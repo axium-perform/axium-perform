@@ -4,445 +4,462 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Axium.Perform - Thérapie & Performance</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
   <style>
     :root {
-      /* Palette de couleurs raffinée */
-      --primary: #0076B6;       
-      --primary-dark: #005f94;  
-      --secondary: #00C6D7;     
-      --accent-bg: #E3F2FD;
-      --surface: #FAFAFA;       
+      /* Palette inspirée de tes captures */
+      --primary: #0F4C75;       /* Bleu profond "Pro" */
+      --primary-light: #3282B8; /* Bleu plus clair */
+      --accent: #BBE1FA;        /* Bleu très clair glace */
+      --text-dark: #1B262C;
+      --text-gray: #52616B;
       --white: #FFFFFF;
-      --text-main: #0A1F33;
-      --text-muted: #546e7a;
+      --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       
-      /* Ombres et Formes */
-      --shadow-soft: 0 10px 40px rgba(0, 118, 182, 0.05);
-      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05);
       --radius: 20px;
-      --radius-btn: 50px;
-      --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --shadow-card: 0 10px 30px rgba(0,0,0,0.08);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     /* --- RESET & BASE --- */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; }
     
     body {
       font-family: 'Montserrat', sans-serif;
-      background: var(--surface);
-      color: var(--text-main);
+      background-color: #F8F9FB;
+      color: var(--text-dark);
       line-height: 1.6;
-      overflow-x: hidden; /* Empêche le scroll horizontal sur mobile */
+      overflow-x: hidden;
+      /* Padding pour bouton mobile */
+      padding-bottom: 80px; 
     }
 
-    h1, h2, h3 { font-weight: 700; line-height: 1.2; }
+    /* PC : Pas de padding bottom nécessaire */
+    @media (min-width: 1024px) { body { padding-bottom: 0; } }
+
     a { text-decoration: none; color: inherit; transition: var(--transition); }
-    img { max-width: 100%; display: block; }
+    img { max-width: 100%; display: block; border-radius: var(--radius); }
     ul { list-style: none; }
 
     /* --- HEADER GLASSMORPHISM --- */
     header {
       background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       padding: 15px 5%;
       display: flex; justify-content: space-between; align-items: center;
       position: sticky; top: 0; z-index: 1000;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
     }
 
     header .logo {
-      display: flex; align-items: center; gap: 10px;
-      font-weight: 800; font-size: 1.2rem; color: var(--primary);
+      font-weight: 800; font-size: 1.4rem; color: var(--primary);
+      text-transform: uppercase; letter-spacing: -1px; display: flex; align-items: center; gap: 10px;
     }
-    header .logo img { height: 50px; width: auto; }
+    header .logo img { height: 40px; width: auto; border-radius: 0; }
 
-    nav ul { display: none; } /* Mobile menu hidden by default */
+    nav ul { display: none; }
     @media (min-width: 768px) {
       nav ul { display: flex; gap: 30px; }
-      nav a { font-weight: 600; font-size: 0.9rem; position: relative; }
-      nav a::after {
-        content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
-        background: var(--secondary); transition: width 0.3s;
+      nav a { font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
+      nav a:hover { color: var(--primary-light); }
+      .btn-nav {
+        background: var(--primary); color: white !important;
+        padding: 8px 20px; border-radius: 50px;
       }
-      nav a:hover::after { width: 100%; }
+      .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(15, 76, 117, 0.3); }
     }
 
-    /* --- ANIMATIONS AU SCROLL --- */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease-out;
-    }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* --- SECTIONS COMMUNES --- */
-    section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
-    
-    .section-title {
-      text-align: center; margin-bottom: 50px;
-    }
-    .section-title h2 {
-      font-size: 2rem; color: var(--primary); margin-bottom: 10px;
-    }
-    .section-title p {
-      color: var(--text-muted); max-width: 600px; margin: 0 auto;
-    }
-
-    /* --- HERO --- */
+    /* --- HERO SECTION --- */
     .hero {
       text-align: center;
-      padding: 100px 20px 60px;
-      background: radial-gradient(circle at top center, rgba(0,198,215,0.1) 0%, rgba(255,255,255,0) 70%);
-      min-height: 80vh; /* Prend presque tout l'écran */
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-    }
-
-    .hero-img-container {
-      width: 150px; height: 150px; margin: 0 auto 30px;
-      border-radius: 40px; overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 118, 182, 0.2);
-      background: white; padding: 5px;
-      animation: float 6s ease-in-out infinite;
+      padding: 80px 20px 60px;
+      background: white;
+      border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 60px;
+      position: relative; overflow: hidden;
     }
     
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
-      100% { transform: translateY(0px); }
+    /* Fond dégradé subtil */
+    .hero::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at top right, rgba(50, 130, 184, 0.1), transparent 60%);
+      pointer-events: none;
     }
 
     .hero h1 {
       font-size: clamp(2rem, 5vw, 3.5rem);
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--primary);
+      margin-bottom: 15px; font-weight: 800; line-height: 1.1;
     }
-
-    /* BOUTON GLOBAL */
-    .btn-main {
-      display: inline-block;
-      background: var(--primary);
-      color: white;
-      padding: 18px 45px;
-      border-radius: var(--radius-btn);
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      box-shadow: 0 10px 25px rgba(0, 118, 182, 0.3);
-      transition: var(--transition);
-      border: none; cursor: pointer;
-    }
-    .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0, 118, 182, 0.4); background: var(--primary-dark); }
-
-    /* --- PRESENTATION (NOUVEAU) --- */
-    .about-grid {
-      display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center;
-    }
-    @media (min-width: 768px) { .about-grid { grid-template-columns: 1fr 1fr; } }
-
-    .about-text h3 { font-size: 1.5rem; margin-bottom: 20px; color: var(--text-main); }
-    .about-text p { margin-bottom: 15px; color: var(--text-muted); text-align: justify; }
-
-    /* --- PROCESSUS (NOUVEAU) --- */
-    .process-steps {
-      display: flex; flex-direction: column; gap: 20px;
-    }
-    @media (min-width: 768px) { .process-steps { flex-direction: row; } }
-
-    .step-card {
-      background: white; padding: 30px; border-radius: var(--radius);
-      flex: 1; text-align: center;
-      box-shadow: var(--shadow-card);
-      position: relative; overflow: hidden;
-      border: 1px solid rgba(0,0,0,0.03);
-    }
-    .step-number {
-      font-size: 4rem; font-weight: 800; color: rgba(0, 118, 182, 0.05);
-      position: absolute; top: -10px; right: 10px;
-    }
-    .step-card h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.2rem; }
-
-    /* --- BIENFAITS (NOUVEAU) --- */
-    .benefits-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;
-    }
-    .benefit-item {
-      background: var(--white); padding: 25px; border-radius: 20px;
-      text-align: center; box-shadow: var(--shadow-card);
-      transition: var(--transition);
-    }
-    .benefit-item:hover { transform: translateY(-5px); }
-    .benefit-icon {
-      width: 50px; height: 50px; background: var(--accent-bg); color: var(--primary);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 15px;
-    }
-
-    /* --- PRESTATIONS (SERVICES) --- */
-    .service-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
-    }
-    .service-card {
-      background: var(--white); border-radius: var(--radius); overflow: hidden;
-      box-shadow: var(--shadow-soft); transition: var(--transition);
-      display: flex; flex-direction: column;
-    }
-    .service-card:hover { transform: translateY(-10px); }
     
-    .service-body { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
-    .service-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-    .price-badge {
-      background: var(--accent-bg); color: var(--primary); padding: 8px 15px;
-      border-radius: 12px; font-weight: 700; font-size: 1rem;
+    .hero p {
+      color: var(--text-gray); max-width: 600px; margin: 0 auto 30px; font-size: 1.1rem;
     }
-    .service-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; flex-grow: 1;}
 
-    /* --- CONTACT --- */
+    /* --- SECTION COMMUNE --- */
+    section { padding: 0 20px; max-width: 1200px; margin: 0 auto 100px; }
+    
+    .section-title {
+      font-size: 2rem; color: var(--primary); text-align: center; margin-bottom: 50px;
+      font-weight: 800; position: relative;
+    }
+    .section-title span { color: var(--primary-light); }
+
+    /* --- QUI SUIS-JE (Capture 1) --- */
+    .about-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    
+    @media (min-width: 900px) {
+      .about-container { grid-template-columns: 1fr 1fr; }
+    }
+
+    .about-image {
+      position: relative;
+    }
+    .about-image img {
+      width: 100%; height: auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      border-radius: 30px;
+    }
+
+    .about-text h3 {
+      font-size: 1.5rem; color: var(--primary); margin-bottom: 20px;
+    }
+    .about-text p {
+      margin-bottom: 20px; color: var(--text-gray); text-align: justify;
+    }
+    .highlight { font-weight: 600; color: var(--primary); }
+
+    /* Stats style capture 1 */
+    .stats-row {
+      display: flex; gap: 30px; margin-top: 30px; flex-wrap: wrap;
+    }
+    .stat-item { text-align: left; }
+    .stat-number { font-size: 2rem; font-weight: 800; color: var(--primary); line-height: 1; }
+    .stat-label { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: #888; }
+
+    /* --- BIENFAITS (Capture 2) --- */
+    .benefits-wrapper {
+      background: white;
+      padding: 40px;
+      border-radius: 30px;
+      box-shadow: var(--shadow-card);
+      display: flex; flex-direction: column; align-items: center; gap: 40px;
+    }
+
+    /* Layout Desktop: Gauche - Image - Droite */
+    @media (min-width: 900px) {
+      .benefits-wrapper { 
+        flex-direction: row; justify-content: center; 
+        background: linear-gradient(90deg, #fff 0%, #f4f8fb 50%, #fff 100%);
+      }
+      .benefits-col { width: 250px; display: flex; flex-direction: column; gap: 30px; }
+      .benefits-img { flex-grow: 1; max-width: 400px; display: flex; justify-content: center; }
+    }
+
+    .benefit-chip {
+      background: white;
+      border: 1px solid #eee;
+      padding: 12px 20px;
+      border-radius: 50px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      font-weight: 600; font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .benefit-chip:hover { transform: scale(1.05); border-color: var(--primary-light); }
+    
+    .chip-val { 
+      background: var(--primary-light); color: white; 
+      padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-right: 10px;
+    }
+    
+    /* Image centrale back placeholder si tu n'as pas le transparent */
+    .anatomy-img {
+      max-width: 100%; height: auto; mix-blend-mode: multiply;
+    }
+
+    /* --- PRESTATIONS (GRID) --- */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;
+    }
+    
+    .service-card {
+      background: white; padding: 30px; border-radius: 25px;
+      border: 1px solid rgba(0,0,0,0.03);
+      transition: var(--transition);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(15, 76, 117, 0.1);
+      border-color: var(--accent);
+    }
+    .card-top h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--primary); }
+    .card-price { 
+      font-size: 1.5rem; font-weight: 800; color: var(--text-dark); margin: 15px 0;
+    }
+    .card-price span { font-size: 0.9rem; font-weight: 400; color: #888; }
+
+    /* --- CONTACT FORM --- */
     .contact-container {
-      background: var(--white); padding: 40px; border-radius: 30px;
-      box-shadow: var(--shadow-soft); max-width: 700px; margin: 0 auto;
+      background: white; padding: 40px; border-radius: 30px; box-shadow: var(--shadow-card);
+      max-width: 700px; margin: 0 auto;
     }
-    .form-group { margin-bottom: 20px; }
     input, textarea {
-      width: 100%; padding: 18px; border: 2px solid #F0F2F5; background: #F9FAFB;
-      border-radius: 16px; font-family: inherit; font-size: 16px; outline: none; transition: 0.3s;
+      width: 100%; padding: 18px; margin-bottom: 20px;
+      border: 2px solid #F0F2F5; border-radius: 15px;
+      background: #F8F9FB; font-family: inherit; font-size: 16px;
+      transition: var(--transition);
     }
-    input:focus, textarea:focus { border-color: var(--primary); background: #fff; }
+    input:focus, textarea:focus {
+      outline: none; border-color: var(--primary); background: white;
+    }
+    .btn-submit {
+      width: 100%; padding: 18px; background: var(--primary); color: white;
+      border: none; border-radius: 15px; font-weight: 700; font-size: 1.1rem;
+      cursor: pointer; transition: var(--transition);
+    }
+    .btn-submit:hover { background: #0b3d61; box-shadow: 0 10px 20px rgba(15, 76, 117, 0.2); }
 
-    /* --- FOOTER --- */
+    /* --- FOOTER (Capture 3) --- */
     footer {
-      text-align: center; padding: 40px 20px 100px; /* Padding bas pour mobile sticky */
-      background: var(--white); color: var(--text-muted); border-top: 1px solid #eee;
+      background: white; padding: 60px 20px 30px;
+      border-top: 1px solid #eee; font-size: 0.9rem;
     }
+    .footer-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px; max-width: 1200px; margin: 0 auto 40px;
+    }
+    .footer-col h4 { color: var(--primary); margin-bottom: 20px; font-weight: 700; }
+    .footer-col ul li { margin-bottom: 12px; color: var(--text-gray); }
+    .footer-col ul li a:hover { color: var(--primary); padding-left: 5px; }
+    .copyright { text-align: center; color: #999; font-size: 0.8rem; border-top: 1px solid #f0f0f0; padding-top: 20px;}
 
-    /* --- STICKY MOBILE BUTTON --- */
+    /* --- STICKY MOBILE BTN --- */
     .sticky-mobile {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      width: 90%; max-width: 400px; z-index: 2000;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      text-align: center;
+      width: 90%; max-width: 400px; background: var(--text-dark); color: white;
+      padding: 16px; border-radius: 50px; text-align: center; font-weight: 700;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 2000;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
     }
-    @media (min-width: 1024px) { 
-      .sticky-mobile { display: none; } 
-      footer { padding-bottom: 40px; }
-    }
+    @media (min-width: 1024px) { .sticky-mobile { display: none; } }
 
   </style>
 </head>
-
 <body>
 
-  <header>
-    <div class="logo">
-      <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="Logo">
-      <span>Axium</span>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="#presentation">À propos</a></li>
-        <li><a href="#process">Déroulement</a></li>
-        <li><a href="#services">Prestations</a></li>
-        <li><a href="#contact" class="btn-main" style="padding: 10px 25px; box-shadow: none;">Réserver</a></li>
-      </ul>
-    </nav>
-  </header>
+<header>
+  <div class="logo">
+    <img src="https://via.placeholder.com/50x50/0F4C75/FFFFFF?text=A" alt="Logo">
+    Axium.Perform
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#services">Prestations</a></li>
+      <li><a href="#benefits">Bienfaits</a></li>
+      <li><a href="#contact" class="btn-nav">Réserver</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <section class="hero reveal">
-    <div class="hero-img-container">
-      <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41 (1).png" alt="Logo Axium Big">
-    </div>
-    <h1>Libérez votre<br>Potentiel Physique</h1>
-    <p style="font-size: 1.1rem; margin-bottom: 30px; color: var(--text-muted);">
-      Massothérapie sportive & Hijama à Genève.<br>
-      Récupération optimisée pour corps performant.
-    </p>
-    <a href="#services" class="btn-main">Découvrir mes soins</a>
-  </section>
-
-  <section id="presentation" class="reveal">
-    <div class="about-grid">
-      <div class="about-text">
-        <h2 style="color: var(--primary); margin-bottom: 20px;">Votre partenaire récupération</h2>
-        <p>Chez <strong>Axium Perform</strong>, nous croyons que la récupération fait partie intégrante de la performance. Que vous soyez athlète de haut niveau ou amateur passionné, votre corps mérite une attention professionnelle.</p>
-        <p>Spécialisé dans le massage sportif et la thérapie par ventouses (Hijama), je vous accompagne pour prévenir les blessures et optimiser votre bien-être général.</p>
-      </div>
-      <div style="text-align: center;">
-         <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="border-radius: 20px; box-shadow: var(--shadow-soft);" alt="Massage Therapy">
-      </div>
-    </div>
-  </section>
-
-  <section id="process" style="background: white;" class="reveal">
-    <div class="section-title">
-      <h2>Le déroulement</h2>
-      <p>Une prise en charge complète en 3 étapes</p>
-    </div>
-    
-    <div class="process-steps">
-      <div class="step-card">
-        <span class="step-number">01</span>
-        <h3>Bilan & Écoute</h3>
-        <p>Nous commençons par un échange pour comprendre vos douleurs, vos objectifs sportifs et vos antécédents.</p>
-      </div>
-      <div class="step-card">
-        <span class="step-number">02</span>
-        <h3>Le Soin</h3>
-        <p>Protocole sur-mesure combinant massage profond, étirements ou ventouses selon vos besoins spécifiques.</p>
-      </div>
-      <div class="step-card">
-        <span class="step-number">03</span>
-        <h3>Conseils</h3>
-        <p>Je vous donne des clés (hydratation, mobilité) pour prolonger les bienfaits de la séance chez vous.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="bienfaits" class="reveal">
-    <div class="section-title">
-      <h2>Les Bienfaits</h2>
-      <p>Pourquoi intégrer ces soins à votre routine ?</p>
-    </div>
-    
-    <div class="benefits-grid">
-      <div class="benefit-item">
-        <div class="benefit-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-        </div>
-        <h4>Récupération</h4>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
-        </div>
-        <h4>Anti-Douleur</h4>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-        </div>
-        <h4>Détox</h4>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
-        </div>
-        <h4>Stress</h4>
-      </div>
-    </div>
-  </section>
-
-  <section id="services" style="background: white;" class="reveal">
-    <div class="section-title">
-      <h2>Nos Tarifs</h2>
-      <p>Des prestations claires et adaptées</p>
-    </div>
-
-    <div class="service-grid">
-      <a href="#contact" class="service-card">
-        <div class="service-body">
-          <div class="service-top">
-            <h3>Massage Sportif</h3>
-            <span class="price-badge">60.-</span>
-          </div>
-          <p class="service-desc">Idéal après une grosse séance ou une compétition. Travail profond sur les fibres musculaires pour éliminer les toxines.</p>
-          <div style="font-size:0.8rem; color: var(--primary); font-weight:600;">⏱ 30 minutes</div>
-        </div>
-      </a>
-
-      <a href="#contact" class="service-card">
-        <div class="service-body">
-          <div class="service-top">
-            <h3>Massage Relaxation</h3>
-            <span class="price-badge">100.-</span>
-          </div>
-          <p class="service-desc">Un moment de détente absolue pour relâcher la pression mentale et physique. Mouvements fluides et enveloppants.</p>
-          <div style="font-size:0.8rem; color: var(--primary); font-weight:600;">⏱ 1 heure</div>
-        </div>
-      </a>
-
-      <a href="#contact" class="service-card">
-        <div class="service-body">
-          <div class="service-top">
-            <h3>Séance Hijama</h3>
-            <span class="price-badge">Incl.</span>
-          </div>
-          <p class="service-desc">Thérapie ancestrale par ventouses (Cupping Therapy). Stimule la circulation sanguine et lymphatique.</p>
-          <div style="font-size:0.8rem; color: var(--primary); font-weight:600;">⏱ Sur demande</div>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <section id="contact" class="reveal">
-    <div class="section-title">
-      <h2>Réserver votre séance</h2>
-      <p>Remplissez le formulaire ci-dessous</p>
-    </div>
-    
-    <div class="contact-container">
-      <form action="https://formsubmit.co/axium.perform@gmail.com" method="POST">
-        <input type="hidden" name="_next" value="https://axium-perform.github.io/axium-perform/">
-        <input type="hidden" name="_subject" value="Nouveau RDV Site Web">
-        <input type="hidden" name="_captcha" value="false">
-
-        <div class="form-group">
-          <input type="text" name="Nom" placeholder="Votre nom complet" required>
-        </div>
-        <div class="form-group">
-          <input type="email" name="Email" placeholder="Votre adresse email" required>
-        </div>
-        <div class="form-group">
-          <input type="tel" name="Telephone" placeholder="Numéro de téléphone" required>
-        </div>
-        <div class="form-group">
-          <textarea name="Message" rows="4" placeholder="Bonjour, je suis disponible le mardi matin pour un massage..." required></textarea>
-        </div>
-        <button type="submit" class="btn-main" style="width: 100%;">Confirmer la demande</button>
-      </form>
-
-      <div style="text-align: center; margin-top: 30px;">
-        <a href="https://www.instagram.com/axium.perform/" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; color: var(--text-main); font-weight: 600;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png" width="24" alt="Insta">
-          Suivez-nous sur Instagram
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <p>© 2025 Axium Perform - Genève</p>
-  </footer>
-
-  <a href="#contact" class="sticky-mobile">
-    <div class="btn-main" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
-      <span>📅</span> Réserver maintenant
-    </div>
+<section class="hero">
+  <h1>Optimisez votre<br>Performance</h1>
+  <p>Récupération sportive & Thérapie par ventouses (Hijama) à Genève.</p>
+  <div style="max-width: 150px; margin: 0 auto 30px;">
+     <img src="https://via.placeholder.com/150/0F4C75/FFFFFF?text=Logo" style="border-radius: 35px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+  </div>
+  <a href="#contact" class="sticky-mobile" style="position: relative; bottom: auto; transform: none; display: inline-flex; width: auto; padding: 15px 40px; background: var(--primary);">
+    Prendre Rendez-vous
   </a>
+</section>
 
-  <script>
-    // Animation au scroll (Intersection Observer)
-    const revealElements = document.querySelectorAll('.reveal');
+<section id="about">
+  <div class="section-title">Présentation<br><span>Qui suis-je ?</span></div>
+  
+  <div class="about-container">
+    <div class="about-image">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Praticien Cupping">
+    </div>
+    
+    <div class="about-text">
+      <h3>Moi, c'est Rayane.</h3>
+      <p>Passionné par le bien-être et la <span class="highlight">récupération physique</span>, j'aide chacun à se sentir mieux dans son corps et dans son esprit, sportifs ou non.</p>
+      
+      <p>J'ai eu la chance d'accompagner énormément de <span class="highlight">sportifs de haut niveau</span>, notamment dans le football, comme <strong>Guirassy (Dortmund)</strong> et <strong>Saibari (PSV)</strong>, ainsi que des athlètes de MMA, dont Movsar Ibragimov (PFL).</p>
+      
+      <p>Je mets mon expérience au service de tous pour offrir détente, récupération et bien-être durable.</p>
+      
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Clients satisfaits</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">+3,000</div>
+          <div class="stat-label">Clients différents</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">+5</div>
+          <div class="stat-label">Années de pratique</div>
+        </div>
+      </div>
+      
+      <a href="#contact" style="display: inline-block; margin-top: 30px; color: var(--primary); font-weight: 700; border-bottom: 2px solid var(--accent);">Réserver votre séance →</a>
+    </div>
+  </div>
+</section>
 
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          observer.unobserve(entry.target); // Ne joue l'animation qu'une fois
-        }
-      });
-    }, {
-      root: null,
-      threshold: 0.15 // Déclenche quand 15% de l'élément est visible
-    });
+<section id="benefits">
+  <div class="section-title">Bienfaits de la Hijama<br><span>Corps & Esprit</span></div>
 
-    revealElements.forEach(el => revealObserver.observe(el));
-  </script>
+  <div class="benefits-wrapper">
+    <div class="benefits-col">
+      <div class="benefit-chip">
+        <span class="chip-val">-50%</span> Douleur
+      </div>
+      <div class="benefit-chip">
+        <span class="chip-val">-40%</span> Inflammation
+      </div>
+      <div class="benefit-chip">
+        <span class="chip-val">+50%</span> Mobilité
+      </div>
+    </div>
+
+    <div class="benefits-img">
+      <img class="anatomy-img" src="https://img.freepik.com/photos-premium/jeune-homme-musclé-subissant-traitement-ventouses-dos_1254714-25757.jpg?w=740" alt="Hijama Back">
+    </div>
+
+    <div class="benefits-col">
+      <div class="benefit-chip">
+        Stress <span class="chip-val" style="margin-right: 0; margin-left: 10px;">-35%</span> 
+      </div>
+      <div class="benefit-chip">
+        Circulation <span class="chip-val" style="margin-right: 0; margin-left: 10px;">+30%</span>
+      </div>
+      <div class="benefit-chip">
+        Récupération <span class="chip-val" style="margin-right: 0; margin-left: 10px;">+25%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-title">Mes Services</div>
+  
+  <div class="services-grid">
+    <a href="#contact" class="service-card">
+      <div class="card-top">
+        <i class="fas fa-running" style="font-size: 2rem; color: var(--primary-light); margin-bottom: 15px;"></i>
+        <h3>Massage Sportif</h3>
+        <p style="color: #777; font-size: 0.9rem;">Ciblage des tensions profondes. Idéal pour la préparation ou récupération après match.</p>
+      </div>
+      <div class="card-price">60.- <span>/ 30 min</span></div>
+    </a>
+
+    <a href="#contact" class="service-card">
+      <div class="card-top">
+        <i class="fas fa-spa" style="font-size: 2rem; color: var(--primary-light); margin-bottom: 15px;"></i>
+        <h3>Massage Relaxation</h3>
+        <p style="color: #777; font-size: 0.9rem;">Détente complète, réduction du stress et relâchement musculaire global.</p>
+      </div>
+      <div class="card-price">100.- <span>/ 1h</span></div>
+    </a>
+
+    <a href="#contact" class="service-card" style="border: 2px solid var(--primary);">
+      <div class="card-top">
+        <i class="fas fa-circle-notch" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+        <h3>Séance Hijama</h3>
+        <p style="color: #777; font-size: 0.9rem;">Thérapie par ventouses (Cupping) pour détoxifier et booster la récupération.</p>
+      </div>
+      <div class="card-price">Sur demande</div>
+    </a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-title">Prendre Rendez-vous</div>
+  <div class="contact-container">
+    <form action="https://formsubmit.co/axium.perform@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="Nouveau RDV Site Web">
+      <input type="hidden" name="_captcha" value="false">
+      
+      <div style="display: grid; gap: 20px; grid-template-columns: 1fr 1fr;">
+         <input type="text" name="Nom" placeholder="Nom complet" required style="margin-bottom: 0;">
+         <input type="tel" name="Telephone" placeholder="Téléphone" required style="margin-bottom: 0;">
+      </div>
+      <input type="email" name="Email" placeholder="Email (Optionnel)" style="margin-top: 20px;">
+      <textarea name="Message" rows="4" placeholder="Bonjour, je suis intéressé par une séance de Hijama..." required></textarea>
+      
+      <button type="submit" class="btn-submit">Confirmer la demande</button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 20px;">
+      <a href="https://instagram.com/axium.perform" target="_blank" style="color: var(--primary); font-weight: 600;">
+        <i class="fab fa-instagram"></i> Suivez-nous sur Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="logo" style="margin-bottom: 15px;">
+        <img src="https://via.placeholder.com/40/0F4C75?text=A" alt="Logo"> Axium
+      </div>
+      <p style="color: #888; font-size: 0.85rem;">
+        Spécialiste de la récupération sportive et du bien-être à Genève.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Menu Rapide</h4>
+      <ul>
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Réservation</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Liens Utiles</h4>
+      <ul>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">Politique de confidentialité</a></li>
+        <li><a href="#">Disclaimer Médical</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Informations</h4>
+      <ul>
+        <li><i class="fas fa-map-marker-alt"></i> Genève, Suisse</li>
+        <li><i class="fas fa-envelope"></i> axium.perform@gmail.com</li>
+        <li><i class="fab fa-instagram"></i> @axium.perform</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="copyright">
+    Copyright © 2025 AXIUM PERFORM. Tous droits réservés.
+  </div>
+</footer>
+
+<a href="#contact" class="sticky-mobile">
+  <i class="far fa-calendar-check"></i> Réserver maintenant
+</a>
 
 </body>
 </html>
