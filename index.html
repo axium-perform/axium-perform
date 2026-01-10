@@ -2,464 +2,406 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Axium.Perform - Récupération & Hijama</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Axium.Perform - Réservation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --primary: #0076B6;       
-      --primary-dark: #005685;
-      --secondary: #00C6D7;     
-      --accent-bg: #E6F7F9;     
-      --text-main: #0F172A;
-      --text-muted: #64748B;
+      --primary: #0076B6;       /* Bleu principal */
+      --primary-dark: #005f94;  /* Bleu plus sombre pour le survol */
+      --secondary: #00C6D7;     /* Turquoise accent */
+      --surface: #F4F6F8;       /* Fond légèrement plus contrasté */
       --white: #FFFFFF;
-      --bg-light: #F8FAFC;
-      
+      --text-main: #0A1F33;
+      --text-muted: #6c757d;
+      --shadow-soft: 0 10px 40px rgba(0, 118, 182, 0.08);
+      --shadow-hover: 0 15px 30px rgba(0, 118, 182, 0.15);
       --radius: 24px;
-      --shadow-card: 0 12px 35px -10px rgba(0, 118, 182, 0.12);
-      --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     /* RESET & BASE */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    
+    html { scroll-behavior: smooth; }
     
     body {
       font-family: 'Montserrat', sans-serif;
-      background: var(--bg-light);
+      background: var(--surface);
       color: var(--text-main);
       line-height: 1.6;
-      /* Espace en bas pour le bouton flottant */
+      /* Padding bottom pour ne pas cacher le contenu derrière le bouton flottant sur mobile */
       padding-bottom: 100px;
-      -webkit-font-smoothing: antialiased;
+      -webkit-font-smoothing: antialiased; /* Rendu plus net sur Mac/iPhone */
     }
 
-    a { text-decoration: none; color: inherit; transition: var(--transition); }
-    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
-    
-    /* UTILS */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 25px; }
-    .text-center { text-align: center; }
-    .section-spacing { padding: 100px 0; }
+    img { max-width: 100%; display: block; }
 
-    /* TITRES */
-    h1, h2, h3, h4 { line-height: 1.1; font-weight: 800; color: var(--text-main); }
-    .section-title {
-      font-size: clamp(2rem, 5vw, 2.8rem);
-      margin-bottom: 60px;
-      text-align: center;
-    }
-    .section-title span { color: var(--primary); position: relative; }
-    
-    /* HEADER */
+    /* HEADER - Effet Glassmorphism (Flou) */
     header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-      padding: 18px 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px); /* Effet flou style iOS */
+      -webkit-backdrop-filter: blur(12px);
+      padding: 15px 5%;
+      display: flex; justify-content: space-between; align-items: center;
       position: sticky; top: 0; z-index: 1000;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
-    .nav-container { display: flex; justify-content: space-between; align-items: center; }
-    .logo { 
-      font-weight: 800; font-size: 1.5rem; color: var(--text-main); 
-      display: flex; align-items: center; gap: 12px; letter-spacing: -0.5px;
+
+    header .logo {
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--primary);
+      display: flex; align-items: center; gap: 12px;
+      letter-spacing: -0.5px;
     }
-    .logo img { height: 45px; width: auto; }
     
+    header img { height: 80px; width: auto; }
+
+    /* Navigation Desktop */
     nav ul { display: none; }
-    @media (min-width: 900px) {
-      nav ul { display: flex; gap: 35px; align-items: center; }
-      nav a { font-weight: 600; font-size: 1rem; color: var(--text-muted); }
-      nav a:hover, nav a.active { color: var(--primary); }
-      .nav-btn { 
-        background: var(--primary); color: white !important; padding: 10px 25px; 
-        border-radius: 50px; box-shadow: 0 5px 15px rgba(0,118,182,0.2);
+    @media (min-width: 768px) {
+      nav ul { display: flex; gap: 40px; }
+      nav a { 
+        font-weight: 600; 
+        font-size: 0.95rem; 
+        position: relative;
+        transition: color 0.3s;
       }
-      .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,118,182,0.3); }
+      nav a:hover { color: var(--primary); }
+      nav a::after {
+        content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
+        background: var(--secondary); transition: width 0.3s;
+      }
+      nav a:hover::after { width: 100%; }
     }
 
-    /* HERO */
+    /* HERO SECTION */
     .hero {
-      text-align: center; padding: 80px 20px 100px;
+      text-align: center;
+      padding: 80px 20px 60px;
       background: var(--white);
-      border-radius: 0 0 60px 60px;
-      box-shadow: var(--shadow-card);
-      margin-bottom: 80px; overflow: hidden; position: relative;
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 60px;
+      position: relative;
+      overflow: hidden;
     }
+
+    /* Décoration d'arrière plan subtile */
     .hero::before {
-        content: ''; position: absolute; top: -10%; left: -10%; width: 120%; height: 120%;
-        background: radial-gradient(circle at 50% 30%, rgba(0,198,215,0.08), transparent 60%);
-        pointer-events: none;
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(0,198,215,0.05) 0%, rgba(255,255,255,0) 70%);
+      z-index: 0; pointer-events: none;
     }
-    .hero-avatar {
-      width: 140px; height: 140px; margin: 0 auto 30px;
-      border-radius: 45px; overflow: hidden;
-      box-shadow: var(--shadow-float); border: 5px solid var(--white);
-      position: relative; z-index: 2;
-    }
-    .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .hero h1 { font-size: clamp(2.2rem, 7vw, 4rem); margin-bottom: 20px; letter-spacing: -1.5px; position: relative; z-index: 2;}
-    .hero p { color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; font-size: 1.15rem; position: relative; z-index: 2;}
 
-    /* BOUTON PRINCIPAL */
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-img-container {
+      width: 130px; height: 130px;
+      margin: 0 auto 25px;
+      border-radius: 40px; /* Forme "Squircle" style iOS app */
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      background: white;
+      padding: 5px;
+    }
+    
+    .hero-img-container img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 35px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem); /* Taille adaptative PC/Mobile */
+      color: var(--text-main);
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-size: 1rem;
+    }
+
+    /* BOUTONS */
     .btn-main {
-      display: inline-flex; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;
-      padding: 18px 38px; border-radius: 50px;
-      font-weight: 700; font-size: 1rem;
-      box-shadow: 0 10px 30px rgba(0, 118, 182, 0.3);
-      transition: var(--transition); border: none; cursor: pointer; position: relative; z-index: 2;
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary) 0%, #0099CC 100%);
+      color: white;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-weight: 600;
+      box-shadow: 0 10px 20px rgba(0, 118, 182, 0.3);
+      transition: var(--transition);
+      border: none; cursor: pointer;
     }
-    .btn-main:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(0, 118, 182, 0.4); }
+    .btn-main:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 15px 30px rgba(0, 118, 182, 0.4);
+    }
+    .btn-main:active { transform: scale(0.98); }
 
-    /* SECTION QUI SUIS-JE (CLEAN) */
-    .about-grid {
-      display: grid; grid-template-columns: 1fr; gap: 50px; align-items: center;
+    /* SECTIONS COMMUNES */
+    section {
+      padding: 0 20px;
+      max-width: 1100px;
+      margin: 0 auto 80px;
     }
-    @media (min-width: 900px) {
-      .about-grid { grid-template-columns: 0.9fr 1.1fr; gap: 80px; }
-    }
-    .about-image {
-      position: relative; border-radius: 50px; overflow: hidden;
-      box-shadow: var(--shadow-float); aspect-ratio: 4/5;
-    }
-    .about-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-    .about-image:hover img { transform: scale(1.03); }
 
-    .about-content h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; color: var(--secondary); margin-bottom: 15px; font-weight: 700; }
-    .about-content h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 30px; }
-    .about-content p { color: var(--text-muted); margin-bottom: 25px; font-size: 1.05rem; line-height: 1.7; }
-    
-    /* Stats Bar Clean */
-    .stats-row {
-      display: flex; gap: 40px; margin-top: 40px; padding-top: 40px;
-      border-top: 2px solid #f0f0f0;
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      text-align: center;
+      position: relative;
+      display: inline-block;
+      left: 50%; transform: translateX(-50%);
     }
-    .stat-item h4 { font-size: 2.5rem; color: var(--primary); margin-bottom: 5px; }
-    .stat-item span { font-size: 0.9rem; color: var(--text-main); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    /* Petit trait souligné sous le titre */
+    .section-title::after {
+      content: ''; display: block; width: 60px; height: 4px;
+      background: var(--secondary); margin: 10px auto 0; border-radius: 2px;
+    }
 
-    /* SECTION BIENFAITS (BULLES SEULES) */
-    .benefits-section { margin: 100px 0; }
-    
-    /* Conteneur centré pour les bulles */
-    .benefits-grid-centered {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 25px;
-      max-width: 800px; /* Largeur max contrôlée pour garder les bulles groupées */
-      margin: 0 auto; /* Centrage horizontal */
+    /* SERVICES (GRID SYSTEM POUR PC) */
+    .service-list { 
+      display: grid; 
+      gap: 20px;
+      /* Mobile: 1 colonne, PC: 2 colonnes, Grand écran: 3 colonnes */
+      grid-template-columns: 1fr; 
     }
     
     @media (min-width: 768px) {
-        .benefits-grid-centered {
-            grid-template-columns: 1fr 1fr; /* 2 colonnes sur PC */
-            gap: 40px 60px; /* Espacement plus grand sur PC */
-        }
+      .service-list { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .service-list { grid-template-columns: repeat(3, 1fr); }
     }
 
-    .benefit-pill {
-      background: var(--white);
-      padding: 20px 30px;
-      border-radius: 60px;
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-      transition: all 0.3s ease; border: 2px solid transparent;
-    }
-    .benefit-pill:hover { transform: translateY(-5px) scale(1.02); border-color: var(--secondary); box-shadow: 0 15px 35px rgba(0,198,215,0.2); }
-
-    .pill-label { font-weight: 700; color: var(--text-main); font-size: 1.1rem; }
-    .pill-val { 
-      background: var(--accent-bg); color: var(--primary-dark); font-weight: 800; 
-      padding: 8px 18px; border-radius: 30px; font-size: 1rem;
-    }
-
-    /* TARIFS CARDS */
-    .services-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
-    }
+    /* Carte transformée en lien <a> pour meilleure UX */
     .service-card {
-      background: var(--white); padding: 40px 35px;
-      border-radius: 35px; box-shadow: var(--shadow-card);
-      transition: var(--transition); display: flex; flex-direction: column; height: 100%;
-      border: 2px solid transparent;
+      background: var(--white);
+      padding: 25px;
+      border-radius: var(--radius);
+      display: flex; flex-direction: column; justify-content: space-between;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.03);
+      height: 100%;
+      text-align: left;
     }
-    .service-card:hover { transform: translateY(-8px); border-color: var(--secondary); }
-    .service-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .service-card h3 { font-size: 1.4rem; }
-    .service-price { font-weight: 800; font-size: 1.3rem; color: var(--primary); background: var(--accent-bg); padding: 8px 15px; border-radius: 15px;}
-    .service-card p { color: var(--text-muted); font-size: 1rem; flex-grow: 1; line-height: 1.7;}
 
-    /* CONTACT FORM */
-    .contact-wrapper {
-      background: var(--white); padding: 50px;
-      border-radius: 40px; box-shadow: var(--shadow-card);
-      max-width: 700px; margin: 0 auto;
+    .service-card:hover {
+      border-color: var(--secondary);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
     }
-    .form-label { display: block; margin-bottom: 10px; font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-left: 10px;}
+
+    .service-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+    
+    .service-card h3 { font-size: 1.2rem; color: var(--text-main); margin-bottom: 10px; }
+    .service-card p { font-size: 0.9rem; color: var(--text-muted); flex-grow: 1; }
+    
+    .service-price { 
+      background: var(--surface); 
+      padding: 8px 15px; 
+      border-radius: 12px; 
+      text-align: center;
+      min-width: 80px;
+    }
+    .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
+    .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
+
+    /* FORMULAIRE */
+    .contact-box {
+      background: var(--white);
+      padding: 40px;
+      border-radius: 30px;
+      box-shadow: var(--shadow-soft);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    
+    /* Style inputs moderne */
     input, textarea {
-      width: 100%; padding: 20px 25px; background: var(--bg-light);
-      border: 2px solid #ECEFF3; border-radius: 20px; margin-bottom: 25px;
-      font-family: inherit; font-size: 16px; transition: var(--transition);
-      color: var(--text-main); font-weight: 500;
+      width: 100%;
+      padding: 16px 20px; /* Padding confortable */
+      border: 2px solid #edf2f7;
+      background: #fcfcfc;
+      border-radius: 16px;
+      font-family: inherit;
+      font-size: 16px; /* IMPORTANT: 16px empêche le zoom auto sur iPhone */
+      transition: var(--transition);
+      color: var(--text-main);
     }
-    input:focus, textarea:focus { outline: none; background: white; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0,118,182,0.1); }
-    ::placeholder { color: #A0AEC0; }
+    
+    input::placeholder, textarea::placeholder { color: #a0aec0; }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(0, 118, 182, 0.1);
+    }
+
+    /* STICKY BAR MOBILE */
+    .sticky-bar {
+      position: fixed; bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      width: 90%; max-width: 400px;
+      background: var(--text-main);
+      color: white;
+      padding: 16px;
+      border-radius: 50px;
+      display: flex; justify-content: center; align-items: center; gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      z-index: 2000;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      transition: transform 0.3s;
+      /* Effet de flou derrière le bouton */
+      backdrop-filter: blur(5px);
+    }
+    
+    .sticky-bar:active { transform: translateX(-50%) scale(0.95); }
+
+    /* Cacher la barre flottante sur PC pour éviter la gêne */
+    @media (min-width: 1024px) {
+      .sticky-bar { display: none; }
+      body { padding-bottom: 0; }
+    }
 
     /* FOOTER */
-    footer { background: var(--white); padding: 80px 20px 40px; border-top: 1px solid #eee; margin-top: 120px; }
-    .footer-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 50px; max-width: 1100px; margin: 0 auto 60px;
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      background: var(--white);
+      border-top: 1px solid #eee;
     }
-    .footer-col h4 { margin-bottom: 25px; font-size: 1.2rem; }
-    .footer-col ul li { margin-bottom: 15px; }
-    .footer-col ul li a { color: var(--text-muted); font-size: 1rem; font-weight: 500; }
-    .footer-col ul li a:hover { color: var(--primary); }
-    .copyright { text-align: center; padding-top: 30px; border-top: 1px solid #eee; color: var(--text-muted); font-size: 0.9rem; }
-
-    /* BOUTON FLOTTANT (Mise à jour demandée) */
-    .floating-cta {
-      position: fixed;
-      z-index: 2000;
-      /* Mobile: centré en bas */
-      bottom: 30px; left: 50%; transform: translateX(-50%);
-      width: 90%; max-width: 350px;
-      
-      background: var(--text-main); color: white;
-      padding: 16px 30px; border-radius: 50px;
-      display: flex; align-items: center; justify-content: center; gap: 12px;
-      font-weight: 700; font-size: 1rem;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-      transition: all 0.3s ease;
-    }
-    .floating-cta:hover { background: var(--primary); transform: translateX(-50%) translateY(-3px); }
-    .floating-cta:active { transform: translateX(-50%) scale(0.98); }
-
-    /* Version Desktop du bouton flottant (en bas à droite, moins intrusif) */
-    @media (min-width: 1024px) {
-      .floating-cta {
-        left: auto; right: 40px; bottom: 40px;
-        transform: none; /* Annule le centrage */
-        width: auto; /* Largeur automatique selon le texte */
-        padding: 18px 40px;
-      }
-       .floating-cta:hover { transform: translateY(-5px); }
-       /* Sur PC, on remet le padding du body à 0 car le bouton est dans un coin */
-       body { padding-bottom: 0; }
-    }
-
+    footer a { color: var(--primary); font-weight: 600; }
   </style>
 </head>
 
 <body>
 
 <header>
-  <div class="container nav-container">
-    <a href="#" class="logo">
-      <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="Axium Logo">
-      Axium Perform
-    </a>
-    <nav>
-      <ul>
-        <li><a href="#quisuisje">À Propos</a></li>
-        <li><a href="#bienfaits">Bienfaits</a></li>
-        <li><a href="#tarifs">Tarifs</a></li>
-        <li><a href="#contact" class="nav-btn">Réserver</a></li>
-      </ul>
-    </nav>
+  <div class="logo">
+    <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="Logo Axium">
+    <span>Axium</span>
   </div>
+  <nav>
+    <ul>
+      <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 </header>
 
 <section class="hero">
-  <div class="container">
-    <div class="hero-avatar">
-        <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41 (1).png" alt="Axium">
+  <div class="hero-content">
+    <div class="hero-img-container">
+      <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41 (1).png" alt="Axium Logo">
     </div>
-    <h1>Optimisez votre<br><span style="color: var(--primary);">Récupération</span></h1>
-    <p>Thérapie sportive et Hijama (Cupping) pour les athlètes et les particuliers à Genève.</p>
+    <h1>Axium Perform</h1>
+    <p>Optimisation de la performance & Récupération sportive.<br>Genève et environs.</p>
     <a href="#contact" class="btn-main">Prendre Rendez-vous</a>
   </div>
 </section>
 
-<section id="quisuisje" class="section-spacing container">
-  <div class="about-grid">
-    <div class="about-image">
-      <img src="image_8bb045.jpg" alt="Thérapeute Axium">
-    </div>
-    
-    <div class="about-content">
-      <h3>À Propos</h3>
-      <h2>Moi c'est Rayane.</h2>
-      <p>
-        Passionné par le bien-être et la récupération physique, j'aide chacun à se sentir mieux dans son corps, sportifs de haut niveau ou particuliers.
-      </p>
-      <p>
-        Spécialisé dans la thérapie par ventouses (Hijama) et le massage sportif, mon approche vise à soulager durablement vos tensions et optimiser vos performances.
-      </p>
-
-      <div class="stats-row">
-        <div class="stat-item">
-          <h4>+3000</h4>
-          <span>Séances</span>
-        </div>
-        <div class="stat-item">
-          <h4>100%</h4>
-          <span>Satisfaits</span>
-        </div>
-        <div class="stat-item">
-          <h4>+5 Ans</h4>
-          <span>Expérience</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="bienfaits" class="section-spacing benefits-section">
-  <div class="container">
-    <h2 class="section-title">Bienfaits de la <span>Hijama</span></h2>
-    
-    <div class="benefits-grid-centered">
-        
-        <div class="benefit-pill">
-          <span class="pill-label">Douleurs & Tensions</span>
-          <span class="pill-val">-60%</span>
-        </div>
-        <div class="benefit-pill">
-          <span class="pill-label">Inflammation</span>
-          <span class="pill-val">Réduite</span>
-        </div>
-        <div class="benefit-pill">
-          <span class="pill-label">Mobilité Articulaire</span>
-          <span class="pill-val">Améliorée</span>
-        </div>
-        <div class="benefit-pill">
-          <span class="pill-label">Stress & Cortisol</span>
-          <span class="pill-val">-40%</span>
-        </div>
-        <div class="benefit-pill">
-          <span class="pill-label">Circulation Sanguine</span>
-          <span class="pill-val">Boostée</span>
-        </div>
-        <div class="benefit-pill">
-          <span class="pill-label">Récupération Musculaire</span>
-          <span class="pill-val">+ Rapide</span>
-        </div>
-
-    </div>
-  </div>
-</section>
-
-<section id="tarifs" class="section-spacing container">
-  <h2 class="section-title">Nos <span>Tarifs</span></h2>
-  <div class="services-grid">
-    
-    <div class="service-card">
+<section id="prestations">
+  <h2 class="section-title">Nos Prestations</h2>
+  
+  <div class="service-list">
+    <a href="#contact" class="service-card">
       <div class="service-header">
         <h3>Massage Sportif</h3>
-        <span class="service-price">60.-</span>
+        <div class="service-price">
+          <span class="price-tag">60.-</span>
+          <span class="duration">30 min</span>
+        </div>
       </div>
-      <p>Récupération musculaire profonde, ciblage des tensions spécifiques. Idéal après l'effort intense ou en préparation.</p>
-      </div>
+      <p>Récupération musculaire profonde, ciblage des tensions. Idéal après l'effort intense.</p>
+    </a>
 
-    <div class="service-card">
+    <a href="#contact" class="service-card">
       <div class="service-header">
-        <h3>Hijama (Cupping)</h3>
-        <span class="service-price">Sur devis</span>
+        <h3>Massage Relaxation</h3>
+        <div class="service-price">
+          <span class="price-tag">100.-</span>
+          <span class="duration">1h</span>
+        </div>
       </div>
-      <p>Thérapie par ventouses (humide ou sèche) pour détoxifier, soulager les douleurs inflammatoires et booster l'immunité.</p>
-      </div>
+      <p>Détente complète du corps. Réduction du stress et relâchement global.</p>
+    </a>
 
-    <div class="service-card">
+    <a href="#contact" class="service-card">
       <div class="service-header">
-        <h3>Relaxation Globale</h3>
-        <span class="service-price">100.-</span>
+        <h3>Séance Hijama</h3>
+        <div class="service-price">
+          <span class="price-tag">Incl.</span>
+        </div>
       </div>
-      <p>Détente complète du corps et de l'esprit. Réduction significative du stress et amélioration du sommeil.</p>
-      </div>
-
+      <p>Thérapie par ventouses pour détoxifier, soulager les douleurs et booster la récupération.</p>
+    </a>
   </div>
 </section>
 
-<section id="contact" class="section-spacing container">
-  <div class="text-center">
-    <h2 class="section-title">Prendre <span>Rendez-vous</span></h2>
-    <p style="margin-bottom: 50px; color: var(--text-muted); font-size: 1.1rem;">Remplissez le formulaire, je vous recontacte très rapidement.</p>
-  </div>
-  
-  <div class="contact-wrapper">
+<section id="contact">
+  <h2 class="section-title">Réserver une séance</h2>
+  <div class="contact-box">
+    
     <form action="https://formsubmit.co/axium.perform@gmail.com" method="POST">
       <input type="hidden" name="_next" value="https://axium-perform.github.io/axium-perform/">
-      <input type="hidden" name="_subject" value="Nouveau RDV Axium">
+      <input type="hidden" name="_subject" value="Nouvelle demande de RDV - Axium">
       <input type="hidden" name="_captcha" value="false">
 
-      <div>
-        <label class="form-label">Nom complet</label>
-        <input type="text" name="Nom" placeholder="Votre nom" required>
+      <div class="form-group">
+        <input type="text" name="Nom" placeholder="Votre Nom complet" required>
       </div>
       
-      <div>
-        <label class="form-label">Email</label>
-        <input type="email" name="Email" placeholder="votre@email.com" required>
+      <div class="form-group">
+        <input type="email" name="Email" placeholder="Votre Email" required>
       </div>
       
-      <div>
-        <label class="form-label">Téléphone</label>
-        <input type="tel" name="Telephone" placeholder="079 123 45 67" required>
+      <div class="form-group">
+        <input type="tel" name="Telephone" placeholder="Numéro de téléphone" required>
       </div>
       
-      <div>
-        <label class="form-label">Votre demande</label>
-        <textarea name="Message" rows="5" placeholder="Bonjour, je souhaite réserver pour..." required></textarea>
+      <div class="form-group">
+        <textarea name="Message" rows="4" placeholder="Bonjour, je souhaite réserver pour un massage sportif le..." required></textarea>
       </div>
       
-      <button type="submit" class="btn-main" style="width: 100%;">Envoyer la demande</button>
+      <button type="submit" class="btn-main" style="width: 100%;">Confirmer la demande</button>
     </form>
+
+    <div style="text-align: center; margin-top: 30px; font-size: 0.9rem;">
+      <p>Retrouvez-nous aussi sur</p>
+      <a href="https://www.instagram.com/axium.perform/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; color: var(--text-main); font-weight: 600;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        @axium.perform
+      </a>
+    </div>
+
   </div>
 </section>
 
 <footer>
-  <div class="footer-grid">
-    <div class="footer-col">
-      <div class="logo" style="margin-bottom: 25px;">
-        <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="Logo">
-        Axium
-      </div>
-      <p style="color: var(--text-muted);">
-        Expert en récupération sportive et Hijama thérapie à Genève.
-      </p>
-    </div>
-
-    <div class="footer-col">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="#quisuisje">À Propos</a></li>
-        <li><a href="#bienfaits">Bienfaits Hijama</a></li>
-        <li><a href="#tarifs">Tarifs</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="#contact">Prendre RDV</a></li>
-        <li><a href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a></li>
-        <li><a href="https://instagram.com/axium.perform" target="_blank">@axium.perform</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="copyright">
-    © 2025 AXIUM PERFORM. Genève, Suisse.
-  </div>
+  © 2025 Axium Perform<br>
+  Genève, Suisse
 </footer>
 
-<a href="#contact" class="floating-cta">
-  📅 Prendre Rendez-vous
+<a href="#contact" class="sticky-bar">
+  <span>📅</span> Réserver maintenant
 </a>
 
 </body>
