@@ -43,26 +43,6 @@
     img { max-width: 100%; display: block; }
     ul { list-style: none; }
 
-    /* --- ANIMATION D'OUVERTURE (PRELOADER) --- */
-    #preloader {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: var(--white);
-      z-index: 9999;
-      display: flex; justify-content: center; align-items: center;
-      flex-direction: column;
-      transition: opacity 0.8s ease-out, visibility 0.8s;
-    }
-    .loader-content img { width: 80px; margin-bottom: 20px; animation: pulse 2s infinite; }
-    .loader-text { font-weight: 600; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; }
-    
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.1); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    
-    .hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-
     /* --- HEADER GLASSMORPHISM --- */
     header {
       background: rgba(255, 255, 255, 0.9);
@@ -258,13 +238,6 @@
 
 <body>
 
-  <div id="preloader">
-    <div class="loader-content">
-      <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="Loading">
-      <div class="loader-text">Axium Perform</div>
-    </div>
-  </div>
-
   <header>
     <div class="logo">
       <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="Logo">
@@ -453,15 +426,7 @@
   </a>
 
   <script>
-    // 1. Gestion du Preloader
-    window.addEventListener('load', () => {
-      const preloader = document.getElementById('preloader');
-      setTimeout(() => {
-        preloader.classList.add('hidden');
-      }, 1500); // Disparaît après 1.5 secondes
-    });
-
-    // 2. Animation au scroll (Intersection Observer)
+    // Animation au scroll (Intersection Observer)
     const revealElements = document.querySelectorAll('.reveal');
 
     const revealObserver = new IntersectionObserver((entries, observer) => {
