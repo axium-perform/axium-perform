@@ -3,27 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Axium.Perform - Réservation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Axium.Perform - Thérapie & Performance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     :root {
-      --primary: #0076B6;       /* Bleu principal */
-      --primary-dark: #005f94;  /* Bleu plus sombre pour le survol */
-      --secondary: #00C6D7;     /* Turquoise accent */
-      --surface: #F4F6F8;       /* Fond légèrement plus contrasté */
+      --primary: #0076B6;        /* Bleu Axium */
+      --primary-dark: #005f94;   
+      --secondary: #00C6D7;      /* Turquoise */
+      --accent-bg: #E3F8FA;      /* Fond très clair turquoise */
+      --surface: #F8F9FA;        /* Fond gris très clair */
       --white: #FFFFFF;
       --text-main: #0A1F33;
-      --text-muted: #6c757d;
-      --shadow-soft: 0 10px 40px rgba(0, 118, 182, 0.08);
-      --shadow-hover: 0 15px 30px rgba(0, 118, 182, 0.15);
-      --radius: 24px;
-      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --text-muted: #546e7a;
+      --radius: 20px;
+      --shadow-card: 0 10px 30px rgba(0, 118, 182, 0.06);
+      --shadow-hover: 0 20px 40px rgba(0, 118, 182, 0.12);
+      --transition: all 0.3s ease;
     }
 
-    /* RESET & BASE */
+    /* --- RESET & GLOBAL --- */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    
     html { scroll-behavior: smooth; }
     
     body {
@@ -31,377 +32,434 @@
       background: var(--surface);
       color: var(--text-main);
       line-height: 1.6;
-      /* Padding bottom pour ne pas cacher le contenu derrière le bouton flottant sur mobile */
-      padding-bottom: 100px;
-      -webkit-font-smoothing: antialiased; /* Rendu plus net sur Mac/iPhone */
+      overflow-x: hidden;
     }
 
-    a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
+    h1, h2, h3 { font-weight: 700; line-height: 1.2; }
+    a { text-decoration: none; color: inherit; transition: var(--transition); }
     img { max-width: 100%; display: block; }
+    ul { list-style: none; }
 
-    /* HEADER - Effet Glassmorphism (Flou) */
+    /* Utilitaires */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .text-center { text-align: center; }
+    .text-highlight { color: var(--secondary); }
+
+    /* --- HEADER (Glassmorphism) --- */
     header {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px); /* Effet flou style iOS */
-      -webkit-backdrop-filter: blur(12px);
-      padding: 15px 5%;
-      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 15px 0;
       position: sticky; top: 0; z-index: 1000;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-
-    header .logo {
-      font-weight: 800;
-      font-size: 1.3rem;
-      color: var(--primary);
-      display: flex; align-items: center; gap: 12px;
-      letter-spacing: -0.5px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.04);
     }
     
-    header img { height: 80px; width: auto; }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; }
 
-    /* Navigation Desktop */
-    nav ul { display: none; }
+    .logo {
+      font-weight: 800; font-size: 1.4rem; color: var(--primary);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo img { height: 50px; width: auto; }
+
+    /* Nav Desktop */
+    .desktop-nav { display: none; }
     @media (min-width: 768px) {
-      nav ul { display: flex; gap: 40px; }
-      nav a { 
-        font-weight: 600; 
-        font-size: 0.95rem; 
-        position: relative;
-        transition: color 0.3s;
-      }
-      nav a:hover { color: var(--primary); }
-      nav a::after {
-        content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
+      .desktop-nav { display: flex; gap: 30px; }
+      .desktop-nav a { font-weight: 600; font-size: 0.95rem; position: relative; }
+      .desktop-nav a:hover { color: var(--primary); }
+      .desktop-nav a::after {
+        content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
         background: var(--secondary); transition: width 0.3s;
       }
-      nav a:hover::after { width: 100%; }
+      .desktop-nav a:hover::after { width: 100%; }
     }
 
-    /* HERO SECTION */
+    /* --- HERO SECTION --- */
     .hero {
-      text-align: center;
-      padding: 80px 20px 60px;
-      background: var(--white);
-      border-bottom-left-radius: 50px;
-      border-bottom-right-radius: 50px;
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 60px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Décoration d'arrière plan subtile */
-    .hero::before {
-      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(0,198,215,0.05) 0%, rgba(255,255,255,0) 70%);
-      z-index: 0; pointer-events: none;
-    }
-
-    .hero-content { position: relative; z-index: 1; }
-
-    .hero-img-container {
-      width: 130px; height: 130px;
-      margin: 0 auto 25px;
-      border-radius: 40px; /* Forme "Squircle" style iOS app */
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      background: white;
-      padding: 5px;
+      padding: 60px 0 80px;
+      background: linear-gradient(180deg, var(--white) 0%, var(--surface) 100%);
+      position: relative; overflow: hidden;
     }
     
-    .hero-img-container img {
-      width: 100%; height: 100%; object-fit: cover; border-radius: 35px;
+    /* Layout Hero responsive: Colonne sur mobile, Ligne sur PC */
+    .hero-grid {
+      display: grid; gap: 40px; align-items: center;
+      text-align: center;
     }
-
+    
+    .hero-img-wrap {
+      width: 180px; height: 180px; margin: 0 auto;
+      border-radius: 40px; overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,198,215,0.2);
+      border: 4px solid var(--white);
+    }
+    
     .hero h1 {
-      font-size: clamp(1.8rem, 5vw, 2.5rem); /* Taille adaptative PC/Mobile */
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 20px;
       color: var(--text-main);
-      margin-bottom: 15px;
-      line-height: 1.2;
+    }
+    
+    .hero p {
+      font-size: 1.1rem; color: var(--text-muted); margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;
     }
 
-    .hero p {
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto 30px;
-      font-size: 1rem;
+    @media (min-width: 992px) {
+      .hero { padding: 100px 0; text-align: left; }
+      .hero-grid { grid-template-columns: 1.2fr 0.8fr; text-align: left; }
+      .hero-img-wrap { width: 100%; height: auto; max-width: 400px; border-radius: 30px; margin: 0; }
+      .hero p { margin-left: 0; margin-right: 0; }
     }
 
     /* BOUTONS */
     .btn-main {
-      display: inline-block;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
       background: linear-gradient(135deg, var(--primary) 0%, #0099CC 100%);
-      color: white;
-      padding: 16px 40px;
-      border-radius: 50px;
-      font-weight: 600;
-      box-shadow: 0 10px 20px rgba(0, 118, 182, 0.3);
-      transition: var(--transition);
-      border: none; cursor: pointer;
+      color: white; padding: 18px 45px; border-radius: 50px;
+      font-weight: 600; font-size: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 118, 182, 0.3);
+      transition: var(--transition); border: none; cursor: pointer;
     }
-    .btn-main:hover { 
-      transform: translateY(-3px); 
-      box-shadow: 0 15px 30px rgba(0, 118, 182, 0.4);
-    }
-    .btn-main:active { transform: scale(0.98); }
+    .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0, 118, 182, 0.4); }
 
-    /* SECTIONS COMMUNES */
-    section {
-      padding: 0 20px;
-      max-width: 1100px;
-      margin: 0 auto 80px;
-    }
-
+    /* --- SECTION INFO / EDUCATIVE (Style Akhijama) --- */
+    .info-section { padding: 80px 0; background: var(--white); }
+    
     .section-title {
-      font-size: 1.8rem;
-      margin-bottom: 30px;
-      text-align: center;
-      position: relative;
-      display: inline-block;
-      left: 50%; transform: translateX(-50%);
+      font-size: 1.8rem; margin-bottom: 50px; text-align: center;
     }
-    /* Petit trait souligné sous le titre */
+    .section-title span { color: var(--secondary); }
     .section-title::after {
       content: ''; display: block; width: 60px; height: 4px;
-      background: var(--secondary); margin: 10px auto 0; border-radius: 2px;
+      background: var(--secondary); margin: 15px auto 0; border-radius: 2px;
     }
 
-    /* SERVICES (GRID SYSTEM POUR PC) */
-    .service-list { 
-      display: grid; 
-      gap: 20px;
-      /* Mobile: 1 colonne, PC: 2 colonnes, Grand écran: 3 colonnes */
-      grid-template-columns: 1fr; 
-    }
-    
-    @media (min-width: 768px) {
-      .service-list { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (min-width: 1024px) {
-      .service-list { grid-template-columns: repeat(3, 1fr); }
+    /* Grille de bienfaits */
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
     }
 
-    /* Carte transformée en lien <a> pour meilleure UX */
-    .service-card {
-      background: var(--white);
-      padding: 25px;
-      border-radius: var(--radius);
-      display: flex; flex-direction: column; justify-content: space-between;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-      transition: var(--transition);
-      border: 1px solid rgba(0,0,0,0.03);
-      height: 100%;
-      text-align: left;
+    .benefit-card {
+      background: var(--surface); padding: 30px; border-radius: var(--radius);
+      text-align: center; transition: var(--transition);
+      border: 1px solid transparent;
     }
-
-    .service-card:hover {
-      border-color: var(--secondary);
+    .benefit-card:hover {
+      border-color: var(--secondary); background: var(--accent-bg);
       transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
     }
 
-    .service-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+    .icon-box {
+      width: 60px; height: 60px; background: var(--white);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; color: var(--primary); font-size: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .benefit-card h3 { margin-bottom: 10px; font-size: 1.2rem; }
+    .benefit-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* --- SERVICES --- */
+    .services-section { padding: 80px 0; background: var(--surface); }
     
-    .service-card h3 { font-size: 1.2rem; color: var(--text-main); margin-bottom: 10px; }
-    .service-card p { font-size: 0.9rem; color: var(--text-muted); flex-grow: 1; }
+    .service-card {
+      background: var(--white); padding: 30px; border-radius: var(--radius);
+      box-shadow: var(--shadow-card); transition: var(--transition);
+      display: flex; flex-direction: column; height: 100%; position: relative;
+      overflow: hidden; border-left: 5px solid var(--secondary);
+    }
     
-    .service-price { 
-      background: var(--surface); 
-      padding: 8px 15px; 
-      border-radius: 12px; 
-      text-align: center;
-      min-width: 80px;
-    }
-    .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
-    .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
+    .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
 
-    /* FORMULAIRE */
-    .contact-box {
-      background: var(--white);
-      padding: 40px;
-      border-radius: 30px;
-      box-shadow: var(--shadow-soft);
-      max-width: 600px;
-      margin: 0 auto;
+    .service-top { display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; }
+    .price-badge {
+      background: var(--accent-bg); color: var(--primary-dark);
+      padding: 5px 12px; border-radius: 10px; font-weight: 700; font-size: 1.1rem;
     }
+    .service-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+    .service-list-features { margin-top: 15px; margin-bottom: 20px; }
+    .service-list-features li {
+      font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .service-list-features i { color: var(--secondary); font-size: 0.8rem; }
 
+    /* --- COMMENT CA MARCHE (Process) --- */
+    .process-section { padding: 80px 0; background: var(--white); }
+    .process-steps {
+      display: flex; flex-direction: column; gap: 30px; max-width: 800px; margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .process-steps { flex-direction: row; text-align: center; }
+    }
+    
+    .step { flex: 1; position: relative; padding: 20px; }
+    .step-number {
+      font-size: 3rem; font-weight: 800; color: rgba(0, 198, 215, 0.1);
+      position: absolute; top: 0; left: 0; z-index: 0;
+    }
+    .step-content { position: relative; z-index: 1; }
+    .step h4 { font-size: 1.2rem; margin-bottom: 10px; color: var(--primary); }
+
+    /* --- CONTACT FORM --- */
+    .contact-section { padding: 80px 0; background: linear-gradient(180deg, var(--surface) 0%, #eefbfd 100%); }
+    
+    .form-box {
+      background: var(--white); padding: 40px; border-radius: 30px;
+      box-shadow: var(--shadow-card); max-width: 600px; margin: 0 auto;
+    }
+    
     .form-group { margin-bottom: 20px; }
+    .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; margin-left: 5px;}
     
-    /* Style inputs moderne */
-    input, textarea {
-      width: 100%;
-      padding: 16px 20px; /* Padding confortable */
-      border: 2px solid #edf2f7;
-      background: #fcfcfc;
-      border-radius: 16px;
-      font-family: inherit;
-      font-size: 16px; /* IMPORTANT: 16px empêche le zoom auto sur iPhone */
+    input, textarea, select {
+      width: 100%; padding: 16px; border: 2px solid #edf2f7;
+      background: #fcfcfc; border-radius: 15px;
+      font-family: inherit; font-size: 16px; /* Évite zoom iPhone */
       transition: var(--transition);
-      color: var(--text-main);
     }
     
-    input::placeholder, textarea::placeholder { color: #a0aec0; }
-
-    input:focus, textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      background: #fff;
-      box-shadow: 0 0 0 4px rgba(0, 118, 182, 0.1);
+    input:focus, textarea:focus, select:focus {
+      outline: none; border-color: var(--primary); background: #fff;
     }
 
-    /* STICKY BAR MOBILE */
+    /* --- FOOTER --- */
+    footer {
+      background: var(--text-main); color: rgba(255,255,255,0.7);
+      padding: 50px 0; text-align: center; font-size: 0.9rem;
+    }
+    footer strong { color: var(--white); }
+    .social-links { margin: 20px 0; }
+    .social-links a {
+      color: var(--white); font-size: 1.5rem; margin: 0 10px;
+      display: inline-block; transition: transform 0.3s;
+    }
+    .social-links a:hover { color: var(--secondary); transform: scale(1.1); }
+
+    /* --- MOBILE STICKY BAR --- */
     .sticky-bar {
-      position: fixed; bottom: 20px; left: 50%;
-      transform: translateX(-50%);
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 400px;
-      background: var(--text-main);
-      color: white;
-      padding: 16px;
-      border-radius: 50px;
-      display: flex; justify-content: center; align-items: center; gap: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      z-index: 2000;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      transition: transform 0.3s;
-      /* Effet de flou derrière le bouton */
+      background: var(--text-main); color: white;
+      padding: 16px; border-radius: 50px;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 2000;
       backdrop-filter: blur(5px);
     }
+    .sticky-info { display: flex; flex-direction: column; line-height: 1.2; padding-left: 10px;}
+    .sticky-info span { font-size: 0.75rem; color: #aaa; }
+    .sticky-info strong { font-size: 0.95rem; }
     
-    .sticky-bar:active { transform: translateX(-50%) scale(0.95); }
+    .sticky-btn {
+      background: var(--primary); color: white; padding: 10px 20px;
+      border-radius: 30px; font-weight: 700; font-size: 0.85rem;
+    }
 
-    /* Cacher la barre flottante sur PC pour éviter la gêne */
     @media (min-width: 1024px) {
       .sticky-bar { display: none; }
       body { padding-bottom: 0; }
     }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      background: var(--white);
-      border-top: 1px solid #eee;
+    @media (max-width: 1023px) {
+       body { padding-bottom: 100px; } /* Espace pour le bouton sticky */
     }
-    footer a { color: var(--primary); font-weight: 600; }
+
   </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">
-    <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="Logo Axium">
-    <span>Axium</span>
+  <div class="container nav-container">
+    <div class="logo">
+      <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="Logo">
+      <span>Axium</span>
+    </div>
+    <nav class="desktop-nav">
+      <a href="#hijama">La Hijama</a>
+      <a href="#prestations">Prestations</a>
+      <a href="#process">Déroulement</a>
+      <a href="#contact" style="color: var(--primary);">Prendre RDV</a>
+    </nav>
   </div>
-  <nav>
-    <ul>
-      <li><a href="#prestations">Prestations</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
 </header>
 
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-img-container">
-      <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41 (1).png" alt="Axium Logo">
-    </div>
-    <h1>Axium Perform</h1>
-    <p>Optimisation de la performance & Récupération sportive.<br>Genève et environs.</p>
-    <a href="#contact" class="btn-main">Prendre Rendez-vous</a>
-  </div>
-</section>
-
-<section id="prestations">
-  <h2 class="section-title">Nos Prestations</h2>
-  
-  <div class="service-list">
-    <a href="#contact" class="service-card">
-      <div class="service-header">
-        <h3>Massage Sportif</h3>
-        <div class="service-price">
-          <span class="price-tag">60.-</span>
-          <span class="duration">30 min</span>
-        </div>
-      </div>
-      <p>Récupération musculaire profonde, ciblage des tensions. Idéal après l'effort intense.</p>
-    </a>
-
-    <a href="#contact" class="service-card">
-      <div class="service-header">
-        <h3>Massage Relaxation</h3>
-        <div class="service-price">
-          <span class="price-tag">100.-</span>
-          <span class="duration">1h</span>
-        </div>
-      </div>
-      <p>Détente complète du corps. Réduction du stress et relâchement global.</p>
-    </a>
-
-    <a href="#contact" class="service-card">
-      <div class="service-header">
-        <h3>Séance Hijama</h3>
-        <div class="service-price">
-          <span class="price-tag">Incl.</span>
-        </div>
-      </div>
-      <p>Thérapie par ventouses pour détoxifier, soulager les douleurs et booster la récupération.</p>
-    </a>
-  </div>
-</section>
-
-<section id="contact">
-  <h2 class="section-title">Réserver une séance</h2>
-  <div class="contact-box">
-    
-    <form action="https://formsubmit.co/axium.perform@gmail.com" method="POST">
-      <input type="hidden" name="_next" value="https://axium-perform.github.io/axium-perform/">
-      <input type="hidden" name="_subject" value="Nouvelle demande de RDV - Axium">
-      <input type="hidden" name="_captcha" value="false">
-
-      <div class="form-group">
-        <input type="text" name="Nom" placeholder="Votre Nom complet" required>
-      </div>
-      
-      <div class="form-group">
-        <input type="email" name="Email" placeholder="Votre Email" required>
-      </div>
-      
-      <div class="form-group">
-        <input type="tel" name="Telephone" placeholder="Numéro de téléphone" required>
-      </div>
-      
-      <div class="form-group">
-        <textarea name="Message" rows="4" placeholder="Bonjour, je souhaite réserver pour un massage sportif le..." required></textarea>
-      </div>
-      
-      <button type="submit" class="btn-main" style="width: 100%;">Confirmer la demande</button>
-    </form>
-
-    <div style="text-align: center; margin-top: 30px; font-size: 0.9rem;">
-      <p>Retrouvez-nous aussi sur</p>
-      <a href="https://www.instagram.com/axium.perform/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; color: var(--text-main); font-weight: 600;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-        @axium.perform
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <h1>Optimisez votre <br><span class="text-highlight">Récupération</span></h1>
+      <p>Spécialiste de la Cupping Therapy (Hijama) et du massage sportif à Genève. Soulagez vos douleurs, détoxifiez votre corps et performez mieux.</p>
+      <a href="#contact" class="btn-main">
+        <i class="fa-regular fa-calendar-check"></i> Réserver ma séance
       </a>
     </div>
+    <div class="hero-img-wrap">
+      <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41 (1).png" alt="Axium Massage">
+    </div>
+  </div>
+</section>
 
+<section id="hijama" class="info-section">
+  <div class="container">
+    <h2 class="section-title">Pourquoi la <span>Hijama</span> ?</h2>
+    
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="icon-box"><i class="fa-solid fa-heart-pulse"></i></div>
+        <h3>Circulation Sanguine</h3>
+        <p>Stimule le flux sanguin, élimine les toxines accumulées et oxygène les tissus pour une meilleure santé globale.</p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="icon-box"><i class="fa-solid fa-person-running"></i></div>
+        <h3>Récupération Sportive</h3>
+        <p>Réduit les courbatures, draine l'acide lactique et accélère la réparation musculaire après l'effort.</p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="icon-box"><i class="fa-solid fa-brain"></i></div>
+        <h3>Stress & Douleurs</h3>
+        <p>Libère les tensions nerveuses, soulage les maux de dos et migraines grâce à l'effet antalgique naturel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="prestations" class="services-section">
+  <div class="container">
+    <h2 class="section-title">Nos Prestations</h2>
+    
+    <div class="benefits-grid"> <a href="#contact" class="service-card">
+        <div class="service-top">
+          <h3>Massage Sportif</h3>
+          <span class="price-badge">60.-</span>
+        </div>
+        <p>Un travail profond sur les tissus musculaires.</p>
+        <ul class="service-list-features">
+          <li><i class="fa-solid fa-check"></i> Ciblage des triggers points</li>
+          <li><i class="fa-solid fa-check"></i> Idéal pré/post compétition</li>
+          <li><i class="fa-solid fa-check"></i> Durée : 30 min</li>
+        </ul>
+      </a>
+
+      <a href="#contact" class="service-card" style="border-left-color: var(--primary);">
+        <div class="service-top">
+          <h3>Massage Relaxation</h3>
+          <span class="price-badge">100.-</span>
+        </div>
+        <p>Détente absolue pour relâcher la pression.</p>
+        <ul class="service-list-features">
+          <li><i class="fa-solid fa-check"></i> Mouvements fluides et lents</li>
+          <li><i class="fa-solid fa-check"></i> Réduction du cortisol (stress)</li>
+          <li><i class="fa-solid fa-check"></i> Durée : 1h00</li>
+        </ul>
+      </a>
+
+      <a href="#contact" class="service-card" style="border-left-color: #0A1F33;">
+        <div class="service-top">
+          <h3>Séance Hijama</h3>
+          <span class="price-badge">Incl.</span>
+        </div>
+        <p>Thérapie par ventouses (Cupping Therapy).</p>
+        <ul class="service-list-features">
+          <li><i class="fa-solid fa-check"></i> Pose de ventouses (humide/sèche)</li>
+          <li><i class="fa-solid fa-check"></i> Matériel stérile à usage unique</li>
+          <li><i class="fa-solid fa-check"></i> Suivi personnalisé</li>
+        </ul>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section id="process" class="process-section">
+  <div class="container">
+    <h2 class="section-title" style="margin-bottom:30px;">Déroulement</h2>
+    <div class="process-steps">
+      <div class="step">
+        <span class="step-number">01</span>
+        <div class="step-content">
+          <h4>Réservation</h4>
+          <p>Choisissez votre créneau et remplissez le formulaire ci-dessous.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-number">02</span>
+        <div class="step-content">
+          <h4>Bilan</h4>
+          <p>Court échange en début de séance pour cibler vos besoins.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-number">03</span>
+        <div class="step-content">
+          <h4>Soin</h4>
+          <p>Profitez de votre traitement dans un cadre professionnel et hygiénique.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="container">
+    <h2 class="section-title">Réserver une séance</h2>
+    
+    <div class="form-box">
+      <form action="https://formsubmit.co/axium.perform@gmail.com" method="POST">
+        <input type="hidden" name="_next" value="https://axium-perform.github.io/axium-perform/">
+        <input type="hidden" name="_subject" value="Nouvelle Demande - Axium">
+        <input type="hidden" name="_captcha" value="false">
+
+        <div class="form-group">
+          <label class="form-label">Nom complet</label>
+          <input type="text" name="Nom" placeholder="Ex: Jean Dupont" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" name="Email" placeholder="jean@email.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Téléphone</label>
+          <input type="tel" name="Telephone" placeholder="079 123 45 67" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Type de séance & Disponibilités</label>
+          <textarea name="Message" rows="4" placeholder="Bonjour, je suis intéressé par une séance de Hijama. Je suis disponible les mardis soirs ou samedis..." required></textarea>
+        </div>
+        
+        <button type="submit" class="btn-main" style="width: 100%;">
+          Confirmer la demande
+        </button>
+      </form>
+    </div>
   </div>
 </section>
 
 <footer>
-  © 2025 Axium Perform<br>
-  Genève, Suisse
+  <div class="container">
+    <div class="logo" style="justify-content: center; margin-bottom: 20px;">
+      <span style="color:white;">Axium</span>
+    </div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/axium.perform/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="mailto:axium.perform@gmail.com"><i class="fa-regular fa-envelope"></i></a>
+    </div>
+    <p>© 2025 <strong>Axium Perform</strong>. Tous droits réservés.<br>Genève, Suisse.</p>
+  </div>
 </footer>
 
 <a href="#contact" class="sticky-bar">
-  <span>📅</span> Réserver maintenant
+  <div class="sticky-info">
+    <span>Besoin d'un soin ?</span>
+    <strong>Réserver maintenant</strong>
+  </div>
+  <div class="sticky-btn">Go</div>
 </a>
 
 </body>
