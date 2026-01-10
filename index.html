@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Axium.Perform - Réservation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <title>Axium.Perform - Réservation & Présentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+   
   <style>
     :root {
       --primary: #0076B6;       /* Bleu principal */
@@ -14,7 +14,7 @@
       --surface: #F4F6F8;       /* Fond légèrement plus contrasté */
       --white: #FFFFFF;
       --text-main: #0A1F33;
-      --text-muted: #6c757d;
+      --text-muted: #546e7a;
       --shadow-soft: 0 10px 40px rgba(0, 118, 182, 0.08);
       --shadow-hover: 0 15px 30px rgba(0, 118, 182, 0.15);
       --radius: 24px;
@@ -31,19 +31,18 @@
       background: var(--surface);
       color: var(--text-main);
       line-height: 1.6;
-      /* Padding bottom pour ne pas cacher le contenu derrière le bouton flottant sur mobile */
       padding-bottom: 100px;
-      -webkit-font-smoothing: antialiased; /* Rendu plus net sur Mac/iPhone */
+      -webkit-font-smoothing: antialiased;
     }
 
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
     img { max-width: 100%; display: block; }
 
-    /* HEADER - Effet Glassmorphism (Flou) */
+    /* HEADER */
     header {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px); /* Effet flou style iOS */
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       padding: 15px 5%;
       display: flex; justify-content: space-between; align-items: center;
@@ -59,12 +58,12 @@
       letter-spacing: -0.5px;
     }
     
-    header img { height: 80px; width: auto; }
+    header img { height: 50px; width: auto; } /* Ajusté pour éviter logo trop gros */
 
     /* Navigation Desktop */
     nav ul { display: none; }
     @media (min-width: 768px) {
-      nav ul { display: flex; gap: 40px; }
+      nav ul { display: flex; gap: 30px; }
       nav a { 
         font-weight: 600; 
         font-size: 0.95rem; 
@@ -72,17 +71,12 @@
         transition: color 0.3s;
       }
       nav a:hover { color: var(--primary); }
-      nav a::after {
-        content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
-        background: var(--secondary); transition: width 0.3s;
-      }
-      nav a:hover::after { width: 100%; }
     }
 
     /* HERO SECTION */
     .hero {
       text-align: center;
-      padding: 80px 20px 60px;
+      padding: 60px 20px 80px;
       background: var(--white);
       border-bottom-left-radius: 50px;
       border-bottom-right-radius: 50px;
@@ -92,7 +86,6 @@
       overflow: hidden;
     }
 
-    /* Décoration d'arrière plan subtile */
     .hero::before {
       content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
       background: radial-gradient(circle, rgba(0,198,215,0.05) 0%, rgba(255,255,255,0) 70%);
@@ -104,7 +97,7 @@
     .hero-img-container {
       width: 130px; height: 130px;
       margin: 0 auto 25px;
-      border-radius: 40px; /* Forme "Squircle" style iOS app */
+      border-radius: 40px;
       overflow: hidden;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       background: white;
@@ -116,10 +109,11 @@
     }
 
     .hero h1 {
-      font-size: clamp(1.8rem, 5vw, 2.5rem); /* Taille adaptative PC/Mobile */
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
       color: var(--text-main);
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       line-height: 1.2;
+      letter-spacing: -1px;
     }
 
     .hero p {
@@ -145,7 +139,18 @@
       transform: translateY(-3px); 
       box-shadow: 0 15px 30px rgba(0, 118, 182, 0.4);
     }
-    .btn-main:active { transform: scale(0.98); }
+    
+    .btn-secondary {
+      display: inline-block;
+      background: #eef5f9;
+      color: var(--primary);
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: var(--transition);
+    }
+    .btn-secondary:hover { background: #e0eaf1; }
 
     /* SECTIONS COMMUNES */
     section {
@@ -156,23 +161,92 @@
 
     .section-title {
       font-size: 1.8rem;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
       text-align: center;
       position: relative;
-      display: inline-block;
-      left: 50%; transform: translateX(-50%);
     }
-    /* Petit trait souligné sous le titre */
     .section-title::after {
       content: ''; display: block; width: 60px; height: 4px;
       background: var(--secondary); margin: 10px auto 0; border-radius: 2px;
     }
 
-    /* SERVICES (GRID SYSTEM POUR PC) */
+    /* --- NOUVELLE SECTION: QUI SUIS-JE --- */
+    .about-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      background: var(--white);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    }
+
+    .about-img {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+    
+    .about-img img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-text { flex: 1; }
+
+    .subtitle {
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .about-text h2 {
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .about-text p {
+      margin-bottom: 20px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      text-align: justify;
+    }
+    
+    .highlight {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Layout PC pour la section À propos */
+    @media (min-width: 900px) {
+      .about-container {
+        flex-direction: row;
+        align-items: center;
+        padding: 50px;
+      }
+      .about-img {
+        flex: 0 0 45%; /* L'image prend 45% de la largeur */
+        height: 400px;
+      }
+      .about-img img { height: 100%; }
+      .about-text { padding-left: 20px; }
+      .about-text h2 { font-size: 2.5rem; }
+    }
+
+    /* SERVICES GRID */
     .service-list { 
       display: grid; 
       gap: 20px;
-      /* Mobile: 1 colonne, PC: 2 colonnes, Grand écran: 3 colonnes */
       grid-template-columns: 1fr; 
     }
     
@@ -183,7 +257,6 @@
       .service-list { grid-template-columns: repeat(3, 1fr); }
     }
 
-    /* Carte transformée en lien <a> pour meilleure UX */
     .service-card {
       background: var(--white);
       padding: 25px;
@@ -229,21 +302,18 @@
 
     .form-group { margin-bottom: 20px; }
     
-    /* Style inputs moderne */
     input, textarea {
       width: 100%;
-      padding: 16px 20px; /* Padding confortable */
+      padding: 16px 20px;
       border: 2px solid #edf2f7;
       background: #fcfcfc;
       border-radius: 16px;
       font-family: inherit;
-      font-size: 16px; /* IMPORTANT: 16px empêche le zoom auto sur iPhone */
+      font-size: 16px; 
       transition: var(--transition);
       color: var(--text-main);
     }
     
-    input::placeholder, textarea::placeholder { color: #a0aec0; }
-
     input:focus, textarea:focus {
       outline: none;
       border-color: var(--primary);
@@ -267,13 +337,10 @@
       text-transform: uppercase;
       font-size: 0.9rem;
       transition: transform 0.3s;
-      /* Effet de flou derrière le bouton */
       backdrop-filter: blur(5px);
     }
-    
     .sticky-bar:active { transform: translateX(-50%) scale(0.95); }
 
-    /* Cacher la barre flottante sur PC pour éviter la gêne */
     @media (min-width: 1024px) {
       .sticky-bar { display: none; }
       body { padding-bottom: 0; }
@@ -301,6 +368,7 @@
   </div>
   <nav>
     <ul>
+      <li><a href="#about">Qui suis-je ?</a></li>
       <li><a href="#prestations">Prestations</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -315,6 +383,33 @@
     <h1>Axium Perform</h1>
     <p>Optimisation de la performance & Récupération sportive.<br>Genève et environs.</p>
     <a href="#contact" class="btn-main">Prendre Rendez-vous</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-container">
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1579758629938-03607ccdbaba?q=80&w=2070&auto=format&fit=crop" alt="Rayane Axium Perform">
+    </div>
+    
+    <div class="about-text">
+      <span class="subtitle">Présentation</span>
+      <h2>Qui suis-je ?</h2>
+      
+      <p>
+        Moi, c'est <span class="highlight">Rayane</span>. Passionné par le bien-être et la récupération physique, j'aide chacun à se sentir mieux dans son corps et dans son esprit, sportifs ou non.
+      </p>
+
+      <p>
+        J'ai eu la chance d'accompagner énormément de sportifs de haut niveau, notamment dans le football, comme <span class="highlight">Guirassy (Dortmund)</span> et <span class="highlight">Saibari (PSV)</span>, ainsi que des athlètes de MMA, dont Movsar Ibragimov, qui a participé au premier PFL en Belgique.
+      </p>
+
+      <p>
+        Je mets mon expérience au service de tous pour offrir détente, récupération et bien-être durable.
+      </p>
+
+      <a href="#contact" class="btn-secondary">Réservez votre séance →</a>
+    </div>
   </div>
 </section>
 
