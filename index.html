@@ -2,198 +2,293 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Axium.Perform - Réservation</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --primary: #0076B6;     /* Bleu principal */
-      --secondary: #00C6D7;   /* Turquoise accent */
-      --surface: #F8F9FA;     /* Gris très clair pour le fond */
+      --primary: #0076B6;       /* Bleu principal */
+      --primary-dark: #005f94;  /* Bleu plus sombre pour le survol */
+      --secondary: #00C6D7;     /* Turquoise accent */
+      --surface: #F4F6F8;       /* Fond légèrement plus contrasté */
       --white: #FFFFFF;
       --text-main: #0A1F33;
       --text-muted: #6c757d;
-      --shadow: 0 10px 30px rgba(0, 118, 182, 0.08);
-      --radius: 20px;
+      --shadow-soft: 0 10px 40px rgba(0, 118, 182, 0.08);
+      --shadow-hover: 0 15px 30px rgba(0, 118, 182, 0.15);
+      --radius: 24px;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
+    /* RESET & BASE */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
     
     body {
       font-family: 'Montserrat', sans-serif;
       background: var(--surface);
       color: var(--text-main);
       line-height: 1.6;
-      scroll-behavior: smooth;
-      padding-bottom: 80px;
+      /* Padding bottom pour ne pas cacher le contenu derrière le bouton flottant sur mobile */
+      padding-bottom: 100px;
+      -webkit-font-smoothing: antialiased; /* Rendu plus net sur Mac/iPhone */
     }
 
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
+    img { max-width: 100%; display: block; }
 
-    /* HEADER */
+    /* HEADER - Effet Glassmorphism (Flou) */
     header {
-      background: var(--white);
-      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px); /* Effet flou style iOS */
+      -webkit-backdrop-filter: blur(12px);
+      padding: 15px 5%;
       display: flex; justify-content: space-between; align-items: center;
       position: sticky; top: 0; z-index: 1000;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     header .logo {
-      font-weight: 700;
-      font-size: 1.2rem;
+      font-weight: 800;
+      font-size: 1.3rem;
       color: var(--primary);
-      display: flex; align-items: center; gap: 10px;
+      display: flex; align-items: center; gap: 12px;
+      letter-spacing: -0.5px;
     }
     
-    header img { height: 40px; }
+    header img { height: 40px; width: auto; }
 
+    /* Navigation Desktop */
     nav ul { display: none; }
     @media (min-width: 768px) {
-      nav ul { display: flex; gap: 30px; }
-      nav a { font-weight: 600; font-size: 0.9rem; }
+      nav ul { display: flex; gap: 40px; }
+      nav a { 
+        font-weight: 600; 
+        font-size: 0.95rem; 
+        position: relative;
+        transition: color 0.3s;
+      }
+      nav a:hover { color: var(--primary); }
+      nav a::after {
+        content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
+        background: var(--secondary); transition: width 0.3s;
+      }
+      nav a:hover::after { width: 100%; }
     }
 
-    /* HERO */
+    /* HERO SECTION */
     .hero {
       text-align: center;
-      padding: 60px 20px 40px;
+      padding: 80px 20px 60px;
       background: var(--white);
-      border-bottom-left-radius: 40px;
-      border-bottom-right-radius: 40px;
-      box-shadow: var(--shadow);
-      margin-bottom: 40px;
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 60px;
+      position: relative;
+      overflow: hidden;
     }
+
+    /* Décoration d'arrière plan subtile */
+    .hero::before {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(0,198,215,0.05) 0%, rgba(255,255,255,0) 70%);
+      z-index: 0; pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
 
     .hero-img-container {
-      width: 120px; height: 120px;
-      margin: 0 auto 20px;
-      border-radius: 50%;
+      width: 130px; height: 130px;
+      margin: 0 auto 25px;
+      border-radius: 40px; /* Forme "Squircle" style iOS app */
       overflow: hidden;
-      border: 4px solid var(--surface);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      background: white;
+      padding: 5px;
+    }
+    
+    .hero-img-container img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 35px;
     }
 
-    .hero img { width: 100%; height: 100%; object-fit: cover; }
-
     .hero h1 {
-      font-size: 1.8rem;
+      font-size: clamp(1.8rem, 5vw, 2.5rem); /* Taille adaptative PC/Mobile */
       color: var(--text-main);
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      line-height: 1.2;
     }
 
     .hero p {
       color: var(--text-muted);
-      max-width: 500px;
-      margin: 0 auto 25px;
-      font-size: 0.95rem;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-size: 1rem;
     }
 
+    /* BOUTONS */
     .btn-main {
       display: inline-block;
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary) 0%, #0099CC 100%);
       color: white;
-      padding: 14px 35px;
+      padding: 16px 40px;
       border-radius: 50px;
       font-weight: 600;
-      box-shadow: 0 4px 15px rgba(0, 118, 182, 0.3);
-      transition: transform 0.2s;
+      box-shadow: 0 10px 20px rgba(0, 118, 182, 0.3);
+      transition: var(--transition);
+      border: none; cursor: pointer;
     }
-    .btn-main:hover { transform: translateY(-2px); }
+    .btn-main:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 15px 30px rgba(0, 118, 182, 0.4);
+    }
+    .btn-main:active { transform: scale(0.98); }
 
-    /* SECTIONS */
+    /* SECTIONS COMMUNES */
     section {
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
+      padding: 0 20px;
+      max-width: 1100px;
+      margin: 0 auto 80px;
     }
 
     .section-title {
-      font-size: 1.4rem;
-      margin-bottom: 25px;
-      color: var(--text-main);
-      border-left: 5px solid var(--secondary);
-      padding-left: 15px;
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      text-align: center;
+      position: relative;
+      display: inline-block;
+      left: 50%; transform: translateX(-50%);
+    }
+    /* Petit trait souligné sous le titre */
+    .section-title::after {
+      content: ''; display: block; width: 60px; height: 4px;
+      background: var(--secondary); margin: 10px auto 0; border-radius: 2px;
     }
 
-    /* SERVICES */
-    .service-list { display: flex; flex-direction: column; gap: 20px; }
+    /* SERVICES (GRID SYSTEM POUR PC) */
+    .service-list { 
+      display: grid; 
+      gap: 20px;
+      /* Mobile: 1 colonne, PC: 2 colonnes, Grand écran: 3 colonnes */
+      grid-template-columns: 1fr; 
+    }
+    
+    @media (min-width: 768px) {
+      .service-list { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .service-list { grid-template-columns: repeat(3, 1fr); }
+    }
 
+    /* Carte transformée en lien <a> pour meilleure UX */
     .service-card {
       background: var(--white);
-      padding: 20px;
+      padding: 25px;
       border-radius: var(--radius);
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-      transition: 0.3s;
-      border: 1px solid transparent;
-      cursor: pointer;
+      display: flex; flex-direction: column; justify-content: space-between;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.03);
+      height: 100%;
+      text-align: left;
     }
 
     .service-card:hover {
       border-color: var(--secondary);
-      transform: scale(1.01);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
     }
 
-    .service-info { flex: 1; padding-right: 15px; }
-    .service-info h3 { font-size: 1.1rem; margin-bottom: 5px; }
-    .service-info p { font-size: 0.85rem; color: var(--text-muted); }
+    .service-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
     
-    .service-price { text-align: right; min-width: 80px; }
-    .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
-    .duration { font-size: 0.75rem; color: var(--text-muted); display: block; }
+    .service-card h3 { font-size: 1.2rem; color: var(--text-main); margin-bottom: 10px; }
+    .service-card p { font-size: 0.9rem; color: var(--text-muted); flex-grow: 1; }
+    
+    .service-price { 
+      background: var(--surface); 
+      padding: 8px 15px; 
+      border-radius: 12px; 
+      text-align: center;
+      min-width: 80px;
+    }
+    .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
+    .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
     /* FORMULAIRE */
     .contact-box {
       background: var(--white);
-      padding: 30px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      padding: 40px;
+      border-radius: 30px;
+      box-shadow: var(--shadow-soft);
+      max-width: 600px;
+      margin: 0 auto;
     }
+
+    .form-group { margin-bottom: 20px; }
     
+    /* Style inputs moderne */
     input, textarea {
       width: 100%;
-      padding: 15px;
-      margin-bottom: 15px;
-      border: 1px solid #eee;
-      background: var(--surface);
-      border-radius: 12px;
+      padding: 16px 20px; /* Padding confortable */
+      border: 2px solid #edf2f7;
+      background: #fcfcfc;
+      border-radius: 16px;
       font-family: inherit;
+      font-size: 16px; /* IMPORTANT: 16px empêche le zoom auto sur iPhone */
+      transition: var(--transition);
+      color: var(--text-main);
     }
+    
+    input::placeholder, textarea::placeholder { color: #a0aec0; }
+
     input:focus, textarea:focus {
       outline: none;
       border-color: var(--primary);
       background: #fff;
+      box-shadow: 0 0 0 4px rgba(0, 118, 182, 0.1);
     }
 
-    /* STICKY BAR */
+    /* STICKY BAR MOBILE */
     .sticky-bar {
       position: fixed; bottom: 20px; left: 50%;
       transform: translateX(-50%);
       width: 90%; max-width: 400px;
       background: var(--text-main);
       color: white;
-      padding: 15px;
+      padding: 16px;
       border-radius: 50px;
-      display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: flex; justify-content: center; align-items: center; gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       z-index: 2000;
-      animation: popIn 0.5s ease-out;
+      font-weight: 700;
       text-transform: uppercase;
       font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
+      transition: transform 0.3s;
+      /* Effet de flou derrière le bouton */
+      backdrop-filter: blur(5px);
     }
-    .sticky-bar:hover { background: var(--primary); }
-    @keyframes popIn { from { bottom: -100px; } to { bottom: 20px; } }
+    
+    .sticky-bar:active { transform: translateX(-50%) scale(0.95); }
 
+    /* Cacher la barre flottante sur PC pour éviter la gêne */
+    @media (min-width: 1024px) {
+      .sticky-bar { display: none; }
+      body { padding-bottom: 0; }
+    }
+
+    /* FOOTER */
     footer {
       text-align: center;
       padding: 40px 20px;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
+      background: var(--white);
+      border-top: 1px solid #eee;
     }
+    footer a { color: var(--primary); font-weight: 600; }
   </style>
 </head>
 
@@ -201,7 +296,7 @@
 
 <header>
   <div class="logo">
-    <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41 (1).png" alt="Logo">
+    <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41 (1).png" alt="Logo Axium">
     <span>Axium</span>
   </div>
   <nav>
@@ -213,50 +308,52 @@
 </header>
 
 <section class="hero">
-  <div class="hero-img-container">
-    <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41 (1).png" alt="Axium Logo">
+  <div class="hero-content">
+    <div class="hero-img-container">
+      <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41 (1).png" alt="Axium Logo">
+    </div>
+    <h1>Axium Perform</h1>
+    <p>Optimisation de la performance & Récupération sportive.<br>Genève et environs.</p>
+    <a href="#contact" class="btn-main">Prendre Rendez-vous</a>
   </div>
-  <h1>Axium Perform</h1>
-  <p>Optimisation de la performance & Récupération sportive.<br>Genève et environs.</p>
-  <a href="#contact" class="btn-main">Prendre Rendez-vous</a>
 </section>
 
 <section id="prestations">
   <h2 class="section-title">Nos Prestations</h2>
   
   <div class="service-list">
-    <div class="service-card" onclick="location.href='#contact'">
-      <div class="service-info">
+    <a href="#contact" class="service-card">
+      <div class="service-header">
         <h3>Massage Sportif</h3>
-        <p>Récupération musculaire profonde, idéal après l'effort.</p>
+        <div class="service-price">
+          <span class="price-tag">60.-</span>
+          <span class="duration">30 min</span>
+        </div>
       </div>
-      <div class="service-price">
-        <span class="price-tag">60.-</span>
-        <span class="duration">30 min</span>
-      </div>
-    </div>
+      <p>Récupération musculaire profonde, ciblage des tensions. Idéal après l'effort intense.</p>
+    </a>
 
-    <div class="service-card" onclick="location.href='#contact'">
-      <div class="service-info">
+    <a href="#contact" class="service-card">
+      <div class="service-header">
         <h3>Massage Relaxation</h3>
-        <p>Détente complète du corps et de l'esprit.</p>
+        <div class="service-price">
+          <span class="price-tag">100.-</span>
+          <span class="duration">1h</span>
+        </div>
       </div>
-      <div class="service-price">
-        <span class="price-tag">100.-</span>
-        <span class="duration">1h</span>
-      </div>
-    </div>
+      <p>Détente complète du corps et de l'esprit. Réduction du stress et relâchement global.</p>
+    </a>
 
-    <div class="service-card" onclick="location.href='#contact'">
-      <div class="service-info">
-        <h3>Séance Hijama (Cupping)</h3>
-        <p>Thérapie par ventouses pour détoxifier et soulager.</p>
+    <a href="#contact" class="service-card">
+      <div class="service-header">
+        <h3>Séance Hijama</h3>
+        <div class="service-price">
+          <span class="price-tag">Incl.</span>
+          <span class="duration">Variable</span>
+        </div>
       </div>
-      <div class="service-price">
-        <span class="price-tag">Incl.</span>
-        <span class="duration">Sur dde.</span>
-      </div>
-    </div>
+      <p>Thérapie par ventouses (Cupping) pour détoxifier, soulager les douleurs et booster la récupération.</p>
+    </a>
   </div>
 </section>
 
@@ -265,32 +362,47 @@
   <div class="contact-box">
     
     <form action="https://formsubmit.co/axium.perform@gmail.com" method="POST">
-      
       <input type="hidden" name="_next" value="https://axium-perform.github.io/axium-perform/">
       <input type="hidden" name="_subject" value="Nouvelle demande de RDV - Axium">
+      <input type="hidden" name="_captcha" value="false">
 
-      <input type="text" name="Nom" placeholder="Votre Nom complet" required>
-      <input type="email" name="Email" placeholder="Votre Email" required>
-      <input type="text" name="Telephone" placeholder="Numéro de téléphone" required>
-      <textarea name="Message" rows="4" placeholder="Bonjour, je souhaite réserver pour un massage sportif le..." required></textarea>
+      <div class="form-group">
+        <input type="text" name="Nom" placeholder="Votre Nom complet" required>
+      </div>
       
-      <button type="submit" class="btn-main" style="width: 100%; border:none; cursor:pointer;">Confirmer la demande</button>
+      <div class="form-group">
+        <input type="email" name="Email" placeholder="Votre Email" required>
+      </div>
+      
+      <div class="form-group">
+        <input type="tel" name="Telephone" placeholder="Numéro de téléphone" required>
+      </div>
+      
+      <div class="form-group">
+        <textarea name="Message" rows="4" placeholder="Bonjour, je souhaite réserver pour un massage sportif le..." required></textarea>
+      </div>
+      
+      <button type="submit" class="btn-main" style="width: 100%;">Confirmer la demande</button>
     </form>
-    <div style="text-align: center; margin-top: 20px;">
-      <a href="https://www.instagram.com/axium.perform/" target="_blank" style="color: var(--primary); font-weight: 600;">
-        Suivez-nous sur Instagram
+
+    <div style="text-align: center; margin-top: 30px; font-size: 0.9rem;">
+      <p>Retrouvez-nous aussi sur</p>
+      <a href="https://www.instagram.com/axium.perform/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; color: var(--text-main); font-weight: 600;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        @axium.perform
       </a>
     </div>
+
   </div>
 </section>
 
 <footer>
-  © 2025 Axium.Perform<br>
+  © 2025 Axium Perform<br>
   Genève, Suisse
 </footer>
 
 <a href="#contact" class="sticky-bar">
-  📅 Réserver maintenant
+  <span>📅</span> Réserver maintenant
 </a>
 
 </body>
