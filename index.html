@@ -8,10 +8,10 @@
    
   <style>
     :root {
-      --primary: #0076B6;       
-      --primary-dark: #005f94;  
-      --secondary: #00C6D7;     
-      --surface: #F4F6F8;       
+      --primary: #0076B6;       /* Bleu principal */
+      --primary-dark: #005f94;  /* Bleu plus sombre pour le survol */
+      --secondary: #00C6D7;     /* Turquoise accent */
+      --surface: #F4F6F8;       /* Fond légèrement plus contrasté */
       --white: #FFFFFF;
       --text-main: #0A1F33;
       --text-muted: #546e7a;
@@ -170,7 +170,7 @@
       background: var(--secondary); margin: 10px auto 0; border-radius: 2px;
     }
 
-    /* SECTION QUI SUIS-JE */
+    /* --- SECTION: QUI SUIS-JE --- */
     .about-container {
       display: flex;
       flex-direction: column;
@@ -222,8 +222,12 @@
       text-align: justify;
     }
     
-    .highlight { color: var(--primary); font-weight: 600; }
+    .highlight {
+      color: var(--primary);
+      font-weight: 600;
+    }
 
+    /* Layout PC pour la section À propos */
     @media (min-width: 900px) {
       .about-container {
         flex-direction: row;
@@ -231,7 +235,7 @@
         padding: 50px;
       }
       .about-img {
-        flex: 0 0 45%; 
+        flex: 0 0 45%; /* L'image prend 45% de la largeur */
         height: 400px;
       }
       .about-img img { height: 100%; }
@@ -239,12 +243,13 @@
       .about-text h2 { font-size: 2.5rem; }
     }
 
-    /* SERVICES */
+    /* SERVICES GRID */
     .service-list { 
       display: grid; 
       gap: 20px;
       grid-template-columns: 1fr; 
     }
+    
     @media (min-width: 768px) {
       .service-list { grid-template-columns: repeat(2, 1fr); }
     }
@@ -271,6 +276,7 @@
     }
 
     .service-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+    
     .service-card h3 { font-size: 1.2rem; color: var(--text-main); margin-bottom: 10px; }
     .service-card p { font-size: 0.9rem; color: var(--text-muted); flex-grow: 1; }
     
@@ -284,14 +290,13 @@
     .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
-    /* CONTACT / CALENDRIER */
+    /* CALENDRIER CONTAINER */
     .contact-box {
       background: var(--white);
-      /* Suppression du padding interne pour laisser la place au widget */
-      padding: 20px 0; 
+      padding: 20px 0; /* Pas de padding coté pour le widget */
       border-radius: 30px;
       box-shadow: var(--shadow-soft);
-      max-width: 800px; /* Plus large pour le calendrier */
+      max-width: 800px;
       margin: 0 auto;
       overflow: hidden;
     }
@@ -321,6 +326,7 @@
       body { padding-bottom: 0; }
     }
 
+    /* FOOTER */
     footer {
       text-align: center;
       padding: 40px 20px;
@@ -344,7 +350,7 @@
     <ul>
       <li><a href="#about">Qui suis-je ?</a></li>
       <li><a href="#prestations">Prestations</a></li>
-      <li><a href="#contact">Réservation</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 </header>
@@ -363,13 +369,25 @@
 <section id="about">
   <div class="about-container">
     <div class="about-img">
-      <img src="https://images.unsplash.com/photo-1579758629938-03607ccdbaba?q=80&w=2070&auto=format&fit=crop" alt="Rayane Axium Perform">
+      <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann Axium Perform">
     </div>
+    
     <div class="about-text">
       <span class="subtitle">Présentation</span>
       <h2>Qui suis-je ?</h2>
-      <p>Moi, c'est <span class="highlight">Rayane</span>. Passionné par le bien-être et la récupération physique, j'aide chacun à se sentir mieux dans son corps et dans son esprit.</p>
-      <p>J'ai accompagné des sportifs de haut niveau (Guirassy, Saibari) et des athlètes de MMA. Je mets cette expérience au service de tous.</p>
+      
+      <p>
+        Moi, c'est <span class="highlight">Sevann</span>. Issu du monde de l’athlétisme, je suis passionné par la récupération, le bien-être et le fonctionnement du corps.
+      </p>
+
+      <p>
+        Athlète à la base, j’ai développé une vraie compréhension aux besoins du corps et à l’importance des soins pour performer, récupérer et durer dans le temps.
+      </p>
+
+      <p>
+       Actuellement en formation, je continue à me perfectionner afin de proposer un accompagnement sérieux, évolutif et axé sur le bien-être durable.
+      </p>
+
       <a href="#contact" class="btn-secondary">Réservez votre séance →</a>
     </div>
   </div>
@@ -377,40 +395,49 @@
 
 <section id="prestations">
   <h2 class="section-title">Nos Prestations</h2>
+  
   <div class="service-list">
     <a href="#contact" class="service-card">
       <div class="service-header">
         <h3>Massage Sportif</h3>
-        <div class="service-price"><span class="price-tag">60.-</span><span class="duration">30 min</span></div>
+        <div class="service-price">
+          <span class="price-tag">60.-</span>
+          <span class="duration">30 min</span>
+        </div>
       </div>
-      <p>Récupération musculaire profonde, ciblage des tensions.</p>
+      <p>Récupération musculaire profonde, ciblage des tensions. Idéal après l'effort intense.</p>
     </a>
 
     <a href="#contact" class="service-card">
       <div class="service-header">
         <h3>Massage Relaxation</h3>
-        <div class="service-price"><span class="price-tag">100.-</span><span class="duration">1h</span></div>
+        <div class="service-price">
+          <span class="price-tag">100.-</span>
+          <span class="duration">1h</span>
+        </div>
       </div>
-      <p>Détente complète du corps. Réduction du stress.</p>
+      <p>Détente complète du corps. Réduction du stress et relâchement global.</p>
     </a>
 
     <a href="#contact" class="service-card">
       <div class="service-header">
         <h3>Séance Hijama</h3>
-        <div class="service-price"><span class="price-tag">Incl.</span></div>
+        <div class="service-price">
+          <span class="price-tag">Incl.</span>
+        </div>
       </div>
-      <p>Thérapie par ventouses pour détoxifier et soulager les douleurs.</p>
+      <p>Thérapie par ventouses pour détoxifier, soulager les douleurs et booster la récupération.</p>
     </a>
   </div>
 </section>
 
 <section id="contact">
-  <h2 class="section-title">Sélectionnez un créneau</h2>
+  <h2 class="section-title">Réserver une séance</h2>
   <div class="contact-box">
     
-    <div class="calendly-inline-widget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium" style="min-width:320px;height:700px;"></div>
+    <div class="calendly-inline-widget" data-url="https://calendly.com/sevann-barbey/seance-de-soin-recuperation" style="min-width:320px;height:700px;"></div>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    <div style="text-align: center; margin-top: 10px; font-size: 0.9rem; padding: 20px;">
+    <div style="text-align: center; margin-top: 10px; padding: 20px; font-size: 0.9rem;">
       <p>Retrouvez-nous aussi sur</p>
       <a href="https://www.instagram.com/axium.perform/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; color: var(--text-main); font-weight: 600;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
@@ -422,7 +449,8 @@
 </section>
 
 <footer>
-  © 2025 Axium Perform<br>Genève, Suisse
+  © 2025 Axium Perform<br>
+  Genève, Suisse
 </footer>
 
 <a href="#contact" class="sticky-bar">
