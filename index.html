@@ -293,7 +293,8 @@
     /* CALENDRIER CONTAINER */
     .contact-box {
       background: var(--white);
-      padding: 20px 0; /* Pas de padding coté pour le widget */
+      /* CORRECTION ICI : Padding à 0 pour coller le widget aux bords */
+      padding: 0; 
       border-radius: 30px;
       box-shadow: var(--shadow-soft);
       max-width: 800px;
@@ -435,7 +436,8 @@
     
     <div class="calendly-inline-widget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium" style="min-width:320px;height:700px;"></div>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    <div style="text-align: center; margin-top: 10px; padding: 20px; font-size: 0.9rem;">
+    
+    <div style="text-align: center; margin-top: 0; padding: 20px 20px 30px 20px; font-size: 0.9rem; background: var(--white);">
       <p>Retrouvez-nous aussi sur</p>
       <a href="https://www.instagram.com/axium.perform/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; color: var(--text-main); font-weight: 600;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
@@ -450,7 +452,6 @@
   © 2025 Axium Perform<br>
   Genève, Suisse
 </footer>
-</a>
 
 </body>
 </html>
