@@ -290,10 +290,82 @@
     .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
+    /* --- SECTION: FAQ --- */
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.03);
+      transition: var(--transition);
+    }
+
+    .faq-item:hover {
+      box-shadow: var(--shadow-soft);
+    }
+
+    .faq-item[open] {
+      box-shadow: var(--shadow-hover);
+    }
+
+    summary {
+      padding: 20px 25px;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none; /* Enlève la flèche par défaut */
+      outline: none;
+    }
+    
+    /* Chrome fix pour enlever la flèche native */
+    summary::-webkit-details-marker { display: none; }
+
+    .faq-icon {
+      width: 24px; height: 24px;
+      background: var(--surface);
+      border-radius: 50%;
+      display: flex; justify-content: center; align-items: center;
+      color: var(--primary);
+      transition: transform 0.3s ease, background 0.3s;
+      flex-shrink: 0;
+      margin-left: 15px;
+    }
+
+    .faq-item[open] .faq-icon {
+      transform: rotate(180deg);
+      background: var(--primary);
+      color: white;
+    }
+
+    .faq-answer {
+      padding: 0 25px 25px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      border-top: 1px solid rgba(0,0,0,0.03);
+      padding-top: 15px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* CALENDRIER CONTAINER */
     .contact-box {
       background: var(--white);
-      /* CORRECTION ICI : Padding à 0 pour coller le widget aux bords */
       padding: 0; 
       border-radius: 30px;
       box-shadow: var(--shadow-soft);
@@ -351,6 +423,7 @@
     <ul>
       <li><a href="#about">Qui suis-je ?</a></li>
       <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#faq">FAQ</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -427,6 +500,74 @@
       </div>
       <p>Thérapie par ventouses pour détoxifier, soulager les douleurs et booster la récupération.</p>
     </a>
+  </div>
+</section>
+
+<section id="faq">
+  <h2 class="section-title">Questions Fréquentes</h2>
+  
+  <div class="faq-container">
+    
+    <details class="faq-item">
+      <summary>
+        Est-ce que ça fait mal ?
+        <div class="faq-icon">
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
+        </div>
+      </summary>
+      <div class="faq-answer">
+        Non, c'est très supportable. La pression est adaptée à votre ressenti et l'objectif est le soulagement, pas la douleur.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        Combien de temps dure la séance ?
+        <div class="faq-icon">
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
+        </div>
+      </summary>
+      <div class="faq-answer">
+        Cela dépend du soin choisi. Comptez environ 30 minutes pour un massage ciblé et jusqu'à 1h pour une séance complète (relaxation ou Hijama).
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        Dois-je venir à jeun ?
+        <div class="faq-icon">
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
+        </div>
+      </summary>
+      <div class="faq-answer">
+        Oui, idéalement il est recommandé de ne pas manger 2 à 3 heures avant la séance pour optimiser les bienfaits du soin.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        Est-ce adapté aux femmes ?
+        <div class="faq-icon">
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
+        </div>
+      </summary>
+      <div class="faq-answer">
+        Oui, tout à fait. Cependant, certains soins (comme la Hijama ou les massages profonds) sont déconseillés aux femmes enceintes. N'hésitez pas à me demander conseil.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        Puis-je annuler mon RDV ?
+        <div class="faq-icon">
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
+        </div>
+      </summary>
+      <div class="faq-answer">
+        Oui, vous pouvez annuler ou reporter votre rendez-vous sans frais jusqu’à 24h avant l'heure prévue.
+      </div>
+    </details>
+
   </div>
 </section>
 
