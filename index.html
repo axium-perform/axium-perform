@@ -39,14 +39,13 @@
     ul { list-style: none; }
     img { max-width: 100%; display: block; }
 
-    /* HEADER - OPTIMISÉ (Plus de flou pour éviter les crashs) */
+    /* HEADER - OPTIMISÉ (Fond blanc simple pour éviter le crash iPhone) */
     header {
-      background: #FFFFFF; /* Fond blanc uni plus stable */
+      background: #FFFFFF; 
       padding: 15px 5%;
       display: flex; justify-content: space-between; align-items: center;
       position: sticky; top: 0; z-index: 1000;
       border-bottom: 1px solid rgba(0,0,0,0.05);
-      /* Suppression des filtres backdrop-filter qui font planter Safari iOS */
     }
 
     header .logo {
@@ -288,7 +287,7 @@
     .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
-    /* --- SECTION BIENFAITS (Taille réduite & Centré) --- */
+    /* --- SECTION BIENFAITS (Taille Réduite) --- */
     .benefits-wrapper {
         display: flex;
         flex-direction: column;
@@ -322,21 +321,21 @@
         gap: 12px;
         width: 100%;
         max-width: 450px; 
-        margin: 0 auto; /* CENTRE LA GRILLE */
+        margin: 0 auto;
     }
 
-    /* Design des bulles (PETITES TAILLES) */
+    /* Design des bulles (PETIT FORMAT) */
     .benefit-pill {
         background-color: #0A1F33; 
         color: white;
         border-radius: 50px;
-        padding: 4px 12px 4px 4px; /* Padding petit */
+        padding: 4px 12px 4px 4px; /* Padding réduit */
         display: flex;
         align-items: center;
-        gap: 8px; /* Gap petit */
+        gap: 8px; 
         box-shadow: 0 6px 15px rgba(10, 31, 51, 0.15);
         font-weight: 600;
-        font-size: 0.8rem; /* Texte petit */
+        font-size: 0.8rem; /* Texte réduit */
         transition: transform 0.3s ease;
         white-space: nowrap;
         z-index: 2;
@@ -347,7 +346,7 @@
         background-color: var(--primary);
     }
 
-    /* Le rond blanc avec le pourcentage (PETITE TAILLE) */
+    /* Le rond blanc avec le pourcentage (PETIT FORMAT) */
     .pill-percent {
         background: white;
         color: #0A1F33;
@@ -358,7 +357,7 @@
         justify-content: center;
         border-radius: 20px;
         font-weight: 800;
-        font-size: 0.7rem; /* % petit */
+        font-size: 0.7rem; /* % réduit */
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
@@ -488,12 +487,12 @@
       overflow: hidden;
     }
 
-    /* STICKY BAR MOBILE - OPTIMISÉ */
+    /* STICKY BAR MOBILE - OPTIMISÉ (sans flou) */
     .sticky-bar {
       position: fixed; bottom: 20px; left: 50%;
       transform: translateX(-50%);
       width: 90%; max-width: 400px;
-      background: var(--text-main); /* Couleur unie */
+      background: var(--text-main);
       color: white;
       padding: 16px;
       border-radius: 50px;
@@ -504,7 +503,6 @@
       text-transform: uppercase;
       font-size: 0.9rem;
       transition: transform 0.3s;
-      /* Suppression du backdrop-filter pour la stabilité */
     }
     .sticky-bar:active { transform: translateX(-50%) scale(0.95); }
 
@@ -766,8 +764,14 @@
     <div class="calendly-inline-widget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium" style="min-width:320px;height:700px;"></div>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     
-    <div style="text-align: center; margin-top: 0; padding: 20px 20px 30px 20px; font-size: 0.9rem; background: var(--white);">
-      <p>Retrouvez-nous aussi sur</p>
+    <div style="text-align: center; margin-top: -20px; padding: 0 20px 30px 20px; font-size: 0.9rem; background: var(--white); position:relative; z-index:5;">
+      
+      <p style="margin-bottom:10px; font-size:0.85rem; color:var(--text-muted);">Le calendrier ne s'affiche pas ?</p>
+      <a href="https://calendly.com/axium-perform/seance-de-massage-axium" target="_blank" class="btn-main" style="padding: 10px 20px; font-size: 0.9rem;">
+        Ouvrir le calendrier
+      </a>
+
+      <p style="margin-top: 30px;">Retrouvez-nous aussi sur</p>
       <a href="https://www.instagram.com/axium.perform/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; color: var(--text-main); font-weight: 600;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
         @axium.perform
