@@ -289,7 +289,7 @@
     .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
-    /* --- SECTION BIENFAITS (MODIFIÉE POUR LES BULLES AUTOUR) --- */
+    /* --- SECTION BIENFAITS (Taille réduite) --- */
     .benefits-wrapper {
         display: flex;
         flex-direction: column;
@@ -300,7 +300,7 @@
     .benefits-visual {
         position: relative;
         width: 100%;
-        max-width: 900px; /* Plus large pour accueillir les bulles */
+        max-width: 900px; 
         margin: 0 auto;
         display: flex;
         flex-direction: column;
@@ -320,24 +320,24 @@
     .mobile-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        gap: 12px; /* Gap réduit */
         width: 100%;
-        max-width: 500px;
-        margin: 0 auto; /* CENTRE LA GRILLE */
+        max-width: 450px; /* Largeur max réduite pour resserrer */
+        margin: 0 auto; 
     }
 
-    /* Design des bulles (Style EXACT de la photo) */
+    /* Design des bulles (Style EXACT de la photo - TAILLE RÉDUITE) */
     .benefit-pill {
         background-color: #0A1F33; /* Bleu Nuit */
         color: white;
         border-radius: 50px;
-        padding: 5px 15px 5px 5px; /* Padding ajusté pour le rond à gauche */
+        padding: 4px 12px 4px 4px; /* PADDING RÉDUIT */
         display: flex;
         align-items: center;
-        gap: 12px;
-        box-shadow: 0 8px 20px rgba(10, 31, 51, 0.2);
+        gap: 8px; /* GAP RÉDUIT */
+        box-shadow: 0 6px 15px rgba(10, 31, 51, 0.15);
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 0.8rem; /* FONT-SIZE RÉDUIT (texte principal) */
         transition: transform 0.3s ease;
         white-space: nowrap;
         z-index: 2;
@@ -348,18 +348,18 @@
         background-color: var(--primary); /* Devient bleu clair au survol */
     }
 
-    /* Le rond blanc avec le pourcentage */
+    /* Le rond blanc avec le pourcentage (TAILLE RÉDUITE) */
     .pill-percent {
         background: white;
         color: #0A1F33; /* Texte foncé */
-        width: 45px;
-        height: 32px;
+        width: 36px;  /* LARGEUR RÉDUITE */
+        height: 26px; /* HAUTEUR RÉDUITE */
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 20px;
         font-weight: 800;
-        font-size: 0.8rem;
+        font-size: 0.7rem; /* FONT-SIZE RÉDUIT (%) */
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
@@ -367,14 +367,14 @@
     @media (min-width: 900px) {
         .benefits-visual {
             display: block;
-            height: 600px; /* Hauteur nécessaire pour l'orbite */
+            height: 600px; 
         }
 
         .benefit-main-img {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 50%; /* Image au centre */
+            width: 50%; 
             max-width: 400px;
             margin: 0;
         }
@@ -385,30 +385,18 @@
 
         .benefit-pill {
             position: absolute;
-            /* Animation d'apparition */
             opacity: 0;
             animation: popIn 0.5s ease forwards;
         }
 
         /* Positions spécifiques en hexagone autour de l'image */
-        
-        /* 1. Haut Gauche */
-        .pos-1 { top: 15%; left: 15%; animation-delay: 0.1s; }
-        
-        /* 2. Haut Droite */
-        .pos-2 { top: 15%; right: 15%; animation-delay: 0.2s; }
-        
-        /* 3. Milieu Gauche */
-        .pos-3 { top: 50%; left: 2%; transform: translateY(-50%); animation-delay: 0.3s; }
-        
-        /* 4. Milieu Droite */
-        .pos-4 { top: 50%; right: 2%; transform: translateY(-50%); animation-delay: 0.4s; }
-        
-        /* 5. Bas Gauche */
-        .pos-5 { bottom: 15%; left: 15%; animation-delay: 0.5s; }
-        
-        /* 6. Bas Droite */
-        .pos-6 { bottom: 15%; right: 15%; animation-delay: 0.6s; }
+        /* Ajustées légèrement pour coller à la nouvelle taille */
+        .pos-1 { top: 18%; left: 18%; animation-delay: 0.1s; }
+        .pos-2 { top: 18%; right: 18%; animation-delay: 0.2s; }
+        .pos-3 { top: 50%; left: 5%; transform: translateY(-50%); animation-delay: 0.3s; }
+        .pos-4 { top: 50%; right: 5%; transform: translateY(-50%); animation-delay: 0.4s; }
+        .pos-5 { bottom: 18%; left: 18%; animation-delay: 0.5s; }
+        .pos-6 { bottom: 18%; right: 18%; animation-delay: 0.6s; }
 
         /* Correction du hover pour garder la position */
         .pos-3:hover, .pos-4:hover { transform: translateY(-50%) scale(1.05); }
