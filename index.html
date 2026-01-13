@@ -33,13 +33,14 @@
       line-height: 1.6;
       padding-bottom: 100px;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden; /* Empêche le scroll horizontal accidentel */
     }
 
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
     img { max-width: 100%; display: block; }
 
-    /* HEADER - OPTIMISÉ (Fond blanc simple pour éviter le crash iPhone) */
+    /* HEADER */
     header {
       background: #FFFFFF; 
       padding: 15px 5%;
@@ -137,18 +138,6 @@
       transform: translateY(-3px); 
       box-shadow: 0 15px 30px rgba(0, 118, 182, 0.4);
     }
-    
-    .btn-secondary {
-      display: inline-block;
-      background: #eef5f9;
-      color: var(--primary);
-      padding: 12px 30px;
-      border-radius: 50px;
-      font-weight: 600;
-      margin-top: 15px;
-      transition: var(--transition);
-    }
-    .btn-secondary:hover { background: #e0eaf1; }
 
     /* SECTIONS COMMUNES */
     section {
@@ -187,15 +176,9 @@
       position: relative;
     }
     
-    .about-img img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      display: block;
-    }
-
+    .about-img img { width: 100%; height: auto; object-fit: cover; display: block; }
     .about-text { flex: 1; }
-
+    
     .subtitle {
       text-transform: uppercase;
       font-size: 0.85rem;
@@ -220,33 +203,19 @@
       text-align: justify;
     }
     
-    .highlight {
-      color: var(--primary);
-      font-weight: 600;
-    }
+    .highlight { color: var(--primary); font-weight: 600; }
 
     @media (min-width: 900px) {
-      .about-container {
-        flex-direction: row;
-        align-items: center;
-        padding: 50px;
-      }
-      .about-img {
-        flex: 0 0 45%; 
-        height: 400px;
-      }
+      .about-container { flex-direction: row; align-items: center; padding: 50px; }
+      .about-img { flex: 0 0 45%; height: 400px; }
       .about-img img { height: 100%; }
       .about-text { padding-left: 20px; }
-      .about-text h2 { font-size: 2.5rem; }
     }
 
     /* SERVICES GRID */
     .service-list { 
-      display: grid; 
-      gap: 20px;
-      grid-template-columns: 1fr; 
+      display: grid; gap: 20px; grid-template-columns: 1fr; 
     }
-    
     @media (min-width: 768px) {
       .service-list { grid-template-columns: repeat(2, 1fr); }
     }
@@ -273,144 +242,139 @@
     }
 
     .service-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-    
     .service-card h3 { font-size: 1.2rem; color: var(--text-main); margin-bottom: 10px; }
     .service-card p { font-size: 0.9rem; color: var(--text-muted); flex-grow: 1; }
     
     .service-price { 
-      background: var(--surface); 
-      padding: 8px 15px; 
-      border-radius: 12px; 
-      text-align: center;
-      min-width: 80px;
+      background: var(--surface); padding: 8px 15px; border-radius: 12px; text-align: center; min-width: 80px;
     }
     .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
-    /* --- SECTION BIENFAITS (Taille Réduite) --- */
+    /* ------------------------------------------- */
+    /* --- SECTION BIENFAITS (MODIFIÉE) --- */
+    /* ------------------------------------------- */
+
     .benefits-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 30px;
+        position: relative;
     }
 
+    /* Conteneur de l'image et des bulles */
     .benefits-visual {
         position: relative;
         width: 100%;
-        max-width: 900px; 
+        max-width: 500px; /* Largeur max sur mobile */
+        height: 400px; /* Hauteur fixe pour garantir l'espace sur mobile */
         margin: 0 auto;
         display: flex;
-        flex-direction: column;
+        justify-content: center;
         align-items: center;
     }
 
+    /* L'image au centre */
     .benefit-main-img {
-        width: 100%;
-        max-width: 500px;
+        width: 180px; /* Image plus petite sur mobile pour laisser place aux bulles */
         height: auto;
-        display: block;
-        margin-bottom: 20px;
         z-index: 1;
+        /* Ombre portée légère pour détacher l'image du fond */
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
     }
 
-    /* Grille Mobile pour les bulles */
-    .mobile-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        width: 100%;
-        max-width: 450px; 
-        margin: 0 auto;
-    }
-
-    /* Design des bulles (PETIT FORMAT) */
+    /* Style commun des bulles */
     .benefit-pill {
+        position: absolute; /* Positionnement absolu sur TOUS les appareils */
         background-color: #0A1F33; 
         color: white;
         border-radius: 50px;
-        padding: 4px 12px 4px 4px; /* Padding réduit */
+        padding: 4px 10px 4px 4px; 
         display: flex;
         align-items: center;
-        gap: 8px; 
-        box-shadow: 0 6px 15px rgba(10, 31, 51, 0.15);
+        gap: 6px; 
+        box-shadow: 0 4px 10px rgba(10, 31, 51, 0.2);
         font-weight: 600;
-        font-size: 0.8rem; /* Texte réduit */
+        font-size: 0.7rem; /* Texte petit sur mobile */
         transition: transform 0.3s ease;
-        white-space: nowrap;
-        z-index: 2;
+        white-space: nowrap; /* Empêche le texte de passer à la ligne */
+        z-index: 5;
+        opacity: 0;
+        animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    .benefit-pill:hover {
-        transform: scale(1.05);
-        background-color: var(--primary);
-    }
-
-    /* Le rond blanc avec le pourcentage (PETIT FORMAT) */
+    /* Le cercle blanc avec le pourcentage */
     .pill-percent {
         background: white;
         color: #0A1F33;
-        width: 36px;  /* Largeur réduite */
-        height: 26px; /* Hauteur réduite */
+        width: 32px; height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 20px;
         font-weight: 800;
-        font-size: 0.7rem; /* % réduit */
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        font-size: 0.65rem;
     }
 
-    /* LAYOUT ORDINATEUR */
-    @media (min-width: 900px) {
+    /* --- POSITIONNEMENT MOBILE (Par défaut) --- */
+    /* On place les bulles autour de l'image de 180px */
+    .pos-1 { top: 5%; left: 5%; animation-delay: 0.1s; }       /* Haut Gauche */
+    .pos-2 { top: 5%; right: 5%; animation-delay: 0.2s; }      /* Haut Droite */
+    
+    .pos-3 { top: 45%; left: -2%; animation-delay: 0.3s; }     /* Milieu Gauche */
+    .pos-4 { top: 45%; right: -2%; animation-delay: 0.4s; }    /* Milieu Droite */
+    
+    .pos-5 { bottom: 10%; left: 5%; animation-delay: 0.5s; }   /* Bas Gauche */
+    .pos-6 { bottom: 10%; right: 5%; animation-delay: 0.6s; }  /* Bas Droite */
+
+    /* Animation d'apparition */
+    @keyframes popIn {
+        from { opacity: 0; transform: scale(0.5); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    /* --- ADAPTATION DESKTOP (Ecrans > 768px) --- */
+    @media (min-width: 768px) {
         .benefits-visual {
-            display: block;
-            height: 600px; 
+            max-width: 900px;
+            height: 600px; /* Plus grand espace */
         }
 
         .benefit-main-img {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50%; 
-            max-width: 400px;
-            margin: 0;
-        }
-
-        .mobile-grid {
-            display: contents; /* Désactive la grille mobile */
+            width: 350px; /* Image plus grande */
         }
 
         .benefit-pill {
-            position: absolute;
-            opacity: 0;
-            animation: popIn 0.5s ease forwards;
+            padding: 6px 16px 6px 6px;
+            gap: 10px;
+            font-size: 0.9rem; /* Texte plus grand */
         }
 
-        /* Positions spécifiques */
-        .pos-1 { top: 18%; left: 18%; animation-delay: 0.1s; }
-        .pos-2 { top: 18%; right: 18%; animation-delay: 0.2s; }
-        .pos-3 { top: 50%; left: 5%; transform: translateY(-50%); animation-delay: 0.3s; }
-        .pos-4 { top: 50%; right: 5%; transform: translateY(-50%); animation-delay: 0.4s; }
-        .pos-5 { bottom: 18%; left: 18%; animation-delay: 0.5s; }
-        .pos-6 { bottom: 18%; right: 18%; animation-delay: 0.6s; }
+        .pill-percent {
+            width: 45px; height: 32px;
+            font-size: 0.85rem;
+        }
 
-        .pos-3:hover, .pos-4:hover { transform: translateY(-50%) scale(1.05); }
-    }
+        .benefit-pill:hover {
+            transform: scale(1.1);
+            background-color: var(--primary);
+            cursor: default;
+        }
 
-    @keyframes popIn {
-        from { opacity: 0; transform: scale(0.8); }
-        to { opacity: 1; transform: scale(1); }
+        /* Positions plus aérées sur grand écran */
+        .pos-1 { top: 15%; left: 15%; }
+        .pos-2 { top: 15%; right: 15%; }
+        .pos-3 { top: 50%; left: 8%; transform: translateY(-50%); }
+        .pos-4 { top: 50%; right: 8%; transform: translateY(-50%); }
+        .pos-5 { bottom: 15%; left: 15%; }
+        .pos-6 { bottom: 15%; right: 15%; }
     }
 
 
     /* --- SECTION: FAQ --- */
     .faq-container {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      max-width: 800px;
-      margin: 0 auto;
+      display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto;
     }
 
     .faq-item {
@@ -421,14 +385,8 @@
       border: 1px solid rgba(0,0,0,0.03);
       transition: var(--transition);
     }
-
-    .faq-item:hover {
-      box-shadow: var(--shadow-soft);
-    }
-
-    .faq-item[open] {
-      box-shadow: var(--shadow-hover);
-    }
+    .faq-item:hover { box-shadow: var(--shadow-soft); }
+    .faq-item[open] { box-shadow: var(--shadow-hover); }
 
     summary {
       padding: 20px 25px;
@@ -436,13 +394,9 @@
       font-weight: 700;
       color: var(--primary);
       font-size: 1.05rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      list-style: none;
-      outline: none;
+      display: flex; justify-content: space-between; align-items: center;
+      list-style: none; outline: none;
     }
-    
     summary::-webkit-details-marker { display: none; }
 
     .faq-icon {
@@ -455,12 +409,7 @@
       flex-shrink: 0;
       margin-left: 15px;
     }
-
-    .faq-item[open] .faq-icon {
-      transform: rotate(180deg);
-      background: var(--primary);
-      color: white;
-    }
+    .faq-item[open] .faq-icon { transform: rotate(180deg); background: var(--primary); color: white; }
 
     .faq-answer {
       padding: 0 25px 25px;
@@ -487,7 +436,7 @@
       overflow: hidden;
     }
 
-    /* STICKY BAR MOBILE - OPTIMISÉ (sans flou) */
+    /* STICKY BAR MOBILE */
     .sticky-bar {
       position: fixed; bottom: 20px; left: 50%;
       transform: translateX(-50%);
@@ -620,7 +569,7 @@
     <h2 class="section-title">Les Bienfaits sur le corps</h2>
     
     <div class="benefits-wrapper">
-        <p style="text-align:center; max-width:600px; color:var(--text-muted);">
+        <p style="text-align:center; max-width:600px; color:var(--text-muted); margin-bottom: 20px;">
             Des résultats concrets pour optimiser vos performances sportives et votre bien-être quotidien.
         </p>
 
@@ -628,39 +577,36 @@
             
             <img src="massage-therapy-2277454_1280.png" alt="Illustration Massage et Anatomie" class="benefit-main-img">
 
-            <div class="mobile-grid">
-                
-                <div class="benefit-pill pos-1"> 
-                    <span class="pill-percent">-40%</span>
-                    <span>Inflammation</span>
-                </div>
-                
-                <div class="benefit-pill pos-2"> 
-                    <span class="pill-percent">+50%</span>
-                    <span>Mobilité</span>
-                </div>
-
-                <div class="benefit-pill pos-3"> 
-                    <span class="pill-percent">-50%</span>
-                    <span>Douleur</span>
-                </div>
-
-                <div class="benefit-pill pos-4"> 
-                    <span class="pill-percent">-35%</span>
-                    <span>Stress</span>
-                </div>
-
-                <div class="benefit-pill pos-5"> 
-                    <span class="pill-percent">+30%</span>
-                    <span>Circulation</span>
-                </div>
-
-                <div class="benefit-pill pos-6"> 
-                    <span class="pill-percent">+25%</span>
-                    <span>Récupération</span>
-                </div>
-
+            <div class="benefit-pill pos-1"> 
+                <span class="pill-percent">-40%</span>
+                <span>Inflammation</span>
             </div>
+            
+            <div class="benefit-pill pos-2"> 
+                <span class="pill-percent">+50%</span>
+                <span>Mobilité</span>
+            </div>
+
+            <div class="benefit-pill pos-3"> 
+                <span class="pill-percent">-50%</span>
+                <span>Douleur</span>
+            </div>
+
+            <div class="benefit-pill pos-4"> 
+                <span class="pill-percent">-35%</span>
+                <span>Stress</span>
+            </div>
+
+            <div class="benefit-pill pos-5"> 
+                <span class="pill-percent">+30%</span>
+                <span>Circulation</span>
+            </div>
+
+            <div class="benefit-pill pos-6"> 
+                <span class="pill-percent">+25%</span>
+                <span>Récupération</span>
+            </div>
+
         </div>
     </div>
 </section>
