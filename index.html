@@ -13,7 +13,7 @@
       --secondary: #00C6D7;     
       --surface: #F4F6F8;       
       --white: #FFFFFF;
-      --text-main: #0A1F33; /* Bleu très foncé pour le texte et les bulles */
+      --text-main: #0A1F33; 
       --text-muted: #546e7a;
       --shadow-soft: 0 10px 40px rgba(0, 118, 182, 0.08);
       --shadow-hover: 0 15px 30px rgba(0, 118, 182, 0.15);
@@ -39,15 +39,14 @@
     ul { list-style: none; }
     img { max-width: 100%; display: block; }
 
-    /* HEADER */
+    /* HEADER - OPTIMISÉ (Plus de flou pour éviter les crashs) */
     header {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: #FFFFFF; /* Fond blanc uni plus stable */
       padding: 15px 5%;
       display: flex; justify-content: space-between; align-items: center;
       position: sticky; top: 0; z-index: 1000;
       border-bottom: 1px solid rgba(0,0,0,0.05);
+      /* Suppression des filtres backdrop-filter qui font planter Safari iOS */
     }
 
     header .logo {
@@ -289,7 +288,7 @@
     .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
-    /* --- SECTION BIENFAITS (Taille réduite) --- */
+    /* --- SECTION BIENFAITS (Taille réduite & Centré) --- */
     .benefits-wrapper {
         display: flex;
         flex-direction: column;
@@ -320,24 +319,24 @@
     .mobile-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px; /* Gap réduit */
+        gap: 12px;
         width: 100%;
-        max-width: 450px; /* Largeur max réduite pour resserrer */
-        margin: 0 auto; 
+        max-width: 450px; 
+        margin: 0 auto; /* CENTRE LA GRILLE */
     }
 
-    /* Design des bulles (Style EXACT de la photo - TAILLE RÉDUITE) */
+    /* Design des bulles (PETITES TAILLES) */
     .benefit-pill {
-        background-color: #0A1F33; /* Bleu Nuit */
+        background-color: #0A1F33; 
         color: white;
         border-radius: 50px;
-        padding: 4px 12px 4px 4px; /* PADDING RÉDUIT */
+        padding: 4px 12px 4px 4px; /* Padding petit */
         display: flex;
         align-items: center;
-        gap: 8px; /* GAP RÉDUIT */
+        gap: 8px; /* Gap petit */
         box-shadow: 0 6px 15px rgba(10, 31, 51, 0.15);
         font-weight: 600;
-        font-size: 0.8rem; /* FONT-SIZE RÉDUIT (texte principal) */
+        font-size: 0.8rem; /* Texte petit */
         transition: transform 0.3s ease;
         white-space: nowrap;
         z-index: 2;
@@ -345,25 +344,25 @@
 
     .benefit-pill:hover {
         transform: scale(1.05);
-        background-color: var(--primary); /* Devient bleu clair au survol */
+        background-color: var(--primary);
     }
 
-    /* Le rond blanc avec le pourcentage (TAILLE RÉDUITE) */
+    /* Le rond blanc avec le pourcentage (PETITE TAILLE) */
     .pill-percent {
         background: white;
-        color: #0A1F33; /* Texte foncé */
-        width: 36px;  /* LARGEUR RÉDUITE */
-        height: 26px; /* HAUTEUR RÉDUITE */
+        color: #0A1F33;
+        width: 36px;  /* Largeur réduite */
+        height: 26px; /* Hauteur réduite */
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 20px;
         font-weight: 800;
-        font-size: 0.7rem; /* FONT-SIZE RÉDUIT (%) */
+        font-size: 0.7rem; /* % petit */
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    /* LAYOUT ORDINATEUR : Les bulles volent AUTOUR de l'image */
+    /* LAYOUT ORDINATEUR */
     @media (min-width: 900px) {
         .benefits-visual {
             display: block;
@@ -389,8 +388,7 @@
             animation: popIn 0.5s ease forwards;
         }
 
-        /* Positions spécifiques en hexagone autour de l'image */
-        /* Ajustées légèrement pour coller à la nouvelle taille */
+        /* Positions spécifiques */
         .pos-1 { top: 18%; left: 18%; animation-delay: 0.1s; }
         .pos-2 { top: 18%; right: 18%; animation-delay: 0.2s; }
         .pos-3 { top: 50%; left: 5%; transform: translateY(-50%); animation-delay: 0.3s; }
@@ -398,7 +396,6 @@
         .pos-5 { bottom: 18%; left: 18%; animation-delay: 0.5s; }
         .pos-6 { bottom: 18%; right: 18%; animation-delay: 0.6s; }
 
-        /* Correction du hover pour garder la position */
         .pos-3:hover, .pos-4:hover { transform: translateY(-50%) scale(1.05); }
     }
 
@@ -491,12 +488,12 @@
       overflow: hidden;
     }
 
-    /* STICKY BAR MOBILE */
+    /* STICKY BAR MOBILE - OPTIMISÉ */
     .sticky-bar {
       position: fixed; bottom: 20px; left: 50%;
       transform: translateX(-50%);
       width: 90%; max-width: 400px;
-      background: var(--text-main);
+      background: var(--text-main); /* Couleur unie */
       color: white;
       padding: 16px;
       border-radius: 50px;
@@ -507,7 +504,7 @@
       text-transform: uppercase;
       font-size: 0.9rem;
       transition: transform 0.3s;
-      backdrop-filter: blur(5px);
+      /* Suppression du backdrop-filter pour la stabilité */
     }
     .sticky-bar:active { transform: translateX(-50%) scale(0.95); }
 
