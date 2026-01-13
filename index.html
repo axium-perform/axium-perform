@@ -8,10 +8,10 @@
    
   <style>
     :root {
-      --primary: #0076B6;       /* Bleu principal */
-      --primary-dark: #005f94;  /* Bleu plus sombre pour le survol */
-      --secondary: #00C6D7;     /* Turquoise accent */
-      --surface: #F4F6F8;       /* Fond légèrement plus contrasté */
+      --primary: #0076B6;       
+      --primary-dark: #005f94;  
+      --secondary: #00C6D7;     
+      --surface: #F4F6F8;       
       --white: #FFFFFF;
       --text-main: #0A1F33;
       --text-muted: #546e7a;
@@ -235,7 +235,7 @@
         padding: 50px;
       }
       .about-img {
-        flex: 0 0 45%; /* L'image prend 45% de la largeur */
+        flex: 0 0 45%; 
         height: 400px;
       }
       .about-img img { height: 100%; }
@@ -290,108 +290,138 @@
     .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
-    /* --- NOUVELLE SECTION: BIENFAITS (Style inspiré image) --- */
+    /* --- SECTION: BIENFAITS (LAYOUT MODIFIÉ) --- */
     .benefits-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 30px;
-    }
-
-    /* Le container central qui gère l'image et les tags */
-    .benefits-visual {
-        display: grid;
-        grid-template-columns: 1fr;
         gap: 20px;
-        width: 100%;
-        align-items: center;
-        margin-top: 20px;
     }
 
-    /* L'image au centre */
-    .benefit-img-box {
+    /* Conteneur principal */
+    .benefits-visual {
+        position: relative;
         width: 100%;
-        max-width: 400px;
+        max-width: 800px;
         margin: 0 auto;
-        border-radius: var(--radius);
-        overflow: hidden;
-        box-shadow: var(--shadow-hover);
-        /* Changement du format pour s'adapter à la nouvelle image */
-        aspect-ratio: 3/4; 
-        background: #fff; /* Fond blanc pour l'image PNG */
-    }
-    
-    .benefit-img-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; /* Affiche l'image entière sans couper */
-    }
-
-    /* Les colonnes de tags (Gauche et Droite) */
-    .benefit-col {
+        /* Par défaut (mobile) : flex column simple */
         display: flex;
         flex-direction: column;
-        gap: 15px; /* Réduit l'espace vertical entre les bulles */
-        justify-content: center;
+        align-items: center;
+        gap: 15px;
     }
 
-    /* Design des bulles */
+    /* Image centrale */
+    .benefit-main-img {
+        width: 100%;
+        max-width: 450px;
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+        /* Animation subtile */
+        animation: floatImg 6s ease-in-out infinite;
+    }
+
+    @keyframes floatImg {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    /* Design des bulles (Pills) */
     .benefit-pill {
-        background-color: var(--text-main); /* Fond sombre */
+        background-color: var(--text-main);
         color: white;
         border-radius: 50px;
-        /* Padding encore plus réduit */
-        padding: 6px 14px; 
+        padding: 6px 14px; /* Petit padding */
         display: flex;
         align-items: center;
-        gap: 10px; /* Gap réduit */
-        box-shadow: 0 5px 15px rgba(10, 31, 51, 0.2);
-        transition: transform 0.3s ease;
-        font-weight: 500;
-        /* Police encore plus réduite */
-        font-size: 0.8rem; 
-        width: fit-content;
-        margin: 0 auto; /* Centré sur mobile */
+        gap: 10px;
+        box-shadow: 0 5px 15px rgba(10, 31, 51, 0.15);
+        transition: transform 0.3s ease, background-color 0.3s;
+        font-weight: 600;
+        font-size: 0.8rem; /* Petit texte */
+        white-space: nowrap;
+        z-index: 2;
     }
 
     .benefit-pill:hover {
         transform: scale(1.05);
         background-color: var(--primary);
+        cursor: default;
     }
 
-    /* Le pourcentage dans la bulle */
     .pill-percent {
         background: white;
         color: var(--text-main);
-        padding: 3px 8px; /* Encore plus réduit */
+        padding: 3px 8px;
         border-radius: 20px;
         font-weight: 800;
-        font-size: 0.85rem; /* Encore plus réduit */
-        min-width: 50px; /* Encore plus réduit */
+        font-size: 0.85rem;
+        min-width: 50px;
         text-align: center;
     }
 
-    /* RESPONSIVE: Mode Ordinateur (Tags autour de l'image) */
+    /* LAYOUT ORDINATEUR : Positionnement absolu autour de l'image */
     @media (min-width: 900px) {
         .benefits-visual {
-            grid-template-columns: 1fr 1.2fr 1fr; /* 3 Colonnes */
-            gap: 40px;
+            display: block; /* On désactive le flex pour utiliser absolute */
+            height: 500px; /* Hauteur fixe nécessaire pour le positionnement */
         }
 
-        .benefit-col.left {
-            align-items: flex-end; /* Colle les items vers l'image */
+        .benefit-main-img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centrage parfait */
+            width: 60%; /* Ajuste la taille de l'image pour laisser de la place aux bulles */
+            margin: 0;
+            animation: none; /* On enlève le float sur desktop pour la stabilité */
         }
 
-        .benefit-col.right {
-            align-items: flex-start; /* Colle les items vers l'image */
-        }
+        /* Positions spécifiques (basées sur le dessin) */
         
-        .benefit-pill {
-            margin: 0; /* Enlève le centrage forcé du mobile */
+        /* HAUT GAUCHE */
+        .pos-1 { 
+            position: absolute; 
+            top: 10%; 
+            left: 5%; 
         }
-        
-        .benefit-col.left .benefit-pill {
-            flex-direction: row-reverse; /* Pour que le texte soit près de l'image à gauche */
+
+        /* HAUT CENTRE */
+        .pos-2 { 
+            position: absolute; 
+            top: 2%; 
+            left: 50%; 
+            transform: translateX(-50%); 
+        }
+
+        /* HAUT DROITE */
+        .pos-3 { 
+            position: absolute; 
+            top: 10%; 
+            right: 5%; 
+        }
+
+        /* BAS GAUCHE */
+        .pos-4 { 
+            position: absolute; 
+            bottom: 15%; 
+            left: 5%; 
+        }
+
+        /* BAS CENTRE */
+        .pos-5 { 
+            position: absolute; 
+            bottom: 5%; 
+            left: 50%; 
+            transform: translateX(-50%); 
+        }
+
+        /* BAS DROITE */
+        .pos-6 { 
+            position: absolute; 
+            bottom: 15%; 
+            right: 5%; 
         }
     }
 
@@ -620,38 +650,30 @@
 
         <div class="benefits-visual">
             
-            <div class="benefit-col left">
-                <div class="benefit-pill">
-                    <span class="pill-percent">-40%</span>
-                    <span>Inflammation</span>
-                </div>
-                <div class="benefit-pill">
-                    <span class="pill-percent">+50%</span>
-                    <span>Mobilité</span>
-                </div>
-                <div class="benefit-pill">
-                    <span class="pill-percent">-50%</span>
-                    <span>Douleur</span>
-                </div>
+            <img src="image.png" alt="Illustration Massage et Anatomie" class="benefit-main-img">
+
+            <div class="benefit-pill pos-1"> <span class="pill-percent">-40%</span>
+                <span>Inflammation</span>
+            </div>
+            
+            <div class="benefit-pill pos-2"> <span class="pill-percent">+50%</span>
+                <span>Mobilité</span>
             </div>
 
-            <div class="benefit-img-box">
-                <img src="massage-therapy-2277454.png" alt="Bienfaits du massage et de la Hijama - Illustration muscles">
+            <div class="benefit-pill pos-3"> <span class="pill-percent">-50%</span>
+                <span>Douleur</span>
             </div>
 
-            <div class="benefit-col right">
-                <div class="benefit-pill">
-                    <span class="pill-percent">-35%</span>
-                    <span>Stress</span>
-                </div>
-                <div class="benefit-pill">
-                    <span class="pill-percent">+30%</span>
-                    <span>Circulation</span>
-                </div>
-                <div class="benefit-pill">
-                    <span class="pill-percent">+25%</span>
-                    <span>Récupération</span>
-                </div>
+            <div class="benefit-pill pos-4"> <span class="pill-percent">-35%</span>
+                <span>Stress</span>
+            </div>
+
+            <div class="benefit-pill pos-5"> <span class="pill-percent">+30%</span>
+                <span>Circulation</span>
+            </div>
+
+            <div class="benefit-pill pos-6"> <span class="pill-percent">+25%</span>
+                <span>Récupération</span>
             </div>
 
         </div>
