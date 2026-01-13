@@ -31,7 +31,7 @@
       background: var(--surface);
       color: var(--text-main);
       line-height: 1.6;
-      padding-bottom: 100px;
+      /* padding-bottom retiré car nous n'avons plus la barre du bas */
       -webkit-font-smoothing: antialiased;
     }
 
@@ -374,29 +374,38 @@
       overflow: hidden;
     }
 
-    /* STICKY BAR MOBILE */
-    .sticky-bar {
-      position: fixed; bottom: 20px; left: 50%;
-      transform: translateX(-50%);
-      width: 90%; max-width: 400px;
-      background: var(--text-main);
-      color: white;
-      padding: 16px;
-      border-radius: 50px;
-      display: flex; justify-content: center; align-items: center; gap: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      z-index: 2000;
+    /* --- NOUVEAU BOUTON LATERAL (STYLE IMAGE) --- */
+    .side-booking-btn {
+      position: fixed;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      background-color: var(--text-main); /* Couleur bleu foncé */
+      color: var(--white);
+      
+      /* Permet d'écrire le texte à la verticale */
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      
+      padding: 30px 12px;
       font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      font-size: 0.9rem;
-      transition: transform 0.3s;
-      backdrop-filter: blur(5px);
+      
+      border-top-left-radius: 18px;
+      border-bottom-left-radius: 18px;
+      box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+      
+      z-index: 3000;
+      transition: var(--transition);
+      cursor: pointer;
     }
-    .sticky-bar:active { transform: translateX(-50%) scale(0.95); }
 
-    @media (min-width: 1024px) {
-      .sticky-bar { display: none; }
-      body { padding-bottom: 0; }
+    .side-booking-btn:hover {
+      background-color: var(--primary);
+      padding-top: 35px;
+      padding-bottom: 35px;
     }
 
     /* FOOTER */
@@ -617,6 +626,10 @@
   © 2025 Axium Perform<br>
   Genève, Suisse
 </footer>
+
+<a href="#contact" class="side-booking-btn">
+  Réservez votre séance maintenant
+</a>
 
 </body>
 </html>
