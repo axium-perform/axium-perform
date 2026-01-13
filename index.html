@@ -31,7 +31,7 @@
       background: var(--surface);
       color: var(--text-main);
       line-height: 1.6;
-      /* padding-bottom retiré car nous n'avons plus la barre du bas */
+      padding-bottom: 100px;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -235,7 +235,7 @@
         padding: 50px;
       }
       .about-img {
-        flex: 0 0 45%; /* L'image prend 45% de la largeur */
+        flex: 0 0 45%; 
         height: 400px;
       }
       .about-img img { height: 100%; }
@@ -290,6 +290,86 @@
     .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
+    /* --- SECTION: COMMENT SE DÉROULE UNE SÉANCE (Timeline) --- */
+    .timeline-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .timeline-item {
+        display: flex;
+        gap: 20px;
+        position: relative;
+        padding-bottom: 40px;
+    }
+    
+    /* La ligne verticale */
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 20px; /* Centré avec le numéro */
+        width: 2px;
+        height: 100%;
+        background: #e0e0e0;
+        z-index: 0;
+    }
+
+    /* Enlève la ligne du dernier élément */
+    .timeline-item:last-child::before { display: none; }
+    
+    .timeline-marker {
+        width: 42px;
+        height: 42px;
+        background: var(--primary); /* Fond plein comme sur la photo */
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+        z-index: 1; /* Au dessus de la ligne */
+        flex-shrink: 0;
+        box-shadow: 0 0 0 5px var(--surface); /* Bordure externe invisible */
+    }
+
+    .timeline-content {
+        flex: 1;
+        padding-top: 5px;
+    }
+
+    /* Style de l'image dans la timeline */
+    .timeline-img-wrapper {
+        width: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    .timeline-img-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.4rem;
+        color: var(--primary-dark);
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        font-weight: 800;
+    }
+
+    .timeline-content p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
     /* --- SECTION: FAQ --- */
     .faq-container {
       display: flex;
@@ -329,7 +409,6 @@
       outline: none;
     }
     
-    /* Chrome fix pour enlever la flèche native */
     summary::-webkit-details-marker { display: none; }
 
     .faq-icon {
@@ -374,38 +453,29 @@
       overflow: hidden;
     }
 
-    /* --- NOUVEAU BOUTON LATERAL (STYLE IMAGE) --- */
-    .side-booking-btn {
-      position: fixed;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      background-color: var(--text-main); /* Couleur bleu foncé */
-      color: var(--white);
-      
-      /* Permet d'écrire le texte à la verticale */
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      
-      padding: 30px 12px;
+    /* STICKY BAR MOBILE */
+    .sticky-bar {
+      position: fixed; bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      width: 90%; max-width: 400px;
+      background: var(--text-main);
+      color: white;
+      padding: 16px;
+      border-radius: 50px;
+      display: flex; justify-content: center; align-items: center; gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      z-index: 2000;
       font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
       text-transform: uppercase;
-      
-      border-top-left-radius: 18px;
-      border-bottom-left-radius: 18px;
-      box-shadow: -5px 0 20px rgba(0,0,0,0.2);
-      
-      z-index: 3000;
-      transition: var(--transition);
-      cursor: pointer;
+      font-size: 0.9rem;
+      transition: transform 0.3s;
+      backdrop-filter: blur(5px);
     }
+    .sticky-bar:active { transform: translateX(-50%) scale(0.95); }
 
-    .side-booking-btn:hover {
-      background-color: var(--primary);
-      padding-top: 35px;
-      padding-bottom: 35px;
+    @media (min-width: 1024px) {
+      .sticky-bar { display: none; }
+      body { padding-bottom: 0; }
     }
 
     /* FOOTER */
@@ -432,6 +502,7 @@
     <ul>
       <li><a href="#about">Qui suis-je ?</a></li>
       <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#process">Déroulement</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -509,6 +580,38 @@
       </div>
       <p>Thérapie par ventouses pour détoxifier, soulager les douleurs et booster la récupération.</p>
     </a>
+  </div>
+</section>
+
+<section id="process">
+  <h2 class="section-title">Comment se déroule la séance ?</h2>
+  
+  <div class="timeline-container">
+    
+    <div class="timeline-item">
+      <div class="timeline-marker">01</div>
+      <div class="timeline-content">
+        <h3>Accueil & Échange</h3>
+        <p>Lors de ton arrivée au cabinet, on prend un moment pour discuter. C'est l'occasion de m'expliquer tes besoins, tes douleurs éventuelles ou tes objectifs sportifs. On procède ensuite à ton installation dans un cadre propre et apaisant.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-marker">02</div>
+      <div class="timeline-content">
+        <h3>Le Soin</h3>
+        <p>C'est le cœur de la séance. Que ce soit pour un massage sportif, relaxant ou une Hijama, j'adapte ma technique et la pression en fonction de ton ressenti. Je reste à l'écoute tout au long du soin pour garantir ton confort et l'efficacité du traitement.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-marker">03</div>
+      <div class="timeline-content">
+        <h3>Fin de séance & Conseils</h3>
+        <p>On termine en douceur. Après le soin, on fait un petit debriefing sur tes sensations. Je te donnerai quelques conseils personnalisés (hydratation, repos, étirements) pour prolonger les bienfaits de la séance et optimiser ta récupération.</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -626,10 +729,6 @@
   © 2025 Axium Perform<br>
   Genève, Suisse
 </footer>
-
-<a href="#contact" class="side-booking-btn">
-  Réservez votre séance maintenant
-</a>
 
 </body>
 </html>
