@@ -235,7 +235,7 @@
         padding: 50px;
       }
       .about-img {
-        flex: 0 0 45%; 
+        flex: 0 0 45%; /* L'image prend 45% de la largeur */
         height: 400px;
       }
       .about-img img { height: 100%; }
@@ -290,85 +290,107 @@
     .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
-    /* --- SECTION: COMMENT SE DÉROULE UNE SÉANCE (Timeline) --- */
-    .timeline-container {
+    /* --- NOUVELLE SECTION: BIENFAITS (Style inspiré image) --- */
+    .benefits-wrapper {
         display: flex;
         flex-direction: column;
-        gap: 0;
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .timeline-item {
-        display: flex;
-        gap: 20px;
-        position: relative;
-        padding-bottom: 40px;
-    }
-    
-    /* La ligne verticale */
-    .timeline-item::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 20px; /* Centré avec le numéro */
-        width: 2px;
-        height: 100%;
-        background: #e0e0e0;
-        z-index: 0;
-    }
-
-    /* Enlève la ligne du dernier élément */
-    .timeline-item:last-child::before { display: none; }
-    
-    .timeline-marker {
-        width: 42px;
-        height: 42px;
-        background: var(--primary); /* Fond plein comme sur la photo */
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
         align-items: center;
-        font-weight: 700;
-        font-size: 0.9rem;
-        z-index: 1; /* Au dessus de la ligne */
-        flex-shrink: 0;
-        box-shadow: 0 0 0 5px var(--surface); /* Bordure externe invisible */
+        gap: 30px;
     }
 
-    .timeline-content {
-        flex: 1;
-        padding-top: 5px;
-    }
-
-    /* Style de l'image dans la timeline */
-    .timeline-img-wrapper {
+    /* Le container central qui gère l'image et les tags */
+    .benefits-visual {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
         width: 100%;
-        border-radius: 20px;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    /* L'image au centre */
+    .benefit-img-box {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        border-radius: var(--radius);
         overflow: hidden;
-        margin-bottom: 15px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        box-shadow: var(--shadow-hover);
+        aspect-ratio: 3/4; /* Format portrait comme l'exemple */
     }
-    .timeline-img-wrapper img {
+    
+    .benefit-img-box img {
         width: 100%;
-        height: auto;
-        display: block;
+        height: 100%;
+        object-fit: cover;
     }
 
-    .timeline-content h3 {
-        font-size: 1.4rem;
-        color: var(--primary-dark);
-        margin-bottom: 10px;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
-        font-weight: 800;
+    /* Les colonnes de tags (Gauche et Droite) */
+    .benefit-col {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
     }
 
-    .timeline-content p {
-        color: var(--text-muted);
+    /* Design des bulles */
+    .benefit-pill {
+        background-color: var(--text-main); /* Fond sombre */
+        color: white;
+        border-radius: 50px;
+        padding: 12px 25px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 5px 15px rgba(10, 31, 51, 0.2);
+        transition: transform 0.3s ease;
+        font-weight: 500;
         font-size: 0.95rem;
+        width: fit-content;
+        margin: 0 auto; /* Centré sur mobile */
     }
+
+    .benefit-pill:hover {
+        transform: scale(1.05);
+        background-color: var(--primary);
+    }
+
+    /* Le pourcentage dans la bulle */
+    .pill-percent {
+        background: white;
+        color: var(--text-main);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-weight: 800;
+        font-size: 1rem;
+        min-width: 65px;
+        text-align: center;
+    }
+
+    /* RESPONSIVE: Mode Ordinateur (Tags autour de l'image) */
+    @media (min-width: 900px) {
+        .benefits-visual {
+            grid-template-columns: 1fr 1.2fr 1fr; /* 3 Colonnes */
+            gap: 40px;
+        }
+
+        .benefit-col.left {
+            align-items: flex-end; /* Colle les items vers l'image */
+        }
+
+        .benefit-col.right {
+            align-items: flex-start; /* Colle les items vers l'image */
+        }
+        
+        .benefit-pill {
+            margin: 0; /* Enlève le centrage forcé du mobile */
+        }
+        
+        .benefit-col.left .benefit-pill {
+            flex-direction: row-reverse; /* Pour que le texte soit près de l'image à gauche */
+        }
+    }
+
 
     /* --- SECTION: FAQ --- */
     .faq-container {
@@ -409,6 +431,7 @@
       outline: none;
     }
     
+    /* Chrome fix pour enlever la flèche native */
     summary::-webkit-details-marker { display: none; }
 
     .faq-icon {
@@ -502,7 +525,7 @@
     <ul>
       <li><a href="#about">Qui suis-je ?</a></li>
       <li><a href="#prestations">Prestations</a></li>
-      <li><a href="#process">Déroulement</a></li>
+      <li><a href="#bienfaits">Bienfaits</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -583,36 +606,52 @@
   </div>
 </section>
 
-<section id="process">
-  <h2 class="section-title">Comment se déroule la séance ?</h2>
-  
-  <div class="timeline-container">
+<section id="bienfaits">
+    <h2 class="section-title">Les Bienfaits sur le corps et l'esprit</h2>
     
-    <div class="timeline-item">
-      <div class="timeline-marker">01</div>
-      <div class="timeline-content">
-        <h3>Accueil & Échange</h3>
-        <p>Lors de ton arrivée au cabinet, on prend un moment pour discuter. C'est l'occasion de m'expliquer tes besoins, tes douleurs éventuelles ou tes objectifs sportifs. On procède ensuite à ton installation dans un cadre propre et apaisant.</p>
-      </div>
-    </div>
+    <div class="benefits-wrapper">
+        <p style="text-align:center; max-width:600px; color:var(--text-muted);">
+            Des résultats concrets pour optimiser vos performances sportives et votre bien-être quotidien.
+        </p>
 
-    <div class="timeline-item">
-      <div class="timeline-marker">02</div>
-      <div class="timeline-content">
-        <h3>Le Soin</h3>
-        <p>C'est le cœur de la séance. Que ce soit pour un massage sportif, relaxant ou une Hijama, j'adapte ma technique et la pression en fonction de ton ressenti. Je reste à l'écoute tout au long du soin pour garantir ton confort et l'efficacité du traitement.</p>
-      </div>
-    </div>
+        <div class="benefits-visual">
+            
+            <div class="benefit-col left">
+                <div class="benefit-pill">
+                    <span class="pill-percent">-40%</span>
+                    <span>Inflammation</span>
+                </div>
+                <div class="benefit-pill">
+                    <span class="pill-percent">+50%</span>
+                    <span>Mobilité</span>
+                </div>
+                <div class="benefit-pill">
+                    <span class="pill-percent">-50%</span>
+                    <span>Douleur</span>
+                </div>
+            </div>
 
-    <div class="timeline-item">
-      <div class="timeline-marker">03</div>
-      <div class="timeline-content">
-        <h3>Fin de séance & Conseils</h3>
-        <p>On termine en douceur. Après le soin, on fait un petit debriefing sur tes sensations. Je te donnerai quelques conseils personnalisés (hydratation, repos, étirements) pour prolonger les bienfaits de la séance et optimiser ta récupération.</p>
-      </div>
-    </div>
+            <div class="benefit-img-box">
+                <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1000&auto=format&fit=crop" alt="Bienfaits du massage et de la Hijama">
+            </div>
 
-  </div>
+            <div class="benefit-col right">
+                <div class="benefit-pill">
+                    <span class="pill-percent">-35%</span>
+                    <span>Stress</span>
+                </div>
+                <div class="benefit-pill">
+                    <span class="pill-percent">+30%</span>
+                    <span>Circulation</span>
+                </div>
+                <div class="benefit-pill">
+                    <span class="pill-percent">+25%</span>
+                    <span>Récupération</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </section>
 
 <section id="faq">
