@@ -23,9 +23,7 @@
 
     /* RESET & BASE */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    
     html { scroll-behavior: smooth; }
-    
     body {
       font-family: 'Montserrat', sans-serif;
       background: var(--surface);
@@ -33,7 +31,7 @@
       line-height: 1.6;
       padding-bottom: 100px;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden; /* Empêche le scroll horizontal accidentel */
+      overflow-x: hidden;
     }
 
     a { text-decoration: none; color: inherit; }
@@ -62,10 +60,10 @@
     /* Navigation Desktop */
     nav ul { display: none; }
     @media (min-width: 768px) {
-      nav ul { display: flex; gap: 30px; }
+      nav ul { display: flex; gap: 22px; flex-wrap: wrap; }
       nav a { 
         font-weight: 600; 
-        font-size: 0.95rem; 
+        font-size: 0.92rem; 
         position: relative;
         transition: color 0.3s;
       }
@@ -252,7 +250,7 @@
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
     /* ------------------------------------------- */
-    /* --- SECTION BIENFAITS (MODIFIÉE) --- */
+    /* --- SECTION BIENFAITS --- */
     /* ------------------------------------------- */
 
     .benefits-wrapper {
@@ -263,30 +261,26 @@
         position: relative;
     }
 
-    /* Conteneur de l'image et des bulles */
     .benefits-visual {
         position: relative;
         width: 100%;
-        max-width: 500px; /* Largeur max sur mobile */
-        height: 400px; /* Hauteur fixe pour garantir l'espace sur mobile */
+        max-width: 500px;
+        height: 400px;
         margin: 0 auto;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    /* L'image au centre */
     .benefit-main-img {
-        width: 180px; /* Image plus petite sur mobile pour laisser place aux bulles */
+        width: 180px;
         height: auto;
         z-index: 1;
-        /* Ombre portée légère pour détacher l'image du fond */
         filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
     }
 
-    /* Style commun des bulles */
     .benefit-pill {
-        position: absolute; /* Positionnement absolu sur TOUS les appareils */
+        position: absolute;
         background-color: #0A1F33; 
         color: white;
         border-radius: 50px;
@@ -296,15 +290,14 @@
         gap: 6px; 
         box-shadow: 0 4px 10px rgba(10, 31, 51, 0.2);
         font-weight: 600;
-        font-size: 0.7rem; /* Texte petit sur mobile */
+        font-size: 0.7rem;
         transition: transform 0.3s ease;
-        white-space: nowrap; /* Empêche le texte de passer à la ligne */
+        white-space: nowrap;
         z-index: 5;
         opacity: 0;
         animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    /* Le cercle blanc avec le pourcentage */
     .pill-percent {
         background: white;
         color: #0A1F33;
@@ -317,38 +310,32 @@
         font-size: 0.65rem;
     }
 
-    /* --- POSITIONNEMENT MOBILE (Par défaut) --- */
-    /* On place les bulles autour de l'image de 180px */
-    .pos-1 { top: 5%; left: 5%; animation-delay: 0.1s; }       /* Haut Gauche */
-    .pos-2 { top: 5%; right: 5%; animation-delay: 0.2s; }      /* Haut Droite */
-    
-    .pos-3 { top: 45%; left: -2%; animation-delay: 0.3s; }     /* Milieu Gauche */
-    .pos-4 { top: 45%; right: -2%; animation-delay: 0.4s; }    /* Milieu Droite */
-    
-    .pos-5 { bottom: 10%; left: 5%; animation-delay: 0.5s; }   /* Bas Gauche */
-    .pos-6 { bottom: 10%; right: 5%; animation-delay: 0.6s; }  /* Bas Droite */
+    .pos-1 { top: 5%; left: 5%; animation-delay: 0.1s; }
+    .pos-2 { top: 5%; right: 5%; animation-delay: 0.2s; }
+    .pos-3 { top: 45%; left: -2%; animation-delay: 0.3s; }
+    .pos-4 { top: 45%; right: -2%; animation-delay: 0.4s; }
+    .pos-5 { bottom: 10%; left: 5%; animation-delay: 0.5s; }
+    .pos-6 { bottom: 10%; right: 5%; animation-delay: 0.6s; }
 
-    /* Animation d'apparition */
     @keyframes popIn {
         from { opacity: 0; transform: scale(0.5); }
         to { opacity: 1; transform: scale(1); }
     }
 
-    /* --- ADAPTATION DESKTOP (Ecrans > 768px) --- */
     @media (min-width: 768px) {
         .benefits-visual {
             max-width: 900px;
-            height: 600px; /* Plus grand espace */
+            height: 600px;
         }
 
         .benefit-main-img {
-            width: 350px; /* Image plus grande */
+            width: 350px;
         }
 
         .benefit-pill {
             padding: 6px 16px 6px 6px;
             gap: 10px;
-            font-size: 0.9rem; /* Texte plus grand */
+            font-size: 0.9rem;
         }
 
         .pill-percent {
@@ -362,7 +349,6 @@
             cursor: default;
         }
 
-        /* Positions plus aérées sur grand écran */
         .pos-1 { top: 15%; left: 15%; }
         .pos-2 { top: 15%; right: 15%; }
         .pos-3 { top: 50%; left: 8%; transform: translateY(-50%); }
@@ -370,7 +356,6 @@
         .pos-5 { bottom: 15%; left: 15%; }
         .pos-6 { bottom: 15%; right: 15%; }
     }
-
 
     /* --- SECTION: FAQ --- */
     .faq-container {
@@ -425,6 +410,154 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ------------------------------ */
+    /* --- NOUVELLES SECTIONS --- */
+    /* ------------------------------ */
+
+    /* Process (déroulement) */
+    .process-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    @media (min-width: 900px) {
+      .process-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .process-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.03);
+      transition: var(--transition);
+    }
+    .process-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-soft);
+      border-color: rgba(0,198,215,0.25);
+    }
+    .process-step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .process-card h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--text-main); }
+    .process-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* Location + contact */
+    .location-wrap {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    @media (min-width: 900px) {
+      .location-wrap { grid-template-columns: 1.1fr 0.9fr; align-items: stretch; }
+    }
+
+    .card-surface {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.03);
+      overflow: hidden;
+    }
+
+    .card-pad { padding: 26px; }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 14px 16px;
+      transition: var(--transition);
+    }
+    .contact-item:hover { transform: translateY(-2px); }
+    .contact-item strong { display: block; }
+    .contact-item span { color: var(--text-muted); font-size: 0.88rem; }
+
+    .contact-ico {
+      width: 40px; height: 40px;
+      border-radius: 14px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+      flex-shrink: 0;
+    }
+
+    .map-embed {
+      width: 100%;
+      height: 380px;
+      border: 0;
+      display: block;
+    }
+
+    /* Safety (hygiène / contre-indications) */
+    .safety-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    @media (min-width: 900px) {
+      .safety-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .safety-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+    .bullet {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .bullet li {
+      position: relative;
+      padding-left: 18px;
+    }
+    .bullet li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--secondary);
+      font-weight: 900;
+    }
+    .note {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(0,198,215,0.08);
+      color: var(--text-main);
+      font-size: 0.92rem;
+      border: 1px solid rgba(0,198,215,0.18);
+    }
+
     /* CALENDRIER CONTAINER */
     .contact-box {
       background: var(--white);
@@ -434,6 +567,53 @@
       max-width: 800px;
       margin: 0 auto;
       overflow: hidden;
+      position: relative; /* pour loader overlay */
+    }
+
+    /* Loader Calendly */
+    .calendly-loader {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.92);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      z-index: 10;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 4px solid rgba(0,0,0,0.08);
+      border-top-color: var(--primary);
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .calendly-loader p {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      max-width: 420px;
+    }
+
+    .calendly-loader small {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .calendly-loader.hide {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
     }
 
     /* STICKY BAR MOBILE */
@@ -484,9 +664,12 @@
     <ul>
       <li><a href="#about">Qui suis-je ?</a></li>
       <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#process">Déroulement</a></li>
       <li><a href="#bienfaits">Bienfaits</a></li>
+      <li><a href="#safety">Hygiène & Infos</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#location">Localisation</a></li>
+      <li><a href="#contact">Réserver</a></li>
     </ul>
   </nav>
 </header>
@@ -565,57 +748,130 @@
   </div>
 </section>
 
-<section id="bienfaits">
-    <h2 class="section-title">Les Bienfaits sur le corps</h2>
-    
-    <div class="benefits-wrapper">
-        <p style="text-align:center; max-width:600px; color:var(--text-muted); margin-bottom: 20px;">
-            Des résultats concrets pour optimiser vos performances sportives et votre bien-être quotidien.
-        </p>
+<!-- ✅ SECTION 2 : DÉROULEMENT -->
+<section id="process">
+  <h2 class="section-title">Déroulement d’une séance</h2>
 
-        <div class="benefits-visual">
-            
-            <img src="massage-therapy-2277454_1280.png" alt="Illustration Massage et Anatomie" class="benefit-main-img">
+  <p style="text-align:center; max-width:700px; color:var(--text-muted); margin: 0 auto 22px;">
+    Une séance simple, claire et orientée résultat : relâcher, récupérer, et repartir plus léger.
+  </p>
 
-            <div class="benefit-pill pos-1"> 
-                <span class="pill-percent">-40%</span>
-                <span>Inflammation</span>
-            </div>
-            
-            <div class="benefit-pill pos-2"> 
-                <span class="pill-percent">+50%</span>
-                <span>Mobilité</span>
-            </div>
-
-            <div class="benefit-pill pos-3"> 
-                <span class="pill-percent">-50%</span>
-                <span>Douleur</span>
-            </div>
-
-            <div class="benefit-pill pos-4"> 
-                <span class="pill-percent">-35%</span>
-                <span>Stress</span>
-            </div>
-
-            <div class="benefit-pill pos-5"> 
-                <span class="pill-percent">+30%</span>
-                <span>Circulation</span>
-            </div>
-
-            <div class="benefit-pill pos-6"> 
-                <span class="pill-percent">+25%</span>
-                <span>Récupération</span>
-            </div>
-
-        </div>
+  <div class="process-grid">
+    <div class="process-card">
+      <div class="process-step">1</div>
+      <h3>Échange rapide</h3>
+      <p>Objectif du jour, zones à travailler, antécédents (douleurs, fatigue, stress, sport).</p>
     </div>
+
+    <div class="process-card">
+      <div class="process-step">2</div>
+      <h3>Travail ciblé</h3>
+      <p>Massage ou hijama selon la prestation, intensité adaptée, zones prioritaires.</p>
+    </div>
+
+    <div class="process-card">
+      <div class="process-step">3</div>
+      <h3>Retour & conseils</h3>
+      <p>Recommandations post-séance : hydratation, repos, mobilité, sensations normales.</p>
+    </div>
+
+    <div class="process-card">
+      <div class="process-step">4</div>
+      <h3>Suivi</h3>
+      <p>Si nécessaire : planifier une prochaine séance (récup, tension récurrente, période intense).</p>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top: 26px;">
+    <a href="#contact" class="btn-main">Réserver une séance</a>
+  </div>
+</section>
+
+<section id="bienfaits">
+  <h2 class="section-title">Les Bienfaits sur le corps</h2>
+  
+  <div class="benefits-wrapper">
+    <p style="text-align:center; max-width:600px; color:var(--text-muted); margin-bottom: 20px;">
+      Des résultats concrets pour optimiser vos performances sportives et votre bien-être quotidien.
+    </p>
+
+    <div class="benefits-visual">
+      <img src="massage-therapy-2277454_1280.png" alt="Illustration Massage et Anatomie" class="benefit-main-img">
+
+      <div class="benefit-pill pos-1"> 
+        <span class="pill-percent">-40%</span>
+        <span>Inflammation</span>
+      </div>
+      <div class="benefit-pill pos-2"> 
+        <span class="pill-percent">+50%</span>
+        <span>Mobilité</span>
+      </div>
+      <div class="benefit-pill pos-3"> 
+        <span class="pill-percent">-50%</span>
+        <span>Douleur</span>
+      </div>
+      <div class="benefit-pill pos-4"> 
+        <span class="pill-percent">-35%</span>
+        <span>Stress</span>
+      </div>
+      <div class="benefit-pill pos-5"> 
+        <span class="pill-percent">+30%</span>
+        <span>Circulation</span>
+      </div>
+      <div class="benefit-pill pos-6"> 
+        <span class="pill-percent">+25%</span>
+        <span>Récupération</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ SECTION 5 : HYGIÈNE + CONTRE-INDICATIONS -->
+<section id="safety">
+  <h2 class="section-title">Hygiène & Contre-indications</h2>
+
+  <div class="safety-grid">
+    <div class="card-surface card-pad safety-card">
+      <h3>Hygiène & sécurité</h3>
+      <p style="color:var(--text-muted); font-size:0.95rem;">
+        La sécurité est prioritaire : protocole propre, matériel adapté, et recommandations post-séance.
+      </p>
+
+      <ul class="bullet">
+        <li>Désinfection des surfaces et lavage des mains avant chaque séance.</li>
+        <li>Matériel et consommables adaptés (usage unique si applicable).</li>
+        <li>Conseils après séance : hydratation, repos, éviter l’intense si besoin.</li>
+      </ul>
+
+      <div class="note">
+        Si tu as une question spécifique (peau, douleurs, fatigue), écris-moi avant de réserver.
+      </div>
+    </div>
+
+    <div class="card-surface card-pad safety-card">
+      <h3>Hijama : quand éviter</h3>
+      <p style="color:var(--text-muted); font-size:0.95rem;">
+        La hijama n’est pas adaptée à toutes les situations. En cas de doute, demande un avis médical.
+      </p>
+
+      <ul class="bullet">
+        <li>Traitement anticoagulant / troubles de la coagulation.</li>
+        <li>Fièvre, infection en cours, état inflammatoire important.</li>
+        <li>Problèmes cutanés sur la zone (plaies, eczéma sévère, infection).</li>
+        <li>Grossesse (par précaution) : demander un avis médical.</li>
+      </ul>
+
+      <div class="note">
+        Objectif : rester prudent et responsable. La hijama ne remplace pas un diagnostic médical.
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="faq">
   <h2 class="section-title">Questions Fréquentes</h2>
   
   <div class="faq-container">
-    
     <details class="faq-item">
       <summary>
         Est-ce que c’est douloureux ?
@@ -699,15 +955,91 @@
         Les marques des ventouses ne sont pas définitives. Elles s'estompent naturellement en quelques jours (généralement entre 3 et 7 jours) selon votre type de peau et l'intensité de la séance.
       </div>
     </details>
+  </div>
+</section>
 
+<!-- ✅ SECTION 4 : LOCALISATION + CONTACT DIRECT -->
+<section id="location">
+  <h2 class="section-title">Localisation & Contact</h2>
+
+  <div class="location-wrap">
+    <div class="card-surface">
+      <!-- Carte (centrée sur Genève) -->
+      <iframe
+        class="map-embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=Gen%C3%A8ve%2C%20Suisse&output=embed"
+        title="Carte - Genève">
+      </iframe>
+    </div>
+
+    <div class="card-surface card-pad">
+      <span class="subtitle">Infos pratiques</span>
+      <h3 style="font-size:1.5rem; color: var(--primary); margin-bottom:10px;">Genève, Suisse</h3>
+      <p style="color:var(--text-muted); font-size:0.95rem;">
+        Séances sur rendez-vous. Tu peux me contacter directement si tu as une question avant de réserver.
+      </p>
+
+      <div class="contact-list">
+        <a class="contact-item" href="tel:+41787310732">
+          <div class="contact-ico">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Appel / WhatsApp</strong>
+            <span>078 731 07 32</span>
+          </div>
+        </a>
+
+        <a class="contact-item" href="mailto:axium.perform@gmail.com">
+          <div class="contact-ico">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16v16H4z"/>
+              <path d="M22 6l-10 7L2 6"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Email</strong>
+            <span>axium.perform@gmail.com</span>
+          </div>
+        </a>
+
+        <a class="contact-item" href="https://www.instagram.com/axium.perform/" target="_blank">
+          <div class="contact-ico">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </div>
+          <div>
+            <strong>Instagram</strong>
+            <span>@axium.perform</span>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
 <section id="contact">
   <h2 class="section-title">Réserver une séance</h2>
+
   <div class="contact-box">
-    
-    <div class="calendly-inline-widget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium" style="min-width:320px;height:700px;"></div>
+    <!-- ✅ Loader (visible au début) -->
+    <div class="calendly-loader" id="calendlyLoader">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Chargement du calendrier de réservation…</p>
+      <small>Si rien ne s’affiche, utilise le bouton “Ouvrir le calendrier”.</small>
+    </div>
+
+    <div class="calendly-inline-widget" id="calendlyWidget"
+         data-url="https://calendly.com/axium-perform/seance-de-massage-axium"
+         style="min-width:320px;height:700px;">
+    </div>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     
     <div style="text-align: center; margin-top: -20px; padding: 0 20px 30px 20px; font-size: 0.9rem; background: var(--white); position:relative; z-index:5;">
@@ -723,14 +1055,46 @@
         @axium.perform
       </a>
     </div>
-
   </div>
 </section>
 
+<!-- Sticky mobile -->
+<a class="sticky-bar" href="#contact">Réserver maintenant</a>
+
 <footer>
   © 2025 Axium Perform<br>
-  Genève, Suisse
+  Genève, Suisse<br><br>
+  <span style="font-size:0.85rem;">Contact : <a href="tel:+41787310732">078 731 07 32</a> • <a href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a></span>
 </footer>
+
+<!-- ✅ Script loader Calendly -->
+<script>
+  (function () {
+    const loader = document.getElementById('calendlyLoader');
+    const widget = document.getElementById('calendlyWidget');
+
+    if (!loader || !widget) return;
+
+    // Cache le loader quand l'iframe Calendly est injectée et chargée
+    const hide = () => loader.classList.add('hide');
+
+    const obs = new MutationObserver(() => {
+      const iframe = widget.querySelector('iframe');
+      if (iframe) {
+        iframe.addEventListener('load', hide, { once: true });
+        // Si l'iframe est déjà chargée très vite
+        try {
+          if (iframe.contentWindow && iframe.contentDocument && iframe.contentDocument.readyState === 'complete') hide();
+        } catch(e) { /* cross-origin: ignore */ }
+        obs.disconnect();
+      }
+    });
+
+    obs.observe(widget, { childList: true, subtree: true });
+
+    // Fallback : si Calendly met longtemps, on garde le loader (pas de timer agressif)
+  })();
+</script>
 
 </body>
 </html>
