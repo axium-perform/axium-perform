@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Axium.Perform - Réservation & Présentation</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-   
+
   <style>
     :root {
-      --primary: #0076B6;       
-      --primary-dark: #005f94;  
-      --secondary: #00C6D7;     
-      --surface: #F4F6F8;       
+      --primary: #0076B6;
+      --primary-dark: #005f94;
+      --secondary: #00C6D7;
+      --surface: #F4F6F8;
       --white: #FFFFFF;
-      --text-main: #0A1F33; 
+      --text-main: #0A1F33;
       --text-muted: #546e7a;
       --shadow-soft: 0 10px 40px rgba(0, 118, 182, 0.08);
       --shadow-hover: 0 15px 30px rgba(0, 118, 182, 0.15);
@@ -40,7 +40,7 @@
 
     /* HEADER */
     header {
-      background: #FFFFFF; 
+      background: #FFFFFF;
       padding: 15px 5%;
       display: flex; justify-content: space-between; align-items: center;
       position: sticky; top: 0; z-index: 1000;
@@ -54,16 +54,16 @@
       display: flex; align-items: center; gap: 12px;
       letter-spacing: -0.5px;
     }
-    
+
     header img { height: 50px; width: auto; }
 
     /* Navigation Desktop */
     nav ul { display: none; }
     @media (min-width: 768px) {
       nav ul { display: flex; gap: 22px; flex-wrap: wrap; }
-      nav a { 
-        font-weight: 600; 
-        font-size: 0.92rem; 
+      nav a {
+        font-weight: 600;
+        font-size: 0.92rem;
         position: relative;
         transition: color 0.3s;
       }
@@ -100,7 +100,7 @@
       background: white;
       padding: 5px;
     }
-    
+
     .hero-img-container img {
       width: 100%; height: 100%; object-fit: cover; border-radius: 35px;
     }
@@ -132,8 +132,8 @@
       transition: var(--transition);
       border: none; cursor: pointer;
     }
-    .btn-main:hover { 
-      transform: translateY(-3px); 
+    .btn-main:hover {
+      transform: translateY(-3px);
       box-shadow: 0 15px 30px rgba(0, 118, 182, 0.4);
     }
 
@@ -173,10 +173,10 @@
       box-shadow: var(--shadow-soft);
       position: relative;
     }
-    
+
     .about-img img { width: 100%; height: auto; object-fit: cover; display: block; }
     .about-text { flex: 1; }
-    
+
     .subtitle {
       text-transform: uppercase;
       font-size: 0.85rem;
@@ -200,7 +200,7 @@
       font-size: 0.95rem;
       text-align: justify;
     }
-    
+
     .highlight { color: var(--primary); font-weight: 600; }
 
     @media (min-width: 900px) {
@@ -211,8 +211,8 @@
     }
 
     /* SERVICES GRID */
-    .service-list { 
-      display: grid; gap: 20px; grid-template-columns: 1fr; 
+    .service-list {
+      display: grid; gap: 20px; grid-template-columns: 1fr;
     }
     @media (min-width: 768px) {
       .service-list { grid-template-columns: repeat(2, 1fr); }
@@ -242,72 +242,69 @@
     .service-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
     .service-card h3 { font-size: 1.2rem; color: var(--text-main); margin-bottom: 10px; }
     .service-card p { font-size: 0.9rem; color: var(--text-muted); flex-grow: 1; }
-    
-    .service-price { 
+
+    .service-price {
       background: var(--surface); padding: 8px 15px; border-radius: 12px; text-align: center; min-width: 80px;
     }
     .price-tag { font-weight: 700; color: var(--primary); font-size: 1.1rem; display: block; }
     .duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
 
-    /* ------------------------------------------- */
     /* --- SECTION BIENFAITS --- */
-    /* ------------------------------------------- */
-
     .benefits-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 30px;
-        position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      position: relative;
     }
 
     .benefits-visual {
-        position: relative;
-        width: 100%;
-        max-width: 500px;
-        height: 400px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      height: 400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .benefit-main-img {
-        width: 180px;
-        height: auto;
-        z-index: 1;
-        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+      width: 180px;
+      height: auto;
+      z-index: 1;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
     }
 
     .benefit-pill {
-        position: absolute;
-        background-color: #0A1F33; 
-        color: white;
-        border-radius: 50px;
-        padding: 4px 10px 4px 4px; 
-        display: flex;
-        align-items: center;
-        gap: 6px; 
-        box-shadow: 0 4px 10px rgba(10, 31, 51, 0.2);
-        font-weight: 600;
-        font-size: 0.7rem;
-        transition: transform 0.3s ease;
-        white-space: nowrap;
-        z-index: 5;
-        opacity: 0;
-        animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      position: absolute;
+      background-color: #0A1F33;
+      color: white;
+      border-radius: 50px;
+      padding: 4px 10px 4px 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 10px rgba(10, 31, 51, 0.2);
+      font-weight: 600;
+      font-size: 0.7rem;
+      transition: transform 0.3s ease;
+      white-space: nowrap;
+      z-index: 5;
+      opacity: 0;
+      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
     .pill-percent {
-        background: white;
-        color: #0A1F33;
-        width: 32px; height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 20px;
-        font-weight: 800;
-        font-size: 0.65rem;
+      background: white;
+      color: #0A1F33;
+      width: 32px; height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.65rem;
     }
 
     .pos-1 { top: 5%; left: 5%; animation-delay: 0.1s; }
@@ -318,43 +315,28 @@
     .pos-6 { bottom: 10%; right: 5%; animation-delay: 0.6s; }
 
     @keyframes popIn {
-        from { opacity: 0; transform: scale(0.5); }
-        to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     @media (min-width: 768px) {
-        .benefits-visual {
-            max-width: 900px;
-            height: 600px;
-        }
+      .benefits-visual { max-width: 900px; height: 600px; }
+      .benefit-main-img { width: 350px; }
+      .benefit-pill { padding: 6px 16px 6px 6px; gap: 10px; font-size: 0.9rem; }
+      .pill-percent { width: 45px; height: 32px; font-size: 0.85rem; }
 
-        .benefit-main-img {
-            width: 350px;
-        }
+      .benefit-pill:hover {
+        transform: scale(1.1);
+        background-color: var(--primary);
+        cursor: default;
+      }
 
-        .benefit-pill {
-            padding: 6px 16px 6px 6px;
-            gap: 10px;
-            font-size: 0.9rem;
-        }
-
-        .pill-percent {
-            width: 45px; height: 32px;
-            font-size: 0.85rem;
-        }
-
-        .benefit-pill:hover {
-            transform: scale(1.1);
-            background-color: var(--primary);
-            cursor: default;
-        }
-
-        .pos-1 { top: 15%; left: 15%; }
-        .pos-2 { top: 15%; right: 15%; }
-        .pos-3 { top: 50%; left: 8%; transform: translateY(-50%); }
-        .pos-4 { top: 50%; right: 8%; transform: translateY(-50%); }
-        .pos-5 { bottom: 15%; left: 15%; }
-        .pos-6 { bottom: 15%; right: 15%; }
+      .pos-1 { top: 15%; left: 15%; }
+      .pos-2 { top: 15%; right: 15%; }
+      .pos-3 { top: 50%; left: 8%; transform: translateY(-50%); }
+      .pos-4 { top: 50%; right: 8%; transform: translateY(-50%); }
+      .pos-5 { bottom: 15%; left: 15%; }
+      .pos-6 { bottom: 15%; right: 15%; }
     }
 
     /* --- SECTION: FAQ --- */
@@ -410,9 +392,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ------------------------------ */
     /* --- NOUVELLES SECTIONS --- */
-    /* ------------------------------ */
 
     /* Process (déroulement) */
     .process-grid {
@@ -513,16 +493,13 @@
       display: block;
     }
 
-    /* Safety (hygiène / contre-indications) */
+    /* Safety (hygiène) */
     .safety-grid {
       display: grid;
       gap: 18px;
       grid-template-columns: 1fr;
       max-width: 900px;
       margin: 0 auto;
-    }
-    @media (min-width: 900px) {
-      .safety-grid { grid-template-columns: repeat(2, 1fr); }
     }
     .safety-card h3 {
       font-size: 1.1rem;
@@ -561,13 +538,13 @@
     /* CALENDRIER CONTAINER */
     .contact-box {
       background: var(--white);
-      padding: 0; 
+      padding: 0;
       border-radius: 30px;
       box-shadow: var(--shadow-soft);
       max-width: 800px;
       margin: 0 auto;
       overflow: hidden;
-      position: relative; /* pour loader overlay */
+      position: relative;
     }
 
     /* Loader Calendly */
@@ -666,7 +643,7 @@
       <li><a href="#prestations">Prestations</a></li>
       <li><a href="#process">Déroulement</a></li>
       <li><a href="#bienfaits">Bienfaits</a></li>
-      <li><a href="#safety">Hygiène & Infos</a></li>
+      <li><a href="#safety">Hygiène</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#location">Localisation</a></li>
       <li><a href="#contact">Réserver</a></li>
@@ -690,11 +667,11 @@
     <div class="about-img">
       <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann Axium Perform">
     </div>
-    
+
     <div class="about-text">
       <span class="subtitle">Présentation</span>
       <h2>Qui suis-je ?</h2>
-      
+
       <p>
         Moi, c'est <span class="highlight">Sevann</span>. Issu du monde de l’athlétisme, je suis passionné par la récupération, le bien-être et le fonctionnement du corps.
       </p>
@@ -704,7 +681,7 @@
       </p>
 
       <p>
-       Actuellement en formation, je continue à me perfectionner afin de proposer un accompagnement sérieux, évolutif et axé sur le bien-être.
+        Actuellement en formation, je continue à me perfectionner afin de proposer un accompagnement sérieux, évolutif et axé sur le bien-être.
       </p>
     </div>
   </div>
@@ -712,7 +689,7 @@
 
 <section id="prestations">
   <h2 class="section-title">Mes Prestations</h2>
-  
+
   <div class="service-list">
     <a href="#contact" class="service-card">
       <div class="service-header">
@@ -748,7 +725,7 @@
   </div>
 </section>
 
-<!-- ✅ SECTION 2 : DÉROULEMENT -->
+<!-- SECTION 2 : DÉROULEMENT -->
 <section id="process">
   <h2 class="section-title">Déroulement d’une séance</h2>
 
@@ -789,7 +766,7 @@
 
 <section id="bienfaits">
   <h2 class="section-title">Les Bienfaits sur le corps</h2>
-  
+
   <div class="benefits-wrapper">
     <p style="text-align:center; max-width:600px; color:var(--text-muted); margin-bottom: 20px;">
       Des résultats concrets pour optimiser vos performances sportives et votre bien-être quotidien.
@@ -798,48 +775,30 @@
     <div class="benefits-visual">
       <img src="massage-therapy-2277454_1280.png" alt="Illustration Massage et Anatomie" class="benefit-main-img">
 
-      <div class="benefit-pill pos-1"> 
-        <span class="pill-percent">-40%</span>
-        <span>Inflammation</span>
-      </div>
-      <div class="benefit-pill pos-2"> 
-        <span class="pill-percent">+50%</span>
-        <span>Mobilité</span>
-      </div>
-      <div class="benefit-pill pos-3"> 
-        <span class="pill-percent">-50%</span>
-        <span>Douleur</span>
-      </div>
-      <div class="benefit-pill pos-4"> 
-        <span class="pill-percent">-35%</span>
-        <span>Stress</span>
-      </div>
-      <div class="benefit-pill pos-5"> 
-        <span class="pill-percent">+30%</span>
-        <span>Circulation</span>
-      </div>
-      <div class="benefit-pill pos-6"> 
-        <span class="pill-percent">+25%</span>
-        <span>Récupération</span>
-      </div>
+      <div class="benefit-pill pos-1"><span class="pill-percent">-40%</span><span>Inflammation</span></div>
+      <div class="benefit-pill pos-2"><span class="pill-percent">+50%</span><span>Mobilité</span></div>
+      <div class="benefit-pill pos-3"><span class="pill-percent">-50%</span><span>Douleur</span></div>
+      <div class="benefit-pill pos-4"><span class="pill-percent">-35%</span><span>Stress</span></div>
+      <div class="benefit-pill pos-5"><span class="pill-percent">+30%</span><span>Circulation</span></div>
+      <div class="benefit-pill pos-6"><span class="pill-percent">+25%</span><span>Récupération</span></div>
     </div>
   </div>
 </section>
 
-<!-- ✅ SECTION 5 : HYGIÈNE + CONTRE-INDICATIONS -->
+<!-- SECTION 5 : HYGIÈNE (nettoyée) -->
 <section id="safety">
-  <h2 class="section-title">Hygiène & Contre-indications</h2>
+  <h2 class="section-title">Hygiène & informations</h2>
 
   <div class="safety-grid">
     <div class="card-surface card-pad safety-card">
-      <h3>Hygiène & sécurité</h3>
+      <h3>Hygiène</h3>
       <p style="color:var(--text-muted); font-size:0.95rem;">
-        La sécurité est prioritaire : protocole propre, matériel adapté, et recommandations post-séance.
+        Protocole propre, matériel adapté, et recommandations post-séance.
       </p>
 
       <ul class="bullet">
         <li>Désinfection des surfaces et lavage des mains avant chaque séance.</li>
-        <li>Matériel et consommables adaptés (usage unique si applicable).</li>
+        <li>Matériel et consommables adaptés.</li>
         <li>Conseils après séance : hydratation, repos, éviter l’intense si besoin.</li>
       </ul>
 
@@ -847,30 +806,12 @@
         Si tu as une question spécifique (peau, douleurs, fatigue), écris-moi avant de réserver.
       </div>
     </div>
-
-    <div class="card-surface card-pad safety-card">
-      <h3>Hijama : quand éviter</h3>
-      <p style="color:var(--text-muted); font-size:0.95rem;">
-        La hijama n’est pas adaptée à toutes les situations. En cas de doute, demande un avis médical.
-      </p>
-
-      <ul class="bullet">
-        <li>Traitement anticoagulant / troubles de la coagulation.</li>
-        <li>Fièvre, infection en cours, état inflammatoire important.</li>
-        <li>Problèmes cutanés sur la zone (plaies, eczéma sévère, infection).</li>
-        <li>Grossesse (par précaution) : demander un avis médical.</li>
-      </ul>
-
-      <div class="note">
-        Objectif : rester prudent et responsable. La hijama ne remplace pas un diagnostic médical.
-      </div>
-    </div>
   </div>
 </section>
 
 <section id="faq">
   <h2 class="section-title">Questions Fréquentes</h2>
-  
+
   <div class="faq-container">
     <details class="faq-item">
       <summary>
@@ -880,7 +821,7 @@
         </div>
       </summary>
       <div class="faq-answer">
-        Non, le but n'est pas de vous faire mal. Que ce soit pour un massage sportif ou la Hijama, la sensation peut être intense mais reste toujours très supportable. 
+        Non, le but n'est pas de vous faire mal. Que ce soit pour un massage sportif ou la Hijama, la sensation peut être intense mais reste toujours très supportable.
       </div>
     </details>
 
@@ -904,7 +845,7 @@
         </div>
       </summary>
       <div class="faq-answer">
-        Il est conseillé de ne pas manger copieusement 2 à 3 heures avant le rendez-vous. 
+        Il est conseillé de ne pas manger copieusement 2 à 3 heures avant le rendez-vous.
       </div>
     </details>
 
@@ -958,13 +899,12 @@
   </div>
 </section>
 
-<!-- ✅ SECTION 4 : LOCALISATION + CONTACT DIRECT -->
+<!-- SECTION 4 : LOCALISATION + CONTACT DIRECT -->
 <section id="location">
   <h2 class="section-title">Localisation & Contact</h2>
 
   <div class="location-wrap">
     <div class="card-surface">
-      <!-- Carte (centrée sur Genève) -->
       <iframe
         class="map-embed"
         loading="lazy"
@@ -1029,7 +969,7 @@
   <h2 class="section-title">Réserver une séance</h2>
 
   <div class="contact-box">
-    <!-- ✅ Loader (visible au début) -->
+    <!-- Loader -->
     <div class="calendly-loader" id="calendlyLoader">
       <div class="spinner" aria-hidden="true"></div>
       <p>Chargement du calendrier de réservation…</p>
@@ -1041,9 +981,8 @@
          style="min-width:320px;height:700px;">
     </div>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    
+
     <div style="text-align: center; margin-top: -20px; padding: 0 20px 30px 20px; font-size: 0.9rem; background: var(--white); position:relative; z-index:5;">
-      
       <p style="margin-bottom:10px; font-size:0.85rem; color:var(--text-muted);">Le calendrier ne s'affiche pas ?</p>
       <a href="https://calendly.com/axium-perform/seance-de-massage-axium" target="_blank" class="btn-main" style="padding: 10px 20px; font-size: 0.9rem;">
         Ouvrir le calendrier
@@ -1058,7 +997,6 @@
   </div>
 </section>
 
-<!-- Sticky mobile -->
 <a class="sticky-bar" href="#contact">Réserver maintenant</a>
 
 <footer>
@@ -1067,32 +1005,24 @@
   <span style="font-size:0.85rem;">Contact : <a href="tel:+41787310732">078 731 07 32</a> • <a href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a></span>
 </footer>
 
-<!-- ✅ Script loader Calendly -->
+<!-- Script loader Calendly -->
 <script>
   (function () {
     const loader = document.getElementById('calendlyLoader');
     const widget = document.getElementById('calendlyWidget');
-
     if (!loader || !widget) return;
 
-    // Cache le loader quand l'iframe Calendly est injectée et chargée
     const hide = () => loader.classList.add('hide');
 
     const obs = new MutationObserver(() => {
       const iframe = widget.querySelector('iframe');
       if (iframe) {
         iframe.addEventListener('load', hide, { once: true });
-        // Si l'iframe est déjà chargée très vite
-        try {
-          if (iframe.contentWindow && iframe.contentDocument && iframe.contentDocument.readyState === 'complete') hide();
-        } catch(e) { /* cross-origin: ignore */ }
         obs.disconnect();
       }
     });
 
     obs.observe(widget, { childList: true, subtree: true });
-
-    // Fallback : si Calendly met longtemps, on garde le loader (pas de timer agressif)
   })();
 </script>
 
