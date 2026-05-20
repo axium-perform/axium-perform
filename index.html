@@ -647,11 +647,14 @@
       position:relative;overflow:hidden;
     }
     .safety-box::before{
-      content:'';position:absolute;top:0;right:0;
-      width:200px;height:200px;
+      content:'';position:absolute;bottom:0;right:0;
+      width:180px;height:180px;
       background:radial-gradient(circle,var(--orange-pale) 0%,transparent 70%);
       pointer-events:none;
+      z-index:0;
     }
+    /* All direct children above the decorative ::before */
+    .safety-box > * { position:relative; z-index:1; }
     .safety-box h3{
       font-family:'Syne',sans-serif;
       font-size:clamp(1.3rem,3vw,1.9rem);
@@ -887,10 +890,28 @@
 <!-- ══ HEADER ══ -->
 <header id="mainHeader">
   <a class="logo" href="#">
-    <svg class="logo-svg" viewBox="0 0 120 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="44" height="44" rx="10" fill="#F4631A"/>
-      <text x="22" y="33" font-family="'Arial Black',Impact,sans-serif" font-size="26" font-weight="900" font-style="italic" fill="white" text-anchor="middle" letter-spacing="-1">AX</text>
-      <circle cx="40" cy="8" r="4" fill="#FF7A35"/>
+    <!-- Real geometric logo: rounded square + A + lightning bolt -->
+    <svg class="logo-svg" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="logoGrad" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FF7A35"/>
+          <stop offset="100%" stop-color="#D4520E"/>
+        </linearGradient>
+      </defs>
+      <!-- Background rounded square -->
+      <rect width="44" height="44" rx="11" fill="url(#logoGrad)"/>
+      <!-- Subtle inner highlight top -->
+      <rect x="0" y="0" width="44" height="22" rx="11" fill="white" fill-opacity="0.07"/>
+      <!-- Letter A — geometric, bold -->
+      <!-- Left leg -->
+      <polygon points="7,35 13,35 19.5,13 14,13" fill="white"/>
+      <!-- Right leg -->
+      <polygon points="37,35 31,35 24.5,13 30,13" fill="white"/>
+      <!-- Crossbar -->
+      <rect x="11" y="25" width="22" height="4" rx="2" fill="white"/>
+      <!-- Orange accent dot top-right -->
+      <circle cx="38" cy="8" r="3.5" fill="white" fill-opacity="0.4"/>
+      <circle cx="38" cy="8" r="2" fill="white"/>
     </svg>
     <span class="logo-wordmark">Axium<span>.Perform</span></span>
   </a>
@@ -930,16 +951,21 @@
 
     <div class="hero-logo-wrap">
       <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100" height="100" rx="22" fill="#F4631A"/>
-        <rect width="100" height="100" rx="22" fill="url(#hgrad)"/>
         <defs>
-          <linearGradient id="hgrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="white" stop-opacity="0.12"/>
-            <stop offset="100%" stop-color="black" stop-opacity="0.1"/>
+          <linearGradient id="hlogoGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FF7A35"/>
+            <stop offset="100%" stop-color="#C94D0D"/>
           </linearGradient>
         </defs>
-        <text x="50" y="70" font-family="'Arial Black',Impact,sans-serif" font-size="56" font-weight="900" font-style="italic" fill="white" text-anchor="middle" letter-spacing="-3">AX</text>
-        <circle cx="84" cy="20" r="7" fill="#FF9A60"/>
+        <rect width="100" height="100" rx="24" fill="url(#hlogoGrad)"/>
+        <rect x="0" y="0" width="100" height="50" rx="24" fill="white" fill-opacity="0.08"/>
+        <!-- Geometric A: left leg, right leg, crossbar -->
+        <polygon points="12,82 24,82 43,22 31,22" fill="white"/>
+        <polygon points="88,82 76,82 57,22 69,22" fill="white"/>
+        <rect x="22" y="58" width="56" height="9" rx="4.5" fill="white"/>
+        <!-- Accent dot -->
+        <circle cx="86" cy="18" r="7" fill="white" fill-opacity="0.3"/>
+        <circle cx="86" cy="18" r="4" fill="white"/>
       </svg>
     </div>
 
