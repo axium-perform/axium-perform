@@ -5,1153 +5,1448 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Axium.Perform — Récupération & Performance Sportive · Genève</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Barlow+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --orange:        #F4631A;
-      --orange-deep:   #D4520E;
-      --orange-light:  #FF8040;
-      --orange-pale:   #FFF3EE;
-      --orange-dim:    rgba(244,99,26,0.08);
-      --orange-border: rgba(244,99,26,0.22);
+      --orange:       #F4631A;
+      --orange-deep:  #C94D0C;
+      --orange-light: #FF7A35;
+      --orange-pale:  #FFF2EB;
+      --orange-mid:   rgba(244,99,26,0.12);
+      --orange-bdr:   rgba(244,99,26,0.25);
 
-      --white:   #FFFFFF;
-      --off:     #F7F6F4;
-      --light:   #EFEFED;
-      --ink:     #1C1C1C;
-      --ink-2:   #2E2B28;
-      --muted:   #6B6560;
-      --faint:   #9E9790;
-      --border:  rgba(28,28,28,0.09);
+      --white:  #FFFFFF;
+      --off:    #F5F4F2;
+      --light:  #ECEAE7;
+      --ink:    #111111;
+      --ink2:   #1E1E1E;
+      --muted:  #606060;
+      --faint:  #999;
+      --bdr:    #E0DEDA;
 
-      --shadow-xs: 0 2px 8px rgba(28,28,28,0.06);
-      --shadow-sm: 0 4px 18px rgba(28,28,28,0.08);
-      --shadow-md: 0 8px 36px rgba(28,28,28,0.10);
-      --shadow-lg: 0 16px 56px rgba(28,28,28,0.12);
-      --shadow-o:  0 8px 28px rgba(244,99,26,0.30);
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.07);
+      --shadow-md: 0 6px 28px rgba(0,0,0,0.10);
+      --shadow-lg: 0 14px 50px rgba(0,0,0,0.13);
+      --shadow-o:  0 6px 24px rgba(244,99,26,0.32);
 
-      --r-sm:  8px;
-      --r-md:  14px;
-      --r-lg:  20px;
-      --r-xl:  28px;
-      --r-pill: 999px;
-
-      --ease:   cubic-bezier(0.4,0,0.2,1);
-      --spring: cubic-bezier(0.34,1.56,0.64,1);
-      --t: all 0.28s var(--ease);
+      --ease: cubic-bezier(0.4,0,0.2,1);
+      --t: all 0.26s var(--ease);
 
       --px: 16px;
-      --mb: 64px;
-      --header-h: 62px;
+      --max: 1240px;
+      --topbar-h: 38px;
+      --nav-h: 64px;
     }
-
-    @media (min-width:480px)  { :root { --px:24px; --mb:72px; } }
-    @media (min-width:768px)  { :root { --px:40px; --mb:88px; --header-h:68px; } }
-    @media (min-width:1024px) { :root { --px:60px; --mb:100px; } }
-    @media (min-width:1280px) { :root { --px:80px; --mb:112px; } }
+    @media(min-width:480px){:root{--px:22px;}}
+    @media(min-width:768px){:root{--px:36px;--nav-h:70px;}}
+    @media(min-width:1024px){:root{--px:52px;}}
+    @media(min-width:1280px){:root{--px:64px;}}
 
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
     html{scroll-behavior:smooth;}
-    body{
-      font-family:'Barlow',sans-serif;
-      background:var(--white);
-      color:var(--ink);
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;
-      overflow-x:hidden;
-    }
-    @media(max-width:1023px){ body{padding-bottom:76px;} }
-    @supports(padding:env(safe-area-inset-bottom)){
-      @media(max-width:1023px){ .sticky-bar{bottom:calc(12px + env(safe-area-inset-bottom));} }
-    }
+    body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    @media(max-width:1023px){body{padding-bottom:70px;}}
     a{text-decoration:none;color:inherit;}
     ul{list-style:none;}
     img{max-width:100%;display:block;}
     ::-webkit-scrollbar{width:3px;}
-    ::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px;}
+    ::-webkit-scrollbar-thumb{background:var(--orange);}
 
-    @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
     @keyframes spin{to{transform:rotate(360deg);}}
-    @keyframes pulseDot{0%,100%{transform:scale(1);}50%{transform:scale(1.6);}}
-    @keyframes slideRight{from{transform:scaleX(0);}to{transform:scaleX(1);}}
-    @keyframes floatBadge{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
-    @media(prefers-reduced-motion:reduce){
-      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}
-      html{scroll-behavior:auto;}
-    }
+    @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.5);}}
+    @keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
 
-    .reveal{
-      opacity:0;transform:translateY(22px);
-      transition:opacity 0.55s var(--ease),transform 0.55s var(--ease);
-    }
-    .reveal.visible{opacity:1;transform:translateY(0);}
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .5s var(--ease),transform .5s var(--ease);}
+    .reveal.in{opacity:1;transform:translateY(0);}
 
-    /* ══ HEADER ══ */
-    header{
-      position:sticky;top:0;z-index:1000;
-      height:var(--header-h);
-      padding:0 var(--px);
+    /* ══════════════════════════════
+       TOP BAR  (thin orange strip)
+    ══════════════════════════════ */
+    .topbar{
+      background:var(--orange);
+      height:var(--topbar-h);
       display:flex;align-items:center;justify-content:space-between;
-      background:rgba(255,255,255,0.95);
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-      border-bottom:2px solid var(--orange);
-      transition:var(--t);
+      padding:0 var(--px);
+      position:relative;z-index:1001;
     }
-    header.scrolled{box-shadow:0 2px 24px rgba(28,28,28,0.08);}
-
-    .logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
-    .logo-svg{height:34px;width:auto;flex-shrink:0;}
-    @media(min-width:768px){.logo-svg{height:38px;}}
-
-    .logo-wordmark{
-      font-family:'Oswald',sans-serif;
-      font-weight:700;font-size:1.15rem;
-      letter-spacing:0.04em;
-      text-transform:uppercase;
-      color:var(--ink);white-space:nowrap;
+    .topbar-left{
+      display:flex;align-items:center;gap:16px;
     }
-    .logo-wordmark span{color:var(--orange);}
-
-    nav ul{display:none;}
-    @media(min-width:768px){
-      nav ul{display:flex;gap:2px;align-items:center;}
-      nav a{
-        font-family:'Barlow Condensed',sans-serif;
-        font-size:0.82rem;font-weight:600;
-        text-transform:uppercase;letter-spacing:0.08em;
-        color:var(--muted);padding:6px 10px;
-        border-radius:4px;transition:var(--t);
-        white-space:nowrap;
-      }
-      nav a:hover{color:var(--orange);}
-      .nav-cta{
-        background:var(--orange)!important;
-        color:#fff!important;
-        padding:8px 18px!important;
-        border-radius:4px!important;
-        box-shadow:var(--shadow-o)!important;
-      }
-      .nav-cta:hover{background:var(--orange-deep)!important;transform:translateY(-1px);}
-    }
-
-    .hamburger{
-      display:flex;flex-direction:column;justify-content:center;gap:5px;
-      width:38px;height:38px;border:2px solid var(--border);
-      border-radius:4px;background:none;cursor:pointer;padding:7px;
-      transition:var(--t);-webkit-tap-highlight-color:transparent;touch-action:manipulation;
-    }
-    .hamburger span{display:block;height:2px;background:var(--ink);border-radius:1px;transition:var(--t);}
-    .hamburger:hover{border-color:var(--orange);}
-    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-    .hamburger.open span:nth-child(2){opacity:0;}
-    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-    @media(min-width:768px){.hamburger{display:none;}}
-
-    .mobile-nav{
-      display:none;position:fixed;
-      top:var(--header-h);left:0;right:0;
-      background:rgba(255,255,255,0.97);
-      backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-      border-bottom:3px solid var(--orange);
-      padding:14px var(--px) 22px;
-      flex-direction:column;gap:2px;z-index:999;
-      box-shadow:var(--shadow-md);
-    }
-    .mobile-nav.open{display:flex;}
-    .mobile-nav a{
+    .topbar-tag{
       font-family:'Barlow Condensed',sans-serif;
-      font-weight:600;font-size:1rem;
-      text-transform:uppercase;letter-spacing:0.07em;
-      padding:12px 14px;border-radius:4px;color:var(--muted);transition:var(--t);
-      min-height:44px;display:flex;align-items:center;
+      font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;
+      color:rgba(255,255,255,0.85);
+      white-space:nowrap;
+    }
+    .topbar-sep{width:1px;height:14px;background:rgba(255,255,255,0.3);}
+    .topbar-right{display:flex;align-items:center;gap:8px;}
+    .topbar-btn{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;
+      padding:5px 14px;border-radius:2px;transition:var(--t);
+      white-space:nowrap;cursor:pointer;
       -webkit-tap-highlight-color:transparent;
     }
-    .mobile-nav a:hover{color:var(--orange);}
-    .mobile-nav .nav-cta{
-      margin-top:8px;background:var(--orange)!important;
-      color:#fff!important;justify-content:center;
-      border-radius:4px!important;font-weight:700!important;
-    }
+    .topbar-btn.ghost{color:#fff;border:1px solid rgba(255,255,255,0.45);}
+    .topbar-btn.ghost:hover{background:rgba(255,255,255,0.15);}
+    .topbar-btn.solid{background:#fff;color:var(--orange);}
+    .topbar-btn.solid:hover{background:var(--orange-pale);}
+    /* Hide some topbar on very small */
+    @media(max-width:479px){.topbar-tag{display:none;}.topbar-sep{display:none;}}
 
-    /* ══ HERO ══ */
-    .hero{
-      position:relative;overflow:hidden;
+    /* ══════════════════════════════
+       MAIN NAV
+    ══════════════════════════════ */
+    .main-nav{
+      position:sticky;
+      top:0;z-index:1000;
+      height:var(--nav-h);
       background:var(--white);
-      padding:clamp(52px,9vw,110px) var(--px) clamp(80px,12vw,150px);
-      text-align:center;
+      border-bottom:3px solid var(--orange);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 var(--px);
+      box-shadow:0 2px 18px rgba(0,0,0,0.07);
+      transition:var(--t);
     }
-    .hero::before{
-      content:'';position:absolute;
-      top:-80px;right:-80px;
-      width:clamp(260px,40vw,480px);
-      height:clamp(260px,40vw,480px);
-      background:var(--orange-pale);
-      clip-path:polygon(100% 0,100% 100%,0 100%);
-      pointer-events:none;
-    }
-    .hero::after{
-      content:'';position:absolute;
-      bottom:0;left:0;right:0;
-      height:6px;
-      background:linear-gradient(90deg,var(--orange),var(--orange-light),var(--orange));
-    }
-    .hero-dots{
-      position:absolute;inset:0;
-      background-image:radial-gradient(circle,rgba(244,99,26,0.14) 1px,transparent 1px);
-      background-size:30px 30px;
-      mask-image:radial-gradient(ellipse 60% 55% at 50% 50%,black 0%,transparent 100%);
-      -webkit-mask-image:radial-gradient(ellipse 60% 55% at 50% 50%,black 0%,transparent 100%);
-      pointer-events:none;
-    }
-    .hero-content{position:relative;z-index:2;max-width:820px;margin:0 auto;}
+    .main-nav.scrolled{box-shadow:0 4px 28px rgba(0,0,0,0.11);}
 
-    .hero-tag{
+    .nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0;}
+    .nav-logo svg{height:32px;width:auto;}
+    @media(min-width:768px){.nav-logo svg{height:36px;}}
+    .nav-logo-word{
+      font-family:'Oswald',sans-serif;font-weight:700;font-size:1.1rem;
+      text-transform:uppercase;letter-spacing:0.05em;color:var(--ink);white-space:nowrap;
+    }
+    .nav-logo-word span{color:var(--orange);}
+
+    .nav-links{display:none;}
+    @media(min-width:900px){
+      .nav-links{
+        display:flex;align-items:center;gap:0;
+        margin:0 auto;
+      }
+      .nav-links a{
+        font-family:'Barlow Condensed',sans-serif;
+        font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;
+        color:var(--muted);padding:8px 12px;
+        border-bottom:3px solid transparent;
+        transition:var(--t);white-space:nowrap;
+        margin-bottom:-3px; /* align with nav border */
+      }
+      .nav-links a:hover{color:var(--orange);border-bottom-color:var(--orange);}
+    }
+    @media(min-width:1100px){.nav-links a{padding:8px 16px;font-size:0.82rem;}}
+
+    .nav-right{display:flex;align-items:center;gap:8px;}
+    .nav-cta{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;
+      background:var(--orange);color:#fff;
+      padding:9px 18px;border-radius:2px;
+      box-shadow:var(--shadow-o);transition:var(--t);
+      white-space:nowrap;
+      display:none;
+    }
+    @media(min-width:768px){.nav-cta{display:inline-flex;align-items:center;gap:6px;}}
+    .nav-cta:hover{background:var(--orange-deep);transform:translateY(-1px);}
+
+    /* Hamburger */
+    .burger{
+      display:flex;flex-direction:column;justify-content:center;gap:5px;
+      width:38px;height:38px;border:2px solid var(--bdr);
+      background:none;cursor:pointer;padding:7px;border-radius:2px;
+      transition:var(--t);-webkit-tap-highlight-color:transparent;
+    }
+    .burger span{display:block;height:2px;background:var(--ink);border-radius:1px;transition:var(--t);}
+    .burger:hover{border-color:var(--orange);}
+    .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .burger.open span:nth-child(2){opacity:0;}
+    .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    @media(min-width:900px){.burger{display:none;}}
+
+    /* Mobile drawer */
+    .mob-drawer{
+      display:none;position:fixed;
+      top:calc(var(--topbar-h) + var(--nav-h));left:0;right:0;
+      background:var(--white);
+      border-bottom:3px solid var(--orange);
+      padding:12px var(--px) 20px;
+      flex-direction:column;gap:2px;z-index:998;
+      box-shadow:var(--shadow-md);
+    }
+    .mob-drawer.open{display:flex;}
+    .mob-drawer a{
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:0.08em;
+      padding:12px 10px;color:var(--muted);transition:var(--t);
+      border-bottom:1px solid var(--bdr);min-height:44px;display:flex;align-items:center;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .mob-drawer a:last-child{border-bottom:none;}
+    .mob-drawer a:hover{color:var(--orange);}
+    .mob-drawer .mob-cta{
+      margin-top:10px;background:var(--orange);color:#fff!important;
+      border-bottom:none!important;justify-content:center;border-radius:2px;
+      font-weight:700;
+    }
+
+    /* ══════════════════════════════
+       HERO  (full-screen image)
+    ══════════════════════════════ */
+    .hero{
+      position:relative;
+      height:clamp(360px,70vh,720px);
+      background:var(--ink2);
+      overflow:hidden;
+    }
+    .hero-img{
+      position:absolute;inset:0;
+      background:linear-gradient(135deg,#1a0a00 0%,#2d1205 40%,#3d1a08 100%);
+    }
+    /* Faux image placeholder with pattern */
+    .hero-img::before{
+      content:'';position:absolute;inset:0;
+      background-image:
+        radial-gradient(circle at 70% 40%,rgba(244,99,26,0.25) 0%,transparent 55%),
+        radial-gradient(circle at 20% 80%,rgba(244,99,26,0.12) 0%,transparent 45%);
+    }
+    /* Diagonal grid pattern */
+    .hero-img::after{
+      content:'';position:absolute;inset:0;
+      background-image:
+        linear-gradient(45deg,rgba(255,255,255,0.02) 1px,transparent 1px),
+        linear-gradient(-45deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+      background-size:40px 40px;
+    }
+    /* Dark gradient overlay bottom */
+    .hero-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(10,5,0,0.3) 40%,
+        rgba(10,5,0,0.75) 80%,
+        rgba(10,5,0,0.92) 100%
+      );
+    }
+    /* Orange left accent bar */
+    .hero-bar{
+      position:absolute;left:0;bottom:0;top:0;width:6px;
+      background:var(--orange);
+    }
+
+    .hero-content{
+      position:absolute;
+      bottom:clamp(28px,5vw,56px);
+      left:0;right:0;
+      padding:0 var(--px);
+      max-width:calc(var(--max) + 2*var(--px));
+      margin:0 auto;
+    }
+    .hero-eyebrow{
       display:inline-flex;align-items:center;gap:8px;
       font-family:'Barlow Condensed',sans-serif;
-      font-size:0.75rem;font-weight:700;
-      text-transform:uppercase;letter-spacing:0.2em;
-      color:var(--orange);
-      margin-bottom:clamp(18px,3.5vw,30px);
+      font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.22em;
+      color:var(--orange);margin-bottom:10px;
       animation:fadeUp 0.6s var(--ease) both;
     }
-    .hero-tag::before,
-    .hero-tag::after{content:'';display:block;width:28px;height:2px;background:var(--orange);}
-
-    .hero-pill{
-      display:inline-flex;align-items:center;gap:7px;
-      background:var(--orange-pale);border:1px solid var(--orange-border);
-      color:var(--orange-deep);
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:0.7rem;font-weight:700;
-      text-transform:uppercase;letter-spacing:0.14em;
-      padding:5px 14px 5px 9px;border-radius:3px;
-      margin-bottom:clamp(18px,3vw,28px);
-      animation:fadeUp 0.6s var(--ease) 0.05s both;
-    }
-    .pulse{width:7px;height:7px;background:var(--orange);border-radius:50%;animation:pulseDot 1.8s infinite;}
-
+    .hero-dot{width:6px;height:6px;background:var(--orange);border-radius:50%;animation:pulse 1.8s infinite;}
     .hero h1{
       font-family:'Oswald',sans-serif;
-      font-size:clamp(3.4rem,13vw,7.5rem);
-      font-weight:700;letter-spacing:-0.01em;
-      text-transform:uppercase;
-      color:var(--ink);line-height:0.92;
-      margin-bottom:clamp(4px,1.5vw,12px);
-      animation:fadeUp 0.7s var(--ease) 0.1s both;
+      font-size:clamp(2.8rem,9vw,6.5rem);
+      font-weight:700;text-transform:uppercase;letter-spacing:-0.01em;
+      color:#fff;line-height:0.92;
+      margin-bottom:clamp(10px,2vw,18px);
+      animation:fadeUp 0.7s var(--ease) 0.08s both;
     }
     .hero h1 em{font-style:normal;color:var(--orange);}
-
-    .hero-bar{
-      width:clamp(50px,10vw,90px);height:5px;
-      background:var(--orange);
-      margin:clamp(14px,2.5vw,22px) auto;
-      animation:slideRight 0.8s var(--ease) 0.2s both;
-      transform-origin:left;
-    }
-    .hero p{
-      color:var(--muted);max-width:min(480px,88vw);
-      margin:0 auto clamp(28px,5vw,48px);
-      font-size:clamp(0.9rem,2.2vw,1.05rem);
-      font-weight:400;line-height:1.72;
-      animation:fadeUp 0.7s var(--ease) 0.22s both;
+    .hero-sub{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:clamp(0.88rem,2vw,1.05rem);font-weight:500;
+      color:rgba(255,255,255,0.7);letter-spacing:0.04em;
+      margin-bottom:clamp(18px,3vw,28px);
+      animation:fadeUp 0.7s var(--ease) 0.15s both;
+      max-width:420px;
     }
     .hero-actions{
-      display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
-      animation:fadeUp 0.7s var(--ease) 0.32s both;
+      display:flex;flex-wrap:wrap;gap:10px;
+      animation:fadeUp 0.7s var(--ease) 0.22s both;
     }
-    .hero-stats{
-      display:inline-flex;
-      margin-top:clamp(40px,7vw,76px);
-      border:2px solid var(--border);
-      border-radius:6px;overflow:hidden;
-      background:var(--white);
-      box-shadow:var(--shadow-sm);
-      animation:fadeUp 0.7s var(--ease) 0.42s both;
-      flex-wrap:wrap;
-    }
-    @media(max-width:359px){
-      .hero-stats{flex-direction:column;}
-      .stat{border-right:none!important;border-bottom:2px solid var(--border);}
-      .stat:last-child{border-bottom:none;}
-    }
-    .stat{
-      padding:clamp(14px,2.5vw,22px) clamp(22px,4vw,42px);
-      text-align:center;border-right:2px solid var(--border);
-      flex:1;position:relative;
-    }
-    .stat:last-child{border-right:none;}
-    .stat::after{
-      content:'';position:absolute;
-      bottom:0;left:0;right:0;height:3px;
-      background:var(--orange);
-      transform:scaleX(0);transform-origin:left;
-      transition:transform 0.4s var(--ease);
-    }
-    .stat:hover::after{transform:scaleX(1);}
-    .stat-val{
-      font-family:'Oswald',sans-serif;
-      font-size:clamp(1.7rem,5.5vw,2.6rem);
-      font-weight:700;color:var(--orange);
-      line-height:1;display:block;
-    }
-    .stat-lbl{
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:0.65rem;color:var(--faint);
-      font-weight:600;text-transform:uppercase;letter-spacing:0.12em;margin-top:3px;display:block;
-    }
-
-    /* ══ BUTTONS ══ */
-    .btn-primary{
+    .btn-hero{
       display:inline-flex;align-items:center;gap:8px;
       background:var(--orange);color:#fff;
-      padding:clamp(12px,2vw,14px) clamp(24px,3.5vw,38px);
-      border-radius:4px;
+      padding:clamp(11px,1.8vw,14px) clamp(22px,3vw,36px);
+      border-radius:2px;
       font-family:'Barlow Condensed',sans-serif;
-      font-weight:700;font-size:clamp(0.88rem,2vw,0.98rem);
+      font-weight:700;font-size:clamp(0.85rem,2vw,0.95rem);
       text-transform:uppercase;letter-spacing:0.1em;
-      box-shadow:var(--shadow-o);
-      transition:var(--t);border:none;cursor:pointer;min-height:46px;
-      -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+      box-shadow:var(--shadow-o);transition:var(--t);
+      min-height:44px;cursor:pointer;border:none;
+      -webkit-tap-highlight-color:transparent;
     }
-    .btn-primary:hover{background:var(--orange-deep);transform:translateY(-2px);box-shadow:0 12px 36px rgba(244,99,26,0.38);}
-    .btn-primary:active{transform:translateY(0);}
-    .btn-primary svg{transition:transform 0.25s;}
-    .btn-primary:hover svg{transform:translateX(4px);}
+    .btn-hero:hover{background:var(--orange-deep);transform:translateY(-2px);}
+    .btn-hero.ghost{background:transparent;border:2px solid rgba(255,255,255,0.5);box-shadow:none;}
+    .btn-hero.ghost:hover{background:rgba(255,255,255,0.12);border-color:#fff;}
+    .btn-hero svg{transition:transform 0.2s;}
+    .btn-hero:not(.ghost):hover svg{transform:translateX(3px);}
 
-    .btn-ghost{
-      display:inline-flex;align-items:center;gap:8px;
-      background:transparent;color:var(--ink);
-      padding:clamp(12px,2vw,14px) clamp(20px,3vw,32px);
-      border-radius:4px;
+    /* ══════════════════════════════
+       NEXT SLOTS  (like UBB matches)
+    ══════════════════════════════ */
+    .slots-section{
+      background:var(--off);
+      border-bottom:2px solid var(--bdr);
+      padding:clamp(28px,4vw,44px) var(--px);
+    }
+    .slots-inner{max-width:var(--max);margin:0 auto;}
+
+    .section-head{margin-bottom:clamp(20px,3vw,30px);}
+    .section-head-sub{
       font-family:'Barlow Condensed',sans-serif;
-      font-weight:700;font-size:clamp(0.88rem,2vw,0.98rem);
-      text-transform:uppercase;letter-spacing:0.1em;
-      border:2px solid var(--ink);transition:var(--t);cursor:pointer;min-height:46px;
-      -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+      font-size:0.72rem;font-weight:700;font-style:italic;
+      text-transform:uppercase;letter-spacing:0.18em;
+      color:var(--orange);margin-bottom:4px;
     }
-    .btn-ghost:hover{border-color:var(--orange);color:var(--orange);}
-
-    /* ══ SECTION WRAPPER ══ */
-    .sw{max-width:min(1160px,100%);margin:0 auto var(--mb);padding:0 var(--px);}
-
-    /* ══ SECTION LABELS ══ */
-    .eyebrow{
-      display:inline-flex;align-items:center;gap:10px;
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:0.7rem;font-weight:700;
-      text-transform:uppercase;letter-spacing:0.22em;
-      color:var(--orange);margin-bottom:10px;
-    }
-    .eyebrow::before{content:'';display:block;width:22px;height:3px;background:var(--orange);border-radius:1px;}
-
-    .section-title{
+    .section-head-title{
       font-family:'Oswald',sans-serif;
-      font-size:clamp(2rem,6vw,3.8rem);
-      font-weight:700;letter-spacing:0.01em;
-      text-transform:uppercase;
-      color:var(--ink);line-height:1;margin-bottom:0;
+      font-size:clamp(1.4rem,4vw,2.2rem);font-weight:700;text-transform:uppercase;
+      color:var(--ink);line-height:1;
     }
-    .section-sub{
-      color:var(--muted);font-size:clamp(0.88rem,2vw,1rem);
-      max-width:500px;line-height:1.72;margin-top:12px;
-    }
-    .sh{margin-bottom:clamp(30px,5vw,56px);}
 
-    /* ══ BAND ══ */
-    .band{
-      background:var(--orange);
-      padding:clamp(18px,3vw,30px) var(--px);
-      margin-bottom:var(--mb);
-      overflow:hidden;position:relative;
+    .slots-grid{
+      display:grid;gap:12px;
+      grid-template-columns:1fr;
     }
-    .band-inner{
-      max-width:min(1160px,100%);margin:0 auto;
-      display:flex;align-items:center;
-      justify-content:space-between;gap:20px;
+    @media(min-width:640px){.slots-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(min-width:960px){.slots-grid{grid-template-columns:repeat(3,1fr);}}
+
+    .slot-card{
+      background:var(--white);border:2px solid var(--bdr);border-radius:2px;
+      display:flex;align-items:stretch;
+      overflow:hidden;box-shadow:var(--shadow-sm);
+      transition:var(--t);cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .slot-card:hover{border-color:var(--orange);box-shadow:var(--shadow-md);transform:translateY(-2px);}
+
+    .slot-left{
+      width:6px;background:var(--orange);flex-shrink:0;
+    }
+    .slot-ico{
+      padding:clamp(12px,2vw,18px);
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+    }
+    .slot-ico-box{
+      width:52px;height:52px;border-radius:2px;
+      background:var(--orange-pale);border:2px solid var(--orange-bdr);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.4rem;
+    }
+    .slot-info{
+      flex:1;padding:clamp(10px,2vw,16px) clamp(10px,2vw,16px) clamp(10px,2vw,16px) 0;
+    }
+    .slot-type{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;
+      color:var(--orange);margin-bottom:3px;
+    }
+    .slot-name{
+      font-family:'Oswald',sans-serif;
+      font-size:clamp(1rem,2.5vw,1.2rem);font-weight:700;text-transform:uppercase;
+      color:var(--ink);margin-bottom:4px;
+    }
+    .slot-meta{
+      font-size:0.8rem;color:var(--muted);
+      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    }
+    .slot-meta span{display:flex;align-items:center;gap:4px;}
+    .slot-price{
+      font-family:'Oswald',sans-serif;
+      font-size:clamp(1.3rem,3vw,1.7rem);font-weight:700;color:var(--orange);
+      padding:clamp(10px,2vw,16px);display:flex;align-items:center;
+      border-left:2px solid var(--bdr);flex-shrink:0;
+    }
+    .slot-price sup{font-size:0.65em;vertical-align:super;font-family:'Barlow',sans-serif;}
+
+    .slots-cta{
+      text-align:center;margin-top:clamp(18px,3vw,28px);
+    }
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:8px;
+      border:2px solid var(--ink);color:var(--ink);
+      padding:11px 28px;border-radius:2px;
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:700;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;
+      transition:var(--t);min-height:44px;cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .btn-outline:hover{border-color:var(--orange);color:var(--orange);}
+
+    /* ══════════════════════════════
+       NEWS GRID  (like UBB articles)
+    ══════════════════════════════ */
+    .news-section{
+      padding:clamp(40px,6vw,72px) var(--px);
+      border-bottom:2px solid var(--bdr);
+    }
+    .news-inner{max-width:var(--max);margin:0 auto;}
+    .news-inner .section-head{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
       flex-wrap:wrap;
     }
-    .band-text{
-      font-family:'Oswald',sans-serif;
-      font-size:clamp(1rem,2.5vw,1.4rem);
-      font-weight:600;text-transform:uppercase;
-      letter-spacing:0.06em;color:#fff;
+    .news-grid{
+      display:grid;gap:16px;
+      grid-template-columns:1fr;
     }
-    .band-text strong{font-weight:700;display:block;font-size:clamp(0.7rem,1.5vw,0.8rem);opacity:0.75;letter-spacing:0.2em;margin-bottom:3px;font-family:'Barlow Condensed',sans-serif;}
-    .band-btn{
-      display:inline-flex;align-items:center;gap:8px;
-      background:#fff;color:var(--orange);
-      padding:10px 24px;border-radius:3px;
-      font-family:'Barlow Condensed',sans-serif;
-      font-weight:700;font-size:0.88rem;
-      text-transform:uppercase;letter-spacing:0.1em;transition:var(--t);
-      min-height:42px;-webkit-tap-highlight-color:transparent;
-    }
-    .band-btn:hover{background:var(--off);transform:scale(1.03);}
+    @media(min-width:560px){.news-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(min-width:900px){.news-grid{grid-template-columns:repeat(4,1fr);}}
 
-    /* ══ ABOUT ══ */
+    .news-card{
+      background:var(--white);border:2px solid var(--bdr);border-radius:2px;
+      overflow:hidden;box-shadow:var(--shadow-sm);
+      transition:var(--t);cursor:pointer;display:flex;flex-direction:column;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .news-card:hover{border-color:var(--orange);box-shadow:var(--shadow-md);transform:translateY(-3px);}
+    .news-card-img{
+      aspect-ratio:16/10;overflow:hidden;position:relative;
+      background:var(--off);
+    }
+    /* We'll use CSS gradient placeholders since images might not load */
+    .news-card-img::before{
+      content:'';position:absolute;inset:0;
+      transition:transform 0.4s var(--ease);
+    }
+    .news-card:hover .news-card-img::before{transform:scale(1.04);}
+    .news-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s var(--ease);}
+    .news-card:hover .news-card-img img{transform:scale(1.04);}
+
+    .news-card-body{padding:14px 16px 18px;flex:1;display:flex;flex-direction:column;}
+    .news-cat{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;
+      color:var(--orange);margin-bottom:6px;
+    }
+    .news-title{
+      font-family:'Oswald',sans-serif;
+      font-size:clamp(0.95rem,2vw,1.05rem);font-weight:700;text-transform:uppercase;
+      color:var(--ink);line-height:1.2;flex:1;
+    }
+    .news-card:hover .news-title{color:var(--orange);}
+    .news-arrow{
+      margin-top:12px;align-self:flex-start;
+      display:flex;align-items:center;gap:5px;
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;
+      color:var(--muted);transition:var(--t);
+    }
+    .news-card:hover .news-arrow{color:var(--orange);}
+
+    /* ══════════════════════════════
+       BRÈVES  (small news list)
+    ══════════════════════════════ */
+    .breves-section{
+      background:var(--off);
+      padding:clamp(32px,5vw,56px) var(--px);
+      border-bottom:2px solid var(--bdr);
+    }
+    .breves-inner{max-width:var(--max);margin:0 auto;}
+    .breves-inner .section-head{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+      flex-wrap:wrap;margin-bottom:clamp(16px,2.5vw,24px);
+    }
+
+    .breves-list{display:flex;flex-direction:column;gap:0;}
+    .breve-item{
+      display:flex;align-items:center;gap:clamp(12px,2vw,20px);
+      padding:clamp(12px,2vw,16px) 0;
+      border-bottom:1px solid var(--bdr);
+      transition:var(--t);cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .breve-item:last-child{border-bottom:none;}
+    .breve-item:hover{padding-left:6px;}
+    .breve-tag{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;
+      color:#fff;background:var(--orange);padding:3px 8px;border-radius:1px;
+      white-space:nowrap;flex-shrink:0;
+    }
+    .breve-date{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:0.68rem;font-weight:600;color:var(--faint);
+      text-transform:uppercase;letter-spacing:0.1em;
+      white-space:nowrap;flex-shrink:0;
+    }
+    .breve-title{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:clamp(0.88rem,2vw,0.96rem);font-weight:700;text-transform:uppercase;
+      color:var(--ink);flex:1;line-height:1.25;
+      transition:color 0.2s;
+    }
+    .breve-item:hover .breve-title{color:var(--orange);}
+    .breve-arr{color:var(--faint);flex-shrink:0;transition:var(--t);}
+    .breve-item:hover .breve-arr{color:var(--orange);transform:translateX(3px);}
+
+    /* ══════════════════════════════
+       ABOUT  (2 col: image + text)
+    ══════════════════════════════ */
+    .about-section{
+      padding:clamp(40px,6vw,76px) var(--px);
+      border-bottom:2px solid var(--bdr);
+    }
+    .about-inner{max-width:var(--max);margin:0 auto;}
     .about-grid{
-      display:grid;gap:clamp(36px,5vw,70px);
+      display:grid;gap:clamp(32px,5vw,64px);
       align-items:center;
     }
-    @media(min-width:768px){.about-grid{grid-template-columns:1fr 1.2fr;}}
+    @media(min-width:768px){.about-grid{grid-template-columns:1fr 1.15fr;}}
 
-    .about-visual{position:relative;}
+    .about-img-wrap{position:relative;}
     .about-img{
-      border-radius:6px;overflow:hidden;
-      aspect-ratio:4/5;
-      box-shadow:var(--shadow-lg);
+      border-radius:2px;overflow:hidden;
+      aspect-ratio:3/4;box-shadow:var(--shadow-lg);
       position:relative;
     }
-    .about-img::before{
-      content:'';position:absolute;
-      top:0;left:0;width:40%;height:5px;
-      background:var(--orange);z-index:2;
-    }
-    @media(min-width:768px){.about-img{aspect-ratio:unset;height:420px;}}
+    @media(min-width:768px){.about-img{aspect-ratio:unset;height:460px;}}
     .about-img img{width:100%;height:100%;object-fit:cover;display:block;}
+    /* Orange corner accent */
+    .about-img::after{
+      content:'';position:absolute;
+      top:0;left:0;right:0;height:5px;
+      background:var(--orange);
+    }
 
-    .about-bg-num{
-      position:absolute;
-      top:-20px;right:-10px;
+    /* Big ghost letter behind */
+    .about-ghost{
+      position:absolute;top:-30px;right:-20px;
       font-family:'Oswald',sans-serif;
-      font-size:clamp(7rem,18vw,14rem);
-      font-weight:700;
-      color:rgba(244,99,26,0.06);
-      line-height:1;
-      pointer-events:none;
-      z-index:0;
-      user-select:none;
+      font-size:clamp(8rem,20vw,16rem);font-weight:700;
+      color:rgba(244,99,26,0.055);line-height:1;
+      pointer-events:none;user-select:none;z-index:-1;
     }
-    .about-float{
-      position:absolute;bottom:-16px;right:-12px;
-      background:var(--white);border:2px solid var(--orange-border);
-      border-radius:6px;padding:12px 16px;
-      box-shadow:var(--shadow-md);
-      display:flex;align-items:center;gap:10px;
-      animation:floatBadge 4s ease-in-out infinite;
-      z-index:3;
-    }
-    .float-ico{
-      width:36px;height:36px;border-radius:4px;
-      background:var(--orange);display:flex;align-items:center;justify-content:center;
-      color:#fff;font-size:1rem;flex-shrink:0;
-    }
-    .float-text strong{display:block;font-size:0.8rem;font-weight:700;color:var(--ink);}
-    .float-text span{font-size:0.72rem;color:var(--muted);}
 
+    .about-badge{
+      position:absolute;bottom:-16px;right:-10px;
+      background:var(--white);border:2px solid var(--orange-bdr);border-radius:2px;
+      padding:12px 16px;box-shadow:var(--shadow-md);
+      display:flex;align-items:center;gap:10px;
+      animation:floatY 4s ease-in-out infinite;z-index:2;
+    }
+    .badge-ico{
+      width:36px;height:36px;border-radius:2px;background:var(--orange);
+      display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0;
+    }
+    .badge-text strong{display:block;font-size:0.8rem;font-weight:700;color:var(--ink);}
+    .badge-text span{font-size:0.72rem;color:var(--muted);}
+
+    .about-kicker{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:0.7rem;font-weight:700;font-style:italic;
+      text-transform:uppercase;letter-spacing:0.2em;
+      color:var(--orange);margin-bottom:6px;
+    }
     .about-name{
       font-family:'Oswald',sans-serif;
-      font-size:clamp(2.4rem,8vw,4.5rem);
-      font-weight:700;text-transform:uppercase;
-      letter-spacing:0.02em;color:var(--ink);line-height:0.9;margin-bottom:6px;
+      font-size:clamp(2.6rem,8vw,5rem);font-weight:700;text-transform:uppercase;
+      color:var(--ink);line-height:0.88;margin-bottom:8px;
     }
     .about-role{
       font-family:'Barlow Condensed',sans-serif;
-      font-size:0.72rem;font-weight:700;
-      text-transform:uppercase;letter-spacing:0.2em;
+      font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;
       color:var(--orange);margin-bottom:24px;
-      display:flex;align-items:center;gap:8px;
+      display:flex;align-items:center;gap:10px;
     }
-    .about-role::after{content:'';flex:1;max-width:60px;height:2px;background:var(--orange-border);}
-    .about-text p{
-      font-size:clamp(0.9rem,1.8vw,1rem);
-      color:var(--muted);margin-bottom:14px;line-height:1.78;
-    }
+    .about-role::after{content:'';flex:1;max-width:50px;height:2px;background:var(--orange-bdr);}
+    .about-body p{font-size:clamp(0.9rem,1.8vw,1rem);color:var(--muted);margin-bottom:14px;line-height:1.78;}
     .hl{color:var(--orange);font-weight:600;}
 
     .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px;}
     .tag{
-      background:var(--off);border:1.5px solid var(--border);
-      border-radius:3px;padding:6px 14px;
+      background:var(--off);border:2px solid var(--bdr);border-radius:2px;
+      padding:5px 14px;
       font-family:'Barlow Condensed',sans-serif;
-      font-size:0.75rem;font-weight:600;color:var(--muted);
+      font-size:0.72rem;font-weight:700;color:var(--muted);
       text-transform:uppercase;letter-spacing:0.07em;
-      transition:var(--t);min-height:32px;display:flex;align-items:center;
+      transition:var(--t);display:flex;align-items:center;min-height:30px;
     }
     .tag:hover{border-color:var(--orange);color:var(--orange);}
 
-    /* ══ SERVICES ══ */
-    .svc-grid{
-      display:grid;gap:clamp(12px,2vw,18px);
-      grid-template-columns:1fr;
-    }
-    @media(min-width:600px){.svc-grid{grid-template-columns:repeat(2,1fr);}}
-    @media(min-width:960px){.svc-grid{grid-template-columns:repeat(3,1fr);}}
-
-    .svc-card{
-      background:var(--white);border:2px solid var(--border);
-      border-radius:6px;padding:clamp(22px,3vw,34px);
-      display:flex;flex-direction:column;
-      position:relative;overflow:hidden;
-      box-shadow:var(--shadow-xs);
-      transition:all 0.3s var(--ease);cursor:pointer;
-      -webkit-tap-highlight-color:transparent;
-    }
-    .svc-card::before{
-      content:'';position:absolute;
-      top:0;left:0;right:0;height:4px;
-      background:var(--orange);
-      transform:scaleX(0);transform-origin:left;
-      transition:transform 0.35s var(--ease);
-    }
-    .svc-card:hover{border-color:var(--orange-border);box-shadow:var(--shadow-md);transform:translateY(-4px);}
-    .svc-card:active{transform:translateY(-2px);}
-    .svc-card:hover::before{transform:scaleX(1);}
-
-    .svc-num{
-      position:absolute;top:12px;right:16px;
-      font-family:'Oswald',sans-serif;
-      font-size:4.5rem;font-weight:700;
-      color:rgba(28,28,28,0.04);line-height:1;
-      pointer-events:none;user-select:none;
-      transition:color 0.3s;
-    }
-    .svc-card:hover .svc-num{color:rgba(244,99,26,0.07);}
-
-    .svc-ico{
-      width:48px;height:48px;border-radius:4px;
-      background:var(--orange-pale);border:2px solid var(--orange-border);
-      display:flex;align-items:center;justify-content:center;
-      font-size:1.35rem;margin-bottom:18px;transition:var(--t);
-    }
-    .svc-card:hover .svc-ico{background:var(--orange);border-color:var(--orange);}
-
-    .svc-card h3{
-      font-family:'Oswald',sans-serif;
-      font-size:clamp(1.15rem,2.8vw,1.45rem);
-      font-weight:700;text-transform:uppercase;
-      color:var(--ink);margin-bottom:10px;letter-spacing:0.02em;
-    }
-    .svc-card p{font-size:0.88rem;color:var(--muted);line-height:1.75;flex-grow:1;margin-bottom:22px;}
-    .svc-foot{
-      display:flex;justify-content:space-between;align-items:center;
-      padding-top:16px;border-top:2px solid var(--light);margin-top:auto;
-    }
-    .price{
-      font-family:'Oswald',sans-serif;
-      font-size:clamp(1.8rem,5vw,2.3rem);font-weight:700;color:var(--orange);line-height:1;
-    }
-    .price sup{font-size:0.78rem;vertical-align:super;font-family:'Barlow',sans-serif;}
-    .dur{
-      background:var(--off);border:1.5px solid var(--border);
-      border-radius:3px;padding:4px 12px;
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:0.7rem;font-weight:700;color:var(--muted);
-      text-transform:uppercase;letter-spacing:0.1em;
-    }
-    .svc-card.featured{
-      background:var(--orange-pale);
-      border-color:var(--orange-border);
-    }
-    .svc-card.featured::before{transform:scaleX(1);}
-
-    /* ══ PROCESS ══ */
+    /* ══════════════════════════════
+       PROCESS  (4 steps, tinted bg)
+    ══════════════════════════════ */
     .process-section{
-      background:var(--off);
-      padding:clamp(48px,7vw,90px) var(--px);
-      margin-bottom:var(--mb);
-      position:relative;
+      background:var(--ink2);
+      padding:clamp(40px,6vw,76px) var(--px);
+      border-bottom:2px solid #000;
+      position:relative;overflow:hidden;
     }
     .process-section::before{
       content:'';position:absolute;
       top:0;left:0;right:0;height:4px;
-      background:linear-gradient(90deg,var(--orange),var(--orange-light),var(--orange));
+      background:var(--orange);
     }
-    .process-inner{max-width:min(1160px,100%);margin:0 auto;}
+    /* Faint large text background */
+    .process-section::after{
+      content:'PERFORM';position:absolute;
+      right:-20px;top:50%;transform:translateY(-50%);
+      font-family:'Oswald',sans-serif;font-size:clamp(8rem,18vw,18rem);font-weight:700;
+      color:rgba(255,255,255,0.025);line-height:1;pointer-events:none;user-select:none;
+      white-space:nowrap;
+    }
+    .process-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1;}
+    .process-inner .section-head-sub{color:rgba(244,99,26,0.85);}
+    .process-inner .section-head-title{color:#fff;}
 
     .proc-grid{
-      display:grid;gap:clamp(10px,2vw,16px);
-      grid-template-columns:1fr 1fr;
+      display:grid;gap:12px;
+      grid-template-columns:repeat(2,1fr);
     }
     @media(min-width:768px){.proc-grid{grid-template-columns:repeat(4,1fr);}}
 
     .proc-card{
-      background:var(--white);border:2px solid var(--border);
-      border-radius:6px;padding:clamp(18px,3vw,28px);
-      text-align:center;box-shadow:var(--shadow-xs);
-      transition:all 0.3s var(--spring);position:relative;overflow:hidden;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:2px;padding:clamp(18px,3vw,26px);
+      text-align:center;transition:var(--t);cursor:default;
     }
-    .proc-card:hover{transform:translateY(-5px);border-color:var(--orange);box-shadow:var(--shadow-md);}
-    .proc-card:active{transform:translateY(-2px);}
+    .proc-card:hover{background:rgba(244,99,26,0.1);border-color:rgba(244,99,26,0.3);}
     .proc-n{
-      width:50px;height:50px;border-radius:4px;
-      background:var(--orange-pale);border:2px solid var(--orange-border);
+      width:50px;height:50px;border-radius:2px;
+      background:transparent;border:2px solid var(--orange);
       display:flex;align-items:center;justify-content:center;
       font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:700;color:var(--orange);
       margin:0 auto 14px;transition:var(--t);
     }
-    @media(min-width:768px){.proc-n{width:56px;height:56px;font-size:1.6rem;margin-bottom:18px;}}
-    .proc-card:hover .proc-n{background:var(--orange);border-color:var(--orange);color:#fff;}
+    @media(min-width:768px){.proc-n{width:54px;height:54px;margin-bottom:16px;}}
+    .proc-card:hover .proc-n{background:var(--orange);color:#fff;}
     .proc-card h3{
       font-family:'Oswald',sans-serif;
-      font-size:clamp(0.9rem,2vw,1rem);font-weight:700;text-transform:uppercase;
-      letter-spacing:0.04em;color:var(--ink);margin-bottom:8px;
+      font-size:clamp(0.88rem,2vw,1rem);font-weight:700;text-transform:uppercase;
+      letter-spacing:0.05em;color:#fff;margin-bottom:8px;
     }
-    .proc-card p{font-size:clamp(0.78rem,1.8vw,0.84rem);color:var(--muted);line-height:1.65;}
+    .proc-card p{font-size:clamp(0.78rem,1.7vw,0.84rem);color:rgba(255,255,255,0.5);line-height:1.6;}
 
-    /* ══ BENEFITS ══ */
-    .bene-layout{
+    .process-cta{text-align:center;margin-top:clamp(24px,4vw,40px);}
+
+    /* ══════════════════════════════
+       BENEFITS  (white bg, bars + image)
+    ══════════════════════════════ */
+    .bene-section{
+      padding:clamp(40px,6vw,76px) var(--px);
+      border-bottom:2px solid var(--bdr);
+    }
+    .bene-inner{max-width:var(--max);margin:0 auto;}
+    .bene-grid{
       display:grid;gap:clamp(28px,5vw,60px);align-items:center;
     }
-    @media(min-width:768px){.bene-layout{grid-template-columns:1fr 1fr;}}
+    @media(min-width:768px){.bene-grid{grid-template-columns:1fr 1fr;}}
 
-    .bene-list{display:flex;flex-direction:column;gap:10px;}
+    .bene-list{display:flex;flex-direction:column;gap:8px;}
     .bene-row{
       display:flex;align-items:center;gap:12px;
-      padding:12px 16px;
-      background:var(--white);border:2px solid var(--border);
-      border-radius:4px;box-shadow:var(--shadow-xs);
+      padding:12px 14px;
+      background:var(--white);border:2px solid var(--bdr);border-radius:2px;
       transition:var(--t);
     }
     .bene-row:hover{border-color:var(--orange);}
     @media(min-width:768px){.bene-row:hover{transform:translateX(4px);}}
     .bene-label{
       font-family:'Barlow Condensed',sans-serif;
-      font-size:0.78rem;font-weight:700;color:var(--muted);
-      text-transform:uppercase;letter-spacing:0.07em;min-width:88px;
+      font-size:0.75rem;font-weight:700;color:var(--muted);
+      text-transform:uppercase;letter-spacing:0.07em;min-width:90px;
     }
-    .bene-track{flex:1;height:6px;background:var(--light);border-radius:2px;overflow:hidden;}
+    .bene-track{flex:1;height:5px;background:var(--light);border-radius:1px;overflow:hidden;}
     .bene-fill{
-      height:100%;border-radius:2px;
-      background:linear-gradient(90deg,var(--orange),var(--orange-light));
+      height:100%;border-radius:1px;background:var(--orange);
       transform:scaleX(0);transform-origin:left;
       transition:transform 0.9s var(--ease) 0.1s;
     }
-    .bene-row.visible .bene-fill{transform:scaleX(1);}
+    .bene-row.inview .bene-fill{transform:scaleX(1);}
     .bene-pct{
       font-family:'Oswald',sans-serif;
       font-size:1rem;font-weight:700;color:var(--orange);
-      min-width:44px;text-align:right;
+      min-width:42px;text-align:right;
     }
+
     .bene-visual{
-      border-radius:6px;overflow:hidden;
+      border-radius:2px;overflow:hidden;
       position:relative;aspect-ratio:1;
-      box-shadow:var(--shadow-lg);
-      border:2px solid var(--border);
+      box-shadow:var(--shadow-lg);border:2px solid var(--bdr);
     }
     .bene-visual img{width:100%;height:100%;object-fit:cover;display:block;}
-    .bene-overlay{
+    .bene-visual-overlay{
       position:absolute;inset:0;
-      background:linear-gradient(135deg,rgba(244,99,26,0.55) 0%,rgba(244,99,26,0.06) 55%,transparent 100%);
+      background:linear-gradient(135deg,rgba(244,99,26,0.6) 0%,transparent 55%);
     }
-    .bene-big{
-      position:absolute;inset:0;
-      display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
-      padding:clamp(18px,4vw,28px);
+    .bene-visual-text{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:clamp(16px,4vw,26px);
     }
-    .bene-big-text{
+    .bene-visual-text h3{
       font-family:'Oswald',sans-serif;
-      font-size:clamp(1.3rem,3.5vw,2.1rem);
-      font-weight:700;text-transform:uppercase;
-      color:#fff;letter-spacing:0.03em;line-height:1.05;
+      font-size:clamp(1.2rem,3.5vw,2rem);font-weight:700;text-transform:uppercase;
+      color:#fff;line-height:1.05;
     }
-    .bene-big-sub{font-size:0.78rem;color:rgba(255,255,255,0.72);margin-top:6px;}
+    .bene-visual-text p{font-size:0.78rem;color:rgba(255,255,255,0.7);margin-top:5px;}
 
-    /* ══ SAFETY ══ */
-    .safety-bg{
+    /* ══════════════════════════════
+       SOCIAL  (dark section, big numbers)
+    ══════════════════════════════ */
+    .social-section{
+      background:var(--ink2);
+      padding:clamp(40px,6vw,76px) var(--px);
+      position:relative;overflow:hidden;
+      border-top:4px solid var(--orange);
+    }
+    .social-section::after{
+      content:'';position:absolute;inset:0;
+      background-image:radial-gradient(circle at 80% 50%,rgba(244,99,26,0.08) 0%,transparent 55%);
+      pointer-events:none;
+    }
+    .social-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1;}
+    .social-grid{
+      display:grid;gap:clamp(28px,5vw,56px);align-items:center;
+    }
+    @media(min-width:768px){.social-grid{grid-template-columns:1fr 1fr;}}
+
+    .social-heading{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:0.7rem;font-weight:700;font-style:italic;
+      text-transform:uppercase;letter-spacing:0.2em;
+      color:var(--orange);margin-bottom:6px;
+    }
+    .social-title{
+      font-family:'Oswald',sans-serif;
+      font-size:clamp(1.6rem,5vw,3rem);font-weight:700;text-transform:uppercase;
+      color:#fff;line-height:1;margin-bottom:6px;
+    }
+    .social-sub{font-size:0.88rem;color:rgba(255,255,255,0.45);margin-bottom:24px;}
+
+    .social-nums{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+    }
+    .snum{
+      padding:14px;
+      background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+      border-radius:2px;transition:var(--t);cursor:pointer;
+    }
+    .snum:hover{background:rgba(244,99,26,0.12);border-color:rgba(244,99,26,0.3);}
+    .snum-val{
+      font-family:'Oswald',sans-serif;
+      font-size:clamp(1.5rem,4vw,2rem);font-weight:700;color:var(--orange);
+      line-height:1;display:block;
+    }
+    .snum-lbl{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;
+      color:rgba(255,255,255,0.4);margin-top:2px;display:block;
+    }
+
+    .social-insta{
+      display:inline-flex;align-items:center;gap:9px;
+      background:var(--orange);color:#fff;
+      padding:12px 24px;border-radius:2px;
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:700;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.1em;
+      box-shadow:var(--shadow-o);transition:var(--t);min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .social-insta:hover{background:var(--orange-deep);transform:translateY(-1px);}
+
+    .social-img{
+      border-radius:2px;overflow:hidden;
+      aspect-ratio:4/3;
+      box-shadow:var(--shadow-lg);
+      position:relative;
+      background:linear-gradient(135deg,#2a1005,#1a0800);
+    }
+    .social-img::before{
+      content:'';position:absolute;inset:0;
+      background-image:radial-gradient(circle at 40% 40%,rgba(244,99,26,0.2) 0%,transparent 60%);
+    }
+    .social-img img{width:100%;height:100%;object-fit:cover;display:block;}
+    .social-img-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to bottom,transparent 40%,rgba(10,5,0,0.65) 100%);
+    }
+
+    /* ══════════════════════════════
+       SAFETY  (hygiene box)
+    ══════════════════════════════ */
+    .safety-section{
       background:var(--off);
-      padding:clamp(48px,7vw,90px) var(--px);
-      margin-bottom:var(--mb);
+      padding:clamp(40px,6vw,72px) var(--px);
+      border-bottom:2px solid var(--bdr);
       position:relative;
     }
-    .safety-bg::after{
+    .safety-section::after{
       content:'';position:absolute;
       bottom:0;left:0;right:0;height:4px;
-      background:linear-gradient(90deg,var(--orange),var(--orange-light),var(--orange));
+      background:var(--orange);
     }
-    .safety-inner{max-width:min(1160px,100%);margin:0 auto;}
-
+    .safety-inner{max-width:var(--max);margin:0 auto;}
     .safety-box{
-      background:var(--white);border:2px solid var(--border);
-      border-radius:6px;padding:clamp(22px,4vw,44px);
-      max-width:760px;margin:0 auto;
+      background:var(--white);border:2px solid var(--bdr);border-radius:2px;
+      padding:clamp(22px,4vw,44px);
+      max-width:740px;margin:0 auto;
       box-shadow:var(--shadow-sm);
-      position:relative;overflow:hidden;
+      position:relative;
     }
     .safety-box::before{
-      content:'';position:absolute;
-      top:0;left:0;bottom:0;width:5px;
-      background:var(--orange);
+      content:'';position:absolute;top:0;left:0;bottom:0;width:5px;background:var(--orange);
     }
     .safety-box h3{
       font-family:'Oswald',sans-serif;
-      font-size:clamp(1.3rem,3vw,2rem);
-      font-weight:700;text-transform:uppercase;
-      letter-spacing:0.02em;
-      color:var(--ink);margin-bottom:6px;
+      font-size:clamp(1.2rem,3vw,1.8rem);font-weight:700;text-transform:uppercase;
+      color:var(--ink);margin-bottom:4px;
     }
-    .safety-box>p{color:var(--muted);font-size:0.9rem;margin-bottom:22px;}
-    .s-items{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+    .safety-box>p{color:var(--muted);font-size:0.9rem;margin-bottom:20px;}
+    .s-list{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
     .s-item{
-      display:flex;gap:12px;align-items:flex-start;
-      padding:12px 14px;background:var(--off);
-      border-radius:4px;border:1.5px solid var(--border);transition:var(--t);
+      display:flex;gap:11px;align-items:flex-start;
+      padding:11px 14px;background:var(--off);
+      border:1.5px solid var(--bdr);border-radius:2px;transition:var(--t);
     }
-    .s-item:hover{border-color:var(--orange-border);background:var(--orange-pale);}
+    .s-item:hover{border-color:var(--orange-bdr);background:var(--orange-pale);}
     .s-check{
-      width:22px;height:22px;border-radius:50%;
-      background:var(--orange-pale);border:1.5px solid var(--orange-border);
+      width:21px;height:21px;border-radius:50%;
+      background:var(--orange-pale);border:1.5px solid var(--orange-bdr);
       display:flex;align-items:center;justify-content:center;
       flex-shrink:0;margin-top:1px;color:var(--orange);
     }
-    .s-item span{font-size:0.88rem;color:var(--muted);line-height:1.65;}
-    .note{
-      background:var(--orange-pale);border:1.5px solid var(--orange-border);
-      border-radius:4px;padding:14px 16px;
-      display:flex;gap:12px;align-items:flex-start;
-      font-size:0.87rem;color:var(--ink-2);line-height:1.65;
+    .s-item span{font-size:0.87rem;color:var(--muted);line-height:1.65;}
+    .safety-note{
+      background:var(--orange-pale);border:1.5px solid var(--orange-bdr);
+      border-radius:2px;padding:13px 15px;
+      display:flex;gap:11px;align-items:flex-start;
+      font-size:0.86rem;color:var(--ink2);line-height:1.65;
     }
     .note-ico{color:var(--orange);flex-shrink:0;margin-top:2px;}
 
-    /* ══ FAQ ══ */
-    .faq-list{display:flex;flex-direction:column;gap:7px;max-width:740px;margin:0 auto;}
-    .faq-item{
-      background:var(--white);border:2px solid var(--border);
-      border-radius:4px;overflow:hidden;transition:var(--t);
+    /* ══════════════════════════════
+       FAQ
+    ══════════════════════════════ */
+    .faq-section{
+      padding:clamp(40px,6vw,72px) var(--px);
+      border-bottom:2px solid var(--bdr);
     }
-    .faq-item:hover{border-color:var(--orange-border);}
+    .faq-inner{max-width:var(--max);margin:0 auto;}
+    .faq-list{display:flex;flex-direction:column;gap:6px;max-width:720px;margin:0 auto;}
+    .faq-item{
+      background:var(--white);border:2px solid var(--bdr);border-radius:2px;
+      overflow:hidden;transition:var(--t);
+    }
+    .faq-item:hover{border-color:var(--orange-bdr);}
     .faq-item[open]{border-color:var(--orange);}
     summary{
-      padding:clamp(14px,2.5vw,19px) clamp(16px,3vw,24px);
+      padding:clamp(13px,2vw,18px) clamp(14px,2.5vw,22px);
       cursor:pointer;
       font-family:'Barlow Condensed',sans-serif;
-      font-weight:700;font-size:clamp(0.88rem,2vw,0.96rem);
+      font-weight:700;font-size:clamp(0.86rem,2vw,0.94rem);
       text-transform:uppercase;letter-spacing:0.06em;
       color:var(--ink);
       display:flex;justify-content:space-between;align-items:center;gap:12px;
       list-style:none;outline:none;transition:color 0.2s;
-      min-height:52px;-webkit-tap-highlight-color:transparent;
+      min-height:50px;-webkit-tap-highlight-color:transparent;
     }
     summary::-webkit-details-marker{display:none;}
     .faq-item[open] summary{color:var(--orange);}
     .faq-arr{
-      width:28px;height:28px;border-radius:3px;
-      background:var(--off);border:1.5px solid var(--border);
+      width:26px;height:26px;border-radius:2px;
+      background:var(--off);border:1.5px solid var(--bdr);
       display:flex;align-items:center;justify-content:center;
       flex-shrink:0;transition:var(--t);color:var(--muted);
     }
-    .faq-item[open] .faq-arr{background:var(--orange-pale);border-color:var(--orange-border);color:var(--orange);transform:rotate(180deg);}
+    .faq-item[open] .faq-arr{background:var(--orange-pale);border-color:var(--orange-bdr);color:var(--orange);transform:rotate(180deg);}
     .faq-ans{
-      padding:12px clamp(16px,3vw,24px) 16px;
-      font-size:0.89rem;color:var(--muted);line-height:1.75;
+      padding:10px clamp(14px,2.5vw,22px) 16px;
+      font-size:0.88rem;color:var(--muted);line-height:1.75;
       border-top:2px solid var(--light);
     }
 
-    /* ══ LOCATION ══ */
-    .loc-grid{
-      display:grid;gap:clamp(12px,2vw,16px);
-      max-width:980px;margin:0 auto;
+    /* ══════════════════════════════
+       CONTACT + MAP
+    ══════════════════════════════ */
+    .contact-section{
+      background:var(--off);
+      padding:clamp(40px,6vw,72px) var(--px);
+      border-bottom:2px solid var(--bdr);
     }
-    @media(min-width:900px){.loc-grid{grid-template-columns:1.4fr 0.6fr;}}
-
-    .map-card{
-      border-radius:6px;overflow:hidden;
-      border:2px solid var(--border);box-shadow:var(--shadow-sm);
+    .contact-inner{max-width:var(--max);margin:0 auto;}
+    .contact-grid{
+      display:grid;gap:14px;max-width:960px;margin:0 auto;
     }
-    .map-card iframe{width:100%;height:clamp(220px,38vw,380px);display:block;border:0;}
+    @media(min-width:860px){.contact-grid{grid-template-columns:1.5fr 1fr;}}
 
-    .contact-card{
-      background:var(--white);border:2px solid var(--border);
-      border-radius:6px;padding:clamp(20px,3vw,32px);
-      box-shadow:var(--shadow-sm);
+    .map-card{border-radius:2px;overflow:hidden;border:2px solid var(--bdr);box-shadow:var(--shadow-sm);}
+    .map-card iframe{width:100%;height:clamp(220px,38vw,360px);display:block;border:0;}
+
+    .cinfo-card{
+      background:var(--white);border:2px solid var(--bdr);border-radius:2px;
+      padding:clamp(18px,3vw,30px);box-shadow:var(--shadow-sm);
       position:relative;overflow:hidden;
     }
-    .contact-card::before{
-      content:'';position:absolute;
-      top:0;left:0;right:0;height:4px;background:var(--orange);
-    }
-    .contact-title{
+    .cinfo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--orange);}
+    .cinfo-title{
       font-family:'Oswald',sans-serif;
-      font-size:clamp(1.4rem,3.5vw,2.1rem);
-      font-weight:700;text-transform:uppercase;
-      color:var(--orange);letter-spacing:0.02em;margin-bottom:4px;margin-top:10px;
+      font-size:clamp(1.3rem,3.5vw,2rem);font-weight:700;text-transform:uppercase;
+      color:var(--orange);margin-bottom:4px;margin-top:10px;
     }
-    .contact-sub{font-size:0.84rem;color:var(--muted);margin-bottom:18px;line-height:1.6;}
-    .clinks{display:flex;flex-direction:column;gap:8px;}
+    .cinfo-sub{font-size:0.84rem;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+    .clinks{display:flex;flex-direction:column;gap:7px;}
     .clink{
-      display:flex;align-items:center;gap:12px;
-      padding:12px 14px;background:var(--off);
-      border:2px solid var(--border);border-radius:4px;transition:var(--t);
-      min-height:52px;-webkit-tap-highlight-color:transparent;
+      display:flex;align-items:center;gap:11px;
+      padding:11px 13px;background:var(--off);
+      border:2px solid var(--bdr);border-radius:2px;transition:var(--t);
+      min-height:50px;-webkit-tap-highlight-color:transparent;
     }
     .clink:hover{border-color:var(--orange);}
     @media(min-width:768px){.clink:hover{transform:translateX(3px);}}
-    .clink:active{background:var(--orange-pale);}
     .clink-ico{
-      width:36px;height:36px;border-radius:4px;background:var(--white);
+      width:34px;height:34px;border-radius:2px;background:var(--white);
       display:flex;align-items:center;justify-content:center;
-      color:var(--orange);box-shadow:var(--shadow-xs);flex-shrink:0;transition:var(--t);
+      color:var(--orange);box-shadow:var(--shadow-sm);flex-shrink:0;transition:var(--t);
     }
     .clink:hover .clink-ico{background:var(--orange);color:#fff;}
-    .clink-info strong{display:block;font-size:0.84rem;font-weight:700;color:var(--ink);}
-    .clink-info span{font-size:0.77rem;color:var(--muted);}
+    .clink-info strong{display:block;font-size:0.83rem;font-weight:700;color:var(--ink);}
+    .clink-info span{font-size:0.75rem;color:var(--muted);}
 
-    /* ══ BOOKING ══ */
+    /* ══════════════════════════════
+       BOOKING
+    ══════════════════════════════ */
+    .booking-section{
+      padding:clamp(40px,6vw,72px) var(--px);
+      border-bottom:2px solid var(--bdr);
+    }
+    .booking-inner{max-width:var(--max);margin:0 auto;}
     .booking-card{
-      background:var(--white);border:2px solid var(--border);
-      border-radius:6px;overflow:hidden;
-      max-width:800px;margin:0 auto;box-shadow:var(--shadow-md);
+      background:var(--white);border:2px solid var(--bdr);border-radius:2px;
+      overflow:hidden;max-width:780px;margin:0 auto;box-shadow:var(--shadow-md);
     }
-    .booking-top{
-      padding:clamp(16px,3vw,24px) clamp(18px,3vw,32px);
-      border-bottom:2px solid var(--border);
-      background:var(--off);
-      display:flex;align-items:center;gap:14px;
-      position:relative;
+    .booking-head{
+      padding:clamp(14px,2.5vw,22px) clamp(16px,3vw,30px);
+      background:var(--off);border-bottom:2px solid var(--bdr);
+      display:flex;align-items:center;gap:13px;position:relative;
     }
-    .booking-top::before{
-      content:'';position:absolute;
-      top:0;left:0;right:0;height:4px;background:var(--orange);
-    }
+    .booking-head::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--orange);}
     .booking-ico{
-      width:44px;height:44px;border-radius:4px;
-      background:var(--orange);display:flex;align-items:center;justify-content:center;
-      color:#fff;flex-shrink:0;
+      width:42px;height:42px;border-radius:2px;background:var(--orange);
+      display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;
     }
-    .booking-top h3{
+    .booking-head h3{
       font-family:'Oswald',sans-serif;
-      font-size:clamp(1rem,2.5vw,1.35rem);font-weight:700;
-      text-transform:uppercase;letter-spacing:0.03em;
+      font-size:clamp(0.95rem,2.5vw,1.25rem);font-weight:700;text-transform:uppercase;letter-spacing:0.02em;
     }
-    .booking-top p{font-size:0.82rem;color:var(--muted);}
-
+    .booking-head p{font-size:0.8rem;color:var(--muted);}
     .loader-ov{
       position:absolute;inset:0;background:rgba(255,255,255,0.92);
       backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
       display:flex;flex-direction:column;align-items:center;justify-content:center;
       gap:12px;z-index:10;
     }
-    .spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(--light);border-top-color:var(--orange);animation:spin 0.7s linear infinite;}
+    .spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--light);border-top-color:var(--orange);animation:spin 0.7s linear infinite;}
     .loader-ov p{font-size:0.87rem;font-weight:600;color:var(--muted);}
-    .loader-ov small{font-size:0.77rem;color:var(--faint);}
+    .loader-ov small{font-size:0.75rem;color:var(--faint);}
     .loader-ov.hide{opacity:0;pointer-events:none;transition:opacity 0.3s;}
-
     .calendly-inline-widget{min-width:280px;height:650px;}
     @media(min-width:768px){.calendly-inline-widget{height:700px;}}
-
     .booking-foot{
-      padding:clamp(12px,2.5vw,20px) clamp(18px,3vw,32px);
-      border-top:2px solid var(--border);background:var(--off);
-      display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+      padding:clamp(10px,2vw,18px) clamp(16px,3vw,30px);
+      background:var(--off);border-top:2px solid var(--bdr);
+      display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;
     }
     .booking-foot p{font-size:0.8rem;color:var(--muted);}
 
-    /* ══ STICKY BAR ══ */
-    .sticky-bar{
-      position:fixed;
-      bottom:clamp(12px,2vw,18px);
-      left:50%;transform:translateX(-50%);
-      width:calc(100% - 28px);max-width:350px;
-      background:var(--orange);color:#fff;
-      padding:15px 24px;border-radius:4px;
-      display:flex;justify-content:center;align-items:center;gap:9px;
-      box-shadow:0 8px 32px rgba(244,99,26,0.38);
+    /* ══════════════════════════════
+       STICKY CTA bar (mobile)
+    ══════════════════════════════ */
+    .sticky-cta{
+      position:fixed;bottom:0;left:0;right:0;
+      background:var(--orange);
+      display:flex;align-items:center;justify-content:center;gap:9px;
+      padding:clamp(12px,2vw,16px) var(--px);
       z-index:2000;
       font-family:'Barlow Condensed',sans-serif;
-      font-weight:700;font-size:0.95rem;
-      text-transform:uppercase;letter-spacing:0.1em;
-      transition:var(--t);min-height:52px;
-      -webkit-tap-highlight-color:transparent;touch-action:manipulation;cursor:pointer;
+      font-weight:700;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.1em;
+      color:#fff;box-shadow:0 -4px 20px rgba(244,99,26,0.35);
+      cursor:pointer;-webkit-tap-highlight-color:transparent;min-height:56px;
+      padding-bottom:max(clamp(12px,2vw,16px), env(safe-area-inset-bottom));
     }
-    .sticky-bar:active{transform:translateX(-50%) scale(0.97);}
-    @media(min-width:768px){.sticky-bar{display:none;}}
+    .sticky-cta:active{background:var(--orange-deep);}
+    @media(min-width:768px){.sticky-cta{display:none;}}
 
-    /* ══ FOOTER ══ */
+    /* ══════════════════════════════
+       FOOTER  (multi-column)
+    ══════════════════════════════ */
     footer{
-      background:var(--off);
+      background:var(--ink);
       border-top:4px solid var(--orange);
-      padding:clamp(36px,6vw,60px) var(--px);
-      text-align:center;
+      padding:clamp(36px,6vw,64px) var(--px) 0;
     }
+    .footer-top{
+      max-width:var(--max);margin:0 auto;
+      display:grid;gap:clamp(28px,4vw,48px);
+      padding-bottom:clamp(32px,5vw,52px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+    @media(min-width:640px){.footer-top{grid-template-columns:1.4fr 1fr 1fr;}}
+    @media(min-width:900px){.footer-top{grid-template-columns:1.6fr 1fr 1fr 1fr;}}
+
+    .footer-brand{}
     .footer-logo{
       font-family:'Oswald',sans-serif;
-      font-size:clamp(1.4rem,4.5vw,1.8rem);font-weight:700;
-      text-transform:uppercase;letter-spacing:0.04em;
-      color:var(--orange);margin-bottom:6px;
+      font-size:clamp(1.3rem,4vw,1.7rem);font-weight:700;text-transform:uppercase;
+      color:var(--orange);letter-spacing:0.04em;margin-bottom:8px;
     }
-    .footer-tag{
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:0.72rem;color:var(--faint);margin-bottom:20px;
-      letter-spacing:0.14em;text-transform:uppercase;
+    .footer-tagline{font-size:0.78rem;color:rgba(255,255,255,0.35);margin-bottom:16px;line-height:1.6;}
+    .footer-brand-links{display:flex;flex-direction:column;gap:6px;}
+    .footer-brand-link{
+      display:flex;align-items:center;gap:9px;
+      font-size:0.8rem;color:rgba(255,255,255,0.5);transition:var(--t);
     }
-    .footer-links{display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-bottom:20px;}
-    .footer-link{
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:0.75rem;font-weight:600;color:var(--muted);
-      text-transform:uppercase;letter-spacing:0.08em;
-      padding:7px 12px;border-radius:3px;transition:var(--t);
-      min-height:36px;display:flex;align-items:center;
-    }
-    .footer-link:hover{color:var(--orange);}
-    .footer-copy{font-size:0.73rem;color:var(--faint);line-height:1.8;}
-    .footer-copy a{color:var(--orange);font-weight:600;}
+    .footer-brand-link:hover{color:#fff;}
+    .footer-brand-link svg{color:var(--orange);flex-shrink:0;}
 
-    .insta-btn{
-      display:inline-flex;align-items:center;gap:8px;
+    .footer-col h4{
       font-family:'Barlow Condensed',sans-serif;
-      font-weight:700;font-size:0.88rem;
-      text-transform:uppercase;letter-spacing:0.1em;
-      color:var(--muted);
-      padding:10px 22px;background:var(--white);
-      border:2px solid var(--border);border-radius:4px;transition:var(--t);
-      min-height:44px;-webkit-tap-highlight-color:transparent;
+      font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;
+      color:rgba(255,255,255,0.35);margin-bottom:12px;
     }
-    .insta-btn:hover{border-color:var(--orange);color:var(--orange);}
+    .footer-col ul{display:flex;flex-direction:column;gap:6px;}
+    .footer-col li a{
+      font-size:0.82rem;color:rgba(255,255,255,0.55);transition:var(--t);
+      font-family:'Barlow Condensed',sans-serif;font-weight:500;
+    }
+    .footer-col li a:hover{color:#fff;}
 
-    @media(min-width:1024px) and (max-width:1279px){
-      .svc-grid{grid-template-columns:repeat(3,1fr);}
+    /* Newsletter in footer */
+    .footer-nl{
+      background:rgba(244,99,26,0.1);border:1px solid rgba(244,99,26,0.2);
+      border-radius:2px;padding:16px;margin-top:16px;
     }
-    @media print{
-      .sticky-bar,.hamburger,.mobile-nav{display:none!important;}
-      body{padding-bottom:0;}
+    .footer-nl p{font-size:0.78rem;color:rgba(255,255,255,0.55);margin-bottom:10px;}
+    .footer-nl-form{display:flex;gap:6px;}
+    .footer-nl-input{
+      flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
+      border-radius:2px;padding:9px 12px;color:#fff;font-size:0.82rem;outline:none;
+      font-family:'Barlow',sans-serif;
     }
+    .footer-nl-input::placeholder{color:rgba(255,255,255,0.3);}
+    .footer-nl-input:focus{border-color:var(--orange);}
+    .footer-nl-btn{
+      background:var(--orange);color:#fff;border:none;border-radius:2px;
+      padding:9px 16px;cursor:pointer;
+      font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.78rem;
+      text-transform:uppercase;letter-spacing:0.1em;transition:var(--t);white-space:nowrap;
+    }
+    .footer-nl-btn:hover{background:var(--orange-deep);}
+
+    .footer-bottom{
+      max-width:var(--max);margin:0 auto;
+      display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;
+      padding:clamp(14px,2vw,20px) 0;
+    }
+    .footer-copy{font-size:0.72rem;color:rgba(255,255,255,0.2);}
+    .footer-copy a{color:var(--orange);}
+    .footer-legal{display:flex;gap:14px;flex-wrap:wrap;}
+    .footer-legal a{font-size:0.7rem;color:rgba(255,255,255,0.25);transition:var(--t);}
+    .footer-legal a:hover{color:rgba(255,255,255,0.6);}
+
+    /* Util */
+    .btn-orange{
+      display:inline-flex;align-items:center;gap:7px;
+      background:var(--orange);color:#fff;
+      padding:10px 22px;border-radius:2px;
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:700;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.1em;
+      box-shadow:var(--shadow-o);transition:var(--t);min-height:42px;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .btn-orange:hover{background:var(--orange-deep);transform:translateY(-1px);}
+    .btn-orange svg{transition:transform 0.2s;}
+    .btn-orange:hover svg{transform:translateX(3px);}
+
+    @media print{.sticky-cta,.burger,.mob-drawer{display:none!important;}body{padding-bottom:0;}}
   </style>
 </head>
 <body>
 
-<!-- ══ HEADER ══ -->
-<header id="mainHeader">
-  <a class="logo" href="#">
-    <svg class="logo-svg" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- ══ TOP BAR ══ -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-tag">Genève · Canton de Genève</span>
+    <span class="topbar-sep"></span>
+    <span class="topbar-tag">Séances sur rendez-vous</span>
+  </div>
+  <div class="topbar-right">
+    <a class="topbar-btn ghost" href="https://www.instagram.com/axium.perform/" target="_blank" rel="noopener">Instagram</a>
+    <a class="topbar-btn solid" href="#contact">Réserver</a>
+  </div>
+</div>
+
+<!-- ══ MAIN NAV ══ -->
+<nav class="main-nav" id="mainNav">
+  <a class="nav-logo" href="#">
+    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="logoGrad" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#FF7A35"/>
-          <stop offset="100%" stop-color="#D4520E"/>
+        <linearGradient id="lg1" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FF7A35"/><stop offset="100%" stop-color="#D4520E"/>
         </linearGradient>
       </defs>
-      <rect width="44" height="44" rx="8" fill="url(#logoGrad)"/>
-      <rect x="0" y="0" width="44" height="22" rx="8" fill="white" fill-opacity="0.07"/>
+      <rect width="44" height="44" rx="7" fill="url(#lg1)"/>
+      <rect x="0" y="0" width="44" height="22" rx="7" fill="white" fill-opacity="0.07"/>
       <polygon points="7,35 13,35 19.5,13 14,13" fill="white"/>
       <polygon points="37,35 31,35 24.5,13 30,13" fill="white"/>
       <rect x="11" y="25" width="22" height="4" rx="2" fill="white"/>
       <circle cx="38" cy="8" r="3.5" fill="white" fill-opacity="0.3"/>
       <circle cx="38" cy="8" r="2" fill="white"/>
     </svg>
-    <span class="logo-wordmark">Axium<span>.Perform</span></span>
+    <span class="nav-logo-word">Axium<span>.Perform</span></span>
   </a>
-  <nav>
-    <ul>
-      <li><a href="#about">Qui suis-je</a></li>
-      <li><a href="#prestations">Prestations</a></li>
-      <li><a href="#process">Déroulement</a></li>
-      <li><a href="#bienfaits">Bienfaits</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#location">Contact</a></li>
-      <li><a href="#contact" class="nav-cta">Réserver →</a></li>
-    </ul>
-  </nav>
-  <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</header>
 
-<nav class="mobile-nav" id="mobileNav">
-  <a href="#about"       onclick="closeMobileNav()">Qui suis-je</a>
-  <a href="#prestations" onclick="closeMobileNav()">Prestations</a>
-  <a href="#process"     onclick="closeMobileNav()">Déroulement</a>
-  <a href="#bienfaits"   onclick="closeMobileNav()">Bienfaits</a>
-  <a href="#faq"         onclick="closeMobileNav()">FAQ</a>
-  <a href="#location"    onclick="closeMobileNav()">Contact</a>
-  <a href="#contact"     onclick="closeMobileNav()" class="nav-cta">Réserver →</a>
+  <div class="nav-links">
+    <a href="#about">Qui suis-je</a>
+    <a href="#prestations">Prestations</a>
+    <a href="#process">Déroulement</a>
+    <a href="#bienfaits">Bienfaits</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact-info">Contact</a>
+  </div>
+
+  <div class="nav-right">
+    <a class="nav-cta" href="#contact">
+      Réserver
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<nav class="mob-drawer" id="mobDrawer">
+  <a href="#about"        onclick="closeNav()">Qui suis-je</a>
+  <a href="#prestations"  onclick="closeNav()">Prestations</a>
+  <a href="#process"      onclick="closeNav()">Déroulement</a>
+  <a href="#bienfaits"    onclick="closeNav()">Bienfaits</a>
+  <a href="#faq"          onclick="closeNav()">FAQ</a>
+  <a href="#contact-info" onclick="closeNav()">Contact</a>
+  <a href="#contact"      onclick="closeNav()" class="mob-cta">Réserver →</a>
 </nav>
 
 <!-- ══ HERO ══ -->
 <section class="hero">
-  <div class="hero-dots"></div>
+  <div class="hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-bar"></div>
   <div class="hero-content">
-    <div class="hero-pill">
-      <span class="pulse"></span>
-      Genève · Suisse
-    </div>
-    <div class="hero-tag">Performance & Récupération</div>
+    <div class="hero-eyebrow"><span class="hero-dot"></span> Récupération &amp; Performance Sportive</div>
     <h1>Axium<br><em>Perform</em></h1>
-    <div class="hero-bar"></div>
-    <p>Optimisation de la performance & récupération sportive sur mesure.<br>Massage sportif · Relaxation · Hijama</p>
+    <p class="hero-sub">Massage sportif · Relaxation · Hijama · Genève, Suisse</p>
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary">
-        Prendre Rendez-vous
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <a href="#contact" class="btn-hero">
+        Prendre rendez-vous
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-      <a href="#about" class="btn-ghost">Découvrir</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-val">3</span><span class="stat-lbl">Prestations</span></div>
-      <div class="stat"><span class="stat-val">40.-</span><span class="stat-lbl">Dès</span></div>
-      <div class="stat"><span class="stat-val">100%</span><span class="stat-lbl">Sur-mesure</span></div>
+      <a href="#about" class="btn-hero ghost">Découvrir</a>
     </div>
   </div>
 </section>
 
-<!-- ══ ORANGE BAND ══ -->
-<div class="band">
-  <div class="band-inner">
-    <div class="band-text">
-      <strong>Séances sur rendez-vous uniquement</strong>
-      Canton de Genève · Disponible 7j/7
+<!-- ══ PROCHAINES SÉANCES (= matchs UBB) ══ -->
+<section class="slots-section" id="prestations">
+  <div class="slots-inner">
+    <div class="section-head reveal in">
+      <p class="section-head-sub">Réservation en ligne !</p>
+      <h2 class="section-head-title">Mes Prestations</h2>
     </div>
-    <a href="#contact" class="band-btn">
-      Réserver maintenant
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
-</div>
+    <div class="slots-grid">
 
-<!-- ══ QUI SUIS-JE ══ -->
-<div class="sw" id="about">
-  <div class="about-grid">
-    <div class="about-visual reveal">
-      <div class="about-bg-num">A</div>
-      <div class="about-img">
-        <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann — Axium Perform">
-      </div>
-      <div class="about-float">
-        <div class="float-ico">🏆</div>
-        <div class="float-text">
-          <strong>Accompagnement sur-mesure</strong>
-          <span>Adapté à chaque athlète</span>
+      <a href="#contact" class="slot-card reveal in">
+        <div class="slot-left"></div>
+        <div class="slot-ico"><div class="slot-ico-box">💪</div></div>
+        <div class="slot-info">
+          <p class="slot-type">Récupération musculaire</p>
+          <p class="slot-name">Massage Sportif</p>
+          <p class="slot-meta">
+            <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 30 min</span>
+            <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/></svg> Genève</span>
+          </p>
         </div>
-      </div>
-    </div>
-    <div class="reveal" style="transition-delay:.14s">
-      <div class="eyebrow">Présentation</div>
-      <h2 class="about-name">Sevann</h2>
-      <p class="about-role">Thérapeute Sportif · Genève</p>
-      <div class="about-text">
-        <p>Issu du monde de l'<span class="hl">athlétisme</span>, je suis passionné par la récupération, le bien-être et le fonctionnement du corps humain.</p>
-        <p>Athlète à la base, j'ai développé une vraie compréhension des besoins du corps et de l'<span class="hl">importance des soins</span> pour performer et récupérer au plus haut niveau.</p>
-        <p>Actuellement en formation, je continue à me perfectionner afin de proposer un accompagnement sérieux, évolutif et <span class="hl">axé sur le bien-être</span>.</p>
-      </div>
-      <div class="tags">
-        <span class="tag">Athlétisme</span>
-        <span class="tag">Massage sportif</span>
-        <span class="tag">Hijama</span>
-        <span class="tag">Récupération</span>
-        <span class="tag">Genève</span>
-      </div>
-    </div>
-  </div>
-</div>
+        <div class="slot-price">40<sup>.-</sup></div>
+      </a>
 
-<!-- ══ PRESTATIONS ══ -->
-<div class="sw" id="prestations">
-  <div class="sh reveal">
-    <div class="eyebrow">Tarifs & Services</div>
-    <h2 class="section-title">Mes Prestations</h2>
-    <p class="section-sub">Chaque séance est adaptée à vos besoins et objectifs du moment.</p>
-  </div>
-  <div class="svc-grid">
-    <a href="#contact" class="svc-card reveal" style="transition-delay:.05s">
-      <span class="svc-num">01</span>
-      <div class="svc-ico">💪</div>
-      <h3>Massage Sportif</h3>
-      <p>Récupération musculaire profonde, ciblage des tensions. Idéal après l'effort pour repartir à 100%.</p>
-      <div class="svc-foot">
-        <div class="price">40<sup>.-</sup></div>
-        <span class="dur">30 min</span>
-      </div>
-    </a>
-    <a href="#contact" class="svc-card featured reveal" style="transition-delay:.12s">
-      <span class="svc-num">02</span>
-      <div class="svc-ico">🧘</div>
-      <h3>Massage Relaxation</h3>
-      <p>Détente complète du corps. Réduction du stress et relâchement profond. La séance signature.</p>
-      <div class="svc-foot">
-        <div class="price">70<sup>.-</sup></div>
-        <span class="dur">1 heure</span>
-      </div>
-    </a>
-    <a href="#contact" class="svc-card reveal" style="transition-delay:.19s">
-      <span class="svc-num">03</span>
-      <div class="svc-ico">🔵</div>
-      <h3>Séance Hijama</h3>
-      <p>Thérapie par ventouses pour détoxifier, soulager les douleurs et booster la récupération naturelle.</p>
-      <div class="svc-foot">
-        <div class="price" style="font-size:1.25rem;letter-spacing:0;">Inclus</div>
-        <span class="dur">Sur devis</span>
-      </div>
-    </a>
-  </div>
-</div>
+      <a href="#contact" class="slot-card reveal in" style="transition-delay:.08s">
+        <div class="slot-left"></div>
+        <div class="slot-ico"><div class="slot-ico-box">🧘</div></div>
+        <div class="slot-info">
+          <p class="slot-type">Détente complète — Séance signature</p>
+          <p class="slot-name">Massage Relaxation</p>
+          <p class="slot-meta">
+            <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 1 heure</span>
+            <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/></svg> Genève</span>
+          </p>
+        </div>
+        <div class="slot-price">70<sup>.-</sup></div>
+      </a>
 
-<!-- ══ PROCESS ══ -->
-<div class="process-section" id="process">
-  <div class="process-inner">
-    <div class="sh reveal">
-      <div class="eyebrow">Comment ça se passe</div>
-      <h2 class="section-title">Déroulement d'une séance</h2>
-      <p class="section-sub">Simple, clair et orienté résultat — relâcher, récupérer, repartir plus léger.</p>
+      <a href="#contact" class="slot-card reveal in" style="transition-delay:.16s">
+        <div class="slot-left"></div>
+        <div class="slot-ico"><div class="slot-ico-box">🔵</div></div>
+        <div class="slot-info">
+          <p class="slot-type">Thérapie par ventouses</p>
+          <p class="slot-name">Séance Hijama</p>
+          <p class="slot-meta">
+            <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Sur devis</span>
+            <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/></svg> Genève</span>
+          </p>
+        </div>
+        <div class="slot-price" style="font-size:1rem;padding:12px 14px;">Inclus<br><small style="font-size:0.6rem;opacity:.6">massage</small></div>
+      </a>
+
     </div>
-    <div class="proc-grid reveal">
-      <div class="proc-card">
-        <div class="proc-n">1</div>
-        <h3>Échange rapide</h3>
-        <p>Objectif du jour, zones à travailler, antécédents (douleurs, fatigue, sport).</p>
-      </div>
-      <div class="proc-card">
-        <div class="proc-n">2</div>
-        <h3>Travail ciblé</h3>
-        <p>Massage ou hijama selon la prestation, intensité adaptée, zones prioritaires.</p>
-      </div>
-      <div class="proc-card">
-        <div class="proc-n">3</div>
-        <h3>Retour & conseils</h3>
-        <p>Recommandations post-séance : hydratation, repos, mobilité, sensations normales.</p>
-      </div>
-      <div class="proc-card">
-        <div class="proc-n">4</div>
-        <h3>Suivi</h3>
-        <p>Si nécessaire : planifier la prochaine séance pour tensions récurrentes.</p>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:clamp(24px,4vw,40px);" class="reveal">
-      <a href="#contact" class="btn-primary">
-        Réserver une séance
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    <div class="slots-cta reveal in">
+      <a href="#contact" class="btn-orange">
+        Voir les disponibilités
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ══ BIENFAITS ══ -->
-<div class="sw" id="bienfaits">
-  <div class="sh reveal">
-    <div class="eyebrow">Résultats concrets</div>
-    <h2 class="section-title">Les Bienfaits sur le corps</h2>
-    <p class="section-sub">Des effets mesurables pour optimiser vos performances et votre bien-être quotidien.</p>
-  </div>
-  <div class="bene-layout">
-    <div class="bene-list reveal">
-      <div class="bene-row"><span class="bene-label">Inflammation</span><div class="bene-track"><div class="bene-fill" style="width:40%"></div></div><span class="bene-pct">-40%</span></div>
-      <div class="bene-row"><span class="bene-label">Mobilité</span><div class="bene-track"><div class="bene-fill" style="width:50%"></div></div><span class="bene-pct">+50%</span></div>
-      <div class="bene-row"><span class="bene-label">Douleur</span><div class="bene-track"><div class="bene-fill" style="width:50%"></div></div><span class="bene-pct">-50%</span></div>
-      <div class="bene-row"><span class="bene-label">Stress</span><div class="bene-track"><div class="bene-fill" style="width:35%"></div></div><span class="bene-pct">-35%</span></div>
-      <div class="bene-row"><span class="bene-label">Circulation</span><div class="bene-track"><div class="bene-fill" style="width:30%"></div></div><span class="bene-pct">+30%</span></div>
-      <div class="bene-row"><span class="bene-label">Récupération</span><div class="bene-track"><div class="bene-fill" style="width:25%"></div></div><span class="bene-pct">+25%</span></div>
+<!-- ══ NEWS GRID = Bienfaits / infos ══ -->
+<section class="news-section" id="bienfaits">
+  <div class="news-inner">
+    <div class="section-head reveal in">
+      <div>
+        <p class="section-head-sub">Résultats concrets</p>
+        <h2 class="section-head-title">Les Bienfaits sur le corps</h2>
+      </div>
+      <a href="#contact" class="btn-orange" style="flex-shrink:0;">Réserver →</a>
     </div>
-    <div class="bene-visual reveal" style="transition-delay:.14s">
-      <img src="massage-therapy-2277454_1280.png" alt="Récupération sportive">
-      <div class="bene-overlay"></div>
-      <div class="bene-big">
-        <div class="bene-big-text">Perform.<br>Recover.<br>Repeat.</div>
-        <div class="bene-big-sub">Axium Perform · Genève</div>
+    <div class="news-grid">
+
+      <a href="#contact" class="news-card reveal in">
+        <div class="news-card-img" style="background:linear-gradient(135deg,#1a0a00,#3d1808);">
+          <img src="massage-therapy-2277454_1280.png" alt="Récupération musculaire" style="opacity:.85;">
+        </div>
+        <div class="news-card-body">
+          <p class="news-cat">Muscles &amp; Performance</p>
+          <h3 class="news-title">Récupération musculaire profonde après l'effort</h3>
+          <div class="news-arrow">Découvrir <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <a href="#contact" class="news-card reveal in" style="transition-delay:.07s">
+        <div class="news-card-img" style="background:linear-gradient(135deg,#0a1a00,#1a3008);">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:3.5rem;">🧘</span>
+          </div>
+        </div>
+        <div class="news-card-body">
+          <p class="news-cat">Bien-être &amp; Stress</p>
+          <h3 class="news-title">Réduction du stress et relâchement profond</h3>
+          <div class="news-arrow">Découvrir <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <a href="#contact" class="news-card reveal in" style="transition-delay:.14s">
+        <div class="news-card-img" style="background:linear-gradient(135deg,#00101a,#083040);">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:3.5rem;">🔵</span>
+          </div>
+        </div>
+        <div class="news-card-body">
+          <p class="news-cat">Hijama &amp; Detox</p>
+          <h3 class="news-title">Ventouses : détoxifier et soulager les douleurs</h3>
+          <div class="news-arrow">Découvrir <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <a href="#contact" class="news-card reveal in" style="transition-delay:.21s">
+        <div class="news-card-img" style="background:linear-gradient(135deg,#1a0f00,#332000);">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:3.5rem;">⚡</span>
+          </div>
+        </div>
+        <div class="news-card-body">
+          <p class="news-cat">Circulation &amp; Mobilité</p>
+          <h3 class="news-title">Boost de la circulation et de la mobilité articulaire</h3>
+          <div class="news-arrow">Découvrir <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ BRÈVES = Déroulement / process ══ -->
+<section class="breves-section" id="process">
+  <div class="breves-inner">
+    <div class="section-head reveal in">
+      <div>
+        <p class="section-head-sub">Comment ça se passe</p>
+        <h2 class="section-head-title">Déroulement d'une séance</h2>
+      </div>
+      <a href="#contact" class="btn-outline" style="flex-shrink:0;">Prendre RDV</a>
+    </div>
+    <div class="breves-list reveal in">
+      <div class="breve-item">
+        <span class="breve-tag">Étape 1</span>
+        <span class="breve-date">Avant la séance</span>
+        <span class="breve-title">Échange rapide — objectif du jour, zones à travailler, antécédents sportifs</span>
+        <svg class="breve-arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+      <div class="breve-item">
+        <span class="breve-tag">Étape 2</span>
+        <span class="breve-date">En séance</span>
+        <span class="breve-title">Travail ciblé — massage ou hijama selon la prestation, intensité adaptée</span>
+        <svg class="breve-arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+      <div class="breve-item">
+        <span class="breve-tag">Étape 3</span>
+        <span class="breve-date">Après la séance</span>
+        <span class="breve-title">Retour &amp; conseils — hydratation, repos, mobilité, sensations normales</span>
+        <svg class="breve-arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+      <div class="breve-item">
+        <span class="breve-tag">Étape 4</span>
+        <span class="breve-date">Suivi</span>
+        <span class="breve-title">Suivi personnalisé — planifier la prochaine séance si tensions récurrentes</span>
+        <svg class="breve-arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- ══ ABOUT  (2 col) ══ -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal in">
+        <div class="about-ghost">A</div>
+        <div class="about-img">
+          <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann — Axium Perform">
+        </div>
+        <div class="about-badge">
+          <div class="badge-ico">🏆</div>
+          <div class="badge-text">
+            <strong>Accompagnement sur-mesure</strong>
+            <span>Adapté à chaque athlète</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal in" style="transition-delay:.12s">
+        <p class="about-kicker">Présentation</p>
+        <h2 class="about-name">Sevann</h2>
+        <p class="about-role">Thérapeute Sportif · Genève</p>
+        <div class="about-body">
+          <p>Issu du monde de l'<span class="hl">athlétisme</span>, je suis passionné par la récupération, le bien-être et le fonctionnement du corps humain.</p>
+          <p>Athlète à la base, j'ai développé une vraie compréhension des besoins du corps et de l'<span class="hl">importance des soins</span> pour performer et récupérer au plus haut niveau.</p>
+          <p>Actuellement en formation, je continue à me perfectionner afin de proposer un accompagnement sérieux, évolutif et <span class="hl">axé sur le bien-être</span>.</p>
+        </div>
+        <div class="tags">
+          <span class="tag">Athlétisme</span>
+          <span class="tag">Massage sportif</span>
+          <span class="tag">Hijama</span>
+          <span class="tag">Récupération</span>
+          <span class="tag">Genève</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROCESS  (dark section) ══ -->
+<section class="process-section">
+  <div class="process-inner">
+    <div class="section-head reveal in" style="margin-bottom:clamp(24px,4vw,44px);">
+      <p class="section-head-sub" style="color:rgba(244,99,26,0.8);">Sur le corps</p>
+      <h2 class="section-head-title" style="color:#fff;">Effets mesurables</h2>
+    </div>
+    <div class="proc-grid reveal in">
+      <div class="proc-card">
+        <div class="proc-n">−40%</div>
+        <h3>Inflammation</h3>
+        <p>Réduction significative des marqueurs inflammatoires post-effort.</p>
+      </div>
+      <div class="proc-card">
+        <div class="proc-n">+50%</div>
+        <h3>Mobilité</h3>
+        <p>Amélioration de l'amplitude articulaire et de la souplesse musculaire.</p>
+      </div>
+      <div class="proc-card">
+        <div class="proc-n">−50%</div>
+        <h3>Douleur</h3>
+        <p>Soulagement des douleurs musculaires et des tensions chroniques.</p>
+      </div>
+      <div class="proc-card">
+        <div class="proc-n">+30%</div>
+        <h3>Circulation</h3>
+        <p>Meilleure circulation sanguine et lymphatique, récupération accélérée.</p>
+      </div>
+    </div>
+    <div class="process-cta reveal in">
+      <a href="#contact" class="btn-hero">
+        Réserver une séance
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SOCIAL  (like UBB supporters section) ══ -->
+<section class="social-section">
+  <div class="social-inner">
+    <div class="social-grid">
+      <div class="reveal in">
+        <p class="social-heading">Retrouvez-moi en ligne</p>
+        <h2 class="social-title">Suivez<br>Axium Perform</h2>
+        <p class="social-sub">Conseils récupération, coulisses des séances et actus sportives.</p>
+        <div class="social-nums" style="margin-bottom:20px;">
+          <div class="snum">
+            <span class="snum-val">@axium</span>
+            <span class="snum-lbl">Instagram</span>
+          </div>
+          <div class="snum">
+            <span class="snum-val">078</span>
+            <span class="snum-lbl">WhatsApp / Appel</span>
+          </div>
+          <div class="snum">
+            <span class="snum-val">3</span>
+            <span class="snum-lbl">Prestations</span>
+          </div>
+          <div class="snum">
+            <span class="snum-val">100%</span>
+            <span class="snum-lbl">Sur-mesure</span>
+          </div>
+        </div>
+        <a href="https://www.instagram.com/axium.perform/" target="_blank" rel="noopener" class="social-insta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @axium.perform
+        </a>
+      </div>
+      <div class="social-img reveal in" style="transition-delay:.1s">
+        <img src="massage-therapy-2277454_1280.png" alt="Axium Perform">
+        <div class="social-img-overlay"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ══ SAFETY ══ -->
-<div class="safety-bg" id="safety">
+<section class="safety-section" id="safety">
   <div class="safety-inner">
-    <div class="sh reveal">
-      <div class="eyebrow">Protocole & Standards</div>
-      <h2 class="section-title">Hygiène & Informations</h2>
+    <div class="section-head reveal in" style="margin-bottom:clamp(20px,3vw,32px);">
+      <p class="section-head-sub">Protocole & Standards</p>
+      <h2 class="section-head-title">Hygiène &amp; Informations</h2>
     </div>
-    <div class="safety-box reveal">
+    <div class="safety-box reveal in">
       <h3>Un cadre propre et rassurant</h3>
       <p>Protocole rigoureux, matériel adapté, et recommandations claires avant et après chaque séance.</p>
-      <div class="s-items">
+      <div class="s-list">
         <div class="s-item">
           <div class="s-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div>
           <span>Désinfection complète des surfaces et lavage des mains avant chaque séance.</span>
@@ -1165,180 +1460,240 @@
           <span>Conseils post-séance clairs : hydratation, repos et retour au sport progressif.</span>
         </div>
       </div>
-      <div class="note">
+      <div class="safety-note">
         <svg class="note-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span>Tu as une question spécifique (peau sensible, douleurs chroniques, fatigue) ? Écris-moi avant de réserver, on en discute.</span>
+        <span>Tu as une question spécifique (peau sensible, douleurs chroniques, fatigue) ? Écris-moi avant de réserver, on en discute ensemble.</span>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- ══ FAQ ══ -->
-<div class="sw" id="faq">
-  <div class="sh reveal">
-    <div class="eyebrow">Questions fréquentes</div>
-    <h2 class="section-title">Tout ce que vous devez savoir</h2>
-  </div>
-  <div class="faq-list reveal">
-    <details class="faq-item">
-      <summary>Est-ce que c'est douloureux ?<div class="faq-arr"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5"/></svg></div></summary>
-      <div class="faq-ans">Non, le but n'est pas de vous faire mal. Que ce soit pour un massage sportif ou la Hijama, la sensation peut être intense mais reste toujours très supportable.</div>
-    </details>
-    <details class="faq-item">
-      <summary>Combien de temps dure la séance ?<div class="faq-arr"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5"/></svg></div></summary>
-      <div class="faq-ans">Cela dépend de la prestation choisie. Comptez généralement entre 30 minutes pour un massage ciblé et jusqu'à 1h pour une séance complète.</div>
-    </details>
-    <details class="faq-item">
-      <summary>Est-ce que je peux manger avant la séance ?<div class="faq-arr"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5"/></svg></div></summary>
-      <div class="faq-ans">Il est conseillé de ne pas manger copieusement 2 à 3 heures avant le rendez-vous pour une séance optimale.</div>
-    </details>
-    <details class="faq-item">
-      <summary>Est-ce que je peux reprendre une activité sportive après ?<div class="faq-arr"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5"/></svg></div></summary>
-      <div class="faq-ans">Il est recommandé de laisser le corps se reposer 24h après une séance (surtout Hijama ou massage profond) pour laisser le processus de récupération opérer efficacement.</div>
-    </details>
-    <details class="faq-item">
-      <summary>Est-ce que ça laisse des marques ?<div class="faq-arr"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5"/></svg></div></summary>
-      <div class="faq-ans">Pour le massage classique, non. Pour la Hijama (ventouses), des marques circulaires peuvent apparaître — réaction normale qui s'estompe en 3 à 7 jours.</div>
-    </details>
-  </div>
-</div>
-
-<!-- ══ LOCATION ══ -->
-<div class="sw" id="location">
-  <div class="sh reveal">
-    <div class="eyebrow">Où me trouver</div>
-    <h2 class="section-title">Localisation & Contact</h2>
-  </div>
-  <div class="loc-grid reveal">
-    <div class="map-card">
-      <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps?q=Canton%20de%20Gen%C3%A8ve%2C%20Suisse&output=embed"
-        title="Canton de Genève, Suisse"></iframe>
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <div class="section-head reveal in" style="margin-bottom:clamp(20px,3vw,36px);">
+      <p class="section-head-sub">Questions fréquentes</p>
+      <h2 class="section-head-title">Tout ce que vous devez savoir</h2>
     </div>
-    <div class="contact-card">
-      <h3 class="contact-title">Canton de Genève</h3>
-      <p class="contact-sub">Séances sur rendez-vous uniquement. N'hésitez pas à me contacter directement pour toute question avant de réserver.</p>
-      <div class="clinks">
-        <a class="clink" href="tel:+41787310732">
-          <div class="clink-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 2.08 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          <div class="clink-info"><strong>Appel / WhatsApp</strong><span>078 731 07 32</span></div>
-        </a>
-        <a class="clink" href="mailto:axium.perform@gmail.com">
-          <div class="clink-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div class="clink-info"><strong>Email</strong><span>axium.perform@gmail.com</span></div>
-        </a>
-        <a class="clink" href="https://www.instagram.com/axium.perform/" target="_blank" rel="noopener">
-          <div class="clink-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
-          <div class="clink-info"><strong>Instagram</strong><span>@axium.perform</span></div>
-        </a>
+    <div class="faq-list reveal in">
+      <details class="faq-item">
+        <summary>Est-ce que c'est douloureux ?<div class="faq-arr"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5"/></svg></div></summary>
+        <div class="faq-ans">Non, le but n'est pas de vous faire mal. Que ce soit pour un massage sportif ou la Hijama, la sensation peut être intense mais reste toujours très supportable.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Combien de temps dure la séance ?<div class="faq-arr"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5"/></svg></div></summary>
+        <div class="faq-ans">Cela dépend de la prestation choisie. Comptez généralement 30 minutes pour un massage ciblé et jusqu'à 1h pour une séance complète.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Est-ce que je peux manger avant la séance ?<div class="faq-arr"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5"/></svg></div></summary>
+        <div class="faq-ans">Il est conseillé de ne pas manger copieusement 2 à 3 heures avant le rendez-vous pour une séance optimale.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Puis-je reprendre une activité sportive après ?<div class="faq-arr"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5"/></svg></div></summary>
+        <div class="faq-ans">Il est recommandé de laisser le corps se reposer 24h après une séance (surtout Hijama ou massage profond) pour laisser le processus de récupération opérer efficacement.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Est-ce que ça laisse des marques ?<div class="faq-arr"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l5 5 5-5"/></svg></div></summary>
+        <div class="faq-ans">Pour le massage classique, non. Pour la Hijama (ventouses), des marques circulaires peuvent apparaître — réaction normale qui s'estompe en 3 à 7 jours.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT + MAP ══ -->
+<section class="contact-section" id="contact-info">
+  <div class="contact-inner">
+    <div class="section-head reveal in" style="margin-bottom:clamp(20px,3vw,32px);">
+      <p class="section-head-sub">Où me trouver</p>
+      <h2 class="section-head-title">Localisation &amp; Contact</h2>
+    </div>
+    <div class="contact-grid reveal in">
+      <div class="map-card">
+        <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Canton%20de%20Gen%C3%A8ve%2C%20Suisse&output=embed"
+          title="Canton de Genève"></iframe>
+      </div>
+      <div class="cinfo-card">
+        <h3 class="cinfo-title">Canton de Genève</h3>
+        <p class="cinfo-sub">Séances sur rendez-vous uniquement. Contactez-moi directement pour toute question avant de réserver.</p>
+        <div class="clinks">
+          <a class="clink" href="tel:+41787310732">
+            <div class="clink-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 2.08 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div class="clink-info"><strong>Appel / WhatsApp</strong><span>078 731 07 32</span></div>
+          </a>
+          <a class="clink" href="mailto:axium.perform@gmail.com">
+            <div class="clink-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div class="clink-info"><strong>Email</strong><span>axium.perform@gmail.com</span></div>
+          </a>
+          <a class="clink" href="https://www.instagram.com/axium.perform/" target="_blank" rel="noopener">
+            <div class="clink-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+            <div class="clink-info"><strong>Instagram</strong><span>@axium.perform</span></div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- ══ BOOKING ══ -->
-<div class="sw" id="contact">
-  <div class="sh reveal">
-    <div class="eyebrow">Prise de rendez-vous</div>
-    <h2 class="section-title">Réserver une séance</h2>
-  </div>
-  <div class="booking-card reveal">
-    <div class="booking-top">
-      <div class="booking-ico">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+<section class="booking-section" id="contact">
+  <div class="booking-inner">
+    <div class="section-head reveal in" style="margin-bottom:clamp(20px,3vw,32px);">
+      <p class="section-head-sub">Prise de rendez-vous</p>
+      <h2 class="section-head-title">Réserver une séance</h2>
+    </div>
+    <div class="booking-card reveal in">
+      <div class="booking-head">
+        <div class="booking-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <h3>Calendrier de réservation</h3>
+          <p>Choisissez votre créneau directement en ligne</p>
+        </div>
       </div>
-      <div>
-        <h3>Calendrier de réservation</h3>
-        <p>Choisissez votre créneau directement en ligne</p>
+      <div style="position:relative;">
+        <div class="loader-ov" id="calendlyLoader">
+          <div class="spinner"></div>
+          <p>Chargement du calendrier…</p>
+          <small>Si rien ne s'affiche, utilisez le bouton ci-dessous.</small>
+        </div>
+        <div class="calendly-inline-widget" id="calendlyWidget"
+             data-url="https://calendly.com/axium-perform/seance-de-massage-axium"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      </div>
+      <div class="booking-foot">
+        <p>Le calendrier ne s'affiche pas ?</p>
+        <a href="https://calendly.com/axium-perform/seance-de-massage-axium" target="_blank" rel="noopener" class="btn-orange" style="padding:9px 20px;font-size:0.8rem;">
+          Ouvrir en plein écran →
+        </a>
       </div>
     </div>
-    <div style="position:relative;">
-      <div class="loader-ov" id="calendlyLoader">
-        <div class="spinner"></div>
-        <p>Chargement du calendrier…</p>
-        <small>Si rien ne s'affiche, utilisez le bouton ci-dessous.</small>
-      </div>
-      <div class="calendly-inline-widget" id="calendlyWidget"
-           data-url="https://calendly.com/axium-perform/seance-de-massage-axium"></div>
-      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    </div>
-    <div class="booking-foot">
-      <p>Le calendrier ne s'affiche pas ?</p>
-      <a href="https://calendly.com/axium-perform/seance-de-massage-axium" target="_blank" rel="noopener" class="btn-primary" style="padding:10px 22px;font-size:0.82rem;">
-        Ouvrir en plein écran →
-      </a>
-    </div>
   </div>
-  <div style="text-align:center;margin-top:clamp(20px,3vw,32px);" class="reveal">
-    <p style="color:var(--faint);font-size:0.72rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.14em;font-family:'Barlow Condensed',sans-serif;font-weight:700;">Retrouvez-nous sur Instagram</p>
-    <a href="https://www.instagram.com/axium.perform/" target="_blank" rel="noopener" class="insta-btn">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-      @axium.perform
-    </a>
-  </div>
-</div>
+</section>
 
-<!-- ══ STICKY BAR ══ -->
-<a class="sticky-bar" href="#contact">
+<!-- ══ STICKY CTA ══ -->
+<a class="sticky-cta" href="#contact">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
   Réserver maintenant
 </a>
 
 <!-- ══ FOOTER ══ -->
 <footer>
-  <div class="footer-logo">Axium Perform</div>
-  <p class="footer-tag">Récupération & Performance Sportive · Genève, Suisse</p>
-  <div class="footer-links">
-    <a class="footer-link" href="#about">Qui suis-je</a>
-    <a class="footer-link" href="#prestations">Prestations</a>
-    <a class="footer-link" href="#faq">FAQ</a>
-    <a class="footer-link" href="#contact">Réserver</a>
+  <div class="footer-top">
+
+    <div class="footer-brand">
+      <div class="footer-logo">Axium Perform</div>
+      <p class="footer-tagline">Récupération &amp; Performance Sportive<br>Canton de Genève, Suisse</p>
+      <div class="footer-brand-links">
+        <a class="footer-brand-link" href="tel:+41787310732">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 2.08 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          078 731 07 32
+        </a>
+        <a class="footer-brand-link" href="mailto:axium.perform@gmail.com">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          axium.perform@gmail.com
+        </a>
+        <a class="footer-brand-link" href="https://www.instagram.com/axium.perform/" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg>
+          @axium.perform
+        </a>
+      </div>
+      <div class="footer-nl">
+        <p>Restez informé des nouveautés et disponibilités</p>
+        <div class="footer-nl-form">
+          <input class="footer-nl-input" type="email" placeholder="Votre adresse e-mail">
+          <button class="footer-nl-btn">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Prestations</h4>
+      <ul>
+        <li><a href="#prestations">Massage Sportif — 40.-</a></li>
+        <li><a href="#prestations">Massage Relaxation — 70.-</a></li>
+        <li><a href="#prestations">Séance Hijama</a></li>
+        <li><a href="#contact">Réserver en ligne</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Informations</h4>
+      <ul>
+        <li><a href="#about">Qui suis-je</a></li>
+        <li><a href="#process">Déroulement</a></li>
+        <li><a href="#bienfaits">Bienfaits</a></li>
+        <li><a href="#safety">Hygiène</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+41787310732">078 731 07 32</a></li>
+        <li><a href="mailto:axium.perform@gmail.com">E-mail</a></li>
+        <li><a href="https://www.instagram.com/axium.perform/" target="_blank">Instagram</a></li>
+        <li><a href="#contact-info">Canton de Genève</a></li>
+      </ul>
+    </div>
+
   </div>
-  <p class="footer-copy">
-    © 2025 Axium Perform ·
-    <a href="tel:+41787310732">078 731 07 32</a> ·
-    <a href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a>
-  </p>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Axium Perform · <a href="tel:+41787310732">078 731 07 32</a> · <a href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a></p>
+    <div class="footer-legal">
+      <a href="#">Mentions légales</a>
+      <a href="#">Confidentialité</a>
+    </div>
+  </div>
 </footer>
 
 <script>
-  const header = document.getElementById('mainHeader');
+  // Sticky nav
+  const nav = document.getElementById('mainNav');
+  let lastScroll = 0;
   window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 20);
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+    lastScroll = window.scrollY;
   }, {passive:true});
 
-  const btn = document.getElementById('hamburgerBtn');
-  const mob = document.getElementById('mobileNav');
-  btn.addEventListener('click', () => {
-    const open = mob.classList.toggle('open');
-    btn.classList.toggle('open', open);
-    document.body.style.overflow = open ? 'hidden' : '';
+  // Burger
+  const burgerBtn = document.getElementById('burgerBtn');
+  const drawer = document.getElementById('mobDrawer');
+  burgerBtn.addEventListener('click', () => {
+    const o = drawer.classList.toggle('open');
+    burgerBtn.classList.toggle('open', o);
+    document.body.style.overflow = o ? 'hidden' : '';
   });
-  function closeMobileNav(){
-    mob.classList.remove('open');
-    btn.classList.remove('open');
+  function closeNav() {
+    drawer.classList.remove('open');
+    burgerBtn.classList.remove('open');
     document.body.style.overflow = '';
   }
   document.addEventListener('click', e => {
-    if (!header.contains(e.target) && !mob.contains(e.target)) closeMobileNav();
+    if (!nav.contains(e.target) && !drawer.contains(e.target)) closeNav();
   });
-  window.addEventListener('orientationchange', closeMobileNav);
+  window.addEventListener('orientationchange', closeNav);
 
-  const ro = new IntersectionObserver(entries => {
+  // Reveal on scroll
+  const revealObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); }
     });
-  }, {threshold:0.06, rootMargin:'0px 0px -20px 0px'});
-  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+  }, {threshold: 0.07, rootMargin: '0px 0px -18px 0px'});
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => revealObs.observe(el));
 
-  const bo = new IntersectionObserver(entries => {
+  // Bene fill bars
+  const beneObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); bo.unobserve(e.target); }
+      if (e.isIntersecting) { e.target.classList.add('inview'); beneObs.unobserve(e.target); }
     });
-  }, {threshold:0.35});
-  document.querySelectorAll('.bene-row').forEach(el => bo.observe(el));
+  }, {threshold: 0.4});
+  document.querySelectorAll('.bene-row').forEach(el => beneObs.observe(el));
 
-  (function(){
+  // Calendly loader
+  (function() {
     const loader = document.getElementById('calendlyLoader');
     const widget = document.getElementById('calendlyWidget');
     if (!loader || !widget) return;
