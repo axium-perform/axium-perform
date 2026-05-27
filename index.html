@@ -7,7 +7,7 @@
 
 <title>Axium.Perform — Performance & Récupération</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -36,17 +36,21 @@ html{
 
 body{
   font-family:'Barlow',sans-serif;
+
   background:
     radial-gradient(circle at top left, rgba(0,118,182,0.05), transparent 30%),
     #f7f9fc;
+
   color:var(--text);
+
   overflow-x:hidden;
+
   -webkit-font-smoothing:antialiased;
 }
 
 img{
-  max-width:100%;
   display:block;
+  max-width:100%;
 }
 
 a{
@@ -54,11 +58,12 @@ a{
   color:inherit;
 }
 
-/* ───────────────── GLOBAL SECTION ───────────────── */
+/* ───────────────── GLOBAL ───────────────── */
 .section{
   padding:
     clamp(45px,8vw,90px)
     clamp(20px,6vw,80px);
+
   position:relative;
 }
 
@@ -68,6 +73,7 @@ header{
   top:0;
   left:0;
   right:0;
+
   z-index:9999;
 
   height:78px;
@@ -103,11 +109,13 @@ header{
 
 .logo-text{
   font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-size:clamp(1.35rem,3vw,1.8rem);
-  text-transform:uppercase;
+  font-weight:800;
+  font-size:clamp(1.3rem,3vw,1.7rem);
+
   letter-spacing:1px;
+  text-transform:uppercase;
   line-height:1;
+
   white-space:nowrap;
 }
 
@@ -127,8 +135,11 @@ nav a{
   font-family:'Barlow Condensed',sans-serif;
   font-weight:700;
   text-transform:uppercase;
+
   color:var(--text-muted);
+
   font-size:clamp(0.8rem,1vw,0.95rem);
+
   transition:0.25s;
 }
 
@@ -154,6 +165,7 @@ nav a:hover{
 
   font-family:'Barlow Condensed',sans-serif;
   font-weight:800;
+
   text-transform:uppercase;
 
   box-shadow:0 12px 30px rgba(0,118,182,0.18);
@@ -167,12 +179,8 @@ nav a:hover{
   transform:translateY(-3px);
 }
 
-/* ───────────────── MOBILE ───────────────── */
+/* ───────────────── RESPONSIVE ───────────────── */
 @media (max-width:900px){
-
-  header{
-    gap:10px;
-  }
 
   nav{
     display:none;
@@ -188,7 +196,7 @@ nav a:hover{
   }
 
   .logo-text{
-    font-size:1.25rem;
+    font-size:1.2rem;
   }
 
 }
@@ -265,9 +273,9 @@ nav a:hover{
 
   line-height:0.88;
 
-  text-transform:uppercase;
-
   letter-spacing:clamp(-2px,-0.4vw,-4px);
+
+  text-transform:uppercase;
 
   margin-bottom:20px;
 
@@ -326,6 +334,7 @@ nav a:hover{
 
   font-family:'Barlow Condensed',sans-serif;
   font-weight:800;
+
   text-transform:uppercase;
 
   transition:0.35s;
@@ -407,6 +416,7 @@ nav a:hover{
 .about-image{
   border-radius:36px;
   overflow:hidden;
+
   box-shadow:0 30px 60px rgba(0,0,0,0.12);
 }
 
@@ -465,6 +475,7 @@ nav a:hover{
 
 .service-card:hover{
   transform:translateY(-10px);
+
   box-shadow:0 30px 60px rgba(0,0,0,0.12);
 }
 
@@ -533,6 +544,7 @@ nav a:hover{
   font-family:'Barlow Condensed',sans-serif;
   font-size:2.3rem;
   font-weight:900;
+
   color:var(--primary);
 }
 
@@ -605,6 +617,7 @@ nav a:hover{
 
 .step{
   font-family:'Barlow Condensed',sans-serif;
+
   font-size:4rem;
   font-weight:900;
 
@@ -615,8 +628,11 @@ nav a:hover{
 
 .process-card h3{
   font-family:'Barlow Condensed',sans-serif;
+
   font-size:1.5rem;
+
   text-transform:uppercase;
+
   margin-bottom:10px;
 }
 
@@ -651,6 +667,7 @@ nav a:hover{
   font-family:'Barlow Condensed',sans-serif;
   font-size:2rem;
   text-transform:uppercase;
+
   margin-bottom:6px;
 }
 
@@ -667,7 +684,9 @@ nav a:hover{
 /* ───────────────── FOOTER ───────────────── */
 footer{
   padding:60px 20px;
+
   background:white;
+
   text-align:center;
 }
 
@@ -675,7 +694,9 @@ footer{
   font-family:'Barlow Condensed',sans-serif;
   font-size:2rem;
   font-weight:900;
+
   text-transform:uppercase;
+
   margin-bottom:12px;
 }
 
@@ -689,7 +710,7 @@ footer p{
   line-height:1.7;
 }
 
-/* ───────────────── CGV ───────────────── */
+/* ───────────────── LEGAL ───────────────── */
 .footer-legal{
   margin-top:34px;
   padding-top:24px;
@@ -703,7 +724,9 @@ footer p{
 .footer-legal h4{
   font-family:'Barlow Condensed',sans-serif;
   font-size:1.3rem;
+
   text-transform:uppercase;
+
   margin-bottom:14px;
 }
 
@@ -712,7 +735,7 @@ footer p{
   color:var(--text-muted);
 }
 
-/* ───────────────── ANIMATIONS ───────────────── */
+/* ───────────────── PREMIUM ANIMATION ───────────────── */
 .fade-in{
   opacity:0;
 
@@ -835,19 +858,24 @@ footer p{
     <div class="about-text fade-in">
 
       <p>
-        Athlète à la base, passionné par la récupération et la performance humaine.
+        Athlète à la base,
+        passionné par la récupération
+        et la performance humaine.
       </p>
 
       <p>
         Axium est né d'une volonté simple :
         aider les sportifs et les personnes actives
-        à récupérer mieux, bouger mieux et performer.
+        à récupérer mieux,
+        bouger mieux et performer.
       </p>
 
       <p>
         Chaque séance est pensée de manière ciblée selon vos besoins :
-        récupération musculaire, tensions,
-        fatigue ou relâchement global.
+        récupération musculaire,
+        tensions,
+        fatigue
+        ou relâchement global.
       </p>
 
       <div style="margin-top:18px;">
@@ -1027,7 +1055,8 @@ footer p{
       <h3>Conseils</h3>
 
       <p>
-        Hydratation, récupération
+        Hydratation,
+        récupération
         et suivi post séance.
       </p>
 
@@ -1115,7 +1144,7 @@ footer p{
 
 <script>
 
-/* ───────────────── PREMIUM SCROLL ANIMATION ───────────────── */
+/* ───────────────── SCROLL ANIMATIONS ───────────────── */
 
 const observer = new IntersectionObserver(
 
