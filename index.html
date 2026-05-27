@@ -22,13 +22,7 @@
   --shadow-hover: 0 25px 50px rgba(0,0,0,0.12);
 }
 
-/* ─── RESET ─── */
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
 
 body {
@@ -64,19 +58,8 @@ header {
   transition: height 0.3s;
 }
 
-.logo-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  z-index: 10001;
-}
-
-.logo-mark {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
-
+.logo-wrap { display:flex; align-items:center; gap:10px; z-index:10001; }
+.logo-mark { width:60px; height:60px; object-fit:contain; }
 .logo-text {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
@@ -84,16 +67,9 @@ header {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-
 .logo-text span { color: var(--secondary); }
 
-/* ─── DESKTOP NAV ─── */
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: clamp(14px, 2vw, 26px);
-}
-
+nav ul { display:flex; list-style:none; gap:clamp(14px,2vw,26px); }
 nav a {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
@@ -103,13 +79,12 @@ nav a {
   transition: color 0.25s;
   white-space: nowrap;
 }
-
 nav a:hover { color: var(--primary); }
 
 .header-btn {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
-  padding: clamp(10px, 1.5vw, 14px) clamp(16px, 2vw, 26px);
+  padding: clamp(10px,1.5vw,14px) clamp(16px,2vw,26px);
   border-radius: 999px;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
@@ -121,7 +96,6 @@ nav a:hover { color: var(--primary); }
   white-space: nowrap;
   flex-shrink: 0;
 }
-
 .header-btn:hover { transform: translateY(-3px); }
 
 /* ─── HAMBURGER ─── */
@@ -131,8 +105,7 @@ nav a:hover { color: var(--primary); }
   justify-content: center;
   align-items: center;
   gap: 5px;
-  width: 44px;
-  height: 44px;
+  width: 44px; height: 44px;
   cursor: pointer;
   z-index: 10001;
   background: none;
@@ -141,35 +114,24 @@ nav a:hover { color: var(--primary); }
   border-radius: 12px;
   transition: background 0.2s;
 }
-
 .hamburger:hover { background: rgba(0,118,182,0.08); }
-
 .hamburger span {
   display: block;
-  width: 24px;
-  height: 2px;
+  width: 24px; height: 2px;
   background: var(--text);
   border-radius: 2px;
-  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
   transform-origin: center;
 }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity:0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-.hamburger.open span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.hamburger.open span:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-.hamburger.open span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
-/* ─── MOBILE DRAWER ─── */
+/* ─── MOBILE MENU ─── */
 .mobile-menu {
   display: none;
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top:0; left:0; right:0; bottom:0;
   z-index: 10000;
   background: rgba(255,255,255,0.97);
   backdrop-filter: blur(20px);
@@ -183,43 +145,33 @@ nav a:hover { color: var(--primary); }
   transition: opacity 0.35s ease, transform 0.35s ease;
   pointer-events: none;
 }
-
-.mobile-menu.open {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: all;
-}
-
+.mobile-menu.open { opacity:1; transform:translateY(0); pointer-events:all; }
 .mobile-menu a {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
-  font-size: clamp(2.4rem, 8vw, 3.5rem);
+  font-size: clamp(2.4rem,8vw,3.5rem);
   text-transform: uppercase;
   letter-spacing: -1px;
   color: var(--text);
   transition: color 0.2s;
   line-height: 1.1;
 }
-
 .mobile-menu a:hover { color: var(--primary); }
-
 .mobile-cta {
   margin-top: 24px;
   background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
   color: white !important;
   padding: 16px 36px;
   border-radius: 999px;
-  font-size: clamp(1.2rem, 4vw, 1.6rem) !important;
+  font-size: clamp(1.2rem,4vw,1.6rem) !important;
   box-shadow: 0 14px 35px rgba(0,118,182,0.22);
 }
 
-/* ─── RESPONSIVE BREAKPOINTS ─── */
 @media (max-width: 979px) {
   nav ul, .header-btn { display: none; }
   .hamburger { display: flex; }
   .mobile-menu { display: flex; }
 }
-
 @media (min-width: 980px) {
   .hamburger, .mobile-menu { display: none !important; }
 }
@@ -230,10 +182,9 @@ nav a:hover { color: var(--primary); }
   position: relative;
   display: flex;
   align-items: flex-end;
-  padding: 0 clamp(20px, 6%, 80px) clamp(60px, 10vw, 120px);
+  padding: 0 clamp(20px,6%,80px) clamp(60px,10vw,120px);
   overflow: hidden;
 }
-
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -245,24 +196,15 @@ nav a:hover { color: var(--primary); }
   background-position: center top;
   transform: scale(1.04);
 }
-
 .hero::after {
   content: '';
   position: absolute;
-  bottom: -1px;
-  left: 0; right: 0;
-  height: clamp(60px, 10vw, 130px);
+  bottom: -1px; left:0; right:0;
+  height: clamp(60px,10vw,130px);
   background: white;
   clip-path: polygon(0 40%, 100% 0, 100% 100%, 0 100%);
 }
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 720px;
-  width: 100%;
-}
-
+.hero-content { position:relative; z-index:2; max-width:720px; width:100%; }
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -272,16 +214,15 @@ nav a:hover { color: var(--primary); }
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-radius: 999px;
-  margin-bottom: clamp(18px, 3vw, 26px);
+  margin-bottom: clamp(18px,3vw,26px);
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--primary);
-  font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+  font-size: clamp(0.7rem,1.5vw,0.85rem);
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
-
 .hero-badge::before {
   content: '';
   width: 8px; height: 8px;
@@ -289,50 +230,38 @@ nav a:hover { color: var(--primary); }
   background: var(--secondary);
   flex-shrink: 0;
 }
-
 .hero h1 {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(4rem, 12vw, 9rem);
+  font-size: clamp(4rem,12vw,9rem);
   line-height: 0.88;
-  letter-spacing: clamp(-2px, -0.4vw, -4px);
+  letter-spacing: clamp(-2px,-0.4vw,-4px);
   text-transform: uppercase;
-  margin-bottom: clamp(12px, 2vw, 20px);
+  margin-bottom: clamp(12px,2vw,20px);
 }
-
-.hero h1 em {
-  color: var(--primary);
-  font-style: italic;
-}
-
+.hero h1 em { color: var(--primary); font-style: italic; }
 .hero-sub {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-size: clamp(1rem,2.5vw,1.4rem);
   text-transform: uppercase;
   letter-spacing: 3px;
   color: var(--secondary);
-  margin-bottom: clamp(16px, 3vw, 28px);
+  margin-bottom: clamp(16px,3vw,28px);
 }
-
 .hero-desc {
   max-width: 520px;
-  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  font-size: clamp(0.95rem,1.5vw,1.1rem);
   line-height: 1.9;
   color: var(--text-muted);
-  margin-bottom: clamp(24px, 4vw, 40px);
+  margin-bottom: clamp(24px,4vw,40px);
 }
-
-.hero-actions {
-  display: flex;
-  gap: clamp(10px, 2vw, 16px);
-  flex-wrap: wrap;
-}
+.hero-actions { display:flex; gap:clamp(10px,2vw,16px); flex-wrap:wrap; }
 
 /* ─── BUTTONS ─── */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(14px, 2vw, 18px) clamp(22px, 3vw, 34px);
+  padding: clamp(14px,2vw,18px) clamp(22px,3vw,34px);
   border-radius: 999px;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
@@ -340,95 +269,80 @@ nav a:hover { color: var(--primary); }
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  font-size: clamp(0.85rem,1.5vw,1rem);
   transition: 0.3s;
   box-shadow: 0 14px 35px rgba(0,118,182,0.18);
 }
-
 .btn-primary:hover { transform: translateY(-4px) scale(1.02); }
-
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(14px, 2vw, 18px) clamp(22px, 3vw, 34px);
+  padding: clamp(14px,2vw,18px) clamp(22px,3vw,34px);
   border-radius: 999px;
   background: white;
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  font-size: clamp(0.85rem,1.5vw,1rem);
   transition: 0.3s;
 }
-
 .btn-secondary:hover { transform: translateY(-4px); }
 
 /* ─── SECTION TITLES ─── */
 .section-label {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.75rem,1.2vw,0.9rem);
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--secondary);
   margin-bottom: 14px;
 }
-
 .section-title {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-size: clamp(2.8rem,7vw,5.5rem);
   line-height: 0.92;
   text-transform: uppercase;
-  letter-spacing: clamp(-1px, -0.3vw, -3px);
-  margin-bottom: clamp(36px, 5vw, 60px);
+  letter-spacing: clamp(-1px,-0.3vw,-3px);
+  margin-bottom: clamp(36px,5vw,60px);
 }
-
-.section-title span {
-  color: var(--primary);
-  font-style: italic;
-}
+.section-title span { color: var(--primary); font-style: italic; }
 
 /* ─── ABOUT ─── */
-.about-grid {
-  display: grid;
-  gap: clamp(36px, 5vw, 60px);
-  align-items: center;
+/* Réduit padding-bottom de la section about */
+#about {
+  padding-bottom: clamp(30px, 4vw, 50px);
 }
 
+.about-grid {
+  display: grid;
+  gap: clamp(36px,5vw,60px);
+  align-items: center;
+}
 @media (min-width: 1000px) {
   .about-grid { grid-template-columns: 1fr 1fr; }
 }
-
 .about-image {
-  border-radius: clamp(20px, 3vw, 40px);
+  border-radius: clamp(20px,3vw,40px);
   overflow: hidden;
   box-shadow: 0 30px 60px rgba(0,0,0,0.12);
   max-height: 600px;
 }
-
 .about-image img {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
   object-position: center top;
   display: block;
 }
-
 .about-text p {
-  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  font-size: clamp(0.95rem,1.4vw,1.05rem);
   line-height: 1.9;
   color: var(--text-muted);
   margin-bottom: 20px;
 }
-
-.about-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 28px;
-}
-
+.about-pills { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
 .pill {
   padding: 9px 16px;
   border-radius: 999px;
@@ -437,48 +351,71 @@ nav a:hover { color: var(--primary); }
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.8rem,1.2vw,0.9rem);
 }
 
-/* ─── SERVICES ─── */
+/* Réduit le gap entre bouton et section suivante */
+.about-btn-wrap {
+  margin-top: 16px;
+}
+
+/* ─── SERVICES : réduit padding-top ─── */
+#services {
+  padding-top: clamp(30px, 4vw, 50px);
+}
+
 .services-grid {
   display: grid;
-  gap: clamp(16px, 2vw, 24px);
+  gap: clamp(16px,2vw,24px);
+}
+@media (min-width: 600px) { .services-grid { grid-template-columns: repeat(2,1fr); } }
+@media (min-width: 1000px) { .services-grid { grid-template-columns: repeat(3,1fr); } }
+
+/* ─── CARD ANIMATION ─── */
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-@media (min-width: 600px) {
-  .services-grid { grid-template-columns: repeat(2, 1fr); }
+.anim-card {
+  opacity: 0;
+}
+.anim-card.card-visible {
+  animation: cardReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@media (min-width: 1000px) {
-  .services-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
+/* ─── SERVICE CARDS ─── */
 .service-card {
   position: relative;
-  padding: clamp(28px, 4vw, 42px) clamp(22px, 3vw, 34px);
-  border-radius: clamp(20px, 3vw, 30px);
+  padding: clamp(28px,4vw,42px) clamp(22px,3vw,34px);
+  border-radius: clamp(20px,3vw,30px);
   background: white;
   box-shadow: 0 10px 35px rgba(0,0,0,0.05);
-  transition: 0.35s;
+  transition: transform 0.35s, box-shadow 0.35s;
   overflow: hidden;
 }
-
 .service-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 30px 60px rgba(0,0,0,0.12);
 }
+/* Neutralise le transform de hover quand la carte n'est pas encore visible */
+.anim-card:not(.card-visible):hover { transform: none; }
 
 .service-number {
   position: absolute;
   top: -10px; right: 20px;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
-  font-size: clamp(4rem, 8vw, 7rem);
+  font-size: clamp(4rem,8vw,7rem);
   color: rgba(0,118,182,0.06);
   user-select: none;
 }
-
 .service-icon {
   width: 60px; height: 60px;
   border-radius: 18px;
@@ -490,41 +427,26 @@ nav a:hover { color: var(--primary); }
   color: var(--primary);
   flex-shrink: 0;
 }
-
 .service-card h3 {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.5rem,3vw,2rem);
   text-transform: uppercase;
   margin-bottom: 10px;
 }
-
 .service-card p {
   color: var(--text-muted);
   line-height: 1.8;
   margin-bottom: 24px;
-  font-size: clamp(0.9rem, 1.3vw, 1rem);
+  font-size: clamp(0.9rem,1.3vw,1rem);
 }
-
-.service-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
+.service-bottom { display:flex; align-items:center; justify-content:space-between; }
 .price {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-size: clamp(1.8rem,3vw,2.4rem);
   font-weight: 900;
   color: var(--primary);
 }
-
-.duration {
-  color: var(--text-muted);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  margin-top: 2px;
-}
-
+.duration { color:var(--text-muted); text-transform:uppercase; font-size:0.75rem; margin-top:2px; }
 .arrow {
   width: 44px; height: 44px;
   border-radius: 50%;
@@ -537,129 +459,98 @@ nav a:hover { color: var(--primary); }
   font-size: 1.2rem;
   transition: 0.25s;
 }
+.service-card:hover .arrow { background: var(--secondary); transform: translateX(4px); }
 
-.service-card:hover .arrow {
-  background: var(--secondary);
-  transform: translateX(4px);
+/* ─── PROCESS : réduit padding-top ─── */
+#process {
+  padding-top: clamp(30px, 4vw, 50px);
 }
 
-/* ─── PROCESS ─── */
 .process-grid {
   display: grid;
-  gap: clamp(16px, 2vw, 24px);
+  gap: clamp(16px,2vw,24px);
 }
-
-@media (min-width: 600px) {
-  .process-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (min-width: 1000px) {
-  .process-grid { grid-template-columns: repeat(4, 1fr); }
-}
+@media (min-width: 600px) { .process-grid { grid-template-columns: repeat(2,1fr); } }
+@media (min-width: 1000px) { .process-grid { grid-template-columns: repeat(4,1fr); } }
 
 .process-card {
-  padding: clamp(24px, 3vw, 34px) clamp(20px, 2.5vw, 28px);
-  border-radius: clamp(20px, 3vw, 30px);
+  padding: clamp(24px,3vw,34px) clamp(20px,2.5vw,28px);
+  border-radius: clamp(20px,3vw,30px);
   background: white;
   box-shadow: var(--shadow);
-  transition: 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-
 .process-card:hover { transform: translateY(-8px); }
+.anim-card.process-card:not(.card-visible):hover { transform: none; }
 
 .step {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(3rem, 5vw, 4rem);
+  font-size: clamp(3rem,5vw,4rem);
   font-weight: 900;
   color: rgba(0,118,182,0.1);
   margin-bottom: 18px;
   line-height: 1;
 }
-
 .process-card h3 {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-size: clamp(1.2rem,2.5vw,1.5rem);
   text-transform: uppercase;
   margin-bottom: 10px;
 }
-
 .process-card p {
   line-height: 1.8;
   color: var(--text-muted);
-  font-size: clamp(0.88rem, 1.3vw, 1rem);
+  font-size: clamp(0.88rem,1.3vw,1rem);
 }
 
 /* ─── CONTACT ─── */
 .contact-box {
   background: white;
-  border-radius: clamp(20px, 3vw, 40px);
+  border-radius: clamp(20px,3vw,40px);
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0,0,0,0.08);
 }
-
 .contact-header {
-  padding: clamp(20px, 3vw, 30px);
+  padding: clamp(20px,3vw,30px);
   background: linear-gradient(135deg, rgba(0,118,182,0.06), rgba(0,198,215,0.04));
 }
-
 .contact-header h3 {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-size: clamp(1.4rem,3vw,2rem);
   text-transform: uppercase;
   margin-bottom: 6px;
 }
-
-.contact-header p {
-  color: var(--text-muted);
-  font-size: clamp(0.88rem, 1.3vw, 1rem);
-}
-
-.calendly-inline-widget {
-  min-width: 280px;
-  height: min(720px, 85vw);
-}
+.contact-header p { color:var(--text-muted); font-size:clamp(0.88rem,1.3vw,1rem); }
+.calendly-inline-widget { min-width:280px; height:min(720px,85vw); }
 
 /* ─── FOOTER ─── */
 footer {
-  padding: clamp(50px, 8vw, 70px) clamp(20px, 6%, 80px);
+  padding: clamp(50px,8vw,70px) clamp(20px,6%,80px);
   background: white;
   text-align: center;
   border-top: 1px solid rgba(0,0,0,0.05);
 }
-
 .footer-logo {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(1.5rem,4vw,2rem);
   font-weight: 900;
   text-transform: uppercase;
   margin-bottom: 12px;
 }
-
 .footer-logo span { color: var(--secondary); }
-
-footer p {
-  color: var(--text-muted);
-  margin-bottom: 6px;
-  font-size: clamp(0.88rem, 1.3vw, 1rem);
-}
-
+footer p { color:var(--text-muted); margin-bottom:6px; font-size:clamp(0.88rem,1.3vw,1rem); }
 footer a { transition: color 0.2s; }
 footer a:hover { color: var(--primary); }
 
-/* ─── PREVENT BODY SCROLL WHEN MENU OPEN ─── */
 body.menu-open { overflow: hidden; }
 
-/* ─── SCROLL ANIMATION ─── */
+/* ─── FADE-IN (kept for other elements) ─── */
 .fade-in {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.fade-in.visible { opacity:1; transform:translateY(0); }
 
 </style>
 </head>
@@ -668,13 +559,10 @@ body.menu-open { overflow: hidden; }
 
 <!-- ─── HEADER ─── -->
 <header>
-
   <div class="logo-wrap">
     <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" class="logo-mark" alt="Axium">
     <div class="logo-text">Axium<span>.Perform</span></div>
   </div>
-
-  <!-- Desktop nav -->
   <nav>
     <ul>
       <li><a href="#about">Profil</a></li>
@@ -683,17 +571,10 @@ body.menu-open { overflow: hidden; }
       <li><a href="#contact">Réservation</a></li>
     </ul>
   </nav>
-
-  <!-- Desktop CTA -->
   <a href="#contact" class="header-btn">Réserver</a>
-
-  <!-- Hamburger -->
   <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
   </button>
-
 </header>
 
 <!-- ─── MOBILE MENU ─── -->
@@ -708,88 +589,55 @@ body.menu-open { overflow: hidden; }
 <!-- ─── HERO ─── -->
 <section class="hero">
   <div class="hero-bg"></div>
-
   <div class="hero-content">
-
-    <div class="hero-badge">
-      Performance • Récupération • Genève
-    </div>
-
-    <h1>
-      Libère<br>
-      <em>ton corps.</em>
-    </h1>
-
-    <div class="hero-sub">
-      Massage · Hijama · Recovery
-    </div>
-
+    <div class="hero-badge">Performance • Récupération • Genève</div>
+    <h1>Libère<br><em>ton corps.</em></h1>
+    <div class="hero-sub">Massage · Hijama · Recovery</div>
     <p class="hero-desc">
       Récupération sportive avancée.<br>
       Performance.<br>
       Mobilité.<br>
       Corps optimisé.
     </p>
-
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">Prendre rendez-vous</a>
       <a href="#services" class="btn-secondary">Découvrir</a>
     </div>
-
   </div>
 </section>
 
 <!-- ─── ABOUT ─── -->
 <section class="section" id="about">
-
   <div class="section-label">Présentation</div>
-
-  <h2 class="section-title">
-    Sevann,<br>
-    <span>Fondateur</span>
-  </h2>
+  <h2 class="section-title">Sevann,<br><span>Fondateur</span></h2>
 
   <div class="about-grid">
-
     <div class="about-image fade-in">
       <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann, fondateur Axium.Perform">
     </div>
-
     <div class="about-text fade-in">
-
       <p>Athlète à la base, passionné par la récupération et la performance humaine.</p>
-
       <p>Axium est né d'une volonté simple : aider les sportifs et les personnes actives à récupérer mieux, bouger mieux et performer.</p>
-
       <p>Chaque séance est pensée de manière ciblée selon vos besoins : récupération musculaire, tensions, fatigue ou relâchement global.</p>
-      </div>
-
-      <div style="margin-top:32px;">
+      <!-- Réduit margin-top via classe dédiée -->
+      <div class="about-btn-wrap">
         <a href="#contact" class="btn-primary">Réserver une séance</a>
       </div>
-
     </div>
-
   </div>
-
 </section>
 
 <!-- ─── SERVICES ─── -->
 <section class="section" id="services" style="background:var(--surface);">
-
   <div class="section-label">Prestations</div>
-
-  <h2 class="section-title">
-    Mes<br>
-    <span>Prestations</span>
-  </h2>
+  <h2 class="section-title">Mes<br><span>Prestations</span></h2>
 
   <div class="services-grid">
 
-    <div class="service-card fade-in">
+    <div class="service-card anim-card">
       <div class="service-number">01</div>
       <div class="service-icon">
-        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/>
         </svg>
       </div>
@@ -804,10 +652,10 @@ body.menu-open { overflow: hidden; }
       </div>
     </div>
 
-    <div class="service-card fade-in">
+    <div class="service-card anim-card">
       <div class="service-number">02</div>
       <div class="service-icon">
-        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="9"/>
           <path d="M8 12s1 2 4 2 4-2 4-2"/>
           <line x1="9" y1="9" x2="9.01" y2="9"/>
@@ -825,10 +673,10 @@ body.menu-open { overflow: hidden; }
       </div>
     </div>
 
-    <div class="service-card fade-in">
+    <div class="service-card anim-card">
       <div class="service-number">03</div>
       <div class="service-icon">
-        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M12 2v20M2 12h20"/>
           <circle cx="12" cy="12" r="4"/>
         </svg>
@@ -845,97 +693,72 @@ body.menu-open { overflow: hidden; }
     </div>
 
   </div>
-
 </section>
 
 <!-- ─── PROCESS ─── -->
 <section class="section" id="process">
-
   <div class="section-label">Déroulement</div>
-
-  <h2 class="section-title">
-    Votre<br>
-    <span>Séance</span>
-  </h2>
+  <h2 class="section-title">Votre<br><span>Séance</span></h2>
 
   <div class="process-grid">
 
-    <div class="process-card fade-in">
+    <div class="process-card anim-card">
       <div class="step">01</div>
       <h3>Échange</h3>
       <p>Analyse des besoins, douleurs et objectifs du jour.</p>
     </div>
 
-    <div class="process-card fade-in">
+    <div class="process-card anim-card">
       <div class="step">02</div>
       <h3>Travail ciblé</h3>
       <p>Massage ou hijama adaptée à votre profil.</p>
     </div>
 
-    <div class="process-card fade-in">
+    <div class="process-card anim-card">
       <div class="step">03</div>
       <h3>Récupération</h3>
       <p>Relâchement musculaire et optimisation du corps.</p>
     </div>
 
-    <div class="process-card fade-in">
+    <div class="process-card anim-card">
       <div class="step">04</div>
       <h3>Conseils</h3>
       <p>Hydratation, récupération et suivi post séance.</p>
     </div>
 
   </div>
-
 </section>
 
 <!-- ─── CONTACT ─── -->
 <section class="section" id="contact" style="background:var(--surface);">
-
   <div class="section-label">Réservation</div>
-
-  <h2 class="section-title">
-    Prendre<br>
-    <span>Rendez-vous</span>
-  </h2>
-
+  <h2 class="section-title">Prendre<br><span>Rendez-vous</span></h2>
   <div class="contact-box">
-
     <div class="contact-header">
       <h3>Calendrier Axium.Perform</h3>
       <p>Choisissez directement votre créneau.</p>
     </div>
-
-    <div
-      class="calendly-inline-widget"
-      data-url="https://calendly.com/axium-perform/seance-de-massage-axium">
-    </div>
-
+    <div class="calendly-inline-widget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium"></div>
     <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-
   </div>
-
 </section>
 
 <!-- ─── FOOTER ─── -->
 <footer>
-
   <div class="footer-logo">Axium<span>.Perform</span></div>
-
   <p>Genève • Suisse</p>
   <p>Performance • Recovery • Bien-être</p>
-
   <p style="margin-top:16px;">
     <a href="tel:+41787310732">078 731 07 32</a>
     &nbsp;•&nbsp;
     <a href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a>
   </p>
-
 </footer>
 
 <!-- ─── JS ─── -->
 <script>
-// Hamburger / mobile menu
-const hamburger = document.getElementById('hamburger');
+// ── Hamburger
+const hamburger  = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 const menuLinks  = document.querySelectorAll('.menu-link');
 
@@ -946,35 +769,58 @@ function toggleMenu(force) {
   document.body.classList.toggle('menu-open', isOpen);
   hamburger.setAttribute('aria-expanded', isOpen);
 }
-
 hamburger.addEventListener('click', () => toggleMenu());
+menuLinks.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
 
-menuLinks.forEach(link => {
-  link.addEventListener('click', () => toggleMenu(false));
-});
-
-// Close on Escape
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') toggleMenu(false);
-});
-
-// Fade-in on scroll
-const observer = new IntersectionObserver(
+// ── Fade-in simple (textes, images)
+const fadeObserver = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+        fadeObserver.unobserve(entry.target);
       }
     });
   },
   { threshold: 0.12 }
 );
-
 document.querySelectorAll('.fade-in').forEach((el, i) => {
   el.style.transitionDelay = `${(i % 4) * 0.1}s`;
-  observer.observe(el);
+  fadeObserver.observe(el);
 });
+
+// ── Animation carte par carte avec stagger
+// On observe le premier enfant de chaque grille pour déclencher l'ensemble d'un coup
+function observeCardGroup(gridSelector) {
+  const grid = document.querySelector(gridSelector);
+  if (!grid) return;
+
+  const cards = [...grid.querySelectorAll('.anim-card')];
+
+  const gridObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          cards.forEach((card, i) => {
+            // délai croissant : 0.1s entre chaque carte, bien visible
+            const delay = i * 0.18;
+            card.style.animationDelay = `${delay}s`;
+            card.classList.add('card-visible');
+          });
+          gridObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  // On observe la grille elle-même (ou son premier enfant)
+  gridObserver.observe(grid);
+}
+
+observeCardGroup('.services-grid');
+observeCardGroup('.process-grid');
 </script>
 
 </body>
