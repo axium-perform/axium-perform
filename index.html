@@ -11,7 +11,6 @@
 <style>
 
 :root{
-
   --primary:#0076B6;
   --primary-dark:#005f94;
   --secondary:#00C6D7;
@@ -25,17 +24,12 @@
   --radius:32px;
   --radius-sm:18px;
 
-  --shadow:
-  0 10px 35px rgba(0,0,0,0.06);
+  --shadow:0 10px 35px rgba(0,0,0,0.06);
 
-  --shadow-hover:
-  0 25px 50px rgba(0,0,0,0.12);
-
+  --shadow-hover:0 25px 50px rgba(0,0,0,0.12);
 }
 
-/* ───────────────────── */
 /* RESET */
-/* ───────────────────── */
 
 *{
   margin:0;
@@ -48,7 +42,6 @@ html{
 }
 
 body{
-
   font-family:'Barlow',sans-serif;
 
   background:
@@ -62,7 +55,6 @@ body{
   overflow-x:hidden;
 
   -webkit-font-smoothing:antialiased;
-
 }
 
 a{
@@ -76,16 +68,13 @@ img{
 }
 
 .section{
-  padding:120px 6%;
+  padding:70px 6%;
   position:relative;
 }
 
-/* ───────────────────── */
 /* HEADER */
-/* ───────────────────── */
 
 header{
-
   position:fixed;
   top:0;
   left:0;
@@ -93,7 +82,7 @@ header{
 
   z-index:9999;
 
-  height:78px;
+  height:110px;
 
   display:flex;
   align-items:center;
@@ -105,9 +94,7 @@ header{
 
   backdrop-filter:blur(18px);
 
-  border-bottom:
-  1px solid rgba(0,0,0,0.05);
-
+  border-bottom:1px solid rgba(0,0,0,0.05);
 }
 
 .logo-wrap{
@@ -117,13 +104,12 @@ header{
 }
 
 .logo-mark{
-  width:44px;
-  height:44px;
+  width:90px;
+  height:90px;
   object-fit:contain;
 }
 
 .logo-text{
-
   font-family:'Barlow Condensed',sans-serif;
   font-weight:900;
 
@@ -131,7 +117,6 @@ header{
 
   letter-spacing:1px;
   text-transform:uppercase;
-
 }
 
 .logo-text span{
@@ -145,15 +130,12 @@ nav ul{
 }
 
 @media(min-width:980px){
-
   nav ul{
     display:flex;
   }
-
 }
 
 nav a{
-
   font-family:'Barlow Condensed',sans-serif;
   font-weight:700;
 
@@ -164,7 +146,6 @@ nav a{
   font-size:0.95rem;
 
   transition:0.25s;
-
 }
 
 nav a:hover{
@@ -172,7 +153,6 @@ nav a:hover{
 }
 
 .header-btn{
-
   background:
   linear-gradient(
   135deg,
@@ -203,12 +183,9 @@ nav a:hover{
   transform:translateY(-3px);
 }
 
-/* ───────────────────── */
 /* HERO */
-/* ───────────────────── */
 
 .hero{
-
   min-height:100vh;
 
   position:relative;
@@ -216,14 +193,12 @@ nav a:hover{
   display:flex;
   align-items:flex-end;
 
-  padding:0 6% 120px;
+  padding:0 6% 70px;
 
   overflow:hidden;
-
 }
 
 .hero-bg{
-
   position:absolute;
   inset:0;
 
@@ -247,11 +222,9 @@ nav a:hover{
   background-position:center;
 
   transform:scale(1.04);
-
 }
 
 .hero::after{
-
   content:'';
 
   position:absolute;
@@ -265,62 +238,16 @@ nav a:hover{
   background:white;
 
   clip-path: polygon(0 40%,100% 0,100% 100%,0 100%);
-
 }
 
 .hero-content{
-
   position:relative;
   z-index:2;
 
   max-width:720px;
-
-}
-
-.hero-badge{
-
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-
-  padding:10px 18px;
-
-  background:rgba(255,255,255,0.72);
-
-  backdrop-filter:blur(14px);
-
-  border-radius:999px;
-
-  margin-bottom:26px;
-
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;
-
-  letter-spacing:2px;
-
-  text-transform:uppercase;
-
-  color:var(--primary);
-
-  box-shadow:0 10px 30px rgba(0,0,0,0.06);
-
-}
-
-.hero-badge::before{
-
-  content:'';
-
-  width:8px;
-  height:8px;
-
-  border-radius:50%;
-
-  background:var(--secondary);
-
 }
 
 .hero h1{
-
   font-family:'Barlow Condensed',sans-serif;
 
   font-size:clamp(5rem,12vw,9rem);
@@ -332,7 +259,6 @@ nav a:hover{
   text-transform:uppercase;
 
   margin-bottom:20px;
-
 }
 
 .hero h1 em{
@@ -341,7 +267,6 @@ nav a:hover{
 }
 
 .hero-sub{
-
   font-family:'Barlow Condensed',sans-serif;
 
   font-size:1.4rem;
@@ -353,11 +278,9 @@ nav a:hover{
   color:var(--secondary);
 
   margin-bottom:28px;
-
 }
 
 .hero-desc{
-
   max-width:520px;
 
   font-size:1.1rem;
@@ -367,7 +290,6 @@ nav a:hover{
   color:var(--text-muted);
 
   margin-bottom:40px;
-
 }
 
 .hero-actions{
@@ -379,7 +301,6 @@ nav a:hover{
 /* BUTTONS */
 
 .btn-primary{
-
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -408,19 +329,15 @@ nav a:hover{
 
   box-shadow:
   0 14px 35px rgba(0,118,182,0.18);
-
 }
 
 .btn-primary:hover{
-
   transform:
   translateY(-4px)
   scale(1.02);
-
 }
 
 .btn-secondary{
-
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -440,19 +357,15 @@ nav a:hover{
   text-transform:uppercase;
 
   transition:0.3s;
-
 }
 
 .btn-secondary:hover{
   transform:translateY(-4px);
 }
 
-/* ───────────────────── */
 /* TITLES */
-/* ───────────────────── */
 
 .section-label{
-
   font-family:'Barlow Condensed',sans-serif;
 
   font-size:0.9rem;
@@ -466,11 +379,9 @@ nav a:hover{
   color:var(--secondary);
 
   margin-bottom:16px;
-
 }
 
 .section-title{
-
   font-family:'Barlow Condensed',sans-serif;
 
   font-size:clamp(3rem,7vw,5.5rem);
@@ -481,8 +392,7 @@ nav a:hover{
 
   letter-spacing:-3px;
 
-  margin-bottom:60px;
-
+  margin-bottom:35px;
 }
 
 .section-title span{
@@ -490,49 +400,38 @@ nav a:hover{
   font-style:italic;
 }
 
-/* ───────────────────── */
 /* ABOUT */
-/* ───────────────────── */
 
 .about-grid{
-
   display:grid;
   gap:60px;
 
   align-items:center;
-
 }
 
 @media(min-width:1000px){
-
   .about-grid{
     grid-template-columns:1fr 1fr;
   }
-
 }
 
 .about-image{
-
   border-radius:40px;
 
   overflow:hidden;
 
   box-shadow:
   0 30px 60px rgba(0,0,0,0.12);
-
 }
 
 .about-image img{
-
   width:100%;
   height:100%;
 
   object-fit:cover;
-
 }
 
 .about-text p{
-
   font-size:1.05rem;
 
   line-height:1.9;
@@ -540,60 +439,22 @@ nav a:hover{
   color:var(--text-muted);
 
   margin-bottom:22px;
-
 }
 
-.about-pills{
-
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-
-  margin-top:30px;
-
-}
-
-.pill{
-
-  padding:10px 18px;
-
-  border-radius:999px;
-
-  background:white;
-
-  box-shadow:
-  0 8px 20px rgba(0,0,0,0.05);
-
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;
-
-  text-transform:uppercase;
-
-  font-size:0.9rem;
-
-}
-
-/* ───────────────────── */
 /* SERVICES */
-/* ───────────────────── */
 
 .services-grid{
-
   display:grid;
   gap:24px;
-
 }
 
 @media(min-width:850px){
-
   .services-grid{
     grid-template-columns:repeat(3,1fr);
   }
-
 }
 
 .service-card{
-
   position:relative;
 
   padding:42px 34px;
@@ -613,20 +474,16 @@ nav a:hover{
   transition:0.35s;
 
   overflow:hidden;
-
 }
 
 .service-card:hover{
-
   transform:translateY(-10px);
 
   box-shadow:
   0 30px 60px rgba(0,0,0,0.12);
-
 }
 
 .service-number{
-
   position:absolute;
 
   top:-10px;
@@ -638,11 +495,9 @@ nav a:hover{
   font-size:7rem;
 
   color:rgba(0,118,182,0.06);
-
 }
 
 .service-icon{
-
   width:64px;
   height:64px;
 
@@ -662,11 +517,9 @@ nav a:hover{
   margin-bottom:24px;
 
   color:var(--primary);
-
 }
 
 .service-card h3{
-
   font-family:'Barlow Condensed',sans-serif;
 
   font-size:2rem;
@@ -674,29 +527,23 @@ nav a:hover{
   text-transform:uppercase;
 
   margin-bottom:12px;
-
 }
 
 .service-card p{
-
   color:var(--text-muted);
 
   line-height:1.8;
 
   margin-bottom:28px;
-
 }
 
 .service-bottom{
-
   display:flex;
   align-items:center;
   justify-content:space-between;
-
 }
 
 .price{
-
   font-family:'Barlow Condensed',sans-serif;
 
   font-size:2.4rem;
@@ -704,21 +551,17 @@ nav a:hover{
   font-weight:900;
 
   color:var(--primary);
-
 }
 
 .duration{
-
   color:var(--text-muted);
 
   text-transform:uppercase;
 
   font-size:0.8rem;
-
 }
 
 .arrow{
-
   width:46px;
   height:46px;
 
@@ -731,30 +574,22 @@ nav a:hover{
   display:flex;
   align-items:center;
   justify-content:center;
-
 }
 
-/* ───────────────────── */
 /* PROCESS */
-/* ───────────────────── */
 
 .process-grid{
-
   display:grid;
   gap:24px;
-
 }
 
 @media(min-width:850px){
-
   .process-grid{
     grid-template-columns:repeat(4,1fr);
   }
-
 }
 
 .process-card{
-
   padding:34px 28px;
 
   border-radius:30px;
@@ -764,7 +599,6 @@ nav a:hover{
   box-shadow:var(--shadow);
 
   transition:0.3s;
-
 }
 
 .process-card:hover{
@@ -772,7 +606,6 @@ nav a:hover{
 }
 
 .step{
-
   font-family:'Barlow Condensed',sans-serif;
 
   font-size:4rem;
@@ -782,11 +615,9 @@ nav a:hover{
   color:rgba(0,118,182,0.1);
 
   margin-bottom:20px;
-
 }
 
 .process-card h3{
-
   font-family:'Barlow Condensed',sans-serif;
 
   font-size:1.5rem;
@@ -794,23 +625,17 @@ nav a:hover{
   text-transform:uppercase;
 
   margin-bottom:12px;
-
 }
 
 .process-card p{
-
   line-height:1.8;
 
   color:var(--text-muted);
-
 }
 
-/* ───────────────────── */
 /* CONTACT */
-/* ───────────────────── */
 
 .contact-box{
-
   background:white;
 
   border-radius:40px;
@@ -819,11 +644,9 @@ nav a:hover{
 
   box-shadow:
   0 20px 50px rgba(0,0,0,0.08);
-
 }
 
 .contact-header{
-
   padding:30px;
 
   background:
@@ -832,17 +655,14 @@ nav a:hover{
   rgba(0,118,182,0.06),
   rgba(0,198,215,0.04)
   );
-
 }
 
 .contact-header h3{
-
   font-family:'Barlow Condensed',sans-serif;
 
   font-size:2rem;
 
   text-transform:uppercase;
-
 }
 
 .contact-header p{
@@ -854,22 +674,17 @@ nav a:hover{
   height:720px;
 }
 
-/* ───────────────────── */
 /* FOOTER */
-/* ───────────────────── */
 
 footer{
-
   padding:70px 6%;
 
   background:white;
 
   text-align:center;
-
 }
 
 .footer-logo{
-
   font-family:'Barlow Condensed',sans-serif;
 
   font-size:2rem;
@@ -879,7 +694,6 @@ footer{
   text-transform:uppercase;
 
   margin-bottom:14px;
-
 }
 
 .footer-logo span{
@@ -887,16 +701,12 @@ footer{
 }
 
 footer p{
-
   color:var(--text-muted);
 
   margin-bottom:8px;
-
 }
 
-/* ───────────────────── */
 /* MOBILE */
-/* ───────────────────── */
 
 @media(max-width:700px){
 
@@ -909,11 +719,16 @@ footer p{
   }
 
   .section{
-    padding:90px 6%;
+    padding:60px 6%;
   }
 
   .section-title{
     font-size:3rem;
+  }
+
+  .logo-mark{
+    width:70px;
+    height:70px;
   }
 
 }
@@ -964,10 +779,6 @@ Réserver
 <div class="hero-bg"></div>
 
 <div class="hero-content">
-
-<div class="hero-badge">
-Performance • Récupération • Genève
-</div>
 
 <h1>
 Libère<br>
@@ -1039,15 +850,6 @@ aider les sportifs et les personnes actives à récupérer mieux, bouger mieux e
 Chaque séance est pensée de manière ciblée selon vos besoins : récupération musculaire, tensions, fatigue ou relâchement global.
 </p>
 
-<div class="about-pills">
-
-<div class="pill">Athlétisme</div>
-<div class="pill">Massage sportif</div>
-<div class="pill">Hijama</div>
-<div class="pill">Recovery</div>
-
-</div>
-
 <div style="margin-top:36px;">
 
 <a href="#contact" class="btn-primary">
@@ -1082,11 +884,9 @@ Mes<br>
 <div class="service-number">01</div>
 
 <div class="service-icon">
-
 <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
 <path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/>
 </svg>
-
 </div>
 
 <h3>
@@ -1110,223 +910,9 @@ Récupération musculaire profonde pour sportifs et personnes actives.
 
 </div>
 
-<div class="service-card">
-
-<div class="service-number">02</div>
-
-<div class="service-icon">
-
-<svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
-<circle cx="12" cy="12" r="9"/>
-</svg>
-
-</div>
-
-<h3>
-Relaxation
-</h3>
-
-<p>
-Relâchement global, diminution du stress et récupération nerveuse.
-</p>
-
-<div class="service-bottom">
-
-<div>
-<div class="price">70.-</div>
-<div class="duration">1h</div>
-</div>
-
-<div class="arrow">→</div>
-
-</div>
-
-</div>
-
-<div class="service-card">
-
-<div class="service-number">03</div>
-
-<div class="service-icon">
-
-<svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M12 2v20"/>
-</svg>
-
-</div>
-
-<h3>
-Hijama
-</h3>
-
-<p>
-Méthode traditionnelle par ventouses pour récupération et circulation.
-</p>
-
-<div class="service-bottom">
-
-<div>
-<div class="price">RDV</div>
-<div class="duration">sur demande</div>
-</div>
-
-<div class="arrow">→</div>
-
-</div>
-
-</div>
-
 </div>
 
 </section>
-
-<!-- PROCESS -->
-
-<section class="section" id="process">
-
-<div class="section-label">
-Déroulement
-</div>
-
-<h2 class="section-title">
-Votre<br>
-<span>Séance</span>
-</h2>
-
-<div class="process-grid">
-
-<div class="process-card">
-
-<div class="step">01</div>
-
-<h3>
-Échange
-</h3>
-
-<p>
-Analyse des besoins, douleurs et objectifs du jour.
-</p>
-
-</div>
-
-<div class="process-card">
-
-<div class="step">02</div>
-
-<h3>
-Travail ciblé
-</h3>
-
-<p>
-Massage ou hijama adaptée à votre profil.
-</p>
-
-</div>
-
-<div class="process-card">
-
-<div class="step">03</div>
-
-<h3>
-Récupération
-</h3>
-
-<p>
-Relâchement musculaire et optimisation du corps.
-</p>
-
-</div>
-
-<div class="process-card">
-
-<div class="step">04</div>
-
-<h3>
-Conseils
-</h3>
-
-<p>
-Hydratation, récupération et suivi post séance.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- CONTACT -->
-
-<section class="section" id="contact">
-
-<div class="section-label">
-Réservation
-</div>
-
-<h2 class="section-title">
-Prendre<br>
-<span>Rendez-vous</span>
-</h2>
-
-<div class="contact-box">
-
-<div class="contact-header">
-
-<h3>
-Calendrier Axium.Perform
-</h3>
-
-<p>
-Choisissez directement votre créneau.
-</p>
-
-</div>
-
-<div
-class="calendly-inline-widget"
-data-url="https://calendly.com/axium-perform/seance-de-massage-axium">
-</div>
-
-<script
-src="https://assets.calendly.com/assets/external/widget.js"
-async>
-</script>
-
-</div>
-
-</section>
-
-<!-- FOOTER -->
-
-<footer>
-
-<div class="footer-logo">
-Axium<span>.Perform</span>
-</div>
-
-<p>
-Genève • Suisse
-</p>
-
-<p>
-Performance • Recovery • Bien-être
-</p>
-
-<p style="margin-top:18px;">
-
-<a href="tel:+41787310732">
-078 731 07 32
-</a>
-
-&nbsp; • &nbsp;
-
-<a href="mailto:axium.perform@gmail.com">
-axium.perform@gmail.com
-</a>
-
-</p>
-
-</footer>
 
 </body>
 </html>
