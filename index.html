@@ -1,1118 +1,1332 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Axium.Perform — Récupération & Performance — Genève</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-  <style>
-    :root {
-      --primary:        #0076B6;
-      --primary-dark:   #005f94;
-      --secondary:      #00C6D7;
-      --surface:        #F4F6F8;
-      --white:          #FFFFFF;
-      --text-main:      #0A1F33;
-      --text-muted:     #546e7a;
-      --shadow-soft:    0 10px 40px rgba(0, 118, 182, 0.08);
-      --shadow-hover:   0 15px 30px rgba(0, 118, 182, 0.15);
-      --radius:         24px;
-      --transition:     all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+<title>Axium.Perform — Performance & Récupération</title>
 
-      /* layout aliases */
-      --bordeaux:       #0076B6;
-      --bordeaux-mid:   #005f94;
-      --bordeaux-light: #0099CC;
-      --gold:           #00C6D7;
-      --gold-light:     #33D4E3;
-      --dark:           #FFFFFF;
-      --dark-2:         #F4F6F8;
-      --dark-3:         #FFFFFF;
-      --dark-4:         #F4F6F8;
-      --off-white:      #0A1F33;
-      --grey:           #546e7a;
-      --grey-light:     #546e7a;
-      --radius-sm:      8px;
-      --radius-lg:      24px;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+<style>
 
-    body {
-      font-family: 'Barlow', sans-serif;
-      background: var(--surface);
-      color: var(--text-main);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      padding-bottom: 90px;
-    }
-    @media(min-width:1024px){ body { padding-bottom: 0; } }
+:root{
 
-    a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
-    img { max-width: 100%; display: block; }
+  --primary:#0076B6;
+  --primary-dark:#005f94;
+  --secondary:#00C6D7;
 
-    /* ─── HEADER ─── */
-    header {
-      position: sticky; top: 0; z-index: 1000;
-      background: var(--white);
-      border-bottom: 2px solid var(--bordeaux);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5%;
-      height: 64px;
-    }
+  --white:#ffffff;
+  --surface:#f7f9fc;
 
-    .logo-wrap { display: flex; align-items: center; gap: 12px; }
-    .logo-mark { height: 44px; width: auto; flex-shrink: 0; }
-    .logo-text {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800; font-size: 1.25rem; letter-spacing: 1px;
-      color: var(--text-main); text-transform: uppercase;
-    }
-    .logo-text span { color: var(--gold); }
+  --text:#081826;
+  --text-muted:#5c6f7d;
 
-    nav ul { display: none; }
-    @media(min-width: 900px) {
-      nav ul { display: flex; gap: 4px; }
-      nav a {
-        font-family: 'Barlow Condensed', sans-serif;
-        font-weight: 700; font-size: 0.95rem;
-        text-transform: uppercase; letter-spacing: 0.5px;
-        color: var(--text-muted);
-        padding: 6px 12px; border-radius: var(--radius-sm);
-        transition: var(--transition);
-      }
-      nav a:hover { color: var(--gold); background: rgba(0,118,182,0.08); }
-    }
+  --radius:32px;
+  --radius-sm:18px;
 
-    /* ─── BOUTONS PRINCIPAUX ─── */
-    /* Fond bleu → texte blanc */
-    .header-cta {
-      display: none;
-      background: var(--bordeaux);
-      color: #ffffff;                        /* ✅ texte blanc */
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800; font-size: 0.9rem; letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 10px 22px; border-radius: var(--radius-sm);
-      transition: var(--transition);
-    }
-    .header-cta:hover { background: var(--bordeaux-light); transform: translateY(-1px); }
-    @media(min-width:900px){ .header-cta { display: block; } }
+  --shadow:
+  0 10px 35px rgba(0,0,0,0.06);
 
-    .btn-primary {
-      display: inline-block;
-      background: var(--bordeaux);
-      color: #ffffff;                        /* ✅ texte blanc */
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800; font-size: 1rem; letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 14px 32px; border-radius: var(--radius-sm);
-      border: none; cursor: pointer;
-      transition: var(--transition);
-      box-shadow: 0 8px 24px rgba(0,118,182,0.2);
-    }
-    .btn-primary:hover {
-      background: var(--bordeaux-light);
-      transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(0,118,182,0.25);
-    }
+  --shadow-hover:
+  0 25px 50px rgba(0,0,0,0.12);
 
-    .btn-ghost {
-      display: inline-block;
-      background: transparent;
-      color: var(--text-main);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700; font-size: 1rem; letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 13px 28px; border-radius: var(--radius-sm);
-      border: 1px solid rgba(10,31,51,0.2);
-      transition: var(--transition);
-    }
-    .btn-ghost:hover {
-      border-color: var(--gold); color: var(--gold);
-      transform: translateY(-2px);
-    }
+}
 
-    /* ─── HERO ─── */
-    .hero {
-      position: relative; overflow: hidden;
-      min-height: 92vh;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 0 5% 60px;
-      background: var(--surface);
-    }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 60% 30%, rgba(0,118,182,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(0,118,182,0.06) 0%, transparent 60%),
-        linear-gradient(180deg, var(--surface) 0%, var(--white) 100%);
-    }
-    .hero-stripes {
-      position: absolute; right: -80px; top: 0; bottom: 0; width: 55%; z-index: 0;
-      overflow: hidden; pointer-events: none;
-    }
-    .hero-stripes::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        -15deg,
-        transparent 0px, transparent 40px,
-        rgba(0,118,182,0.05) 40px, rgba(0,118,182,0.05) 42px
-      );
-    }
-    .hero-stripes-img {
-      position: absolute; inset: 0;
-      background: linear-gradient(to left, rgba(0,118,182,0.06) 0%, transparent 100%);
-    }
-    .hero-number {
-      position: absolute; right: 4%; bottom: -20px; z-index: 0;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900; font-size: clamp(200px, 30vw, 380px);
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(0,118,182,0.10);
-      line-height: 1; letter-spacing: -10px;
-      pointer-events: none; user-select: none;
-    }
-    .hero-content { position: relative; z-index: 1; max-width: 780px; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(0,118,182,0.12);
-      border: 1px solid rgba(0,198,215,0.3);
-      padding: 6px 14px; border-radius: 4px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700; font-size: 0.8rem; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 20px;
-    }
-    .hero-badge::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold); display: block;
-    }
-    .hero h1 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900; font-size: clamp(3.5rem, 9vw, 7rem);
-      line-height: 0.92; letter-spacing: -2px;
-      text-transform: uppercase; color: var(--text-main);
-      margin-bottom: 8px;
-    }
-    .hero h1 em { font-style: italic; color: var(--bordeaux-light); }
-    .hero-sub {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600; font-size: clamp(1.2rem, 3vw, 1.8rem);
-      text-transform: uppercase; letter-spacing: 3px;
-      color: var(--gold); margin-bottom: 24px;
-    }
-    .hero-desc {
-      font-size: 1rem; color: var(--text-muted);
-      max-width: 500px; margin-bottom: 36px; line-height: 1.7;
-    }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+/* ───────────────────── */
+/* RESET */
+/* ───────────────────── */
 
-    /* Hero stats bar */
-    .hero-stats {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
-      background: var(--white);
-      border-top: 1px solid rgba(0,0,0,0.07);
-      display: flex; overflow-x: auto;
-    }
-    .stat-item {
-      flex: 1; min-width: 120px;
-      padding: 16px 24px;
-      display: flex; flex-direction: column; align-items: center;
-      border-right: 1px solid rgba(0,0,0,0.07); text-align: center;
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-val {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900; font-size: 1.8rem; color: var(--gold); line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.75rem; color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    /* ─── SECTIONS ─── */
-    .section { padding: 80px 5%; position: relative; z-index: 1; }
+html{
+  scroll-behavior:smooth;
+}
 
-    .section-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700; font-size: 0.8rem; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--bordeaux-light);
-      display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
-    }
-    .section-label::before {
-      content: ''; display: block; width: 28px; height: 2px; background: var(--bordeaux-light);
-    }
-    h2.section-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900; font-size: clamp(2.2rem, 6vw, 4rem);
-      line-height: 0.95; text-transform: uppercase;
-      letter-spacing: -1px; color: var(--text-main); margin-bottom: 48px;
-    }
-    h2.section-title span { color: var(--bordeaux-light); font-style: italic; }
+body{
 
-    .divider {
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(0,0,0,0.08), transparent);
-      margin: 0 5%;
-    }
+  font-family:'Barlow',sans-serif;
 
-    /* ─── ABOUT ─── */
-    #about { background: var(--dark-2); }
-    .about-grid {
-      display: grid; gap: 50px; grid-template-columns: 1fr;
-      max-width: 1200px; margin: 0 auto;
-    }
-    @media(min-width:960px){ .about-grid { grid-template-columns: 1fr 1.1fr; align-items: center; } }
+  background:
+  radial-gradient(circle at top left,
+  rgba(0,118,182,0.05),
+  transparent 30%),
+  #f7f9fc;
 
-    .about-img-wrap { position: relative; }
-    .about-img-frame {
-      width: 100%; aspect-ratio: 4/5; border-radius: var(--radius);
-      overflow: hidden; position: relative; background: var(--dark-3);
-    }
-    .about-img-frame img {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: grayscale(20%) contrast(1.05);
-    }
-    .about-img-frame::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(160deg, rgba(0,118,182,0.12) 0%, transparent 50%);
-    }
-    .about-img-wrap::before {
-      content: ''; position: absolute; top: -12px; left: -12px;
-      width: 80px; height: 80px; z-index: -1;
-      border-top: 3px solid var(--primary); border-left: 3px solid var(--primary);
-      border-radius: 4px 0 0 0;
-    }
-    .about-img-wrap::after {
-      content: ''; position: absolute; bottom: -12px; right: -12px;
-      width: 80px; height: 80px; z-index: -1;
-      border-bottom: 3px solid var(--secondary); border-right: 3px solid var(--secondary);
-      border-radius: 0 0 4px 0;
-    }
-    .about-tag {
-      position: absolute; bottom: 20px; left: 20px; z-index: 2;
-      background: var(--bordeaux); color: #ffffff;   /* ✅ texte blanc */
-      padding: 10px 18px; border-radius: var(--radius-sm);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800; font-size: 0.9rem; letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-    .about-text p { color: var(--text-muted); font-size: 1rem; margin-bottom: 18px; line-height: 1.75; }
-    .about-text .highlight { color: var(--gold); font-weight: 700; }
-    .about-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-    .pill {
-      background: rgba(0,118,182,0.08);
-      border: 1px solid rgba(0,118,182,0.2);
-      color: var(--text-main);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 8px 16px; border-radius: 4px;
-    }
+  color:var(--text);
 
-    /* ─── PRESTATIONS ─── */
-    #prestations { background: var(--dark); }
-    .services-grid {
-      display: grid; gap: 2px; grid-template-columns: 1fr;
-      max-width: 1200px; margin: 0 auto;
-    }
-    @media(min-width:768px){ .services-grid { grid-template-columns: repeat(3, 1fr); } }
+  overflow-x:hidden;
 
-    .service-card {
-      position: relative; background: var(--dark-3);
-      padding: 36px 30px; overflow: hidden;
-      transition: var(--transition); cursor: pointer;
-      display: flex; flex-direction: column;
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-    .service-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(to right, var(--bordeaux), var(--bordeaux-light));
-      transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
-    }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-card:hover {
-      background: var(--dark-4);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-      z-index: 1;
-    }
-    .service-card-num {
-      position: absolute; top: -10px; right: 16px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900; font-size: 7rem;
-      color: transparent; -webkit-text-stroke: 1px rgba(0,118,182,0.08);
-      line-height: 1; pointer-events: none; user-select: none; transition: var(--transition);
-    }
-    .service-card:hover .service-card-num { -webkit-text-stroke-color: rgba(0,118,182,0.14); }
-    .service-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: rgba(0,118,182,0.08); border: 1px solid rgba(0,118,182,0.15);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--primary); margin-bottom: 20px; flex-shrink: 0;
-    }
-    .service-card h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800; font-size: 1.5rem;
-      text-transform: uppercase; letter-spacing: 0.5px;
-      color: var(--text-main); margin-bottom: 12px;
-    }
-    .service-card p { color: var(--text-muted); font-size: 0.95rem; flex-grow: 1; line-height: 1.65; }
-    .service-price-row {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 28px; padding-top: 20px;
-      border-top: 1px solid rgba(0,0,0,0.07);
-    }
-    .price { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2rem; color: var(--gold); line-height: 1; }
-    .price-duration { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
-    .service-arrow {
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.1);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-muted); transition: var(--transition);
-    }
-    .service-card:hover .service-arrow {
-      background: var(--bordeaux); border-color: var(--bordeaux);
-      color: #ffffff; transform: rotate(45deg);   /* ✅ icône blanc */
-    }
+  -webkit-font-smoothing:antialiased;
 
-    /* ─── PROCESS ─── */
-    #process { background: var(--dark-2); }
-    .process-track { max-width: 1200px; margin: 0 auto; position: relative; }
-    .process-track::before {
-      content: ''; position: absolute; top: 40px; left: 40px; right: 40px; height: 1px;
-      background: linear-gradient(to right, var(--bordeaux), transparent); display: none;
-    }
-    @media(min-width:900px){ .process-track::before { display: block; } }
-    .process-grid {
-      display: grid; gap: 20px; grid-template-columns: 1fr;
-    }
-    @media(min-width:600px){ .process-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media(min-width:900px){ .process-grid { grid-template-columns: repeat(4, 1fr); } }
-    .process-card {
-      background: var(--dark-3); border: 1px solid rgba(0,0,0,0.06);
-      border-radius: var(--radius); padding: 28px 24px;
-      transition: var(--transition);
-    }
-    .process-card:hover { border-color: rgba(0,118,182,0.25); transform: translateY(-4px); }
-    .step-num {
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 3.5rem;
-      color: transparent; -webkit-text-stroke: 1.5px var(--bordeaux);
-      line-height: 1; margin-bottom: 16px; opacity: 0.5;
-    }
-    .process-card h3 {
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.15rem;
-      text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-main); margin-bottom: 10px;
-    }
-    .process-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+}
 
-    /* ─── BIENFAITS ─── */
-    #bienfaits { background: var(--dark); }
-    .benefits-layout {
-      display: grid; gap: 40px; grid-template-columns: 1fr;
-      max-width: 1200px; margin: 0 auto; align-items: center;
-    }
-    @media(min-width:900px){ .benefits-layout { grid-template-columns: 1fr 1fr; } }
-    .benefits-visual {
-      position: relative; display: flex;
-      justify-content: center; align-items: center; min-height: 400px;
-    }
-    .benefit-main-img {
-      width: 55%; max-width: 220px;
-      filter: drop-shadow(0 20px 40px rgba(0,118,182,0.2)) grayscale(20%);
-      position: relative; z-index: 1;
-    }
-    .benefits-visual::before {
-      content: ''; position: absolute; width: 60%; aspect-ratio: 1;
-      background: radial-gradient(circle, rgba(0,118,182,0.10) 0%, transparent 70%); z-index: 0;
-    }
-    .benefit-pill {
-      position: absolute; background: var(--white);
-      border: 1px solid rgba(0,0,0,0.08); border-radius: 40px;
-      padding: 8px 14px 8px 8px;
-      display: flex; align-items: center; gap: 10px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px;
-      text-transform: uppercase; color: var(--text-main);
-      white-space: nowrap; z-index: 5;
-      opacity: 0; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-      transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    }
-    .benefit-pill:hover { background: var(--bordeaux); border-color: var(--bordeaux); color: #ffffff; transform: scale(1.06) !important; }
-    .pill-val {
-      background: var(--bordeaux); color: #ffffff;   /* ✅ texte blanc */
-      width: 40px; height: 30px;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 20px; font-weight: 900; font-size: 0.78rem;
-    }
-    .p1 { top: 8%;    left: 0%;   animation-delay: 0.1s; }
-    .p2 { top: 8%;    right: 0%;  animation-delay: 0.2s; }
-    .p3 { top: 44%;   left: -4%;  animation-delay: 0.3s; }
-    .p4 { top: 44%;   right: -4%; animation-delay: 0.4s; }
-    .p5 { bottom: 8%; left: 0%;   animation-delay: 0.5s; }
-    .p6 { bottom: 8%; right: 0%;  animation-delay: 0.6s; }
-    @keyframes popIn {
-      from { opacity:0; transform: scale(0.6); }
-      to   { opacity:1; transform: scale(1); }
-    }
-    .benefits-list { display: flex; flex-direction: column; gap: 16px; }
-    .benefit-row {
-      display: flex; align-items: center; gap: 16px;
-      background: var(--dark-3); border: 1px solid rgba(0,0,0,0.06);
-      border-radius: var(--radius-sm); padding: 16px 20px; transition: var(--transition);
-    }
-    .benefit-row:hover { border-color: rgba(0,118,182,0.2); transform: translateX(6px); }
-    .benefit-row-pct {
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.8rem;
-      color: var(--gold); min-width: 80px; line-height: 1;
-    }
-    .benefit-row-info h4 {
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem;
-      text-transform: uppercase; color: var(--text-main);
-    }
-    .benefit-row-info p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+a{
+  text-decoration:none;
+  color:inherit;
+}
 
-    /* ─── HYGIÈNE ─── */
-    #safety { background: var(--dark-2); }
-    .safety-layout {
-      max-width: 900px; margin: 0 auto;
-      background: var(--dark-3); border: 1px solid rgba(0,0,0,0.07);
-      border-radius: var(--radius-lg); padding: 40px;
-      display: grid; gap: 30px; grid-template-columns: 1fr;
-    }
-    @media(min-width:700px){ .safety-layout { grid-template-columns: 1fr 1fr; } }
-    .safety-block h3 {
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.2rem;
-      text-transform: uppercase; color: var(--text-main); margin-bottom: 14px;
-    }
-    .bullet-list { display: flex; flex-direction: column; gap: 10px; }
-    .bullet-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.92rem; color: var(--text-muted); line-height: 1.5; }
-    .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bordeaux-light); flex-shrink: 0; margin-top: 7px; }
-    .safety-note {
-      grid-column: 1 / -1;
-      background: rgba(0,118,182,0.05); border: 1px solid rgba(0,118,182,0.12);
-      border-radius: var(--radius-sm); padding: 16px 20px;
-      font-size: 0.92rem; color: var(--text-muted);
-    }
-    .safety-note strong { color: var(--bordeaux-light); }
+img{
+  display:block;
+  max-width:100%;
+}
 
-    /* ─── FAQ ─── */
-    #faq { background: var(--dark); }
-    .faq-wrap { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 4px; }
-    .faq-item {
-      background: var(--dark-3); border: 1px solid rgba(0,0,0,0.06);
-      border-radius: var(--radius-sm); overflow: hidden; transition: var(--transition);
-    }
-    .faq-item:hover { border-color: rgba(0,118,182,0.12); }
-    .faq-item[open] { border-color: rgba(0,118,182,0.25); }
-    summary {
-      padding: 20px 24px; cursor: pointer;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700; font-size: 1.1rem; letter-spacing: 0.3px;
-      color: var(--text-main);
-      display: flex; justify-content: space-between; align-items: center;
-      list-style: none; outline: none; transition: color 0.2s;
-    }
-    summary::-webkit-details-marker { display: none; }
-    .faq-item[open] summary { color: var(--bordeaux-light); }
-    .faq-chevron {
-      width: 28px; height: 28px; background: rgba(0,118,182,0.06); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-muted); flex-shrink: 0; margin-left: 16px;
-      transition: transform 0.3s ease, background 0.3s;
-    }
-    .faq-item[open] .faq-chevron {
-      transform: rotate(180deg);
-      background: var(--bordeaux); color: #ffffff;  /* ✅ icône blanc */
-    }
-    .faq-answer {
-      padding: 16px 24px 20px; font-size: 0.95rem; color: var(--text-muted);
-      line-height: 1.7; border-top: 1px solid rgba(0,0,0,0.07);
-      animation: slideDown 0.3s ease;
-    }
-    @keyframes slideDown {
-      from { opacity:0; transform: translateY(-6px); }
-      to   { opacity:1; transform: translateY(0); }
-    }
+.section{
+  padding:120px 6%;
+  position:relative;
+}
 
-    /* ─── LOCALISATION ─── */
-    #location { background: var(--dark-2); }
-    .location-grid {
-      display: grid; gap: 20px; grid-template-columns: 1fr;
-      max-width: 1200px; margin: 0 auto;
-    }
-    @media(min-width:900px){ .location-grid { grid-template-columns: 1.2fr 0.8fr; } }
-    .map-card {
-      border-radius: var(--radius); overflow: hidden;
-      border: 1px solid rgba(0,0,0,0.07); min-height: 360px;
-    }
-    .map-card iframe { width: 100%; height: 100%; min-height: 360px; border: 0; display: block; }
-    .contact-card {
-      background: var(--dark-3); border: 1px solid rgba(0,0,0,0.07);
-      border-radius: var(--radius); padding: 36px 30px;
-    }
-    .contact-card h3 {
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2rem;
-      text-transform: uppercase; color: var(--text-main); line-height: 1; margin-bottom: 8px;
-    }
-    .contact-card h3 span { color: var(--bordeaux-light); }
-    .contact-card .sub { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 28px; }
-    .contact-links { display: flex; flex-direction: column; gap: 12px; }
-    .contact-link {
-      display: flex; align-items: center; gap: 14px;
-      background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.07);
-      border-radius: var(--radius-sm); padding: 14px 16px; transition: var(--transition);
-    }
-    .contact-link:hover {
-      border-color: rgba(0,118,182,0.25); background: rgba(0,118,182,0.05);
-      transform: translateX(4px);
-    }
-    .contact-ico {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: rgba(0,118,182,0.10); flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--bordeaux-light);
-    }
-    .contact-link strong { display: block; color: var(--text-main); font-size: 0.95rem; }
-    .contact-link span { color: var(--text-muted); font-size: 0.85rem; }
+/* ───────────────────── */
+/* HEADER */
+/* ───────────────────── */
 
-    /* ─── RÉSERVATION ─── */
-    #contact { background: var(--dark); }
+header{
 
-    .booking-box {
-      max-width: 860px; margin: 0 auto;
-      background: var(--white); border: 1px solid rgba(0,118,182,0.15);
-      border-radius: var(--radius-lg); overflow: hidden;
-    }
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
 
-    /* ✅ Header calendrier : compact, clair, non sombre */
-    .booking-header {
-      padding: 20px 28px;
-      background: rgba(0,118,182,0.05);
-      border-bottom: 1px solid rgba(0,118,182,0.12);
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px;
-    }
-    .booking-header-left { display: flex; flex-direction: column; gap: 2px; }
-    .booking-header h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800; font-size: 1.3rem;
-      text-transform: uppercase; color: var(--text-main);
-      letter-spacing: 0.5px;
-    }
-    .booking-header p { font-size: 0.85rem; color: var(--text-muted); }
+  z-index:9999;
 
-    /* Lien "ouvrir en plein écran" sobre */
-    .booking-header .link-out {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700; font-size: 0.85rem; letter-spacing: 1px;
-      text-transform: uppercase; color: var(--bordeaux-light);
-      border: 1px solid rgba(0,118,182,0.25);
-      padding: 8px 16px; border-radius: var(--radius-sm);
-      transition: var(--transition); white-space: nowrap;
-    }
-    .booking-header .link-out:hover {
-      background: var(--bordeaux); color: #ffffff; border-color: var(--bordeaux);
-    }
+  height:78px;
 
-    .calendly-loader {
-      position: absolute; inset: 0; top: 0;
-      background: rgba(255,255,255,0.95);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 16px; z-index: 10; padding: 24px; text-align: center;
-    }
-    .spinner {
-      width: 44px; height: 44px; border-radius: 50%;
-      border: 3px solid rgba(0,0,0,0.08);
-      border-top-color: var(--bordeaux-light);
-      animation: spin 0.9s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .calendly-loader p { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
-    .calendly-loader.hide { opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 
-    .calendly-inline-widget { min-width: 320px; height: 700px; }
+  padding:0 6%;
 
-    .booking-footer {
-      padding: 18px 28px 24px;
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      background: var(--surface); border-top: 1px solid rgba(0,0,0,0.06);
-    }
-    .booking-footer p { font-size: 0.85rem; color: var(--text-muted); }
-    .insta-link {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700; font-size: 1rem; letter-spacing: 1px;
-      text-transform: uppercase; color: var(--text-main); transition: var(--transition);
-    }
-    .insta-link:hover { color: var(--bordeaux-light); }
+  background:rgba(255,255,255,0.75);
 
-    /* ─── STICKY BAR ─── */
-    .sticky-bar {
-      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-      width: 90%; max-width: 380px;
-      background: var(--bordeaux); color: #ffffff;   /* ✅ texte blanc */
-      padding: 16px; border-radius: var(--radius-sm);
-      display: flex; justify-content: center; align-items: center; gap: 10px;
-      box-shadow: 0 8px 30px rgba(0,118,182,0.3); z-index: 2000;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800; font-size: 1rem; letter-spacing: 2px;
-      text-transform: uppercase; transition: transform 0.3s;
-    }
-    .sticky-bar:active { transform: translateX(-50%) scale(0.96); }
-    @media(min-width:1024px){ .sticky-bar { display: none; } }
+  backdrop-filter:blur(18px);
 
-    /* ─── FOOTER ─── */
-    footer {
-      background: var(--white); border-top: 2px solid var(--bordeaux);
-      padding: 40px 5%;
-      display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
-    }
-    .footer-logo {
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.5rem;
-      text-transform: uppercase; letter-spacing: 2px; color: var(--text-main);
-    }
-    .footer-logo span { color: var(--gold); }
-    footer p { font-size: 0.85rem; color: var(--text-muted); }
-    footer a { color: var(--bordeaux-light); font-weight: 600; transition: color 0.2s; }
-    footer a:hover { color: var(--gold); }
-    .footer-strip {
-      width: 100%; height: 3px;
-      background: linear-gradient(to right, var(--bordeaux), var(--gold), var(--bordeaux));
-      border-radius: 2px; margin-bottom: 8px;
-    }
-  </style>
+  border-bottom:
+  1px solid rgba(0,0,0,0.05);
+
+}
+
+.logo-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-mark{
+  width:44px;
+  height:44px;
+  object-fit:contain;
+}
+
+.logo-text{
+
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+
+  font-size:1.5rem;
+
+  letter-spacing:1px;
+  text-transform:uppercase;
+
+}
+
+.logo-text span{
+  color:var(--secondary);
+}
+
+nav ul{
+  display:none;
+  list-style:none;
+  gap:26px;
+}
+
+@media(min-width:980px){
+
+  nav ul{
+    display:flex;
+  }
+
+}
+
+nav a{
+
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+
+  text-transform:uppercase;
+
+  color:var(--text-muted);
+
+  font-size:0.95rem;
+
+  transition:0.25s;
+
+}
+
+nav a:hover{
+  color:var(--primary);
+}
+
+.header-btn{
+
+  background:
+  linear-gradient(
+  135deg,
+  var(--primary),
+  var(--secondary)
+  );
+
+  color:white;
+
+  padding:14px 26px;
+
+  border-radius:999px;
+
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;
+
+  text-transform:uppercase;
+
+  letter-spacing:1px;
+
+  box-shadow:
+  0 12px 30px rgba(0,118,182,0.18);
+
+  transition:0.3s;
+}
+
+.header-btn:hover{
+  transform:translateY(-3px);
+}
+
+/* ───────────────────── */
+/* HERO */
+/* ───────────────────── */
+
+.hero{
+
+  min-height:100vh;
+
+  position:relative;
+
+  display:flex;
+  align-items:flex-end;
+
+  padding:0 6% 120px;
+
+  overflow:hidden;
+
+}
+
+.hero-bg{
+
+  position:absolute;
+  inset:0;
+
+  background:
+
+  linear-gradient(
+  to bottom,
+  rgba(255,255,255,0.25),
+  rgba(255,255,255,0.92)
+  ),
+
+  linear-gradient(
+  135deg,
+  rgba(0,118,182,0.15),
+  rgba(0,198,215,0.08)
+  ),
+
+  url('0fc6911e-bb7e-4be2-9817-8390221d3612.JPG');
+
+  background-size:cover;
+  background-position:center;
+
+  transform:scale(1.04);
+
+}
+
+.hero::after{
+
+  content:'';
+
+  position:absolute;
+
+  bottom:-1px;
+  left:0;
+  right:0;
+
+  height:130px;
+
+  background:white;
+
+  clip-path: polygon(0 40%,100% 0,100% 100%,0 100%);
+
+}
+
+.hero-content{
+
+  position:relative;
+  z-index:2;
+
+  max-width:720px;
+
+}
+
+.hero-badge{
+
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+
+  padding:10px 18px;
+
+  background:rgba(255,255,255,0.72);
+
+  backdrop-filter:blur(14px);
+
+  border-radius:999px;
+
+  margin-bottom:26px;
+
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+
+  letter-spacing:2px;
+
+  text-transform:uppercase;
+
+  color:var(--primary);
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+
+}
+
+.hero-badge::before{
+
+  content:'';
+
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:var(--secondary);
+
+}
+
+.hero h1{
+
+  font-family:'Barlow Condensed',sans-serif;
+
+  font-size:clamp(5rem,12vw,9rem);
+
+  line-height:0.88;
+
+  letter-spacing:-4px;
+
+  text-transform:uppercase;
+
+  margin-bottom:20px;
+
+}
+
+.hero h1 em{
+  color:var(--primary);
+  font-style:italic;
+}
+
+.hero-sub{
+
+  font-family:'Barlow Condensed',sans-serif;
+
+  font-size:1.4rem;
+
+  text-transform:uppercase;
+
+  letter-spacing:3px;
+
+  color:var(--secondary);
+
+  margin-bottom:28px;
+
+}
+
+.hero-desc{
+
+  max-width:520px;
+
+  font-size:1.1rem;
+
+  line-height:1.9;
+
+  color:var(--text-muted);
+
+  margin-bottom:40px;
+
+}
+
+.hero-actions{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+/* BUTTONS */
+
+.btn-primary{
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:18px 34px;
+
+  border-radius:999px;
+
+  background:
+  linear-gradient(
+  135deg,
+  var(--primary),
+  var(--secondary)
+  );
+
+  color:white;
+
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;
+
+  text-transform:uppercase;
+
+  letter-spacing:1px;
+
+  transition:0.3s;
+
+  box-shadow:
+  0 14px 35px rgba(0,118,182,0.18);
+
+}
+
+.btn-primary:hover{
+
+  transform:
+  translateY(-4px)
+  scale(1.02);
+
+}
+
+.btn-secondary{
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:18px 34px;
+
+  border-radius:999px;
+
+  background:white;
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,0.06);
+
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+
+  text-transform:uppercase;
+
+  transition:0.3s;
+
+}
+
+.btn-secondary:hover{
+  transform:translateY(-4px);
+}
+
+/* ───────────────────── */
+/* TITLES */
+/* ───────────────────── */
+
+.section-label{
+
+  font-family:'Barlow Condensed',sans-serif;
+
+  font-size:0.9rem;
+
+  font-weight:700;
+
+  letter-spacing:3px;
+
+  text-transform:uppercase;
+
+  color:var(--secondary);
+
+  margin-bottom:16px;
+
+}
+
+.section-title{
+
+  font-family:'Barlow Condensed',sans-serif;
+
+  font-size:clamp(3rem,7vw,5.5rem);
+
+  line-height:0.92;
+
+  text-transform:uppercase;
+
+  letter-spacing:-3px;
+
+  margin-bottom:60px;
+
+}
+
+.section-title span{
+  color:var(--primary);
+  font-style:italic;
+}
+
+/* ───────────────────── */
+/* ABOUT */
+/* ───────────────────── */
+
+.about-grid{
+
+  display:grid;
+  gap:60px;
+
+  align-items:center;
+
+}
+
+@media(min-width:1000px){
+
+  .about-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+.about-image{
+
+  border-radius:40px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 30px 60px rgba(0,0,0,0.12);
+
+}
+
+.about-image img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+}
+
+.about-text p{
+
+  font-size:1.05rem;
+
+  line-height:1.9;
+
+  color:var(--text-muted);
+
+  margin-bottom:22px;
+
+}
+
+.about-pills{
+
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+
+  margin-top:30px;
+
+}
+
+.pill{
+
+  padding:10px 18px;
+
+  border-radius:999px;
+
+  background:white;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,0.05);
+
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+
+  text-transform:uppercase;
+
+  font-size:0.9rem;
+
+}
+
+/* ───────────────────── */
+/* SERVICES */
+/* ───────────────────── */
+
+.services-grid{
+
+  display:grid;
+  gap:24px;
+
+}
+
+@media(min-width:850px){
+
+  .services-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+}
+
+.service-card{
+
+  position:relative;
+
+  padding:42px 34px;
+
+  border-radius:30px;
+
+  background:
+  linear-gradient(
+  180deg,
+  rgba(255,255,255,1),
+  rgba(255,255,255,0.96)
+  );
+
+  box-shadow:
+  0 10px 35px rgba(0,0,0,0.05);
+
+  transition:0.35s;
+
+  overflow:hidden;
+
+}
+
+.service-card:hover{
+
+  transform:translateY(-10px);
+
+  box-shadow:
+  0 30px 60px rgba(0,0,0,0.12);
+
+}
+
+.service-number{
+
+  position:absolute;
+
+  top:-10px;
+  right:20px;
+
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+
+  font-size:7rem;
+
+  color:rgba(0,118,182,0.06);
+
+}
+
+.service-icon{
+
+  width:64px;
+  height:64px;
+
+  border-radius:20px;
+
+  background:
+  linear-gradient(
+  135deg,
+  rgba(0,118,182,0.12),
+  rgba(0,198,215,0.12)
+  );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin-bottom:24px;
+
+  color:var(--primary);
+
+}
+
+.service-card h3{
+
+  font-family:'Barlow Condensed',sans-serif;
+
+  font-size:2rem;
+
+  text-transform:uppercase;
+
+  margin-bottom:12px;
+
+}
+
+.service-card p{
+
+  color:var(--text-muted);
+
+  line-height:1.8;
+
+  margin-bottom:28px;
+
+}
+
+.service-bottom{
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+}
+
+.price{
+
+  font-family:'Barlow Condensed',sans-serif;
+
+  font-size:2.4rem;
+
+  font-weight:900;
+
+  color:var(--primary);
+
+}
+
+.duration{
+
+  color:var(--text-muted);
+
+  text-transform:uppercase;
+
+  font-size:0.8rem;
+
+}
+
+.arrow{
+
+  width:46px;
+  height:46px;
+
+  border-radius:50%;
+
+  background:var(--primary);
+
+  color:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+}
+
+/* ───────────────────── */
+/* PROCESS */
+/* ───────────────────── */
+
+.process-grid{
+
+  display:grid;
+  gap:24px;
+
+}
+
+@media(min-width:850px){
+
+  .process-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+}
+
+.process-card{
+
+  padding:34px 28px;
+
+  border-radius:30px;
+
+  background:white;
+
+  box-shadow:var(--shadow);
+
+  transition:0.3s;
+
+}
+
+.process-card:hover{
+  transform:translateY(-8px);
+}
+
+.step{
+
+  font-family:'Barlow Condensed',sans-serif;
+
+  font-size:4rem;
+
+  font-weight:900;
+
+  color:rgba(0,118,182,0.1);
+
+  margin-bottom:20px;
+
+}
+
+.process-card h3{
+
+  font-family:'Barlow Condensed',sans-serif;
+
+  font-size:1.5rem;
+
+  text-transform:uppercase;
+
+  margin-bottom:12px;
+
+}
+
+.process-card p{
+
+  line-height:1.8;
+
+  color:var(--text-muted);
+
+}
+
+/* ───────────────────── */
+/* CONTACT */
+/* ───────────────────── */
+
+.contact-box{
+
+  background:white;
+
+  border-radius:40px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 20px 50px rgba(0,0,0,0.08);
+
+}
+
+.contact-header{
+
+  padding:30px;
+
+  background:
+  linear-gradient(
+  135deg,
+  rgba(0,118,182,0.06),
+  rgba(0,198,215,0.04)
+  );
+
+}
+
+.contact-header h3{
+
+  font-family:'Barlow Condensed',sans-serif;
+
+  font-size:2rem;
+
+  text-transform:uppercase;
+
+}
+
+.contact-header p{
+  color:var(--text-muted);
+}
+
+.calendly-inline-widget{
+  min-width:320px;
+  height:720px;
+}
+
+/* ───────────────────── */
+/* FOOTER */
+/* ───────────────────── */
+
+footer{
+
+  padding:70px 6%;
+
+  background:white;
+
+  text-align:center;
+
+}
+
+.footer-logo{
+
+  font-family:'Barlow Condensed',sans-serif;
+
+  font-size:2rem;
+
+  font-weight:900;
+
+  text-transform:uppercase;
+
+  margin-bottom:14px;
+
+}
+
+.footer-logo span{
+  color:var(--secondary);
+}
+
+footer p{
+
+  color:var(--text-muted);
+
+  margin-bottom:8px;
+
+}
+
+/* ───────────────────── */
+/* MOBILE */
+/* ───────────────────── */
+
+@media(max-width:700px){
+
+  .hero{
+    padding-bottom:90px;
+  }
+
+  .hero h1{
+    font-size:4.5rem;
+  }
+
+  .section{
+    padding:90px 6%;
+  }
+
+  .section-title{
+    font-size:3rem;
+  }
+
+}
+
+</style>
 </head>
+
 <body>
 
-<!-- ─── HEADER ─── -->
+<!-- HEADER -->
+
 <header>
-  <div class="logo-wrap">
-    <img class="logo-mark" src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="Logo Axium">
-    <div class="logo-text">Axium<span>.Perform</span></div>
-  </div>
-  <nav>
-    <ul>
-      <li><a href="#about">Profil</a></li>
-      <li><a href="#prestations">Prestations</a></li>
-      <li><a href="#process">Déroulement</a></li>
-      <li><a href="#bienfaits">Bienfaits</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#location">Contact</a></li>
-    </ul>
-  </nav>
-  <a href="#contact" class="header-cta">Réserver</a>
+
+<div class="logo-wrap">
+
+<img
+src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png"
+class="logo-mark"
+alt="Axium">
+
+<div class="logo-text">
+Axium<span>.Perform</span>
+</div>
+
+</div>
+
+<nav>
+
+<ul>
+<li><a href="#about">Profil</a></li>
+<li><a href="#services">Prestations</a></li>
+<li><a href="#process">Déroulement</a></li>
+<li><a href="#contact">Réservation</a></li>
+</ul>
+
+</nav>
+
+<a href="#contact" class="header-btn">
+Réserver
+</a>
+
 </header>
 
-<!-- ─── HERO ─── -->
+<!-- HERO -->
+
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-stripes"><div class="hero-stripes-img"></div></div>
-  <div class="hero-number">01</div>
 
-  <div class="hero-content">
-    <h1>Libère<br><em>ton corps.</em></h1>
-    <div class="hero-sub">Massage · Hijama · Récupération</div>
-    <p class="hero-desc">
-      Optimisation de la performance sportive et récupération avancée.
-      Soins personnalisés pour athlètes et actifs — canton de Genève.
-    </p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Prendre rendez-vous</a>
-      <a href="#prestations" class="btn-ghost">Voir les prestations</a>
-    </div>
-  </div>
+<div class="hero-bg"></div>
 
-  <div class="hero-stats">
-    <div class="stat-item"><div class="stat-val">40.-</div><div class="stat-label">Dès</div></div>
-    <div class="stat-item"><div class="stat-val">3</div><div class="stat-label">Prestations</div></div>
-    <div class="stat-item"><div class="stat-val">30'</div><div class="stat-label">Séance min</div></div>
-    <div class="stat-item"><div class="stat-val">GE</div><div class="stat-label">Canton</div></div>
-  </div>
+<div class="hero-content">
+
+<div class="hero-badge">
+Performance • Récupération • Genève
+</div>
+
+<h1>
+Libère<br>
+<em>ton corps.</em>
+</h1>
+
+<div class="hero-sub">
+Massage · Hijama · Recovery
+</div>
+
+<p class="hero-desc">
+Récupération sportive avancée.<br>
+Performance.<br>
+Mobilité.<br>
+Corps optimisé.
+</p>
+
+<div class="hero-actions">
+
+<a href="#contact" class="btn-primary">
+Prendre rendez-vous
+</a>
+
+<a href="#services" class="btn-secondary">
+Découvrir
+</a>
+
+</div>
+
+</div>
+
 </section>
 
-<div class="divider"></div>
+<!-- ABOUT -->
 
-<!-- ─── QUI SUIS-JE ─── -->
 <section class="section" id="about">
-  <div class="section-label">Présentation</div>
-  <h2 class="section-title">Sevann,<br><span>Thérapeute</span></h2>
 
-  <div class="about-grid">
-    <div class="about-img-wrap">
-      <div class="about-img-frame">
-        <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann — Axium Perform">
-        <div class="about-tag">Sevann · Fondateur</div>
-      </div>
-    </div>
-    <div class="about-text">
-      <p>Moi, c'est <span class="highlight">Sevann</span>. Issu du monde de l'athlétisme, je suis passionné par la récupération, le bien-être et le fonctionnement du corps.</p>
-      <p>Athlète à la base, j'ai développé une vraie compréhension des besoins du corps et de l'importance des soins pour performer et récupérer efficacement.</p>
-      <p>Actuellement en formation, je continue à me perfectionner afin de proposer un accompagnement sérieux, évolutif et axé sur le bien-être de chaque client.</p>
-      <div class="about-pills">
-        <span class="pill">Athlétisme</span>
-        <span class="pill">Massage sportif</span>
-        <span class="pill">Hijama</span>
-        <span class="pill">Récupération</span>
-        <span class="pill">En formation</span>
-      </div>
-      <div style="margin-top: 32px;">
-        <a href="#contact" class="btn-primary">Réserver une séance</a>
-      </div>
-    </div>
-  </div>
+<div class="section-label">
+Présentation
+</div>
+
+<h2 class="section-title">
+Sevann,<br>
+<span>Fondateur</span>
+</h2>
+
+<div class="about-grid">
+
+<div class="about-image">
+
+<img
+src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG"
+alt="Sevann">
+
+</div>
+
+<div class="about-text">
+
+<p>
+Athlète à la base, passionné par la récupération et la performance humaine.
+</p>
+
+<p>
+Axium.Perform est né d’une volonté simple :
+aider les sportifs et les personnes actives à récupérer mieux, bouger mieux et performer durablement.
+</p>
+
+<p>
+Chaque séance est pensée de manière ciblée selon vos besoins : récupération musculaire, tensions, fatigue ou relâchement global.
+</p>
+
+<div class="about-pills">
+
+<div class="pill">Athlétisme</div>
+<div class="pill">Massage sportif</div>
+<div class="pill">Hijama</div>
+<div class="pill">Recovery</div>
+
+</div>
+
+<div style="margin-top:36px;">
+
+<a href="#contact" class="btn-primary">
+Réserver une séance
+</a>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<div class="divider"></div>
+<!-- SERVICES -->
 
-<!-- ─── PRESTATIONS ─── -->
-<section class="section" id="prestations">
-  <div class="section-label">Soins</div>
-  <h2 class="section-title">Mes <span>Prestations</span></h2>
+<section class="section" id="services">
 
-  <div class="services-grid">
-    <a href="#contact" class="service-card">
-      <div class="service-card-num">01</div>
-      <div class="service-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </div>
-      <h3>Massage Sportif</h3>
-      <p>Récupération musculaire profonde, ciblage des tensions. Idéal après l'effort ou en période de compétition intense.</p>
-      <div class="service-price-row">
-        <div><div class="price">40.-</div><div class="price-duration">30 minutes</div></div>
-        <div class="service-arrow">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </div>
-      </div>
-    </a>
+<div class="section-label">
+Prestations
+</div>
 
-    <a href="#contact" class="service-card">
-      <div class="service-card-num">02</div>
-      <div class="service-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-      </div>
-      <h3>Massage Relaxation</h3>
-      <p>Détente complète du corps. Réduction du stress, relâchement global et retour à l'équilibre.</p>
-      <div class="service-price-row">
-        <div><div class="price">70.-</div><div class="price-duration">1 heure</div></div>
-        <div class="service-arrow">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </div>
-      </div>
-    </a>
+<h2 class="section-title">
+Mes<br>
+<span>Prestations</span>
+</h2>
 
-    <a href="#contact" class="service-card">
-      <div class="service-card-num">03</div>
-      <div class="service-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/></svg>
-      </div>
-      <h3>Séance Hijama</h3>
-      <p>Thérapie par ventouses pour détoxifier, soulager les douleurs chroniques et booster la récupération.</p>
-      <div class="service-price-row">
-        <div><div class="price">Inclus</div><div class="price-duration">Sur RDV</div></div>
-        <div class="service-arrow">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </div>
-      </div>
-    </a>
-  </div>
+<div class="services-grid">
+
+<div class="service-card">
+
+<div class="service-number">01</div>
+
+<div class="service-icon">
+
+<svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/>
+</svg>
+
+</div>
+
+<h3>
+Massage Sportif
+</h3>
+
+<p>
+Récupération musculaire profonde pour sportifs et personnes actives.
+</p>
+
+<div class="service-bottom">
+
+<div>
+<div class="price">40.-</div>
+<div class="duration">30 min</div>
+</div>
+
+<div class="arrow">→</div>
+
+</div>
+
+</div>
+
+<div class="service-card">
+
+<div class="service-number">02</div>
+
+<div class="service-icon">
+
+<svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="9"/>
+</svg>
+
+</div>
+
+<h3>
+Relaxation
+</h3>
+
+<p>
+Relâchement global, diminution du stress et récupération nerveuse.
+</p>
+
+<div class="service-bottom">
+
+<div>
+<div class="price">70.-</div>
+<div class="duration">1h</div>
+</div>
+
+<div class="arrow">→</div>
+
+</div>
+
+</div>
+
+<div class="service-card">
+
+<div class="service-number">03</div>
+
+<div class="service-icon">
+
+<svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 2v20"/>
+</svg>
+
+</div>
+
+<h3>
+Hijama
+</h3>
+
+<p>
+Méthode traditionnelle par ventouses pour récupération et circulation.
+</p>
+
+<div class="service-bottom">
+
+<div>
+<div class="price">RDV</div>
+<div class="duration">sur demande</div>
+</div>
+
+<div class="arrow">→</div>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<div class="divider"></div>
+<!-- PROCESS -->
 
-<!-- ─── DÉROULEMENT ─── -->
 <section class="section" id="process">
-  <div class="section-label">Protocole</div>
-  <h2 class="section-title">Déroulement<br><span>d'une séance</span></h2>
 
-  <div class="process-track">
-    <div class="process-grid">
-      <div class="process-card">
-        <div class="step-num">01</div>
-        <h3>Échange rapide</h3>
-        <p>Objectif du jour, zones à travailler, antécédents (douleurs, fatigue, stress, sport).</p>
-      </div>
-      <div class="process-card">
-        <div class="step-num">02</div>
-        <h3>Travail ciblé</h3>
-        <p>Massage ou hijama selon la prestation, intensité adaptée, zones prioritaires.</p>
-      </div>
-      <div class="process-card">
-        <div class="step-num">03</div>
-        <h3>Retour & conseils</h3>
-        <p>Recommandations post-séance : hydratation, repos, mobilité, sensations normales.</p>
-      </div>
-      <div class="process-card">
-        <div class="step-num">04</div>
-        <h3>Suivi</h3>
-        <p>Si nécessaire : planifier une prochaine séance (récup, tension récurrente, période intense).</p>
-      </div>
-    </div>
-  </div>
+<div class="section-label">
+Déroulement
+</div>
 
-  <div style="text-align:center; margin-top:36px;">
-    <a href="#contact" class="btn-primary">Réserver une séance</a>
-  </div>
+<h2 class="section-title">
+Votre<br>
+<span>Séance</span>
+</h2>
+
+<div class="process-grid">
+
+<div class="process-card">
+
+<div class="step">01</div>
+
+<h3>
+Échange
+</h3>
+
+<p>
+Analyse des besoins, douleurs et objectifs du jour.
+</p>
+
+</div>
+
+<div class="process-card">
+
+<div class="step">02</div>
+
+<h3>
+Travail ciblé
+</h3>
+
+<p>
+Massage ou hijama adaptée à votre profil.
+</p>
+
+</div>
+
+<div class="process-card">
+
+<div class="step">03</div>
+
+<h3>
+Récupération
+</h3>
+
+<p>
+Relâchement musculaire et optimisation du corps.
+</p>
+
+</div>
+
+<div class="process-card">
+
+<div class="step">04</div>
+
+<h3>
+Conseils
+</h3>
+
+<p>
+Hydratation, récupération et suivi post séance.
+</p>
+
+</div>
+
+</div>
+
 </section>
 
-<div class="divider"></div>
+<!-- CONTACT -->
 
-<!-- ─── BIENFAITS ─── -->
-<section class="section" id="bienfaits">
-  <div class="section-label">Effets</div>
-  <h2 class="section-title">Bienfaits<br><span>sur le corps</span></h2>
-
-  <div class="benefits-layout">
-    <div class="benefits-visual">
-      <img src="massage-therapy-2277454_1280.png" alt="Illustration anatomie" class="benefit-main-img">
-      <div class="benefit-pill p1"><span class="pill-val">-40%</span><span>Inflammation</span></div>
-      <div class="benefit-pill p2"><span class="pill-val">+50%</span><span>Mobilité</span></div>
-      <div class="benefit-pill p3"><span class="pill-val">-50%</span><span>Douleur</span></div>
-      <div class="benefit-pill p4"><span class="pill-val">-35%</span><span>Stress</span></div>
-      <div class="benefit-pill p5"><span class="pill-val">+30%</span><span>Circulation</span></div>
-      <div class="benefit-pill p6"><span class="pill-val">+25%</span><span>Récupération</span></div>
-    </div>
-
-    <div class="benefits-list">
-      <div class="benefit-row">
-        <div class="benefit-row-pct">-40%</div>
-        <div class="benefit-row-info">
-          <h4>Inflammation réduite</h4>
-          <p>Diminution des marqueurs inflammatoires après séance de massage profond.</p>
-        </div>
-      </div>
-      <div class="benefit-row">
-        <div class="benefit-row-pct">+50%</div>
-        <div class="benefit-row-info">
-          <h4>Mobilité améliorée</h4>
-          <p>Gain de souplesse et amplitude articulaire sur les zones travaillées.</p>
-        </div>
-      </div>
-      <div class="benefit-row">
-        <div class="benefit-row-pct">-50%</div>
-        <div class="benefit-row-info">
-          <h4>Douleurs soulagées</h4>
-          <p>Réduction significative des tensions musculaires chroniques.</p>
-        </div>
-      </div>
-      <div class="benefit-row">
-        <div class="benefit-row-pct">+30%</div>
-        <div class="benefit-row-info">
-          <h4>Circulation sanguine</h4>
-          <p>Stimulation du flux sanguin et lymphatique, détoxification naturelle.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ─── HYGIÈNE ─── -->
-<section class="section" id="safety">
-  <div class="section-label">Protocole sanitaire</div>
-  <h2 class="section-title">Hygiène &<br><span>Informations</span></h2>
-
-  <div class="safety-layout">
-    <div class="safety-block">
-      <h3>Protocole hygiène</h3>
-      <div class="bullet-list">
-        <div class="bullet-item"><span class="bullet-dot"></span><span>Désinfection des surfaces et lavage des mains avant chaque séance.</span></div>
-        <div class="bullet-item"><span class="bullet-dot"></span><span>Matériel et consommables adaptés et renouvelés.</span></div>
-        <div class="bullet-item"><span class="bullet-dot"></span><span>Environnement propre, serviettes fraîches à chaque client.</span></div>
-      </div>
-    </div>
-    <div class="safety-block">
-      <h3>Après la séance</h3>
-      <div class="bullet-list">
-        <div class="bullet-item"><span class="bullet-dot"></span><span>Hydratation conseillée dans les heures suivantes.</span></div>
-        <div class="bullet-item"><span class="bullet-dot"></span><span>Repos recommandé 24h après une séance profonde ou hijama.</span></div>
-        <div class="bullet-item"><span class="bullet-dot"></span><span>Légère fatigue normale — signe de récupération active.</span></div>
-      </div>
-    </div>
-    <div class="safety-note">
-      <strong>Note :</strong> Si tu as une question spécifique (peau, douleurs, pathologie), écris-moi avant de réserver — je serai disponible pour te répondre.
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ─── FAQ ─── -->
-<section class="section" id="faq">
-  <div class="section-label">Questions</div>
-  <h2 class="section-title">FAQ</h2>
-
-  <div class="faq-wrap">
-    <details class="faq-item">
-      <summary>Est-ce que c'est douloureux ?
-        <div class="faq-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></div>
-      </summary>
-      <div class="faq-answer">Non, le but n'est pas de vous faire mal. Que ce soit pour un massage sportif ou la Hijama, la sensation peut être intense mais reste toujours très supportable.</div>
-    </details>
-
-    <details class="faq-item">
-      <summary>Combien de temps dure la séance ?
-        <div class="faq-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></div>
-      </summary>
-      <div class="faq-answer">Cela dépend de la prestation choisie. Comptez généralement entre 30 minutes pour un massage ciblé et jusqu'à 1h pour une séance complète.</div>
-    </details>
-
-    <details class="faq-item">
-      <summary>Est-ce que je peux manger avant la séance ?
-        <div class="faq-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></div>
-      </summary>
-      <div class="faq-answer">Il est conseillé de ne pas manger copieusement 2 à 3 heures avant le rendez-vous.</div>
-    </details>
-
-    <details class="faq-item">
-      <summary>Est-ce que je peux reprendre une activité sportive après ?
-        <div class="faq-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></div>
-      </summary>
-      <div class="faq-answer">Il est recommandé de laisser le corps se reposer pendant 24h après une séance (surtout Hijama ou massage profond) pour laisser le processus de récupération opérer efficacement.</div>
-    </details>
-
-    <details class="faq-item">
-      <summary>Est-ce que je vais être fatigué après la séance ?
-        <div class="faq-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></div>
-      </summary>
-      <div class="faq-answer">Vous ressentirez sûrement une bonne fatigue "saine" — c'est le signe que votre corps se relâche et récupère. Vous vous sentirez surtout détendu et apaisé.</div>
-    </details>
-
-    <details class="faq-item">
-      <summary>Est-ce que ça laisse des marques ?
-        <div class="faq-chevron"><svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></div>
-      </summary>
-      <div class="faq-answer">Pour le massage classique, non. Pour la Hijama (ventouses), oui, des marques circulaires peuvent apparaître. C'est une réaction normale qui disparaît en 3 à 7 jours.</div>
-    </details>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ─── LOCALISATION ─── -->
-<section class="section" id="location">
-  <div class="section-label">Infos pratiques</div>
-  <h2 class="section-title">Localisation &<br><span>Contact</span></h2>
-
-  <div class="location-grid">
-    <div class="map-card">
-      <iframe
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps?q=Canton+de+Gen%C3%A8ve,+Suisse&output=embed"
-        title="Canton de Genève">
-      </iframe>
-    </div>
-
-    <div class="contact-card">
-      <h3>Canton de<br><span>Genève</span></h3>
-      <p class="sub">Séances sur rendez-vous — disponible pour toute question avant réservation.</p>
-      <div class="contact-links">
-        <a class="contact-link" href="tel:+41787310732">
-          <div class="contact-ico">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 9.18 19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          </div>
-          <div><strong>Appel / WhatsApp</strong><span>078 731 07 32</span></div>
-        </a>
-        <a class="contact-link" href="mailto:axium.perform@gmail.com">
-          <div class="contact-ico">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
-          </div>
-          <div><strong>Email</strong><span>axium.perform@gmail.com</span></div>
-        </a>
-        <a class="contact-link" href="https://www.instagram.com/axium.perform/" target="_blank" rel="noopener">
-          <div class="contact-ico">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </div>
-          <div><strong>Instagram</strong><span>@axium.perform</span></div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ─── RÉSERVATION ─── -->
 <section class="section" id="contact">
-  <div class="section-label">Calendrier</div>
-  <h2 class="section-title">Réserver<br><span>une séance</span></h2>
 
-  <div class="booking-box">
-    <!-- ✅ Header compact et clair -->
-    <div class="booking-header">
-      <div class="booking-header-left">
-        <h3>Prise de rendez-vous</h3>
-        <p>Choisis ton créneau directement dans le calendrier</p>
-      </div>
-      <a href="https://calendly.com/axium-perform/seance-de-massage-axium" target="_blank" class="link-out">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        Plein écran
-      </a>
-    </div>
+<div class="section-label">
+Réservation
+</div>
 
-    <div style="position: relative;">
-      <div class="calendly-loader" id="calendlyLoader">
-        <div class="spinner"></div>
-        <p>Chargement du calendrier…</p>
-      </div>
-      <div class="calendly-inline-widget" id="calendlyWidget"
-           data-url="https://calendly.com/axium-perform/seance-de-massage-axium"
-           style="min-width:320px;height:700px;">
-      </div>
-      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    </div>
+<h2 class="section-title">
+Prendre<br>
+<span>Rendez-vous</span>
+</h2>
 
-    <div class="booking-footer">
-      <p>Retrouvez-nous aussi sur</p>
-      <a href="https://www.instagram.com/axium.perform/" target="_blank" class="insta-link" rel="noopener">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        @axium.perform
-      </a>
-    </div>
-  </div>
+<div class="contact-box">
+
+<div class="contact-header">
+
+<h3>
+Calendrier Axium.Perform
+</h3>
+
+<p>
+Choisissez directement votre créneau.
+</p>
+
+</div>
+
+<div
+class="calendly-inline-widget"
+data-url="https://calendly.com/axium-perform/seance-de-massage-axium">
+</div>
+
+<script
+src="https://assets.calendly.com/assets/external/widget.js"
+async>
+</script>
+
+</div>
+
 </section>
 
-<!-- ─── STICKY BAR ─── -->
-<a href="#contact" class="sticky-bar">Réserver maintenant →</a>
+<!-- FOOTER -->
 
-<!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-strip"></div>
-  <div class="footer-logo">Axium<span>.Perform</span></div>
-  <p>Genève, Suisse — Optimisation de la performance & Récupération sportive</p>
-  <p>
-    <a href="tel:+41787310732">078 731 07 32</a>
-    &nbsp;·&nbsp;
-    <a href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a>
-  </p>
-  <p style="margin-top: 8px; font-size: 0.78rem;">© 2025 Axium Perform — Tous droits réservés</p>
-</footer>
 
-<script>
-  (function () {
-    const loader = document.getElementById('calendlyLoader');
-    const widget = document.getElementById('calendlyWidget');
-    if (!loader || !widget) return;
-    const hide = () => loader.classList.add('hide');
-    const obs = new MutationObserver(() => {
-      const iframe = widget.querySelector('iframe');
-      if (iframe) {
-        iframe.addEventListener('load', hide, { once: true });
-        obs.disconnect();
-      }
-    });
-    obs.observe(widget, { childList: true, subtree: true });
-  })();
-</script>
+<div class="footer-logo">
+Axium<span>.Perform</span>
+</div>
+
+<p>
+Genève • Suisse
+</p>
+
+<p>
+Performance • Recovery • Bien-être
+</p>
+
+<p style="margin-top:18px;">
+
+<a href="tel:+41787310732">
+078 731 07 32
+</a>
+
+&nbsp; • &nbsp;
+
+<a href="mailto:axium.perform@gmail.com">
+axium.perform@gmail.com
+</a>
+
+</p>
+
+</footer>
 
 </body>
 </html>
