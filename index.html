@@ -4,533 +4,492 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Axium.Perform — massage sportif, relaxation et hijama à Genève. Récupération et performance, par un praticien lui-même athlète de demi-fond.">
 
-<title>Axium.Perform — Performance & Récupération</title>
+<title>Axium.Perform — Récupération & Performance</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600;1,9..144,700&family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-/* ───────────────── ROOT ───────────────── */
+/* ═══════════════════════ TOKENS ═══════════════════════
+   Charbon   #081826  — fond sombre (hero, contrastes)
+   Pierre    #F7F9FC  — fond clair principal
+   Nacre     #FFFFFF  — cartes sur fond clair
+   Cuivre    #0076B6  — accent primaire
+   Cuivre+   #00C6D7  — accent secondaire / hover
+   Argile    #5C6F7D  — texte atténué
+   Blanc     #FFFFFF  — texte clair sur fond sombre
+   ══════════════════════════════════════════════════════ */
+
 :root{
-  --primary:#0076B6;
-  --secondary:#00C6D7;
-  --surface:#f7f9fc;
-  --text:#081826;
-  --text-muted:#5c6f7d;
-  --white:#ffffff;
+  --charbon:#081826;
+  --charbon-2:#0F2A3D;
+  --pierre:#F7F9FC;
+  --nacre:#FFFFFF;
+  --cuivre:#0076B6;
+  --cuivre-vif:#00C6D7;
+  --pin:#00C6D7;
+  --argile:#5C6F7D;
+  --blanc:#FFFFFF;
+  --ligne:rgba(8,24,38,0.08);
 }
 
-/* ───────────────── RESET ───────────────── */
-*,
-*::before,
-*::after{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
 
-html{
-  scroll-behavior:smooth;
+html{ scroll-behavior:smooth; }
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
 }
 
 body{
-  font-family:'Barlow',sans-serif;
-
+  font-family:'Inter',sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(0,118,182,0.05), transparent 30%),
-    #f7f9fc;
-
-  color:var(--text);
-
+    radial-gradient(circle at 8% 6%, rgba(184,80,47,0.06), transparent 32%),
+    radial-gradient(circle at 92% 30%, rgba(36,80,76,0.05), transparent 34%),
+    var(--pierre);
+  color:var(--charbon);
   overflow-x:hidden;
-
   -webkit-font-smoothing:antialiased;
+  line-height:1.5;
 }
 
-img{
-  display:block;
-  max-width:100%;
+img{ display:block; max-width:100%; }
+a{ text-decoration:none; color:inherit; }
+ul{ list-style:none; }
+
+a:focus-visible,
+button:focus-visible{
+  outline:2px solid var(--cuivre);
+  outline-offset:4px;
+  border-radius:3px;
 }
 
-a{
-  text-decoration:none;
-  color:inherit;
+.section{ padding:clamp(50px,8vw,100px) clamp(20px,6vw,80px); position:relative; }
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.82rem;
+  font-weight:700;
+  letter-spacing:3.5px;
+  text-transform:uppercase;
+  color:var(--cuivre);
+  margin-bottom:18px;
 }
 
-/* ───────────────── GLOBAL ───────────────── */
-.section{
-  padding:
-    clamp(45px,8vw,90px)
-    clamp(20px,6vw,80px);
+.eyebrow::before{
+  content:'';
+  width:16px; height:16px;
+  border-radius:50%;
+  border:2px solid var(--cuivre);
+  box-shadow: inset 0 0 0 3px var(--pierre), inset 0 0 0 4px var(--cuivre);
+  flex-shrink:0;
+}
 
-  position:relative;
+.section--dark .eyebrow::before{
+  box-shadow: inset 0 0 0 3px var(--charbon), inset 0 0 0 4px var(--cuivre-vif);
+}
+
+.section-title{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:clamp(2.6rem,6vw,4.6rem);
+  line-height:1.02;
+  letter-spacing:-0.5px;
+  margin-bottom:clamp(26px,4vw,42px);
+}
+
+.section-title em{
+  font-style:italic;
+  font-weight:500;
+  color:var(--cuivre);
 }
 
 /* ───────────────── HEADER ───────────────── */
 header{
   position:fixed;
-  top:0;
-  left:0;
-  right:0;
-
+  top:0; left:0; right:0;
   z-index:9999;
-
-  height:78px;
-
+  height:76px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   padding:0 clamp(16px,6vw,80px);
-
-  background:rgba(255,255,255,0.88);
-
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-
-  border-bottom:1px solid rgba(0,0,0,0.05);
+  background:rgba(246,242,232,0.86);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--ligne);
 }
 
-/* ───────────────── LOGO ───────────────── */
-.logo-wrap{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  min-width:0;
-}
+.logo-wrap{ display:flex; align-items:center; gap:12px; min-width:0; }
 
-.logo-mark{
-  width:78px;
-  height:78px;
-  object-fit:contain;
-  flex-shrink:0;
-}
+.logo-mark{ width:44px; height:44px; object-fit:contain; flex-shrink:0; border-radius:10px; }
 
 .logo-text{
   font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-  font-size:clamp(1.3rem,3vw,1.7rem);
-
-  letter-spacing:1px;
+  font-weight:700;
+  font-size:clamp(1.15rem,3vw,1.4rem);
+  letter-spacing:0.5px;
   text-transform:uppercase;
   line-height:1;
-
   white-space:nowrap;
 }
 
-.logo-text span{
-  color:var(--secondary);
-}
+.logo-text em{ font-style:normal; color:var(--cuivre); }
 
-/* ───────────────── NAV ───────────────── */
-nav ul{
-  display:flex;
-  list-style:none;
-  gap:clamp(12px,2vw,28px);
-  flex-wrap:wrap;
-}
+nav ul{ display:flex; gap:clamp(14px,2vw,32px); flex-wrap:wrap; }
 
 nav a{
   font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;
+  font-weight:600;
   text-transform:uppercase;
-
-  color:var(--text-muted);
-
-  font-size:clamp(0.8rem,1vw,0.95rem);
-
-  transition:0.25s;
+  letter-spacing:0.5px;
+  color:var(--argile);
+  font-size:0.95rem;
+  transition:color 0.25s;
+  position:relative;
+  padding-bottom:4px;
 }
 
-nav a:hover{
-  color:var(--primary);
+nav a::after{
+  content:'';
+  position:absolute; left:0; bottom:0;
+  width:0; height:2px;
+  background:var(--cuivre);
+  transition:width 0.25s;
 }
+
+nav a:hover{ color:var(--charbon); }
+nav a:hover::after{ width:100%; }
 
 .header-btn{
-  background:
-    linear-gradient(
-      135deg,
-      var(--primary),
-      var(--secondary)
-    );
-
-  color:white;
-
-  padding:
-    clamp(10px,1.5vw,14px)
-    clamp(18px,2vw,28px);
-
+  background:var(--charbon);
+  color:var(--blanc);
+  padding:12px 26px;
   border-radius:999px;
-
   font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-
+  font-weight:700;
+  font-size:0.95rem;
+  letter-spacing:0.5px;
   text-transform:uppercase;
-
-  box-shadow:0 12px 30px rgba(0,118,182,0.18);
-
-  transition:0.3s;
-
+  transition:transform 0.3s, background 0.3s;
   white-space:nowrap;
 }
 
-.header-btn:hover{
-  transform:translateY(-3px);
+.header-btn:hover{ background:var(--cuivre); transform:translateY(-2px); }
+
+.burger{
+  display:none;
+  width:40px; height:40px;
+  border:none; background:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  cursor:pointer;
 }
 
-/* ───────────────── RESPONSIVE ───────────────── */
-@media (max-width:900px){
+.burger span{
+  width:22px; height:2px;
+  background:var(--charbon);
+  transition:transform 0.3s, opacity 0.3s;
+}
 
-  nav{
-    display:none;
-  }
+.burger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2){ opacity:0; }
+.burger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
 
-  .header-btn{
-    display:none;
-  }
+.mobile-menu{
+  position:fixed;
+  top:76px; left:0; right:0;
+  background:var(--nacre);
+  border-bottom:1px solid var(--ligne);
+  display:flex;
+  flex-direction:column;
+  padding:10px clamp(20px,6vw,80px) 26px;
+  transform:translateY(-8px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.25s, transform 0.25s;
+  z-index:9998;
+}
 
-  .logo-mark{
-    width:70px;
-    height:70px;
-  }
+.mobile-menu.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
 
-  .logo-text{
-    font-size:1.2rem;
-  }
+.mobile-menu a{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  font-size:1.15rem;
+  padding:14px 0;
+  border-bottom:1px solid var(--ligne);
+  color:var(--charbon);
+}
 
+.mobile-menu a:last-child{ border-bottom:none; }
+
+@media (max-width:880px){
+  nav{ display:none; }
+  .header-btn{ display:none; }
+  .burger{ display:flex; }
 }
 
 /* ───────────────── HERO ───────────────── */
 .hero{
   min-height:100svh;
-
   position:relative;
-
   display:flex;
   align-items:flex-end;
-
-  padding:
-    0
-    clamp(20px,6vw,80px)
-    clamp(70px,10vw,120px);
-
+  padding:0 clamp(20px,6vw,80px) clamp(80px,10vw,130px);
   overflow:hidden;
+  background:var(--charbon);
 }
 
 .hero-bg{
-  position:absolute;
-  inset:0;
-
+  position:absolute; inset:0;
   background:
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.1),
-      rgba(255,255,255,0.88)
-    ),
-
-    linear-gradient(
-      135deg,
-      rgba(0,118,182,0.15),
-      rgba(0,198,215,0.08)
-    ),
-
+    linear-gradient(to top, rgba(26,22,19,0.94) 8%, rgba(26,22,19,0.55) 46%, rgba(26,22,19,0.35)),
     url('0fc6911e-bb7e-4be2-9817-8390221d3612.JPG');
-
   background-size:cover;
-  background-position:center top;
-
+  background-position:center 20%;
   transform:scale(1.04);
 }
 
+.hero-rings{
+  position:absolute;
+  top:8%; right:6%;
+  width:min(46vw,420px);
+  aspect-ratio:1;
+  pointer-events:none;
+  opacity:0.55;
+}
+
+.hero-rings span{
+  position:absolute; inset:0;
+  border-radius:50%;
+  border:1px solid rgba(247,243,234,0.16);
+}
+
+.hero-rings span:nth-child(1){ inset:0; }
+.hero-rings span:nth-child(2){ inset:14%; border-color:rgba(201,102,63,0.3); }
+.hero-rings span:nth-child(3){ inset:28%; }
+.hero-rings span:nth-child(4){ inset:42%; border-color:rgba(201,102,63,0.4); }
+
 .hero::after{
   content:'';
-
-  position:absolute;
-  bottom:-1px;
-  left:0;
-  right:0;
-
-  height:clamp(60px,10vw,130px);
-
-  background:white;
-
-  clip-path:polygon(0 40%,100% 0,100% 100%,0 100%);
+  position:absolute; bottom:-1px; left:0; right:0;
+  height:clamp(50px,8vw,90px);
+  background:var(--pierre);
+  clip-path:polygon(0 55%,100% 0,100% 100%,0 100%);
 }
 
-.hero-content{
-  position:relative;
-  z-index:2;
+.hero-content{ position:relative; z-index:2; max-width:800px; width:100%; }
 
-  max-width:760px;
-  width:100%;
-}
+.hero .eyebrow{ color:var(--cuivre-vif); }
+.hero .eyebrow::before{ box-shadow: inset 0 0 0 3px var(--charbon), inset 0 0 0 4px var(--cuivre-vif); }
 
 .hero h1{
-  font-family:'Barlow Condensed',sans-serif;
-
-  font-size:clamp(4rem,12vw,9rem);
-
-  line-height:0.88;
-
-  letter-spacing:clamp(-2px,-0.4vw,-4px);
-
-  text-transform:uppercase;
-
-  margin-bottom:20px;
-
-  word-break:break-word;
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  color:var(--blanc);
+  font-size:clamp(2.7rem,8vw,5.6rem);
+  line-height:1.04;
+  letter-spacing:-1px;
+  margin-bottom:26px;
 }
 
-.hero h1 em{
-  color:var(--primary);
-  font-style:italic;
-}
-
-.hero-sub{
-  font-family:'Barlow Condensed',sans-serif;
-
-  font-size:clamp(1rem,2vw,1.4rem);
-
-  text-transform:uppercase;
-
-  letter-spacing:3px;
-
-  color:var(--secondary);
-
-  margin-bottom:24px;
-}
+.hero h1 em{ font-style:italic; font-weight:500; color:var(--cuivre-vif); }
 
 .hero-desc{
-  max-width:520px;
-
-  font-size:clamp(0.95rem,1.5vw,1.08rem);
-
-  line-height:1.9;
-
-  color:var(--text-muted);
-
-  margin-bottom:34px;
+  max-width:480px;
+  font-size:clamp(1rem,1.5vw,1.12rem);
+  line-height:1.85;
+  color:rgba(247,243,234,0.72);
+  margin-bottom:36px;
 }
 
-.hero-actions{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
+.hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
 
 /* ───────────────── BUTTONS ───────────────── */
-.btn-primary,
-.btn-secondary{
+.btn-primary,.btn-secondary{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-
-  padding:
-    clamp(14px,2vw,18px)
-    clamp(22px,3vw,34px);
-
+  padding:clamp(15px,2vw,18px) clamp(24px,3vw,32px);
   border-radius:999px;
-
   font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-
+  font-weight:700;
+  font-size:1rem;
+  letter-spacing:0.5px;
   text-transform:uppercase;
-
-  transition:0.35s;
-
-  text-align:center;
+  transition:transform 0.3s, background 0.3s, box-shadow 0.3s;
 }
 
 .btn-primary{
-  background:
-    linear-gradient(
-      135deg,
-      var(--primary),
-      var(--secondary)
-    );
-
-  color:white;
-
-  box-shadow:0 14px 35px rgba(0,118,182,0.18);
+  background:var(--cuivre);
+  color:var(--blanc);
+  box-shadow:0 14px 32px rgba(184,80,47,0.28);
 }
+
+.btn-primary:hover{ background:var(--cuivre-vif); transform:translateY(-3px); }
 
 .btn-secondary{
-  background:white;
-  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+  background:transparent;
+  color:var(--blanc);
+  border:1px solid rgba(247,243,234,0.3);
 }
 
-.btn-primary:hover,
-.btn-secondary:hover{
-  transform:translateY(-4px);
-}
+.btn-secondary:hover{ border-color:var(--blanc); transform:translateY(-3px); }
 
-/* ───────────────── TITLES ───────────────── */
-.section-label{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:0.9rem;
-  font-weight:700;
-
-  letter-spacing:3px;
-  text-transform:uppercase;
-
-  color:var(--secondary);
-
-  margin-bottom:14px;
-}
-
-.section-title{
-  font-family:'Barlow Condensed',sans-serif;
-
-  font-size:clamp(2.8rem,7vw,5.5rem);
-
-  line-height:0.92;
-
-  text-transform:uppercase;
-
-  margin-bottom:clamp(28px,4vw,44px);
-
-  word-break:break-word;
-}
-
-.section-title span{
-  color:var(--primary);
-  font-style:italic;
+.section:not(.section--dark) .btn-secondary{
+  color:var(--charbon);
+  border:1px solid var(--ligne);
 }
 
 /* ───────────────── ABOUT ───────────────── */
-.about-grid{
-  display:grid;
-  gap:clamp(34px,5vw,60px);
-  align-items:center;
-}
+.about-grid{ display:grid; gap:clamp(36px,5vw,64px); align-items:center; }
 
-@media (min-width:1000px){
-
-  .about-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-}
+@media (min-width:1000px){ .about-grid{ grid-template-columns:0.85fr 1.15fr; } }
 
 .about-image{
-  border-radius:36px;
+  position:relative;
+  border-radius:28px;
   overflow:hidden;
-
-  box-shadow:0 30px 60px rgba(0,0,0,0.12);
+  box-shadow:0 30px 60px rgba(26,22,19,0.16);
+  aspect-ratio:4/5;
 }
 
-.about-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+.about-image img{ width:100%; height:100%; object-fit:cover; }
+
+.about-image::after{
+  content:'';
+  position:absolute; inset:0;
+  border-radius:28px;
+  box-shadow:inset 0 0 0 1px rgba(247,243,234,0.12);
+}
+
+.about-tag{
+  position:absolute;
+  bottom:18px; left:18px;
+  background:rgba(26,22,19,0.78);
+  backdrop-filter:blur(6px);
+  color:var(--blanc);
+  padding:10px 18px;
+  border-radius:999px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.85rem;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-weight:600;
 }
 
 .about-text p{
-  font-size:1rem;
+  font-size:1.05rem;
   line-height:1.9;
-  color:var(--text-muted);
+  color:var(--argile);
   margin-bottom:18px;
+  max-width:56ch;
+}
+
+.about-text strong{ color:var(--charbon); font-weight:600; }
+
+.pillars{
+  display:grid;
+  gap:20px;
+  margin-top:30px;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+}
+
+.pillar{
+  padding:22px 20px;
+  background:var(--nacre);
+  border-radius:18px;
+  border:1px solid var(--ligne);
+}
+
+.pillar-ring{
+  width:34px; height:34px;
+  border-radius:50%;
+  border:2px solid var(--cuivre);
+  margin-bottom:14px;
+  position:relative;
+}
+
+.pillar-ring::before{
+  content:'';
+  position:absolute; inset:8px;
+  border-radius:50%;
+  background:var(--cuivre);
+  opacity:0.35;
+}
+
+.pillar h4{
+  font-family:'Barlow Condensed',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  font-size:1.05rem;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.pillar p{
+  font-size:0.92rem;
+  color:var(--argile);
+  line-height:1.7;
 }
 
 /* ───────────────── SERVICES ───────────────── */
-.services-grid{
-  display:grid;
-  gap:24px;
-}
+.services-grid{ display:grid; gap:24px; }
 
-@media (min-width:700px){
-
-  .services-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-}
-
-@media (min-width:1150px){
-
-  .services-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-}
+@media (min-width:700px){ .services-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1150px){ .services-grid{ grid-template-columns:repeat(3,1fr); } }
 
 .service-card{
-  position:relative;
-
-  padding:40px 30px;
-
-  border-radius:30px;
-
-  background:white;
-
-  overflow:hidden;
-
-  box-shadow:0 10px 35px rgba(0,0,0,0.05);
-
-  transition:0.4s;
-
+  padding:38px 30px;
+  border-radius:26px;
+  background:var(--nacre);
+  border:1px solid var(--ligne);
+  transition:transform 0.35s, box-shadow 0.35s, border-color 0.35s;
   min-width:0;
 }
 
 .service-card:hover{
-  transform:translateY(-10px);
-
-  box-shadow:0 30px 60px rgba(0,0,0,0.12);
+  transform:translateY(-8px);
+  box-shadow:0 26px 50px rgba(26,22,19,0.12);
+  border-color:transparent;
 }
 
-.service-number{
-  position:absolute;
-  top:-10px;
-  right:20px;
-
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:7rem;
-  font-weight:900;
-
-  color:rgba(0,118,182,0.06);
-
-  user-select:none;
+.service-badge{
+  width:56px; height:56px;
+  border-radius:50%;
+  border:1.5px solid var(--cuivre);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:24px;
+  color:var(--cuivre);
 }
 
-.service-icon{
-  width:60px;
-  height:60px;
-
-  border-radius:18px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(0,118,182,0.12),
-      rgba(0,198,215,0.12)
-    );
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  margin-bottom:22px;
-
-  color:var(--primary);
-
-  font-size:1.2rem;
-}
+.service-badge svg{ width:26px; height:26px; }
 
 .service-card h3{
-  font-family:'Barlow Condensed',sans-serif;
-
-  font-size:clamp(1.6rem,3vw,2rem);
-
-  text-transform:uppercase;
-
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:1.55rem;
   margin-bottom:10px;
 }
 
 .service-card p{
   line-height:1.8;
-  color:var(--text-muted);
-  margin-bottom:24px;
+  color:var(--argile);
+  margin-bottom:26px;
+  min-height:4.8em;
 }
 
 .service-bottom{
@@ -538,225 +497,184 @@ nav a:hover{
   align-items:center;
   justify-content:space-between;
   gap:14px;
+  padding-top:20px;
+  border-top:1px solid var(--ligne);
 }
 
 .price{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:2.3rem;
-  font-weight:900;
-
-  color:var(--primary);
+  font-size:2rem;
+  font-weight:800;
+  color:var(--charbon);
 }
 
 .duration{
-  color:var(--text-muted);
+  color:var(--argile);
   text-transform:uppercase;
-  font-size:0.75rem;
+  font-size:0.72rem;
+  letter-spacing:1px;
+  font-weight:600;
 }
 
 .arrow{
-  width:44px;
-  height:44px;
-
+  width:42px; height:42px;
   border-radius:50%;
-
-  background:var(--primary);
-  color:white;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
+  background:var(--charbon);
+  color:var(--blanc);
+  display:flex; align-items:center; justify-content:center;
   flex-shrink:0;
-
-  transition:0.3s;
+  transition:background 0.3s, transform 0.3s;
+  font-size:1.1rem;
 }
 
-.service-card:hover .arrow{
-  background:var(--secondary);
-  transform:translateX(4px);
-}
+.service-card:hover .arrow{ background:var(--cuivre); transform:translateX(3px); }
 
 /* ───────────────── PROCESS ───────────────── */
-.process-grid{
+.process-track{
+  position:relative;
   display:grid;
   gap:24px;
 }
 
-@media (min-width:700px){
-
-  .process-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-}
-
+@media (min-width:700px){ .process-track{ grid-template-columns:repeat(2,1fr); } }
 @media (min-width:1150px){
-
-  .process-grid{
-    grid-template-columns:repeat(4,1fr);
+  .process-track{ grid-template-columns:repeat(4,1fr); }
+  .process-track::before{
+    content:'';
+    position:absolute;
+    top:27px; left:calc(12.5% + 4px); right:calc(12.5% + 4px);
+    height:2px;
+    background:repeating-linear-gradient(90deg, var(--cuivre) 0 10px, transparent 10px 18px);
+    opacity:0.4;
   }
-
 }
 
-.process-card{
-  padding:34px 28px;
+.process-card{ position:relative; padding-top:6px; }
 
-  border-radius:30px;
-
-  background:white;
-
-  box-shadow:0 10px 35px rgba(0,0,0,0.05);
-
-  transition:0.35s;
-}
-
-.process-card:hover{
-  transform:translateY(-8px);
-}
-
-.step{
+.lap{
+  width:56px; height:56px;
+  border-radius:50%;
+  background:var(--pierre);
+  border:2px solid var(--cuivre);
+  display:flex; align-items:center; justify-content:center;
   font-family:'Barlow Condensed',sans-serif;
-
-  font-size:4rem;
-  font-weight:900;
-
-  color:rgba(0,118,182,0.1);
-
-  margin-bottom:18px;
+  font-weight:800;
+  font-size:1.3rem;
+  color:var(--cuivre);
+  margin-bottom:20px;
+  position:relative;
+  z-index:2;
 }
 
 .process-card h3{
-  font-family:'Barlow Condensed',sans-serif;
-
-  font-size:1.5rem;
-
-  text-transform:uppercase;
-
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:1.4rem;
   margin-bottom:10px;
 }
 
-.process-card p{
-  line-height:1.8;
-  color:var(--text-muted);
-}
+.process-card p{ line-height:1.8; color:var(--argile); max-width:32ch; }
 
 /* ───────────────── CONTACT ───────────────── */
 .contact-box{
-  background:white;
-
-  border-radius:40px;
-
+  background:var(--nacre);
+  border-radius:32px;
   overflow:hidden;
-
-  box-shadow:0 20px 50px rgba(0,0,0,0.08);
+  border:1px solid var(--ligne);
 }
 
 .contact-header{
-  padding:30px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(0,118,182,0.06),
-      rgba(0,198,215,0.04)
-    );
+  padding:32px clamp(24px,4vw,40px);
+  background:var(--charbon);
+  color:var(--blanc);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:16px;
 }
 
 .contact-header h3{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:2rem;
-  text-transform:uppercase;
-
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:clamp(1.5rem,3vw,2.1rem);
   margin-bottom:6px;
 }
 
-.contact-header p{
-  color:var(--text-muted);
+.contact-header p{ color:rgba(247,243,234,0.65); }
+
+.contact-note{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:'Barlow Condensed',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-size:0.85rem;
+  color:var(--cuivre-vif);
+  border:1px solid rgba(201,102,63,0.4);
+  padding:10px 18px;
+  border-radius:999px;
+  white-space:nowrap;
 }
 
-.calendly-inline-widget{
-  min-width:280px;
-  width:100%;
-  height:min(720px,85vw);
-}
+.calendly-inline-widget{ min-width:280px; width:100%; height:min(720px,85vw); }
 
 /* ───────────────── FOOTER ───────────────── */
-footer{
-  padding:60px 20px;
+footer{ padding:64px 20px 40px; background:var(--charbon); color:var(--blanc); }
 
-  background:white;
-
-  text-align:center;
-}
+.footer-inner{ max-width:900px; margin-inline:auto; }
 
 .footer-logo{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:2rem;
-  font-weight:900;
-
+  font-size:1.8rem;
+  font-weight:700;
   text-transform:uppercase;
-
-  margin-bottom:12px;
+  margin-bottom:10px;
+  text-align:center;
 }
 
-.footer-logo span{
-  color:var(--secondary);
-}
+.footer-logo em{ font-style:normal; color:var(--cuivre-vif); }
 
-footer p{
-  color:var(--text-muted);
+footer > .footer-inner > p{
+  color:rgba(247,243,234,0.55);
+  text-align:center;
   margin-bottom:6px;
   line-height:1.7;
 }
 
-/* ───────────────── LEGAL ───────────────── */
 .footer-legal{
   margin-top:34px;
-  padding-top:24px;
-
-  border-top:1px solid rgba(0,0,0,0.08);
-
-  max-width:900px;
-  margin-inline:auto;
+  padding-top:28px;
+  border-top:1px solid rgba(247,243,234,0.12);
 }
 
 .footer-legal h4{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:1.3rem;
-
+  font-size:1.1rem;
+  letter-spacing:1px;
   text-transform:uppercase;
-
-  margin-bottom:14px;
+  margin-bottom:16px;
+  color:var(--cuivre-vif);
+  text-align:center;
 }
 
 .footer-legal p{
-  font-size:0.9rem;
-  color:var(--text-muted);
+  font-size:0.88rem;
+  color:rgba(247,243,234,0.5);
+  line-height:1.75;
+  margin-bottom:10px;
 }
 
-/* ───────────────── PREMIUM ANIMATION ───────────────── */
+/* ───────────────── REVEAL ───────────────── */
 .fade-in{
   opacity:0;
-
-  transform:
-    translateY(60px)
-    scale(0.96);
-
-  transition:
-    opacity 1.1s cubic-bezier(0.22,1,0.36,1),
-    transform 1.1s cubic-bezier(0.22,1,0.36,1);
-
+  transform:translateY(46px);
+  transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1);
   will-change:opacity,transform;
 }
 
-.fade-in.visible{
-  opacity:1;
-
-  transform:
-    translateY(0)
-    scale(1);
-}
+.fade-in.visible{ opacity:1; transform:translateY(0); }
 
 </style>
 </head>
@@ -767,66 +685,60 @@ footer p{
 <header>
 
   <div class="logo-wrap">
-
-    <img
-      src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png"
-      class="logo-mark"
-      alt="Axium.Perform">
-
-    <div class="logo-text">
-      Axium<span>.Perform</span>
-    </div>
-
+    <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" class="logo-mark" alt="Axium.Perform">
+    <div class="logo-text">Axium<em>.Perform</em></div>
   </div>
 
   <nav>
     <ul>
-      <li><a href="#about">Profil</a></li>
-      <li><a href="#services">Prestations</a></li>
-      <li><a href="#process">Déroulement</a></li>
+      <li><a href="#profil">Profil</a></li>
+      <li><a href="#pourquoi">Pourquoi Axium</a></li>
+      <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#deroulement">Déroulement</a></li>
       <li><a href="#contact">Réservation</a></li>
     </ul>
   </nav>
 
-  <a href="#contact" class="header-btn">
-    Réserver
-  </a>
+  <a href="#contact" class="header-btn">Réserver</a>
+
+  <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 
 </header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#profil">Profil</a>
+  <a href="#pourquoi">Pourquoi Axium</a>
+  <a href="#prestations">Prestations</a>
+  <a href="#deroulement">Déroulement</a>
+  <a href="#contact">Réservation</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
 
   <div class="hero-bg"></div>
 
+  <div class="hero-rings" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+  </div>
+
   <div class="hero-content">
 
-    <h1>
-      Libère<br>
-      <em>ton corps.</em>
-    </h1>
+    <div class="eyebrow">Massage · Hijama · Récupération sportive — Genève</div>
 
-    <div class="hero-sub">
-      Massage · Hijama · Recovery
-    </div>
+    <h1>Ton corps encaisse.<br><em>Il mérite de récupérer.</em></h1>
 
     <p class="hero-desc">
-      Récupération sportive avancée.<br>
-      Performance.<br>
-      Mobilité.<br>
-      Corps optimisé.
+      Une récupération pensée pour les corps qui s'entraînent : relâchement musculaire,
+      circulation, mobilité. Une approche ciblée, construite séance après séance
+      autour de vos besoins réels.
     </p>
 
     <div class="hero-actions">
-
-      <a href="#contact" class="btn-primary">
-        Prendre rendez-vous
-      </a>
-
-      <a href="#services" class="btn-secondary">
-        Découvrir
-      </a>
-
+      <a href="#contact" class="btn-primary">Prendre rendez-vous</a>
+      <a href="#prestations" class="btn-secondary">Découvrir les prestations</a>
     </div>
 
   </div>
@@ -834,56 +746,63 @@ footer p{
 </section>
 
 <!-- ABOUT -->
-<section class="section" id="about">
+<section class="section" id="profil">
 
-  <div class="section-label">
-    Présentation
-  </div>
+  <div class="eyebrow">Présentation</div>
 
-  <h2 class="section-title">
-    Sevann,<br>
-    <span>Masseur</span>
-  </h2>
+  <h2 class="section-title">Sevann,<br><em>praticien</em></h2>
 
   <div class="about-grid">
 
     <div class="about-image fade-in">
-
-      <img
-        src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG"
-        alt="Sevann">
-
+      <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann, praticien Axium.Perform">
+      <div class="about-tag">Athlète & praticien</div>
     </div>
 
     <div class="about-text fade-in">
 
       <p>
-        Athlète à la base,
-        passionné par la récupération
-        et la performance humaine.
+        Athlète de demi-fond à la base, Sevann connaît la fatigue musculaire et nerveuse
+        de l'intérieur — celle qui suit un bloc d'intensité, une compétition,
+        ou simplement une semaine trop chargée.
       </p>
 
       <p>
-        Axium est né d'une volonté simple :
-        aider les sportifs et les personnes actives
-        à récupérer mieux,
-        bouger mieux et performer.
+        <strong>Axium.Perform</strong> est né de ce constat : la récupération n'est pas un luxe,
+        c'est une partie du travail. Chaque séance est construite autour de vos besoins du moment —
+        tension localisée, fatigue générale, ou simple besoin de relâcher.
       </p>
 
       <p>
-        Chaque séance est pensée de manière ciblée selon vos besoins :
-        récupération musculaire,
-        tensions,
-        fatigue
-        ou relâchement global.
+        Deux approches se complètent : le massage, pour le travail musculaire direct et
+        le relâchement nerveux, et la hijama, méthode traditionnelle par ventouses,
+        pour la circulation et la récupération en profondeur.
       </p>
 
-      <div style="margin-top:18px;">
+      <div class="pillars">
 
-        <a href="#contact" class="btn-primary">
-          Réserver une séance
-        </a>
+        <div class="pillar">
+          <div class="pillar-ring"></div>
+          <h4>Vécu d'athlète</h4>
+          <p>Une compréhension de la fatigue construite sur l'entraînement, pas seulement sur la théorie.</p>
+        </div>
 
+        <div class="pillar">
+          <div class="pillar-ring"></div>
+          <h4>Approche ciblée</h4>
+          <p>Chaque séance s'adapte au profil de la personne — sportif ou non.</p>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar-ring"></div>
+          <h4>Deux méthodes</h4>
+          <p>Massage et hijama, utilisés seuls ou combinés selon le besoin.</p>
+        </div>
+
+      </div>
+
+      <div style="margin-top:30px;">
+        <a href="#contact" class="btn-primary">Réserver une séance</a>
       </div>
 
     </div>
@@ -893,97 +812,80 @@ footer p{
 </section>
 
 <!-- SERVICES -->
-<section
-  class="section"
-  id="services"
-  style="background:var(--surface);">
+<section class="section" id="prestations" style="background:var(--pierre);">
 
-  <div class="section-label">
-    Prestations
-  </div>
+  <div class="eyebrow">Prestations</div>
 
-  <h2 class="section-title">
-    Mes<br>
-    <span>Prestations</span>
-  </h2>
+  <h2 class="section-title">Mes<br><em>prestations</em></h2>
 
   <div class="services-grid">
 
     <div class="service-card fade-in">
 
-      <div class="service-number">01</div>
+      <div class="service-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M4 12c2-3 5-4 8-4s6 1 8 4"/>
+          <path d="M4 12c2 3 5 4 8 4s6-1 8-4"/>
+        </svg>
+      </div>
 
-      <div class="service-icon">✦</div>
+      <h3>Massage sportif</h3>
 
-      <h3>Massage Sportif</h3>
-
-      <p>
-        Récupération musculaire profonde
-        pour sportifs et personnes actives.
-      </p>
+      <p>Travail musculaire ciblé pour dénouer les tensions et accélérer la récupération après l'effort.</p>
 
       <div class="service-bottom">
-
         <div>
           <div class="price">40.-</div>
-          <div class="duration">30 min</div>
+          <div class="duration">30 minutes</div>
         </div>
-
-        <a href="#contact" class="arrow">→</a>
-
+        <a href="#contact" class="arrow" aria-label="Réserver un massage sportif">→</a>
       </div>
 
     </div>
 
     <div class="service-card fade-in">
 
-      <div class="service-number">02</div>
-
-      <div class="service-icon">✦</div>
+      <div class="service-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M4 18c3-8 5-12 8-14 3 2 5 6 8 14"/>
+          <path d="M4 18h16"/>
+        </svg>
+      </div>
 
       <h3>Relaxation</h3>
 
-      <p>
-        Relâchement global,
-        diminution du stress
-        et récupération nerveuse.
-      </p>
+      <p>Relâchement global du corps et du système nerveux — pour souffler et récupérer en profondeur.</p>
 
       <div class="service-bottom">
-
         <div>
           <div class="price">70.-</div>
           <div class="duration">1 heure</div>
         </div>
-
-        <a href="#contact" class="arrow">→</a>
-
+        <a href="#contact" class="arrow" aria-label="Réserver une relaxation">→</a>
       </div>
 
     </div>
 
     <div class="service-card fade-in">
 
-      <div class="service-number">03</div>
-
-      <div class="service-icon">✦</div>
+      <div class="service-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="8" cy="9" r="2.6"/>
+          <circle cx="16" cy="9" r="2.6"/>
+          <circle cx="12" cy="16" r="2.6"/>
+        </svg>
+      </div>
 
       <h3>Hijama</h3>
 
-      <p>
-        Méthode traditionnelle par ventouses
-        pour récupération et circulation.
-      </p>
+      <p>Méthode traditionnelle par ventouses, pour stimuler la circulation et la récupération en profondeur.</p>
 
       <div class="service-bottom">
-
         <div>
-          <div class="price">RDV</div>
-          <div class="duration">Sur demande</div>
+          <div class="price">Sur devis</div>
+          <div class="duration">Sur rendez-vous</div>
         </div>
-
-        <a href="#contact" class="arrow">→</a>
-
+        <a href="#contact" class="arrow" aria-label="Réserver une hijama">→</a>
       </div>
 
     </div>
@@ -993,73 +895,36 @@ footer p{
 </section>
 
 <!-- PROCESS -->
-<section
-  class="section"
-  id="process"
-  style="padding-top:40px;">
+<section class="section" id="deroulement">
 
-  <div class="section-label">
-    Déroulement
-  </div>
+  <div class="eyebrow">Déroulement</div>
 
-  <h2 class="section-title">
-    Votre<br>
-    <span>Séance</span>
-  </h2>
+  <h2 class="section-title">Votre<br><em>séance</em></h2>
 
-  <div class="process-grid">
+  <div class="process-track">
 
     <div class="process-card fade-in">
-
-      <div class="step">01</div>
-
+      <div class="lap">01</div>
       <h3>Échange</h3>
-
-      <p>
-        Analyse des besoins,
-        douleurs et objectifs du jour.
-      </p>
-
+      <p>Un point rapide sur vos douleurs, votre charge d'entraînement et l'objectif du jour.</p>
     </div>
 
     <div class="process-card fade-in">
-
-      <div class="step">02</div>
-
+      <div class="lap">02</div>
       <h3>Travail ciblé</h3>
-
-      <p>
-        Massage ou hijama
-        adaptée à votre profil.
-      </p>
-
+      <p>Massage ou hijama, selon ce que votre corps demande ce jour-là.</p>
     </div>
 
     <div class="process-card fade-in">
-
-      <div class="step">03</div>
-
+      <div class="lap">03</div>
       <h3>Récupération</h3>
-
-      <p>
-        Relâchement musculaire
-        et optimisation du corps.
-      </p>
-
+      <p>Relâchement musculaire, retour au calme, corps déchargé.</p>
     </div>
 
     <div class="process-card fade-in">
-
-      <div class="step">04</div>
-
+      <div class="lap">04</div>
       <h3>Conseils</h3>
-
-      <p>
-        Hydratation,
-        récupération
-        et suivi post séance.
-      </p>
-
+      <p>Hydratation, points de vigilance et suivi jusqu'à la prochaine séance.</p>
     </div>
 
   </div>
@@ -1067,38 +932,23 @@ footer p{
 </section>
 
 <!-- CONTACT -->
-<section
-  class="section"
-  id="contact"
-  style="background:var(--surface);">
+<section class="section" id="contact" style="background:var(--pierre);">
 
-  <div class="section-label">
-    Réservation
-  </div>
+  <div class="eyebrow">Réservation</div>
 
-  <h2 class="section-title">
-    Prendre<br>
-    <span>Rendez-vous</span>
-  </h2>
+  <h2 class="section-title">Prendre<br><em>rendez-vous</em></h2>
 
-  <div class="contact-box">
+  <div class="contact-box fade-in">
 
     <div class="contact-header">
-
-      <h3>
-        Calendrier Axium.Perform
-      </h3>
-
-      <p>
-        Choisissez directement votre créneau.
-      </p>
-
+      <div>
+        <h3>Calendrier Axium.Perform</h3>
+        <p>Choisissez directement votre créneau, en quelques clics.</p>
+      </div>
+      <div class="contact-note">Annulation gratuite jusqu'à 24h avant</div>
     </div>
 
-    <div
-      class="calendly-inline-widget"
-      data-url="https://calendly.com/axium-perform/seance-de-massage-axium">
-    </div>
+    <div class="calendly-inline-widget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium"></div>
 
   </div>
 
@@ -1107,33 +957,26 @@ footer p{
 <!-- FOOTER -->
 <footer>
 
- <div class="footer-legal">
+  <div class="footer-inner">
 
-  <h4>Conditions générales</h4>
+    <div class="footer-logo">Axium<em>.Perform</em></div>
+    <p>Massage · Hijama · Récupération sportive</p>
 
-  <div class="legal-card">
+    <div class="footer-legal">
 
-    <p>
-      Toute réservation effectuée via Axium.Perform implique l’acceptation des conditions ci-dessous.
-    </p>
+      <h4>Conditions générales</h4>
 
-    <p>
-      Une annulation doit être effectuée au minimum <strong>24h à l’avance</strong>.  
-      Dans le cas contraire, la séance peut être facturée.
-    </p>
+      <p>Toute réservation effectuée via Axium.Perform implique l'acceptation des conditions ci-dessous.</p>
 
-    <p>
-      Les prestations proposées sont des services de bien-être et de récupération.  
-      Elles ne remplacent en aucun cas un avis ou traitement médical.
-    </p>
+      <p>Une annulation doit être effectuée au minimum <strong style="color:var(--blanc)">24h à l'avance</strong>. Dans le cas contraire, la séance peut être facturée.</p>
 
-    <p>
-      En réservant une séance, le client confirme avoir pris connaissance de ces conditions et les accepter pleinement.
-    </p>
+      <p>Les prestations proposées sont des services de bien-être et de récupération. Elles ne remplacent en aucun cas un avis ou un traitement médical.</p>
+
+      <p>En réservant une séance, le client confirme avoir pris connaissance de ces conditions et les accepter pleinement.</p>
+
+    </div>
 
   </div>
-
-</div>
 
 </footer>
 
@@ -1141,55 +984,46 @@ footer p{
 
 <script>
 
-/* ───────────────── SCROLL ANIMATIONS ───────────────── */
-
+/* ───────────────── SCROLL REVEAL ───────────────── */
 const observer = new IntersectionObserver(
-
   entries => {
-
-    entries.forEach(entry => {
-
+    entries.forEach((entry, i) => {
       if(entry.isIntersecting){
-
         entry.target.classList.add('visible');
-
         observer.unobserve(entry.target);
-
       }
-
     });
-
   },
-
-  {
-    threshold:0.15,
-    rootMargin:"0px 0px -60px 0px"
-  }
-
+  { threshold:0.15, rootMargin:"0px 0px -60px 0px" }
 );
 
-document.querySelectorAll('.service-card').forEach((el,i)=>{
-
-  el.style.transitionDelay = `${i * 0.22}s`;
-
+document.querySelectorAll('.fade-in').forEach((el,i)=>{
+  el.style.transitionDelay = `${(i % 6) * 0.1}s`;
   observer.observe(el);
-
 });
 
-document.querySelectorAll('.process-card').forEach((el,i)=>{
+/* ───────────────── MOBILE MENU ───────────────── */
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
 
-  el.style.transitionDelay = `${i * 0.22}s`;
-
-  observer.observe(el);
-
+burger.addEventListener('click', () => {
+  const isOpen = mobileMenu.classList.toggle('open');
+  burger.classList.toggle('open', isOpen);
+  burger.setAttribute('aria-expanded', isOpen);
 });
 
-document.querySelectorAll('.about-image, .about-text').forEach((el,i)=>{
+document.querySelectorAll('#mobileMenu a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', false);
+  });
+});
 
-  el.style.transitionDelay = `${i * 0.15}s`;
-
-  observer.observe(el);
-
+/* ───────────────── HEADER BACKGROUND ON SCROLL ───────────────── */
+const headerEl = document.querySelector('header');
+window.addEventListener('scroll', () => {
+  headerEl.style.boxShadow = window.scrollY > 20 ? '0 4px 20px rgba(26,22,19,0.06)' : 'none';
 });
 
 </script>
