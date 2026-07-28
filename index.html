@@ -256,7 +256,7 @@ nav a:hover::after{ width:100%; }
 .hero-bg{
   position:absolute; inset:0;
   background:
-    linear-gradient(to top, rgba(26,22,19,0.94) 8%, rgba(26,22,19,0.55) 46%, rgba(26,22,19,0.35)),
+    linear-gradient(to top, rgba(8,24,38,0.94) 8%, rgba(8,24,38,0.55) 46%, rgba(8,24,38,0.35)),
     url('0fc6911e-bb7e-4be2-9817-8390221d3612.JPG');
   background-size:cover;
   background-position:center 20%;
@@ -275,13 +275,13 @@ nav a:hover::after{ width:100%; }
 .hero-rings span{
   position:absolute; inset:0;
   border-radius:50%;
-  border:1px solid rgba(247,243,234,0.16);
+  border:1px solid rgba(255,255,255,0.16);
 }
 
 .hero-rings span:nth-child(1){ inset:0; }
-.hero-rings span:nth-child(2){ inset:14%; border-color:rgba(201,102,63,0.3); }
+.hero-rings span:nth-child(2){ inset:14%; border-color:rgba(0,198,215,0.3); }
 .hero-rings span:nth-child(3){ inset:28%; }
-.hero-rings span:nth-child(4){ inset:42%; border-color:rgba(201,102,63,0.4); }
+.hero-rings span:nth-child(4){ inset:42%; border-color:rgba(0,198,215,0.4); }
 
 .hero::after{
   content:'';
@@ -312,7 +312,7 @@ nav a:hover::after{ width:100%; }
   max-width:480px;
   font-size:clamp(1rem,1.5vw,1.12rem);
   line-height:1.85;
-  color:rgba(247,243,234,0.72);
+  color:rgba(255,255,255,0.72);
   margin-bottom:36px;
 }
 
@@ -344,7 +344,7 @@ nav a:hover::after{ width:100%; }
 .btn-secondary{
   background:transparent;
   color:var(--blanc);
-  border:1px solid rgba(247,243,234,0.3);
+  border:1px solid rgba(255,255,255,0.3);
 }
 
 .btn-secondary:hover{ border-color:var(--blanc); transform:translateY(-3px); }
@@ -355,7 +355,7 @@ nav a:hover::after{ width:100%; }
 }
 
 /* ───────────────── ABOUT ───────────────── */
-.about-grid{ display:grid; gap:clamp(36px,5vw,64px); align-items:center; }
+.about-grid{ display:grid; gap:clamp(36px,5vw,64px); align-items:start; }
 
 @media (min-width:1000px){ .about-grid{ grid-template-columns:0.85fr 1.15fr; } }
 
@@ -363,7 +363,7 @@ nav a:hover::after{ width:100%; }
   position:relative;
   border-radius:28px;
   overflow:hidden;
-  box-shadow:0 30px 60px rgba(26,22,19,0.16);
+  box-shadow:0 30px 60px rgba(8,24,38,0.16);
   aspect-ratio:4/5;
 }
 
@@ -373,13 +373,13 @@ nav a:hover::after{ width:100%; }
   content:'';
   position:absolute; inset:0;
   border-radius:28px;
-  box-shadow:inset 0 0 0 1px rgba(247,243,234,0.12);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.12);
 }
 
 .about-tag{
   position:absolute;
   bottom:18px; left:18px;
-  background:rgba(26,22,19,0.78);
+  background:rgba(8,24,38,0.78);
   backdrop-filter:blur(6px);
   color:var(--blanc);
   padding:10px 18px;
@@ -463,26 +463,16 @@ nav a:hover::after{ width:100%; }
 
 .service-card:hover{
   transform:translateY(-8px);
-  box-shadow:0 26px 50px rgba(26,22,19,0.12);
+  box-shadow:0 26px 50px rgba(8,24,38,0.12);
   border-color:transparent;
 }
-
-.service-badge{
-  width:56px; height:56px;
-  border-radius:50%;
-  border:1.5px solid var(--cuivre);
-  display:flex; align-items:center; justify-content:center;
-  margin-bottom:24px;
-  color:var(--cuivre);
-}
-
-.service-badge svg{ width:26px; height:26px; }
 
 .service-card h3{
   font-family:'Fraunces',serif;
   font-weight:600;
   font-size:1.55rem;
   margin-bottom:10px;
+  margin-top:6px;
 }
 
 .service-card p{
@@ -531,39 +521,36 @@ nav a:hover::after{ width:100%; }
 
 /* ───────────────── PROCESS ───────────────── */
 .process-track{
-  position:relative;
   display:grid;
   gap:24px;
 }
 
 @media (min-width:700px){ .process-track{ grid-template-columns:repeat(2,1fr); } }
-@media (min-width:1150px){
-  .process-track{ grid-template-columns:repeat(4,1fr); }
-  .process-track::before{
-    content:'';
-    position:absolute;
-    top:27px; left:calc(12.5% + 4px); right:calc(12.5% + 4px);
-    height:2px;
-    background:repeating-linear-gradient(90deg, var(--cuivre) 0 10px, transparent 10px 18px);
-    opacity:0.4;
-  }
+@media (min-width:1150px){ .process-track{ grid-template-columns:repeat(4,1fr); } }
+
+.process-card{
+  padding:32px 28px;
+  border-radius:26px;
+  background:var(--nacre);
+  border:1px solid var(--ligne);
+  transition:transform 0.3s, box-shadow 0.3s;
 }
 
-.process-card{ position:relative; padding-top:6px; }
+.process-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 22px 42px rgba(8,24,38,0.1);
+}
 
-.lap{
-  width:56px; height:56px;
-  border-radius:50%;
-  background:var(--pierre);
-  border:2px solid var(--cuivre);
-  display:flex; align-items:center; justify-content:center;
+.process-step{
   font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-  font-size:1.3rem;
+  font-weight:700;
+  font-size:0.82rem;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
   color:var(--cuivre);
-  margin-bottom:20px;
-  position:relative;
-  z-index:2;
+  padding-bottom:16px;
+  margin-bottom:16px;
+  border-bottom:1px solid var(--ligne);
 }
 
 .process-card h3{
@@ -573,7 +560,7 @@ nav a:hover::after{ width:100%; }
   margin-bottom:10px;
 }
 
-.process-card p{ line-height:1.8; color:var(--argile); max-width:32ch; }
+.process-card p{ line-height:1.8; color:var(--argile); }
 
 /* ───────────────── CONTACT ───────────────── */
 .contact-box{
@@ -601,7 +588,7 @@ nav a:hover::after{ width:100%; }
   margin-bottom:6px;
 }
 
-.contact-header p{ color:rgba(247,243,234,0.65); }
+.contact-header p{ color:rgba(255,255,255,0.65); }
 
 .contact-note{
   display:flex;
@@ -612,7 +599,7 @@ nav a:hover::after{ width:100%; }
   letter-spacing:1px;
   font-size:0.85rem;
   color:var(--cuivre-vif);
-  border:1px solid rgba(201,102,63,0.4);
+  border:1px solid rgba(0,198,215,0.4);
   padding:10px 18px;
   border-radius:999px;
   white-space:nowrap;
@@ -637,7 +624,7 @@ footer{ padding:64px 20px 40px; background:var(--charbon); color:var(--blanc); }
 .footer-logo em{ font-style:normal; color:var(--cuivre-vif); }
 
 footer > .footer-inner > p{
-  color:rgba(247,243,234,0.55);
+  color:rgba(255,255,255,0.55);
   text-align:center;
   margin-bottom:6px;
   line-height:1.7;
@@ -646,7 +633,7 @@ footer > .footer-inner > p{
 .footer-legal{
   margin-top:34px;
   padding-top:28px;
-  border-top:1px solid rgba(247,243,234,0.12);
+  border-top:1px solid rgba(255,255,255,0.12);
 }
 
 .footer-legal h4{
@@ -661,7 +648,7 @@ footer > .footer-inner > p{
 
 .footer-legal p{
   font-size:0.88rem;
-  color:rgba(247,243,234,0.5);
+  color:rgba(255,255,255,0.5);
   line-height:1.75;
   margin-bottom:10px;
 }
@@ -822,13 +809,6 @@ footer > .footer-inner > p{
 
     <div class="service-card fade-in">
 
-      <div class="service-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-          <path d="M4 12c2-3 5-4 8-4s6 1 8 4"/>
-          <path d="M4 12c2 3 5 4 8 4s6-1 8-4"/>
-        </svg>
-      </div>
-
       <h3>Massage sportif</h3>
 
       <p>Travail musculaire ciblé pour dénouer les tensions et accélérer la récupération après l'effort.</p>
@@ -844,13 +824,6 @@ footer > .footer-inner > p{
     </div>
 
     <div class="service-card fade-in">
-
-      <div class="service-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-          <path d="M4 18c3-8 5-12 8-14 3 2 5 6 8 14"/>
-          <path d="M4 18h16"/>
-        </svg>
-      </div>
 
       <h3>Relaxation</h3>
 
@@ -868,22 +841,14 @@ footer > .footer-inner > p{
 
     <div class="service-card fade-in">
 
-      <div class="service-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-          <circle cx="8" cy="9" r="2.6"/>
-          <circle cx="16" cy="9" r="2.6"/>
-          <circle cx="12" cy="16" r="2.6"/>
-        </svg>
-      </div>
-
       <h3>Hijama</h3>
 
       <p>Méthode traditionnelle par ventouses, pour stimuler la circulation et la récupération en profondeur.</p>
 
       <div class="service-bottom">
         <div>
-          <div class="price">Sur devis</div>
-          <div class="duration">Sur rendez-vous</div>
+          <div class="price">Sur demande</div>
+          <div class="duration">Selon besoin du client</div>
         </div>
         <a href="#contact" class="arrow" aria-label="Réserver une hijama">→</a>
       </div>
@@ -1023,7 +988,7 @@ document.querySelectorAll('#mobileMenu a').forEach(link => {
 /* ───────────────── HEADER BACKGROUND ON SCROLL ───────────────── */
 const headerEl = document.querySelector('header');
 window.addEventListener('scroll', () => {
-  headerEl.style.boxShadow = window.scrollY > 20 ? '0 4px 20px rgba(26,22,19,0.06)' : 'none';
+  headerEl.style.boxShadow = window.scrollY > 20 ? '0 4px 20px rgba(8,24,38,0.06)' : 'none';
 });
 
 </script>
