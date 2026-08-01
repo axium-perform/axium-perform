@@ -76,7 +76,9 @@ button:focus-visible{
 .section--dark a:focus-visible,
 .section--dark button:focus-visible,
 .hero a:focus-visible,
-.hero button:focus-visible{
+.hero button:focus-visible,
+.mobile-menu a:focus-visible,
+.mobile-menu button:focus-visible{
   outline-color:var(--blanc);
 }
 
@@ -140,9 +142,11 @@ button:focus-visible{
 .btn-secondary:hover{ background:var(--noir); color:var(--blanc); }
 
 .section--dark .btn-primary,
-.hero .btn-primary{ background:var(--blanc); color:var(--noir); border-color:var(--blanc); }
+.hero .btn-primary,
+.mobile-menu .btn-primary{ background:var(--blanc); color:var(--noir); border-color:var(--blanc); }
 .section--dark .btn-primary:hover,
-.hero .btn-primary:hover{ background:transparent; color:var(--blanc); }
+.hero .btn-primary:hover,
+.mobile-menu .btn-primary:hover{ background:transparent; color:var(--blanc); }
 
 .section--dark .btn-secondary,
 .hero .btn-secondary{ color:var(--blanc); border-color:rgba(255,255,255,0.4); }
@@ -166,17 +170,6 @@ button:focus-visible{
   text-transform:uppercase;
   color:var(--noir);
 }
-.bib::before,.bib::after{
-  content:'';
-  position:absolute;
-  top:-4px;
-  width:6px;height:6px;
-  border-radius:50%;
-  background:var(--noir);
-}
-.bib::before{ left:12px; }
-.bib::after{ right:12px; }
-
 /* ───────────────── INSTRUMENT GRID (cadres hairline sur fond sombre) ───────────────── */
 .instrument-grid{
   display:grid;
@@ -209,7 +202,6 @@ header{
 }
 
 .logo-wrap{ display:flex; align-items:center; gap:10px; min-width:0; }
-.logo-mark{ width:32px; height:32px; object-fit:contain; flex-shrink:0; }
 
 .logo-text{
   display:flex;
@@ -255,6 +247,10 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
 
 .burger{
   display:none;
+  position:fixed;
+  top:19px;
+  right:clamp(16px,5vw,64px);
+  z-index:1001;
   width:38px; height:38px;
   border:none; background:none;
   flex-direction:column;
@@ -264,40 +260,70 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   cursor:pointer;
 }
 
-.burger span{ width:22px; height:2px; background:var(--noir); transition:transform 0.3s, opacity 0.3s; }
+.burger span{ width:22px; height:2px; background:var(--noir); transition:transform 0.3s, opacity 0.3s, background 0.3s; }
+.burger.open span{ background:var(--blanc); }
 .burger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
 .burger.open span:nth-child(2){ opacity:0; }
 .burger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+.burger.open:focus-visible{ outline-color:var(--blanc); }
 
+/* ───────────────── MENU PLEIN ÉCRAN (façon Nocco) ───────────────── */
 .mobile-menu{
   position:fixed;
-  top:76px; left:0; right:0;
-  background:var(--blanc);
-  border-bottom:1px solid var(--ligne);
+  inset:0;
+  z-index:1000;
+  background:var(--noir);
   display:flex;
   flex-direction:column;
-  padding:8px clamp(20px,6vw,80px) 24px;
-  transform:translateY(-8px);
+  justify-content:space-between;
+  gap:40px;
+  padding:clamp(100px,18vh,132px) clamp(20px,6vw,80px) clamp(32px,5vh,48px);
   opacity:0;
-  pointer-events:none;
-  transition:opacity 0.25s, transform 0.25s;
-  z-index:998;
+  visibility:hidden;
+  transform:translateY(-16px);
+  transition:opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s;
+  overflow-y:auto;
 }
 
-.mobile-menu.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
+.mobile-menu.open{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+  transition:opacity 0.35s ease, transform 0.35s ease;
+}
 
-.mobile-menu a{
-  font-family:'Inter',sans-serif;
-  font-weight:600;
+.mobile-menu-links{ display:flex; flex-direction:column; }
+
+.mobile-menu-links a{
+  font-family:'Archivo',sans-serif;
+  font-weight:800;
   text-transform:uppercase;
-  letter-spacing:.03em;
-  font-size:1.05rem;
-  padding:14px 0;
-  border-bottom:1px solid var(--ligne);
-  color:var(--noir);
+  font-size:clamp(2.2rem,11vw,3.4rem);
+  line-height:1.15;
+  letter-spacing:-0.01em;
+  color:var(--blanc);
+  padding:9px 0;
+  transition:opacity 0.2s ease;
 }
 
-.mobile-menu a:last-child{ border-bottom:none; }
+.mobile-menu-links a:hover{ opacity:0.6; }
+
+.mobile-menu-footer{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:18px;
+  padding-top:26px;
+  border-top:1px solid var(--ligne-onDark);
+}
+
+.mobile-menu-footer p{
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.45);
+}
 
 @media (max-width:880px){
   nav{ display:none; }
@@ -589,7 +615,11 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
 
 .contact-note::before{ content:'●'; font-size:.6rem; }
 
-.calendly-inline-widget{ min-width:280px; width:100%; height:min(720px,85vw); }
+.calendly-inline-widget{ min-width:320px; width:100%; height:min(720px,85vw); }
+
+@media (max-width:680px){
+  .calendly-inline-widget{ height:900px; }
+}
 
 /* ───────────────── FOOTER ───────────────── */
 footer{ padding:60px 20px 40px; background:var(--noir); color:var(--blanc); }
@@ -675,7 +705,6 @@ footer > .footer-inner > p.footer-tagline{
 <header>
 
   <div class="logo-wrap">
-    <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" class="logo-mark" alt="Axium.Perform">
     <div class="logo-text"><span class="logo-strong">Axium</span><span class="logo-light">.Perform</span></div>
   </div>
 
@@ -691,18 +720,27 @@ footer > .footer-inner > p.footer-tagline{
 
   <a href="#contact" class="header-btn">Réserver</a>
 
-  <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-
 </header>
 
+<button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
+  <span></span><span></span><span></span>
+</button>
+
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#profil">Profil</a>
-  <a href="#pourquoi">Pourquoi Axium</a>
-  <a href="#prestations">Prestations</a>
-  <a href="#deroulement">Déroulement</a>
-  <a href="#contact">Réservation</a>
+
+  <nav class="mobile-menu-links">
+    <a href="#profil">Profil</a>
+    <a href="#pourquoi">Pourquoi Axium</a>
+    <a href="#prestations">Prestations</a>
+    <a href="#deroulement">Déroulement</a>
+    <a href="#contact">Réservation</a>
+  </nav>
+
+  <div class="mobile-menu-footer">
+    <a href="#contact" class="btn-primary">Réserver une séance →</a>
+    <p>Massage · Hijama · Récupération sportive</p>
+  </div>
+
 </div>
 
 <!-- HERO -->
@@ -944,7 +982,7 @@ footer > .footer-inner > p.footer-tagline{
       <div class="contact-note">Annulation gratuite — 24h avant</div>
     </div>
 
-    <div class="calendly-inline-widget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium"></div>
+    <div class="calendly-inline-widget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium" data-resize="true"></div>
 
   </div>
 
@@ -1005,18 +1043,30 @@ document.querySelectorAll('.fade-in').forEach((el,i)=>{
 const burger = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobileMenu');
 
+function openMobileMenu(){
+  mobileMenu.classList.add('open');
+  burger.classList.add('open');
+  burger.setAttribute('aria-expanded', true);
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu(){
+  mobileMenu.classList.remove('open');
+  burger.classList.remove('open');
+  burger.setAttribute('aria-expanded', false);
+  document.body.style.overflow = '';
+}
+
 burger.addEventListener('click', () => {
-  const isOpen = mobileMenu.classList.toggle('open');
-  burger.classList.toggle('open', isOpen);
-  burger.setAttribute('aria-expanded', isOpen);
+  mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
 });
 
 document.querySelectorAll('#mobileMenu a').forEach(link => {
-  link.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    burger.classList.remove('open');
-    burger.setAttribute('aria-expanded', false);
-  });
+  link.addEventListener('click', closeMobileMenu);
+});
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMobileMenu();
 });
 
 /* ───────────────── HEADER SHADOW ON SCROLL ───────────────── */
