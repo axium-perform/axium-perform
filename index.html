@@ -5,11 +5,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Axium.Perform — massage sportif, relaxation et hijama à Genève. Récupération et performance, par un praticien lui-même athlète de demi-fond.">
+<meta name="theme-color" content="#F2F2EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)">
 
 <title>Axium.Perform — Récupération & Performance</title>
 
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:site_name" content="Axium.Perform">
+<meta property="og:title" content="Axium.Perform — Récupération & Performance">
+<meta property="og:description" content="Massage sportif, relaxation et hijama à Genève. Récupération et performance, par un praticien lui-même athlète de demi-fond.">
+<meta property="og:image" content="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Archivo+Black&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
@@ -31,6 +42,12 @@
    Affichage   Archivo Black (hero, un seul moment) / Archivo 700–800
    Texte       Inter 400–600
    Instrument  Space Mono 400/700 — index, prix, données, dossard
+   ───────────────────────────────────────────────────────────────────
+   MOUVEMENT — la même discipline que la couleur.
+   Une seule courbe (ease-out expo), trois durées, jamais de rebond.
+   Le mouvement va dans un sens : les lignes se tracent de la gauche,
+   les remplissages montent du bas, les textes montent depuis leur
+   propre ligne de base. Rien ne clignote, rien ne tourne.
    ═══════════════════════════════════════════════════════════════════ */
 
 :root{
@@ -41,15 +58,34 @@
   --ardoise:#52565A;
   --ligne:rgba(10,10,10,0.15);
   --ligne-onDark:rgba(255,255,255,0.18);
+
+  /* mouvement */
+  --ease:cubic-bezier(0.22,1,0.36,1);
+  --ease-inout:cubic-bezier(0.65,0,0.35,1);
+  --t-fast:0.18s;
+  --t-mid:0.34s;
+  --t-slow:0.8s;
 }
 
 *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
 
-html{ scroll-behavior:smooth; scroll-padding-top:92px; }
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:92px;
+  scrollbar-gutter:stable;
+}
 
 @media (prefers-reduced-motion:reduce){
   html{ scroll-behavior:auto; }
-  *,*::before,*::after{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+    transition-delay:0s !important;
+  }
+  .js .fade-in{ opacity:1 !important; transform:none !important; }
+  .is-split .ln > span{ transform:none !important; }
+  .js .index-line{ transform:scaleX(1) !important; }
 }
 
 body{
@@ -60,6 +96,8 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
+
+body.is-locked{ overflow:hidden; }
 
 img{ display:block; max-width:100%; }
 a{ text-decoration:none; color:inherit; }
@@ -81,6 +119,23 @@ button:focus-visible{
 .mobile-menu button:focus-visible{
   outline-color:var(--blanc);
 }
+
+/* Lien d'évitement — invisible tant qu'on ne navigue pas au clavier. */
+.skip-link{
+  position:fixed;
+  top:12px; left:12px;
+  z-index:1200;
+  padding:12px 20px;
+  background:var(--noir);
+  color:var(--blanc);
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  transform:translateY(-160%);
+  transition:transform var(--t-mid) var(--ease);
+}
+.skip-link:focus-visible{ transform:translateY(0); outline-color:var(--blanc); }
 
 /* ───────────────── SECTION SHELL ───────────────── */
 .section{ padding:clamp(72px,10vw,136px) clamp(20px,6vw,80px); position:relative; background:var(--neige); }
@@ -110,6 +165,23 @@ button:focus-visible{
 .index-line{ flex:1; height:1px; background:var(--ligne); }
 .section--dark .index-line{ background:var(--ligne-onDark); }
 
+/* L'index se compose à l'entrée : le numéro monte, la ligne se trace. */
+.js .index-num,
+.js .index-label{
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity .7s var(--ease), transform .7s var(--ease);
+}
+.js .index-label{ transition-delay:.06s; }
+.js .index-line{
+  transform:scaleX(0);
+  transform-origin:0 50%;
+  transition:transform 1.1s var(--ease) .12s;
+}
+.index.is-in .index-num{ opacity:1; transform:none; }
+.index.is-in .index-label{ opacity:.55; transform:none; }
+.index.is-in .index-line{ transform:scaleX(1); }
+
 .section-title{
   font-family:'Archivo',sans-serif;
   font-weight:800;
@@ -121,8 +193,31 @@ button:focus-visible{
   max-width:18ch;
 }
 
-/* ───────────────── BUTTONS (inversion noir/blanc) ───────────────── */
+/* ───────────────── TITRES EN LIGNES MASQUÉES ─────────────────
+   Chaque ligne est enfermée dans son propre cadre et remonte depuis
+   sa ligne de base. Le padding négatif évite de rogner les capitales. */
+.is-split .ln{
+  display:block;
+  overflow:hidden;
+  padding-top:.12em;   margin-top:-.12em;
+  padding-bottom:.08em; margin-bottom:-.08em;
+}
+.is-split .ln > span{
+  display:block;
+  transform:translateY(130%);
+  transition:transform .95s var(--ease);
+  transition-delay:var(--delay,0s);
+}
+.is-split:not(.is-in) .ln > span{ will-change:transform; }
+.is-split.is-in .ln > span{ transform:translateY(0); }
+
+/* ───────────────── BUTTONS (inversion noir/blanc) ─────────────────
+   L'inversion ne se fait plus en fondu mais au balayage : le négatif
+   monte depuis le bas du bouton, comme une aiguille qui passe. */
 .btn-primary,.btn-secondary{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
   display:inline-flex;
   align-items:center;
   gap:9px;
@@ -132,26 +227,67 @@ button:focus-visible{
   font-size:.84rem;
   letter-spacing:.04em;
   text-transform:uppercase;
-  transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition:color var(--t-mid) var(--ease), border-color var(--t-mid) var(--ease), transform var(--t-fast) var(--ease);
 }
 
-.btn-primary{ background:var(--noir); color:var(--blanc); border:1.5px solid var(--noir); }
-.btn-primary:hover{ background:var(--neige); color:var(--noir); }
+.btn-primary::before,
+.btn-secondary::before,
+.header-btn::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:var(--fill,transparent);
+  transform:scaleY(0);
+  transform-origin:50% 100%;
+  transition:transform .42s var(--ease);
+}
 
-.btn-secondary{ background:transparent; color:var(--noir); border:1.5px solid var(--noir); }
-.btn-secondary:hover{ background:var(--noir); color:var(--blanc); }
+.btn-primary:hover::before,
+.btn-secondary:hover::before,
+.header-btn:hover::before{ transform:scaleY(1); }
 
+.btn-primary:active,
+.btn-secondary:active,
+.header-btn:active{ transform:translateY(1px); }
+
+.btn-primary .arrow,
+.btn-secondary .arrow,
+.header-btn .arrow{
+  display:inline-block;
+  transition:transform var(--t-mid) var(--ease);
+}
+.btn-primary:hover .arrow,
+.btn-secondary:hover .arrow{ transform:translateX(4px); }
+
+.btn-primary{ background:var(--noir); color:var(--blanc); border:1.5px solid var(--noir); --fill:var(--neige); }
+.btn-primary:hover{ color:var(--noir); }
+
+.btn-secondary{ background:transparent; color:var(--noir); border:1.5px solid var(--noir); --fill:var(--noir); }
+.btn-secondary:hover{ color:var(--blanc); }
+
+/* Sur fond sombre, le primaire est blanc au repos : le balayage se
+   fait à l'envers — le blanc se retire vers le bas. */
 .section--dark .btn-primary,
 .hero .btn-primary,
-.mobile-menu .btn-primary{ background:var(--blanc); color:var(--noir); border-color:var(--blanc); }
+.mobile-menu .btn-primary{ background:transparent; color:var(--noir); border-color:var(--blanc); --fill:var(--blanc); }
+
+.section--dark .btn-primary::before,
+.hero .btn-primary::before,
+.mobile-menu .btn-primary::before{ transform:scaleY(1); transform-origin:50% 0; }
+
+.section--dark .btn-primary:hover::before,
+.hero .btn-primary:hover::before,
+.mobile-menu .btn-primary:hover::before{ transform:scaleY(0); }
+
 .section--dark .btn-primary:hover,
 .hero .btn-primary:hover,
-.mobile-menu .btn-primary:hover{ background:transparent; color:var(--blanc); }
+.mobile-menu .btn-primary:hover{ color:var(--blanc); }
 
 .section--dark .btn-secondary,
-.hero .btn-secondary{ color:var(--blanc); border-color:rgba(255,255,255,0.4); }
+.hero .btn-secondary{ color:var(--blanc); border-color:rgba(255,255,255,0.4); --fill:var(--blanc); }
 .section--dark .btn-secondary:hover,
-.hero .btn-secondary:hover{ background:var(--blanc); color:var(--noir); border-color:var(--blanc); }
+.hero .btn-secondary:hover{ color:var(--noir); border-color:var(--blanc); }
 
 /* ───────────────── DOSSARD (le détail signature) ─────────────────
    Sevann porte un dossard en course. Le même objet, réutilisé ici
@@ -170,6 +306,7 @@ button:focus-visible{
   text-transform:uppercase;
   color:var(--noir);
 }
+
 /* ───────────────── INSTRUMENT GRID (cadres hairline sur fond sombre) ───────────────── */
 .instrument-grid{
   display:grid;
@@ -178,11 +315,25 @@ button:focus-visible{
   border:1px solid var(--ligne-onDark);
 }
 .instrument-grid > div{
+  position:relative;
   background:var(--noir);
   padding:clamp(30px,4vw,42px) clamp(24px,3vw,32px);
-  transition:background 0.2s ease;
+  transition:background var(--t-mid) var(--ease);
 }
 .instrument-grid > div:hover{ background:var(--noir-2); }
+
+/* Au survol, une réglette blanche se trace en tête de cellule. */
+.instrument-grid > div::after{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:1px;
+  background:var(--blanc);
+  transform:scaleX(0);
+  transform-origin:0 50%;
+  transition:transform .5s var(--ease);
+}
+.instrument-grid > div:hover::after{ transform:scaleX(1); }
 
 /* ───────────────── HEADER ───────────────── */
 header{
@@ -198,7 +349,30 @@ header{
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid var(--ligne);
-  transition:box-shadow 0.25s;
+  transition:height .4s var(--ease), background-color .4s var(--ease), box-shadow .3s var(--ease), transform .45s var(--ease);
+}
+
+/* Jauge de progression — un hairline noir qui se remplit sur la
+   hauteur totale du document. Instrument, pas décoration. */
+header::after{
+  content:'';
+  position:absolute;
+  left:0; right:0; bottom:-1px;
+  height:2px;
+  background:var(--noir);
+  transform:scaleX(var(--progress,0));
+  transform-origin:0 50%;
+  transition:transform .12s linear;
+}
+
+html.is-compact header{
+  height:62px;
+  background:rgba(255,255,255,0.94);
+  box-shadow:0 12px 30px -24px rgba(10,10,10,0.55);
+}
+
+@media (min-width:881px){
+  html.is-nav-hidden header{ transform:translateY(-101%); }
 }
 
 .logo-wrap{ display:flex; align-items:center; gap:10px; min-width:0; }
@@ -209,13 +383,16 @@ header{
   font-size:clamp(1.02rem,3vw,1.18rem);
   line-height:1;
   white-space:nowrap;
+  transition:opacity var(--t-mid) var(--ease);
 }
+.logo-text:hover{ opacity:.6; }
 .logo-strong{ font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:-0.01em; }
 .logo-light{ font-family:'Inter',sans-serif; font-weight:500; opacity:.5; margin-left:1px; }
 
 nav ul{ display:flex; gap:clamp(16px,2vw,34px); flex-wrap:wrap; }
 
 nav a{
+  position:relative;
   font-family:'Inter',sans-serif;
   font-weight:600;
   font-size:.82rem;
@@ -224,12 +401,33 @@ nav a{
   color:var(--ardoise);
   padding-bottom:5px;
   border-bottom:1px solid transparent;
-  transition:color 0.2s, border-color 0.2s;
+  transition:color var(--t-mid) var(--ease);
 }
 
-nav a:hover{ color:var(--noir); border-color:var(--noir); }
+/* Le soulignement se trace au lieu d'apparaître, et se retire par
+   l'autre bord — même geste que les lignes d'index. */
+nav a::after{
+  content:'';
+  position:absolute;
+  left:0; right:0; bottom:-1px;
+  height:1px;
+  background:var(--noir);
+  transform:scaleX(0);
+  transform-origin:100% 50%;
+  transition:transform .38s var(--ease);
+}
+
+nav a:hover{ color:var(--noir); }
+nav a:hover::after,
+nav a.is-active::after{ transform:scaleX(1); transform-origin:0 50%; }
+nav a.is-active{ color:var(--noir); }
 
 .header-btn{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  display:inline-flex;
+  align-items:center;
   background:var(--noir);
   color:var(--blanc);
   padding:11px 24px;
@@ -239,11 +437,12 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   letter-spacing:.03em;
   text-transform:uppercase;
   border:1.5px solid var(--noir);
-  transition:background 0.2s, color 0.2s;
+  transition:color var(--t-mid) var(--ease), transform var(--t-fast) var(--ease);
   white-space:nowrap;
+  --fill:var(--neige);
 }
 
-.header-btn:hover{ background:var(--neige); color:var(--noir); }
+.header-btn:hover{ color:var(--noir); }
 
 .burger{
   display:none;
@@ -258,13 +457,22 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   justify-content:center;
   gap:5px;
   cursor:pointer;
+  transition:top .4s var(--ease);
 }
 
-.burger span{ width:22px; height:2px; background:var(--noir); transition:transform 0.3s, opacity 0.3s, background 0.3s; }
+html.is-compact .burger{ top:12px; }
+
+.burger span{
+  width:22px; height:2px;
+  background:var(--noir);
+  transition:transform .4s var(--ease), opacity .2s var(--ease), background .3s var(--ease), width .3s var(--ease);
+}
+.burger:hover span:nth-child(2){ width:16px; }
 .burger.open span{ background:var(--blanc); }
 .burger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
-.burger.open span:nth-child(2){ opacity:0; }
+.burger.open span:nth-child(2){ opacity:0; transform:scaleX(0); }
 .burger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+.burger.open:hover span:nth-child(2){ width:22px; }
 .burger.open:focus-visible{ outline-color:var(--blanc); }
 
 /* ───────────────── MENU PLEIN ÉCRAN (façon Nocco) ───────────────── */
@@ -281,7 +489,7 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   opacity:0;
   visibility:hidden;
   transform:translateY(-16px);
-  transition:opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s;
+  transition:opacity 0.35s var(--ease), transform 0.35s var(--ease), visibility 0s linear 0.35s;
   overflow-y:auto;
 }
 
@@ -289,7 +497,7 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   opacity:1;
   visibility:visible;
   transform:translateY(0);
-  transition:opacity 0.35s ease, transform 0.35s ease;
+  transition:opacity 0.35s var(--ease), transform 0.35s var(--ease);
 }
 
 .mobile-menu-links{ display:flex; flex-direction:column; }
@@ -303,10 +511,20 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   letter-spacing:-0.01em;
   color:var(--blanc);
   padding:9px 0;
-  transition:opacity 0.2s ease;
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
 }
 
-.mobile-menu-links a:hover{ opacity:0.6; }
+/* Les entrées se posent l'une après l'autre, jamais toutes ensemble. */
+.mobile-menu.open .mobile-menu-links a{ opacity:1; transform:none; }
+.mobile-menu.open .mobile-menu-links a:nth-child(1){ transition-delay:.10s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(2){ transition-delay:.16s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(3){ transition-delay:.22s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(4){ transition-delay:.28s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(5){ transition-delay:.34s; }
+
+.mobile-menu-links a:hover{ opacity:0.6; transform:translateX(10px); }
 
 .mobile-menu-footer{
   display:flex;
@@ -315,7 +533,12 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   gap:18px;
   padding-top:26px;
   border-top:1px solid var(--ligne-onDark);
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
 }
+
+.mobile-menu.open .mobile-menu-footer{ opacity:1; transform:none; transition-delay:.42s; }
 
 .mobile-menu-footer p{
   font-family:'Space Mono',monospace;
@@ -343,16 +566,39 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   border-bottom:2px solid var(--blanc);
 }
 
+/* Le dégradé est détaché de l'image : il reste calé sur le cadre
+   pendant que la photo dérive au scroll. */
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(to top, rgba(10,10,10,0.96) 8%, rgba(10,10,10,0.58) 46%, rgba(10,10,10,0.28));
+}
+
 .hero-bg{
   position:absolute; inset:0;
-  background:
-    linear-gradient(to top, rgba(10,10,10,0.96) 8%, rgba(10,10,10,0.58) 46%, rgba(10,10,10,0.28)),
-    url('0fc6911e-bb7e-4be2-9817-8390221d3612.JPG');
+  z-index:0;
+  will-change:transform;
+}
+
+.hero-bg-img{
+  position:absolute; inset:0;
+  background-image:url('0fc6911e-bb7e-4be2-9817-8390221d3612.JPG');
   background-size:cover;
   background-position:center 20%;
   filter:grayscale(1) contrast(1.18) brightness(0.86);
-  transform:scale(1.02);
+  transform:scale(1.16);
 }
+
+/* Ouverture : la photo se pose en reculant d'un cran. */
+.js .hero-bg-img{
+  opacity:0;
+  transform:scale(1.30);
+  transition:transform 1.8s var(--ease), opacity 1.2s ease;
+}
+.hero.is-in .hero-bg-img{ opacity:1; transform:scale(1.16); }
 
 .hero-coords{
   position:absolute;
@@ -365,6 +611,7 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   letter-spacing:.03em;
   color:rgba(255,255,255,0.4);
   text-align:right;
+  font-variant-numeric:tabular-nums;
 }
 
 @media (max-width:680px){ .hero-coords{ display:none; } }
@@ -402,6 +649,75 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
 
 .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
 
+/* Séquence d'ouverture — tag, titre, texte, boutons, repères. */
+.js .hero-tag,
+.js .hero-desc,
+.js .hero-actions,
+.js .hero-coords,
+.js .hero-scroll{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .9s var(--ease), transform .9s var(--ease);
+  transition-delay:var(--delay,0s);
+}
+
+.hero.is-in .hero-tag,
+.hero.is-in .hero-desc,
+.hero.is-in .hero-actions,
+.hero.is-in .hero-coords,
+.hero.is-in .hero-scroll{ opacity:1; transform:none; }
+
+.hero-tag{ --delay:.05s; }
+.hero-desc{ --delay:.46s; }
+.hero-actions{ --delay:.58s; }
+.hero-coords{ --delay:.75s; }
+.hero-scroll{ --delay:.9s; }
+
+/* Repère de défilement — un segment qui descend le long d'un rail. */
+.hero-scroll{
+  position:absolute;
+  right:clamp(20px,6vw,80px);
+  bottom:clamp(60px,9vw,104px);
+  z-index:2;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  font-size:.62rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.45);
+}
+
+@media (min-width:900px){ .hero-scroll{ display:flex; } }
+
+.hero-scroll-rail{
+  position:relative;
+  width:1px;
+  height:58px;
+  background:rgba(255,255,255,0.18);
+  overflow:hidden;
+}
+
+.hero-scroll-rail::after{
+  content:'';
+  position:absolute;
+  left:0; top:0;
+  width:1px; height:18px;
+  background:var(--blanc);
+  animation:railRun 2.4s var(--ease-inout) infinite;
+}
+
+@keyframes railRun{
+  0%{ transform:translateY(-20px); }
+  60%{ transform:translateY(58px); }
+  100%{ transform:translateY(58px); }
+}
+
+.hero.is-scrolled .hero-scroll{ opacity:0; transform:translateY(12px); transition-delay:0s; }
+
 /* ───────────────── PROFIL ───────────────── */
 .about-grid{ display:grid; gap:clamp(36px,5vw,64px); align-items:start; }
 
@@ -417,7 +733,25 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
 
 .about-image img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.05); }
 
-.about-image .bib{ position:absolute; bottom:16px; left:16px; }
+/* L'image se resserre en entrant, puis respire au survol. */
+.js .about-image img{
+  transform:scale(1.09);
+  transition:transform 1.3s var(--ease) .1s;
+}
+.about-image.is-in img{ transform:scale(1); }
+.about-image.is-in:hover img{ transform:scale(1.04); transition-duration:.9s; transition-delay:0s; }
+
+.about-image .bib{
+  position:absolute;
+  bottom:16px; left:16px;
+}
+
+.js .about-image .bib{
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity .6s var(--ease) .5s, transform .6s var(--ease) .5s;
+}
+.about-image.is-in .bib{ opacity:1; transform:none; }
 
 .about-text p{
   font-size:1.05rem;
@@ -450,7 +784,11 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   font-variant-numeric:tabular-nums;
   opacity:.55;
   margin-bottom:18px;
+  transition:opacity var(--t-mid) var(--ease);
 }
+
+.instrument-grid > div:hover .pillar-num,
+.instrument-grid > div:hover .process-step{ opacity:1; }
 
 .pillar-block h3{
   font-family:'Archivo',sans-serif;
@@ -465,22 +803,42 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
 
 /* ───────────────── PRESTATIONS ─────────────────
    Au survol, la carte s'inverse en négatif — comme un chrono qu'on
-   déclenche. C'est la seule animation de couleur du site. */
+   déclenche. Le noir monte du bas, la carte se soulève d'un cran. */
 .services-grid{ display:grid; gap:20px; }
 
 @media (min-width:700px){ .services-grid{ grid-template-columns:repeat(2,1fr); } }
 @media (min-width:1150px){ .services-grid{ grid-template-columns:repeat(3,1fr); } }
 
 .service-card{
+  position:relative;
+  isolation:isolate;
   padding:36px 30px;
   background:var(--blanc);
   border:1.5px solid var(--noir);
   color:var(--noir);
-  transition:background 0.22s ease, color 0.22s ease;
+  transition:color .28s var(--ease), transform .45s var(--ease), box-shadow .45s var(--ease);
   min-width:0;
 }
 
-.service-card:hover{ background:var(--noir); color:var(--blanc); }
+.service-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:var(--noir);
+  transform:scaleY(0);
+  transform-origin:50% 100%;
+  transition:transform .45s var(--ease);
+}
+
+.service-card:hover::before{ transform:scaleY(1); }
+
+.service-card:hover,
+.service-card.visible:hover{
+  color:var(--blanc);
+  transform:translateY(-5px);
+  box-shadow:0 26px 44px -34px rgba(10,10,10,0.7);
+}
 
 .service-card h3{
   font-family:'Archivo',sans-serif;
@@ -496,7 +854,7 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   color:var(--ardoise);
   margin-bottom:26px;
   min-height:4.8em;
-  transition:color 0.22s ease;
+  transition:color .28s var(--ease);
 }
 
 .service-card:hover p{ color:rgba(255,255,255,0.7); }
@@ -508,7 +866,7 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   gap:14px;
   padding-top:20px;
   border-top:1px solid var(--ligne);
-  transition:border-color 0.22s ease;
+  transition:border-color .28s var(--ease);
 }
 
 .service-card:hover .service-bottom{ border-top-color:var(--ligne-onDark); }
@@ -528,7 +886,7 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   text-transform:uppercase;
   font-size:.68rem;
   letter-spacing:.06em;
-  transition:color 0.22s ease;
+  transition:color .28s var(--ease);
 }
 
 .service-card:hover .duration{ color:rgba(255,255,255,0.6); }
@@ -539,11 +897,18 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   color:var(--noir);
   display:flex; align-items:center; justify-content:center;
   flex-shrink:0;
-  transition:background 0.22s, border-color 0.22s, color 0.22s;
+  transition:background .28s var(--ease), border-color .28s var(--ease), color .28s var(--ease);
   font-size:1.05rem;
 }
 
+.card-arrow span{
+  display:block;
+  transition:transform var(--t-mid) var(--ease);
+}
+
 .service-card:hover .card-arrow{ background:var(--blanc); border-color:var(--blanc); color:var(--noir); }
+.service-card:hover .card-arrow span,
+.card-arrow:hover span{ transform:translateX(3px); }
 
 /* ───────────────── DÉROULEMENT (dark) ───────────────── */
 .process-track{ grid-template-columns:1fr; }
@@ -559,6 +924,7 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   text-transform:uppercase;
   opacity:.55;
   margin-bottom:18px;
+  transition:opacity var(--t-mid) var(--ease);
 }
 
 .process-card h3{
@@ -613,12 +979,77 @@ nav a:hover{ color:var(--noir); border-color:var(--noir); }
   white-space:nowrap;
 }
 
-.contact-note::before{ content:'●'; font-size:.6rem; }
+/* Le point respire — signal de disponibilité, pas un gyrophare. */
+.contact-note::before{
+  content:'●';
+  font-size:.6rem;
+  animation:pouls 2.6s var(--ease-inout) infinite;
+}
 
-.calendly-inline-widget{ min-width:320px; width:100%; height:min(720px,85vw); }
+@keyframes pouls{
+  0%,100%{ opacity:.35; }
+  50%{ opacity:1; }
+}
+
+.calendly-shell{ position:relative; }
+
+.calendly-inline-widget{
+  position:relative;
+  z-index:1;
+  min-width:320px;
+  width:100%;
+  height:min(720px,85vw);
+}
 
 @media (max-width:680px){
   .calendly-inline-widget{ height:900px; }
+}
+
+/* Attente du calendrier — un rail qui se remplit, rien d'autre. */
+.calendly-skeleton{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  padding:24px;
+  text-align:center;
+  transition:opacity .5s var(--ease), visibility 0s linear .5s;
+}
+
+.calendly-skeleton.is-done{ opacity:0; visibility:hidden; }
+
+.calendly-skeleton span.label{
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ardoise);
+}
+
+.calendly-skeleton .rail{
+  position:relative;
+  width:min(220px,60%);
+  height:1px;
+  background:var(--ligne);
+  overflow:hidden;
+}
+
+.calendly-skeleton .rail::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:var(--noir);
+  transform:translateX(-100%);
+  animation:railLoad 1.6s var(--ease-inout) infinite;
+}
+
+@keyframes railLoad{
+  0%{ transform:translateX(-100%); }
+  100%{ transform:translateX(100%); }
 }
 
 /* ───────────────── FOOTER ───────────────── */
@@ -686,29 +1117,38 @@ footer > .footer-inner > p.footer-tagline{
   text-align:center;
 }
 
-/* ───────────────── REVEAL ───────────────── */
-.fade-in{
+/* ───────────────── REVEAL ─────────────────
+   L'état masqué n'existe que si le JS tourne : sans script, la page
+   reste entièrement lisible. Une fois révélé, l'élément est libéré
+   de ces règles pour rendre la main aux transitions de composant. */
+.js .fade-in{
   opacity:0;
   transform:translateY(28px);
-  transition:opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
-  will-change:opacity,transform;
+  transition:opacity .8s var(--ease), transform .8s var(--ease);
+  transition-delay:var(--delay,0s);
 }
 
-.fade-in.visible{ opacity:1; transform:translateY(0); }
+.js .fade-in:not(.visible){ will-change:opacity,transform; }
+
+.js .fade-in.visible{ opacity:1; transform:translateY(0); }
 
 </style>
+
+<script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body>
+
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
 <!-- HEADER -->
 <header>
 
   <div class="logo-wrap">
-    <div class="logo-text"><span class="logo-strong">Axium</span><span class="logo-light">.Perform</span></div>
+    <a href="#contenu" class="logo-text" aria-label="Axium.Perform — retour en haut"><span class="logo-strong">Axium</span><span class="logo-light">.Perform</span></a>
   </div>
 
-  <nav>
+  <nav aria-label="Navigation principale">
     <ul>
       <li><a href="#profil">Profil</a></li>
       <li><a href="#pourquoi">Pourquoi Axium</a></li>
@@ -726,9 +1166,9 @@ footer > .footer-inner > p.footer-tagline{
   <span></span><span></span><span></span>
 </button>
 
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu de navigation">
 
-  <nav class="mobile-menu-links">
+  <nav class="mobile-menu-links" aria-label="Navigation mobile">
     <a href="#profil">Profil</a>
     <a href="#pourquoi">Pourquoi Axium</a>
     <a href="#prestations">Prestations</a>
@@ -737,16 +1177,22 @@ footer > .footer-inner > p.footer-tagline{
   </nav>
 
   <div class="mobile-menu-footer">
-    <a href="#contact" class="btn-primary">Réserver une séance →</a>
+    <a href="#contact" class="btn-primary">Réserver une séance <span class="arrow">→</span></a>
     <p>Massage · Hijama · Récupération sportive</p>
   </div>
 
 </div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="contenu" tabindex="-1">
 
-  <div class="hero-bg"></div>
+  <div class="hero-bg"><div class="hero-bg-img"></div></div>
+
+  <div class="hero-coords" aria-hidden="true">
+    Genève — CH<br>
+    46.2044° N / 6.1432° E<br>
+    <span id="heroClock">--:--:--</span>
+  </div>
 
   <div class="hero-content">
 
@@ -761,10 +1207,15 @@ footer > .footer-inner > p.footer-tagline{
     </p>
 
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Prendre rendez-vous →</a>
+      <a href="#contact" class="btn-primary">Prendre rendez-vous <span class="arrow">→</span></a>
       <a href="#prestations" class="btn-secondary">Découvrir les prestations</a>
     </div>
 
+  </div>
+
+  <div class="hero-scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <span class="hero-scroll-rail"></span>
   </div>
 
 </section>
@@ -783,8 +1234,8 @@ footer > .footer-inner > p.footer-tagline{
   <div class="about-grid">
 
     <div class="about-image fade-in">
-      <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann, praticien Axium.Perform">
-      <span class="bib">Athlète & praticien</span>
+      <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann, praticien Axium.Perform" loading="lazy" decoding="async">
+      <span class="bib">Athlète &amp; praticien</span>
     </div>
 
     <div class="about-text fade-in">
@@ -807,7 +1258,7 @@ footer > .footer-inner > p.footer-tagline{
         pour la circulation et la récupération en profondeur.
       </p>
       <div>
-        <a href="#contact" class="btn-primary">Réserver une séance →</a>
+        <a href="#contact" class="btn-primary">Réserver une séance <span class="arrow">→</span></a>
       </div>
 
     </div>
@@ -827,7 +1278,7 @@ footer > .footer-inner > p.footer-tagline{
 
   <h2 class="section-title">Pourquoi<br>Axium</h2>
 
-  <p class="pourquoi-lead">
+  <p class="pourquoi-lead fade-in">
     Trois principes qui structurent chaque séance, du premier échange à la récupération.
   </p>
 
@@ -879,7 +1330,7 @@ footer > .footer-inner > p.footer-tagline{
           <div class="price">40.–</div>
           <div class="duration">30 minutes</div>
         </div>
-        <a href="#contact" class="card-arrow" aria-label="Réserver un massage sportif">→</a>
+        <a href="#contact" class="card-arrow" aria-label="Réserver un massage sportif"><span>→</span></a>
       </div>
 
     </div>
@@ -895,7 +1346,7 @@ footer > .footer-inner > p.footer-tagline{
           <div class="price">70.–</div>
           <div class="duration">1 heure</div>
         </div>
-        <a href="#contact" class="card-arrow" aria-label="Réserver une relaxation">→</a>
+        <a href="#contact" class="card-arrow" aria-label="Réserver une relaxation"><span>→</span></a>
       </div>
 
     </div>
@@ -911,7 +1362,7 @@ footer > .footer-inner > p.footer-tagline{
           <div class="price" style="font-size:1.1rem;">Sur demande</div>
           <div class="duration">Selon besoin du client</div>
         </div>
-        <a href="#contact" class="card-arrow" aria-label="Réserver une hijama">→</a>
+        <a href="#contact" class="card-arrow" aria-label="Réserver une hijama"><span>→</span></a>
       </div>
 
     </div>
@@ -982,7 +1433,19 @@ footer > .footer-inner > p.footer-tagline{
       <div class="contact-note">Annulation gratuite — 24h avant</div>
     </div>
 
-    <div class="calendly-inline-widget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium" data-resize="true"></div>
+    <div class="calendly-shell">
+
+      <div class="calendly-skeleton" id="calendlySkeleton">
+        <span class="label">Chargement du calendrier</span>
+        <span class="rail"></span>
+        <noscript>
+          <a class="btn-secondary" href="https://calendly.com/axium-perform/seance-de-massage-axium" target="_blank" rel="noopener">Ouvrir le calendrier <span class="arrow">→</span></a>
+        </noscript>
+      </div>
+
+      <div class="calendly-inline-widget" id="calendlyWidget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium" data-resize="true"></div>
+
+    </div>
 
   </div>
 
@@ -993,13 +1456,13 @@ footer > .footer-inner > p.footer-tagline{
 
   <div class="footer-inner">
 
-    <div class="footer-top">
+    <div class="footer-top fade-in">
       <div class="footer-logo"><span class="logo-strong">Axium</span><span class="logo-light">.Perform</span></div>
     </div>
 
-    <p class="footer-tagline">Massage · Hijama · Récupération sportive</p>
+    <p class="footer-tagline fade-in">Massage · Hijama · Récupération sportive</p>
 
-    <div class="footer-legal">
+    <div class="footer-legal fade-in">
 
       <h4>Conditions générales</h4>
 
@@ -1017,44 +1480,225 @@ footer > .footer-inner > p.footer-tagline{
 
 </footer>
 
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-
 <script>
 
-/* ───────────────── SCROLL REVEAL ───────────────── */
-const observer = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold:0.15, rootMargin:"0px 0px -60px 0px" }
-);
+/* ═══════════════════════════════════════════════════════════════════
+   MOUVEMENT — un seul rAF pour le scroll, un seul observer pour les
+   entrées. Tout est désactivé si l'utilisateur demande moins d'animation.
+   ═══════════════════════════════════════════════════════════════════ */
 
-document.querySelectorAll('.fade-in').forEach((el,i)=>{
-  el.style.transitionDelay = `${(i % 6) * 0.08}s`;
-  observer.observe(el);
-});
+const root       = document.documentElement;
+const motionQ    = window.matchMedia('(prefers-reduced-motion: reduce)');
+let   reduced    = motionQ.matches;
 
-/* ───────────────── MOBILE MENU ───────────────── */
-const burger = document.getElementById('burger');
+const headerEl   = document.querySelector('header');
+const heroEl     = document.querySelector('.hero');
+const heroBg     = document.querySelector('.hero-bg');
+const burger     = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobileMenu');
 
+/* ───────────────── TITRES : découpe en lignes masquées ───────────────── */
+function splitLines(el){
+  const lines = el.innerHTML.split(/<br\s*\/?>/i).map(s => s.trim()).filter(Boolean);
+  if(lines.length === 0) return;
+  el.innerHTML = lines
+    .map((line,i) => `<span class="ln"><span style="--delay:${(i*0.09).toFixed(2)}s">${line}</span></span>`)
+    .join('');
+  el.classList.add('is-split');
+}
+
+document.querySelectorAll('.section-title, .hero h1').forEach(splitLines);
+
+/* ───────────────── ENTRÉES AU SCROLL ─────────────────
+   Le décalage se calcule par groupe (entre voisins), pas globalement :
+   trois cartes côte à côte se posent l'une après l'autre. */
+document.querySelectorAll('.fade-in').forEach(el => {
+  const peers = Array.from(el.parentElement.children).filter(n => n.classList.contains('fade-in'));
+  const i = peers.indexOf(el);
+  if(i > 0) el.style.setProperty('--delay', `${(i * 0.09).toFixed(2)}s`);
+});
+
+function reveal(el){
+  el.classList.add('is-in','visible');
+  /* Une fois posé, on retire l'habillage de révélation pour rendre la
+     main aux transitions propres au composant (survol des cartes…). */
+  if(el.classList.contains('fade-in')){
+    window.setTimeout(() => el.classList.remove('fade-in'), 1400);
+  }
+}
+
+const revealTargets = document.querySelectorAll('.fade-in, .index, .section-title');
+
+if(reduced){
+  revealTargets.forEach(el => el.classList.add('is-in','visible'));
+  document.querySelectorAll('.fade-in').forEach(el => el.classList.remove('fade-in'));
+}else{
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        reveal(entry.target);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+
+  revealTargets.forEach(el => revealObserver.observe(el));
+}
+
+/* ───────────────── OUVERTURE DU HERO ─────────────────
+   On attend les polices (max 1.2s) pour ne pas animer un titre qui
+   change de fonte en cours de route. */
+function startHero(){
+  heroEl.classList.add('is-in');
+  const h1 = heroEl.querySelector('h1');
+  if(h1) h1.classList.add('is-in');
+}
+
+if(reduced){
+  startHero();
+}else if(document.fonts && document.fonts.ready){
+  Promise.race([
+    document.fonts.ready,
+    new Promise(r => window.setTimeout(r, 1200))
+  ]).then(() => requestAnimationFrame(startHero));
+}else{
+  window.addEventListener('load', startHero, { once:true });
+}
+
+/* ───────────────── SCROLL : en-tête, jauge, parallaxe ─────────────────
+   Un seul écouteur passif, une seule frame par tick. */
+let lastY = window.scrollY;
+let ticking = false;
+
+function onScroll(){
+  const y = Math.max(0, window.scrollY);
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+
+  headerEl.style.setProperty('--progress', max > 0 ? Math.min(1, y / max).toFixed(4) : 0);
+
+  root.classList.toggle('is-compact', y > 24);
+
+  /* L'en-tête s'efface en descente et revient dès qu'on remonte —
+     jamais quand le menu est ouvert. */
+  if(!mobileMenu.classList.contains('open')){
+    root.classList.toggle('is-nav-hidden', y > lastY + 4 && y > 260);
+  }
+
+  if(heroEl){
+    heroEl.classList.toggle('is-scrolled', y > 60);
+
+    if(!reduced && heroBg){
+      const h = heroEl.offsetHeight;
+      if(y < h){
+        heroBg.style.transform = `translate3d(0, ${(y * 0.07).toFixed(2)}px, 0)`;
+      }
+    }
+  }
+
+  lastY = y;
+}
+
+window.addEventListener('scroll', () => {
+  if(ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => { onScroll(); ticking = false; });
+}, { passive:true });
+
+onScroll();
+
+/* ───────────────── LIEN ACTIF DANS LA NAV ─────────────────
+   La section qui occupe le milieu de l'écran allume son onglet. */
+const navLinks = Array.from(document.querySelectorAll('header nav a'));
+const sections = navLinks
+  .map(a => document.querySelector(a.getAttribute('href')))
+  .filter(Boolean);
+
+if(sections.length){
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting) return;
+      navLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === `#${entry.target.id}`));
+    });
+  }, { rootMargin:'-45% 0px -50% 0px', threshold:0 });
+
+  sections.forEach(s => navObserver.observe(s));
+}
+
+/* ───────────────── PRIX : montée au compteur ─────────────────
+   Le prix se compose comme un chrono qui s'arrête sur le tarif. */
+if(!reduced){
+  const easeOut = t => 1 - Math.pow(1 - t, 4);
+
+  const countObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting) return;
+      const el = entry.target;
+      countObserver.unobserve(el);
+
+      const target = Number(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const dur = 900;
+      const t0 = performance.now();
+
+      (function step(now){
+        const p = Math.min(1, (now - t0) / dur);
+        el.textContent = Math.round(target * easeOut(p)) + suffix;
+        if(p < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }, { threshold:0.4 });
+
+  document.querySelectorAll('.price').forEach(el => {
+    const m = el.textContent.trim().match(/^(\d+)([\s\S]*)$/);
+    if(!m) return;
+    el.dataset.target = m[1];
+    el.dataset.suffix = m[2];
+    el.textContent = '0' + m[2];
+    countObserver.observe(el);
+  });
+}
+
+/* ───────────────── HORLOGE DE GENÈVE ─────────────────
+   Un repère d'instrument : l'heure locale du praticien. */
+const clockEl = document.getElementById('heroClock');
+if(clockEl){
+  const fmt = new Intl.DateTimeFormat('fr-CH', {
+    timeZone:'Europe/Zurich', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false
+  });
+  const tick = () => { clockEl.textContent = fmt.format(new Date()); };
+  tick();
+  window.setInterval(() => { if(!document.hidden) tick(); }, 1000);
+}
+
+/* ───────────────── MENU PLEIN ÉCRAN ───────────────── */
+let lastFocused = null;
+
+function menuFocusables(){
+  return Array.from(mobileMenu.querySelectorAll('a[href], button')).filter(el => el.offsetParent !== null);
+}
+
 function openMobileMenu(){
+  lastFocused = document.activeElement;
   mobileMenu.classList.add('open');
   burger.classList.add('open');
-  burger.setAttribute('aria-expanded', true);
-  document.body.style.overflow = 'hidden';
+  burger.setAttribute('aria-expanded', 'true');
+  burger.setAttribute('aria-label', 'Fermer le menu');
+  document.body.classList.add('is-locked');
+  root.classList.remove('is-nav-hidden');
+  window.setTimeout(() => {
+    const first = menuFocusables()[0];
+    if(first) first.focus({ preventScroll:true });
+  }, 220);
 }
 
 function closeMobileMenu(){
+  if(!mobileMenu.classList.contains('open')) return;
   mobileMenu.classList.remove('open');
   burger.classList.remove('open');
-  burger.setAttribute('aria-expanded', false);
-  document.body.style.overflow = '';
+  burger.setAttribute('aria-expanded', 'false');
+  burger.setAttribute('aria-label', 'Ouvrir le menu');
+  document.body.classList.remove('is-locked');
+  if(lastFocused && lastFocused.focus) lastFocused.focus({ preventScroll:true });
 }
 
 burger.addEventListener('click', () => {
@@ -1066,14 +1710,89 @@ document.querySelectorAll('#mobileMenu a').forEach(link => {
 });
 
 document.addEventListener('keydown', (e) => {
-  if(e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMobileMenu();
+  if(!mobileMenu.classList.contains('open')) return;
+
+  if(e.key === 'Escape'){
+    closeMobileMenu();
+    return;
+  }
+
+  /* Piège à focus : tant que le menu est ouvert, la tabulation
+     tourne à l'intérieur. */
+  if(e.key === 'Tab'){
+    const items = menuFocusables().concat(burger);
+    if(!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+
+    if(e.shiftKey && document.activeElement === first){
+      e.preventDefault(); last.focus();
+    }else if(!e.shiftKey && document.activeElement === last){
+      e.preventDefault(); first.focus();
+    }
+  }
 });
 
-/* ───────────────── HEADER SHADOW ON SCROLL ───────────────── */
-const headerEl = document.querySelector('header');
-window.addEventListener('scroll', () => {
-  headerEl.style.boxShadow = window.scrollY > 20 ? '0 4px 20px rgba(10,10,10,0.08)' : 'none';
-});
+/* ───────────────── CALENDRIER — chargement différé ─────────────────
+   Le widget ne part qu'à l'approche de la section : la page s'ouvre
+   sans attendre un script tiers. */
+(function deferCalendly(){
+  const widget = document.getElementById('calendlyWidget');
+  const skeleton = document.getElementById('calendlySkeleton');
+  if(!widget) return;
+
+  const done = () => { if(skeleton) skeleton.classList.add('is-done'); };
+
+  const watch = new MutationObserver(() => {
+    if(widget.querySelector('iframe')){
+      watch.disconnect();
+      window.setTimeout(done, 600);
+    }
+  });
+  watch.observe(widget, { childList:true, subtree:true });
+
+  function load(){
+    const s = document.createElement('script');
+    s.src = 'https://assets.calendly.com/assets/external/widget.js';
+    s.async = true;
+    s.onload = () => {
+      /* Filet de sécurité : si le script n'a pas auto-initialisé le
+         widget (chargement tardif), on l'initialise à la main. */
+      window.setTimeout(() => {
+        if(!widget.querySelector('iframe') && window.Calendly){
+          window.Calendly.initInlineWidget({ url: widget.dataset.url, parentElement: widget });
+        }
+      }, 400);
+    };
+    s.onerror = () => {
+      /* Bloqueur de pub, réseau coupé… : on ne laisse jamais la
+         réservation dans le vide, on renvoie sur Calendly. */
+      if(!skeleton) return;
+      skeleton.querySelector('.label').textContent = 'Calendrier momentanément indisponible';
+      const rail = skeleton.querySelector('.rail');
+      if(rail) rail.remove();
+      if(!skeleton.querySelector('.fallback-link')){
+        const a = document.createElement('a');
+        a.className = 'btn-secondary fallback-link';
+        a.href = widget.dataset.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.innerHTML = 'Ouvrir le calendrier <span class="arrow">→</span>';
+        skeleton.appendChild(a);
+      }
+    };
+    document.head.appendChild(s);
+  }
+
+  const io = new IntersectionObserver(entries => {
+    if(entries.some(e => e.isIntersecting)){
+      io.disconnect();
+      load();
+    }
+  }, { rootMargin:'600px 0px' });
+
+  io.observe(widget);
+})();
 
 </script>
 
