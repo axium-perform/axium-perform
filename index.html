@@ -52,12 +52,13 @@
 
 :root{
   --noir:#0A0A0A;
-  --noir-2:#161616;
+  --noir-2:#0F0F0F;
+  --noir-3:#1A1A1A;
   --blanc:#FFFFFF;
-  --neige:#F2F2EF;
-  --ardoise:#52565A;
-  --ligne:rgba(10,10,10,0.12);
-  --ligne-onDark:rgba(255,255,255,0.14);
+  --neige:#F5F5F2;
+  --ardoise:#54585D;
+  --ligne:rgba(10,10,10,0.08);
+  --ligne-onDark:rgba(255,255,255,0.1);
 
   /* mouvement */
   --ease:cubic-bezier(0.22,1,0.36,1);
@@ -132,14 +133,14 @@ button:focus-visible{
   font-size:.68rem;
   letter-spacing:.12em;
   text-transform:uppercase;
-  border-radius:3px;
+  border-radius:6px;
   transform:translateY(-160%);
   transition:transform var(--t-mid) var(--ease);
 }
 .skip-link:focus-visible{ transform:translateY(0); outline-color:var(--blanc); }
 
 /* ───────────────── SECTION SHELL ───────────────── */
-.section{ padding:clamp(72px,10vw,136px) clamp(20px,6vw,80px); position:relative; background:var(--neige); }
+.section{ padding:clamp(80px,11vw,148px) clamp(24px,7vw,88px); position:relative; background:var(--neige); }
 .section--dark{ background:var(--noir); color:var(--blanc); }
 
 .index{
@@ -222,14 +223,14 @@ button:focus-visible{
   isolation:isolate;
   display:inline-flex;
   align-items:center;
-  gap:9px;
-  padding:clamp(14px,2vw,17px) clamp(24px,3vw,30px);
+  gap:10px;
+  padding:clamp(15px,2.2vw,18px) clamp(28px,3.5vw,36px);
   font-family:'Inter',sans-serif;
   font-weight:700;
-  font-size:.82rem;
-  letter-spacing:.04em;
+  font-size:.81rem;
+  letter-spacing:.05em;
   text-transform:uppercase;
-  border-radius:2px;
+  border-radius:10px;
   transition:color var(--t-mid) var(--ease), border-color var(--t-mid) var(--ease), transform var(--t-fast) var(--ease);
 }
 
@@ -299,33 +300,37 @@ button:focus-visible{
   position:relative;
   display:inline-flex;
   align-items:center;
-  padding:8px 16px;
+  padding:9px 18px;
   background:var(--blanc);
-  border:1.5px solid var(--noir);
+  border:1px solid var(--ligne);
   font-family:'Space Mono',monospace;
   font-weight:700;
-  font-size:.68rem;
-  letter-spacing:.1em;
+  font-size:.66rem;
+  letter-spacing:.12em;
   text-transform:uppercase;
   color:var(--noir);
-  border-radius:2px;
+  border-radius:8px;
+  box-shadow:0 4px 16px -8px rgba(10,10,10,0.14);
 }
 
 /* ───────────────── INSTRUMENT GRID (cadres hairline sur fond sombre) ───────────────── */
 .instrument-grid{
   display:grid;
-  gap:1px;
-  background:var(--ligne-onDark);
-  border:1px solid var(--ligne-onDark);
-  border-radius:1px;
+  gap:0;
+  background:transparent;
+  border:none;
+  border-radius:12px;
+  overflow:hidden;
 }
 .instrument-grid > div{
   position:relative;
-  background:var(--noir);
-  padding:clamp(36px,4vw,48px) clamp(28px,3.5vw,38px);
-  transition:background var(--t-mid) var(--ease);
+  background:var(--noir-3);
+  padding:clamp(44px,5vw,56px) clamp(36px,4.5vw,48px);
+  transition:background var(--t-mid) var(--ease), transform var(--t-mid) var(--ease);
+  border-bottom:1px solid var(--ligne-onDark);
 }
-.instrument-grid > div:hover{ background:var(--noir-2); }
+.instrument-grid > div:last-child{ border-bottom:none; }
+.instrument-grid > div:hover{ background:var(--noir-2); transform:translateX(4px); }
 
 /* Au survol, une réglette blanche se trace en tête de cellule. */
 .instrument-grid > div::after{
@@ -372,8 +377,8 @@ header::after{
 
 html.is-compact header{
   height:62px;
-  background:rgba(242,242,239,0.96);
-  box-shadow:0 16px 36px -26px rgba(10,10,10,0.42);
+  background:rgba(245,245,242,0.97);
+  box-shadow:0 8px 24px -12px rgba(10,10,10,0.28), 0 2px 8px rgba(10,10,10,0.08);
 }
 
 @media (min-width:881px){
@@ -435,18 +440,20 @@ nav a.is-active{ color:var(--noir); }
   align-items:center;
   background:var(--noir);
   color:var(--blanc);
-  padding:10px 22px;
+  padding:11px 26px;
   font-family:'Inter',sans-serif;
   font-weight:700;
-  font-size:.8rem;
-  letter-spacing:.02em;
+  font-size:.79rem;
+  letter-spacing:.05em;
   text-transform:uppercase;
-  border:1.5px solid var(--noir);
-  border-radius:2px;
-  transition:color var(--t-mid) var(--ease), transform var(--t-fast) var(--ease);
+  border:1px solid var(--noir);
+  border-radius:10px;
+  transition:color var(--t-mid) var(--ease), transform var(--t-fast) var(--ease), box-shadow .26s var(--ease);
   white-space:nowrap;
   --fill:var(--neige);
 }
+
+.header-btn:hover{ box-shadow:0 8px 24px -6px rgba(10,10,10,0.28); }
 
 .header-btn:hover{ color:var(--noir); }
 
@@ -475,7 +482,7 @@ html.is-compact .burger{ top:12px; }
   width:20px; height:2px;
   background:var(--noir);
   transition:transform .38s var(--ease), opacity .18s var(--ease), background .28s var(--ease), width .28s var(--ease);
-  border-radius:1px;
+  border-radius:4px;
 }
 .burger:hover span:nth-child(2){ width:14px; }
 .burger.open span{ background:var(--blanc); }
@@ -708,7 +715,7 @@ html.is-compact .burger{ top:12px; }
   height:56px;
   background:rgba(255,255,255,0.14);
   overflow:hidden;
-  border-radius:1px;
+  border-radius:4px;
 }
 
 .hero-scroll-rail::after{
@@ -736,10 +743,11 @@ html.is-compact .burger{ top:12px; }
 .about-image{
   position:relative;
   overflow:hidden;
-  border:1.5px solid var(--noir);
+  border:1px solid var(--ligne);
   aspect-ratio:4/5;
   background:var(--blanc);
-  border-radius:2px;
+  border-radius:12px;
+  box-shadow:0 12px 40px -12px rgba(10,10,10,0.18);
 }
 
 .about-image img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.08); }
@@ -825,12 +833,12 @@ html.is-compact .burger{ top:12px; }
 .service-card{
   position:relative;
   isolation:isolate;
-  padding:36px 32px;
+  padding:42px 38px;
   background:var(--blanc);
-  border:1.5px solid var(--noir);
+  border:1px solid var(--ligne);
   color:var(--noir);
-  border-radius:2px;
-  transition:color .26s var(--ease), transform .42s var(--ease), box-shadow .42s var(--ease);
+  border-radius:12px;
+  transition:color .26s var(--ease), transform .42s var(--ease), box-shadow .42s var(--ease), border-color .26s var(--ease);
   min-width:0;
 }
 
@@ -843,7 +851,7 @@ html.is-compact .burger{ top:12px; }
   transform:scaleY(0);
   transform-origin:50% 100%;
   transition:transform .42s var(--ease);
-  border-radius:2px;
+  border-radius:8px;
 }
 
 .service-card:hover::before{ transform:scaleY(1); }
@@ -851,8 +859,8 @@ html.is-compact .burger{ top:12px; }
 .service-card:hover,
 .service-card.visible:hover{
   color:var(--blanc);
-  transform:translateY(-6px);
-  box-shadow:0 28px 48px -32px rgba(10,10,10,0.65);
+  transform:translateY(-8px);
+  box-shadow:0 20px 40px -8px rgba(10,10,10,0.35), 0 4px 12px rgba(10,10,10,0.12);
 }
 
 .service-card h3{
@@ -909,14 +917,14 @@ html.is-compact .burger{ top:12px; }
 .service-card:hover .duration{ color:rgba(255,255,255,0.58); }
 
 .card-arrow{
-  width:38px; height:38px;
-  border:1.5px solid var(--noir);
+  width:42px; height:42px;
+  border:1px solid var(--ligne);
   color:var(--noir);
   display:flex; align-items:center; justify-content:center;
   flex-shrink:0;
-  border-radius:2px;
-  transition:background .26s var(--ease), border-color .26s var(--ease), color .26s var(--ease);
-  font-size:1rem;
+  border-radius:8px;
+  transition:background .26s var(--ease), border-color .26s var(--ease), color .26s var(--ease), box-shadow .26s var(--ease);
+  font-size:1.1rem;
 }
 
 .card-arrow span{
@@ -960,9 +968,10 @@ html.is-compact .burger{ top:12px; }
 /* ───────────────── CONTACT ───────────────── */
 .contact-box{
   background:var(--blanc);
-  border:1.5px solid var(--noir);
-  border-radius:2px;
+  border:1px solid var(--ligne);
+  border-radius:12px;
   overflow:hidden;
+  box-shadow:0 8px 32px -8px rgba(10,10,10,0.12);
 }
 
 .contact-header{
@@ -1000,7 +1009,7 @@ html.is-compact .burger{ top:12px; }
   border:1px solid var(--ligne-onDark);
   padding:8px 14px;
   white-space:nowrap;
-  border-radius:2px;
+  border-radius:8px;
 }
 
 /* Le point respire — signal de disponibilité, pas un gyrophare. */
@@ -1060,7 +1069,7 @@ html.is-compact .burger{ top:12px; }
   height:1px;
   background:var(--ligne);
   overflow:hidden;
-  border-radius:1px;
+  border-radius:4px;
 }
 
 .calendly-skeleton .rail::after{
@@ -1108,7 +1117,7 @@ footer{ padding:68px 20px 48px; background:var(--noir); color:var(--blanc); }
   color:rgba(255,255,255,0.38);
   border:1px solid var(--ligne-onDark);
   padding:4px 10px;
-  border-radius:2px;
+  border-radius:8px;
 }
 
 footer > .footer-inner > p.footer-tagline{
