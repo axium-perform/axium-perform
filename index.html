@@ -25,46 +25,19 @@
 
 <style>
 
-/* ═══════════════════════════════════════════════════════════════════
-   AXIUM.PERFORM — SYSTÈME NOIR / BLANC
-   ───────────────────────────────────────────────────────────────────
-   Noir      #0A0A0A  — encre. Fond des sections sombres, texte sur clair.
-   Blanc     #FFFFFF  — surfaces élevées (cartes, cadres) + texte sur sombre.
-   Neige     #F2F2EF  — fond des sections claires. Papier, pas glacial.
-   Ardoise   #52565A  — texte secondaire sur fond clair.
-   Ligne     hairline — séparateurs, cadres, grilles.
-
-   Pas de couleur d'accent. La hiérarchie se fait au poids, à l'échelle
-   et à l'espace — comme un tableau de bord, pas une brochure. Les
-   interactions clés (boutons, cartes) s'inversent en négatif pur,
-   noir ↔ blanc, comme un chrono qu'on déclenche.
-
-   Affichage   Archivo Black (hero, un seul moment) / Archivo 700–800
-   Texte       Inter 400–600
-   Instrument  Space Mono 400/700 — index, prix, données, dossard
-   ───────────────────────────────────────────────────────────────────
-   MOUVEMENT — la même discipline que la couleur.
-   Une seule courbe (ease-out expo), trois durées, jamais de rebond.
-   Le mouvement va dans un sens : les lignes se tracent de la gauche,
-   les remplissages montent du bas, les textes montent depuis leur
-   propre ligne de base. Rien ne clignote, rien ne tourne.
-   ═══════════════════════════════════════════════════════════════════ */
-
 :root{
   --noir:#0A0A0A;
   --noir-2:#161616;
   --blanc:#FFFFFF;
   --neige:#F2F2EF;
   --ardoise:#52565A;
-  --ligne:rgba(10,10,10,0.15);
-  --ligne-onDark:rgba(255,255,255,0.18);
-
-  /* mouvement */
+  --ligne:rgba(10,10,10,0.12);
+  --ligne-onDark:rgba(255,255,255,0.14);
   --ease:cubic-bezier(0.22,1,0.36,1);
   --ease-inout:cubic-bezier(0.65,0,0.35,1);
-  --t-fast:0.18s;
-  --t-mid:0.34s;
-  --t-slow:0.8s;
+  --t-fast:0.16s;
+  --t-mid:0.32s;
+  --t-slow:0.76s;
 }
 
 *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
@@ -105,81 +78,73 @@ ul{ list-style:none; }
 
 ::selection{ background:var(--noir); color:var(--blanc); }
 
-a:focus-visible,
-button:focus-visible{
+a:focus-visible,button:focus-visible{
   outline:2px solid var(--noir);
   outline-offset:3px;
 }
 
-.section--dark a:focus-visible,
-.section--dark button:focus-visible,
-.hero a:focus-visible,
-.hero button:focus-visible,
-.mobile-menu a:focus-visible,
-.mobile-menu button:focus-visible{
+.section--dark a:focus-visible,.section--dark button:focus-visible,.hero a:focus-visible,.hero button:focus-visible,.mobile-menu a:focus-visible,.mobile-menu button:focus-visible{
   outline-color:var(--blanc);
 }
 
-/* Lien d'évitement — invisible tant qu'on ne navigue pas au clavier. */
 .skip-link{
   position:fixed;
   top:12px; left:12px;
   z-index:1200;
-  padding:12px 20px;
+  padding:10px 18px;
   background:var(--noir);
   color:var(--blanc);
   font-family:'Space Mono',monospace;
-  font-size:.72rem;
+  font-size:.68rem;
   letter-spacing:.12em;
   text-transform:uppercase;
+  border-radius:3px;
   transform:translateY(-160%);
   transition:transform var(--t-mid) var(--ease);
 }
 .skip-link:focus-visible{ transform:translateY(0); outline-color:var(--blanc); }
 
-/* ───────────────── SECTION SHELL ───────────────── */
 .section{ padding:clamp(72px,10vw,136px) clamp(20px,6vw,80px); position:relative; background:var(--neige); }
 .section--dark{ background:var(--noir); color:var(--blanc); }
 
 .index{
   display:flex;
   align-items:center;
-  gap:14px;
-  margin-bottom:24px;
+  gap:12px;
+  margin-bottom:clamp(24px,4vw,36px);
 }
 .index-num{
   font-family:'Space Mono',monospace;
   font-weight:700;
-  font-size:.82rem;
+  font-size:.78rem;
   font-variant-numeric:tabular-nums;
+  letter-spacing:.08em;
 }
 .index-label{
   font-family:'Space Mono',monospace;
   font-weight:700;
-  font-size:.72rem;
+  font-size:.68rem;
   letter-spacing:.18em;
   text-transform:uppercase;
-  opacity:.55;
+  opacity:.48;
   white-space:nowrap;
 }
 .index-line{ flex:1; height:1px; background:var(--ligne); }
 .section--dark .index-line{ background:var(--ligne-onDark); }
 
-/* L'index se compose à l'entrée : le numéro monte, la ligne se trace. */
-.js .index-num,
-.js .index-label{
+.js .index-num,.js .index-label{
   opacity:0;
-  transform:translateY(10px);
-  transition:opacity .7s var(--ease), transform .7s var(--ease);
+  transform:translateY(8px);
+  transition:opacity .65s var(--ease), transform .65s var(--ease);
 }
-.js .index-label{ transition-delay:.06s; }
+.js .index-label{ transition-delay:.05s; }
 .js .index-line{
   transform:scaleX(0);
   transform-origin:0 50%;
-  transition:transform 1.1s var(--ease) .12s;
+  transition:transform 1s var(--ease) .1s;
 }
 .index.is-in .index-num{ opacity:1; transform:none; }
-.index.is-in .index-label{ opacity:.55; transform:none; }
+.index.is-in .index-label{ opacity:.48; transform:none; }
 .index.is-in .index-line{ transform:scaleX(1); }
 
 .section-title{
@@ -189,13 +154,10 @@ button:focus-visible{
   font-size:clamp(2.4rem,5.6vw,4.4rem);
   line-height:0.98;
   letter-spacing:-0.015em;
-  margin-bottom:clamp(30px,4vw,48px);
+  margin-bottom:clamp(36px,5vw,52px);
   max-width:18ch;
 }
 
-/* ───────────────── TITRES EN LIGNES MASQUÉES ─────────────────
-   Chaque ligne est enfermée dans son propre cadre et remonte depuis
-   sa ligne de base. Le padding négatif évite de rogner les capitales. */
 .is-split .ln{
   display:block;
   overflow:hidden;
@@ -205,15 +167,12 @@ button:focus-visible{
 .is-split .ln > span{
   display:block;
   transform:translateY(130%);
-  transition:transform .95s var(--ease);
+  transition:transform .9s var(--ease);
   transition-delay:var(--delay,0s);
 }
 .is-split:not(.is-in) .ln > span{ will-change:transform; }
 .is-split.is-in .ln > span{ transform:translateY(0); }
 
-/* ───────────────── BUTTONS (inversion noir/blanc) ─────────────────
-   L'inversion ne se fait plus en fondu mais au balayage : le négatif
-   monte depuis le bas du bouton, comme une aiguille qui passe. */
 .btn-primary,.btn-secondary{
   position:relative;
   overflow:hidden;
@@ -224,15 +183,14 @@ button:focus-visible{
   padding:clamp(14px,2vw,17px) clamp(24px,3vw,30px);
   font-family:'Inter',sans-serif;
   font-weight:700;
-  font-size:.84rem;
+  font-size:.82rem;
   letter-spacing:.04em;
   text-transform:uppercase;
+  border-radius:2px;
   transition:color var(--t-mid) var(--ease), border-color var(--t-mid) var(--ease), transform var(--t-fast) var(--ease);
 }
 
-.btn-primary::before,
-.btn-secondary::before,
-.header-btn::before{
+.btn-primary::before,.btn-secondary::before,.header-btn::before{
   content:'';
   position:absolute;
   inset:0;
@@ -240,25 +198,18 @@ button:focus-visible{
   background:var(--fill,transparent);
   transform:scaleY(0);
   transform-origin:50% 100%;
-  transition:transform .42s var(--ease);
+  transition:transform .38s var(--ease);
 }
 
-.btn-primary:hover::before,
-.btn-secondary:hover::before,
-.header-btn:hover::before{ transform:scaleY(1); }
+.btn-primary:hover::before,.btn-secondary:hover::before,.header-btn:hover::before{ transform:scaleY(1); }
 
-.btn-primary:active,
-.btn-secondary:active,
-.header-btn:active{ transform:translateY(1px); }
+.btn-primary:active,.btn-secondary:active,.header-btn:active{ transform:translateY(1px); }
 
-.btn-primary .arrow,
-.btn-secondary .arrow,
-.header-btn .arrow{
+.btn-primary .arrow,.btn-secondary .arrow,.header-btn .arrow{
   display:inline-block;
   transition:transform var(--t-mid) var(--ease);
 }
-.btn-primary:hover .arrow,
-.btn-secondary:hover .arrow{ transform:translateX(4px); }
+.btn-primary:hover .arrow,.btn-secondary:hover .arrow{ transform:translateX(4px); }
 
 .btn-primary{ background:var(--noir); color:var(--blanc); border:1.5px solid var(--noir); --fill:var(--neige); }
 .btn-primary:hover{ color:var(--noir); }
@@ -266,76 +217,60 @@ button:focus-visible{
 .btn-secondary{ background:transparent; color:var(--noir); border:1.5px solid var(--noir); --fill:var(--noir); }
 .btn-secondary:hover{ color:var(--blanc); }
 
-/* Sur fond sombre, le primaire est blanc au repos : le balayage se
-   fait à l'envers — le blanc se retire vers le bas. */
-.section--dark .btn-primary,
-.hero .btn-primary,
-.mobile-menu .btn-primary{ background:transparent; color:var(--noir); border-color:var(--blanc); --fill:var(--blanc); }
+.section--dark .btn-primary,.hero .btn-primary,.mobile-menu .btn-primary{ background:transparent; color:var(--noir); border-color:var(--blanc); --fill:var(--blanc); }
 
-.section--dark .btn-primary::before,
-.hero .btn-primary::before,
-.mobile-menu .btn-primary::before{ transform:scaleY(1); transform-origin:50% 0; }
+.section--dark .btn-primary::before,.hero .btn-primary::before,.mobile-menu .btn-primary::before{ transform:scaleY(1); transform-origin:50% 0; }
 
-.section--dark .btn-primary:hover::before,
-.hero .btn-primary:hover::before,
-.mobile-menu .btn-primary:hover::before{ transform:scaleY(0); }
+.section--dark .btn-primary:hover::before,.hero .btn-primary:hover::before,.mobile-menu .btn-primary:hover::before{ transform:scaleY(0); }
 
-.section--dark .btn-primary:hover,
-.hero .btn-primary:hover,
-.mobile-menu .btn-primary:hover{ color:var(--blanc); }
+.section--dark .btn-primary:hover,.hero .btn-primary:hover,.mobile-menu .btn-primary:hover{ color:var(--blanc); }
 
-.section--dark .btn-secondary,
-.hero .btn-secondary{ color:var(--blanc); border-color:rgba(255,255,255,0.4); --fill:var(--blanc); }
-.section--dark .btn-secondary:hover,
-.hero .btn-secondary:hover{ color:var(--noir); border-color:var(--blanc); }
+.section--dark .btn-secondary,.hero .btn-secondary{ color:var(--blanc); border-color:rgba(255,255,255,0.35); --fill:var(--blanc); }
+.section--dark .btn-secondary:hover,.hero .btn-secondary:hover{ color:var(--noir); border-color:var(--blanc); }
 
-/* ───────────────── DOSSARD (le détail signature) ─────────────────
-   Sevann porte un dossard en course. Le même objet, réutilisé ici
-   comme repère de crédibilité — pas une icône générique de médaille. */
 .bib{
   position:relative;
   display:inline-flex;
   align-items:center;
-  padding:9px 18px;
+  padding:8px 16px;
   background:var(--blanc);
   border:1.5px solid var(--noir);
   font-family:'Space Mono',monospace;
   font-weight:700;
-  font-size:.72rem;
+  font-size:.68rem;
   letter-spacing:.1em;
   text-transform:uppercase;
   color:var(--noir);
+  border-radius:2px;
 }
 
-/* ───────────────── INSTRUMENT GRID (cadres hairline sur fond sombre) ───────────────── */
 .instrument-grid{
   display:grid;
   gap:1px;
   background:var(--ligne-onDark);
   border:1px solid var(--ligne-onDark);
+  border-radius:1px;
 }
 .instrument-grid > div{
   position:relative;
   background:var(--noir);
-  padding:clamp(30px,4vw,42px) clamp(24px,3vw,32px);
+  padding:clamp(36px,4vw,48px) clamp(28px,3.5vw,38px);
   transition:background var(--t-mid) var(--ease);
 }
 .instrument-grid > div:hover{ background:var(--noir-2); }
 
-/* Au survol, une réglette blanche se trace en tête de cellule. */
 .instrument-grid > div::after{
   content:'';
   position:absolute;
   top:0; left:0; right:0;
-  height:1px;
+  height:2px;
   background:var(--blanc);
   transform:scaleX(0);
   transform-origin:0 50%;
-  transition:transform .5s var(--ease);
+  transition:transform .46s var(--ease);
 }
 .instrument-grid > div:hover::after{ transform:scaleX(1); }
 
-/* ───────────────── HEADER ───────────────── */
 header{
   position:fixed;
   top:0; left:0; right:0;
@@ -345,15 +280,13 @@ header{
   align-items:center;
   justify-content:space-between;
   padding:0 clamp(16px,5vw,64px);
-  background:rgba(255,255,255,0.88);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
+  background:rgba(242,242,239,0.92);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid var(--ligne);
-  transition:height .4s var(--ease), background-color .4s var(--ease), box-shadow .3s var(--ease), transform .45s var(--ease);
+  transition:height .38s var(--ease), background-color .38s var(--ease), box-shadow .28s var(--ease), transform .42s var(--ease);
 }
 
-/* Jauge de progression — un hairline noir qui se remplit sur la
-   hauteur totale du document. Instrument, pas décoration. */
 header::after{
   content:'';
   position:absolute;
@@ -362,13 +295,13 @@ header::after{
   background:var(--noir);
   transform:scaleX(var(--progress,0));
   transform-origin:0 50%;
-  transition:transform .12s linear;
+  transition:transform .1s linear;
 }
 
 html.is-compact header{
   height:62px;
-  background:rgba(255,255,255,0.94);
-  box-shadow:0 12px 30px -24px rgba(10,10,10,0.55);
+  background:rgba(242,242,239,0.96);
+  box-shadow:0 16px 36px -26px rgba(10,10,10,0.42);
 }
 
 @media (min-width:881px){
@@ -385,41 +318,38 @@ html.is-compact header{
   white-space:nowrap;
   transition:opacity var(--t-mid) var(--ease);
 }
-.logo-text:hover{ opacity:.6; }
+.logo-text:hover{ opacity:.58; }
 .logo-strong{ font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:-0.01em; }
-.logo-light{ font-family:'Inter',sans-serif; font-weight:500; opacity:.5; margin-left:1px; }
+.logo-light{ font-family:'Inter',sans-serif; font-weight:500; opacity:.48; margin-left:1px; }
 
-nav ul{ display:flex; gap:clamp(16px,2vw,34px); flex-wrap:wrap; }
+nav ul{ display:flex; gap:clamp(18px,2.2vw,36px); flex-wrap:wrap; }
 
 nav a{
   position:relative;
   font-family:'Inter',sans-serif;
   font-weight:600;
-  font-size:.82rem;
-  letter-spacing:.03em;
+  font-size:.8rem;
+  letter-spacing:.02em;
   text-transform:uppercase;
   color:var(--ardoise);
-  padding-bottom:5px;
+  padding-bottom:6px;
   border-bottom:1px solid transparent;
   transition:color var(--t-mid) var(--ease);
 }
 
-/* Le soulignement se trace au lieu d'apparaître, et se retire par
-   l'autre bord — même geste que les lignes d'index. */
 nav a::after{
   content:'';
   position:absolute;
   left:0; right:0; bottom:-1px;
-  height:1px;
+  height:1.5px;
   background:var(--noir);
   transform:scaleX(0);
   transform-origin:100% 50%;
-  transition:transform .38s var(--ease);
+  transition:transform .36s var(--ease);
 }
 
 nav a:hover{ color:var(--noir); }
-nav a:hover::after,
-nav a.is-active::after{ transform:scaleX(1); transform-origin:0 50%; }
+nav a:hover::after,nav a.is-active::after{ transform:scaleX(1); transform-origin:0 50%; }
 nav a.is-active{ color:var(--noir); }
 
 .header-btn{
@@ -430,13 +360,14 @@ nav a.is-active{ color:var(--noir); }
   align-items:center;
   background:var(--noir);
   color:var(--blanc);
-  padding:11px 24px;
+  padding:10px 22px;
   font-family:'Inter',sans-serif;
   font-weight:700;
-  font-size:.82rem;
-  letter-spacing:.03em;
+  font-size:.8rem;
+  letter-spacing:.02em;
   text-transform:uppercase;
   border:1.5px solid var(--noir);
+  border-radius:2px;
   transition:color var(--t-mid) var(--ease), transform var(--t-fast) var(--ease);
   white-space:nowrap;
   --fill:var(--neige);
@@ -450,32 +381,34 @@ nav a.is-active{ color:var(--noir); }
   top:19px;
   right:clamp(16px,5vw,64px);
   z-index:1001;
-  width:38px; height:38px;
+  width:36px; height:36px;
   border:none; background:none;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   gap:5px;
   cursor:pointer;
-  transition:top .4s var(--ease);
+  transition:top .38s var(--ease);
+  border-radius:3px;
 }
 
 html.is-compact .burger{ top:12px; }
 
+.burger:focus-visible{ outline:2px solid var(--noir); outline-offset:2px; }
+
 .burger span{
-  width:22px; height:2px;
+  width:20px; height:2px;
   background:var(--noir);
-  transition:transform .4s var(--ease), opacity .2s var(--ease), background .3s var(--ease), width .3s var(--ease);
+  transition:transform .38s var(--ease), opacity .18s var(--ease), background .28s var(--ease), width .28s var(--ease);
+  border-radius:1px;
 }
-.burger:hover span:nth-child(2){ width:16px; }
+.burger:hover span:nth-child(2){ width:14px; }
 .burger.open span{ background:var(--blanc); }
 .burger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
 .burger.open span:nth-child(2){ opacity:0; transform:scaleX(0); }
 .burger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
-.burger.open:hover span:nth-child(2){ width:22px; }
-.burger.open:focus-visible{ outline-color:var(--blanc); }
+.burger.open:hover span:nth-child(2){ width:20px; }
 
-/* ───────────────── MENU PLEIN ÉCRAN (façon Nocco) ───────────────── */
 .mobile-menu{
   position:fixed;
   inset:0;
@@ -484,12 +417,12 @@ html.is-compact .burger{ top:12px; }
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  gap:40px;
-  padding:clamp(100px,18vh,132px) clamp(20px,6vw,80px) clamp(32px,5vh,48px);
+  gap:48px;
+  padding:clamp(100px,18vh,132px) clamp(20px,6vw,80px) clamp(36px,6vh,52px);
   opacity:0;
   visibility:hidden;
-  transform:translateY(-16px);
-  transition:opacity 0.35s var(--ease), transform 0.35s var(--ease), visibility 0s linear 0.35s;
+  transform:translateY(-14px);
+  transition:opacity 0.32s var(--ease), transform 0.32s var(--ease), visibility 0s linear 0.32s;
   overflow-y:auto;
 }
 
@@ -497,7 +430,7 @@ html.is-compact .burger{ top:12px; }
   opacity:1;
   visibility:visible;
   transform:translateY(0);
-  transition:opacity 0.35s var(--ease), transform 0.35s var(--ease);
+  transition:opacity 0.32s var(--ease), transform 0.32s var(--ease);
 }
 
 .mobile-menu-links{ display:flex; flex-direction:column; }
@@ -507,45 +440,44 @@ html.is-compact .burger{ top:12px; }
   font-weight:800;
   text-transform:uppercase;
   font-size:clamp(2.2rem,11vw,3.4rem);
-  line-height:1.15;
+  line-height:1.12;
   letter-spacing:-0.01em;
   color:var(--blanc);
-  padding:9px 0;
+  padding:8px 0;
   opacity:0;
-  transform:translateY(26px);
-  transition:opacity .5s var(--ease), transform .5s var(--ease);
+  transform:translateY(24px);
+  transition:opacity .46s var(--ease), transform .46s var(--ease);
 }
 
-/* Les entrées se posent l'une après l'autre, jamais toutes ensemble. */
 .mobile-menu.open .mobile-menu-links a{ opacity:1; transform:none; }
-.mobile-menu.open .mobile-menu-links a:nth-child(1){ transition-delay:.10s; }
-.mobile-menu.open .mobile-menu-links a:nth-child(2){ transition-delay:.16s; }
-.mobile-menu.open .mobile-menu-links a:nth-child(3){ transition-delay:.22s; }
-.mobile-menu.open .mobile-menu-links a:nth-child(4){ transition-delay:.28s; }
-.mobile-menu.open .mobile-menu-links a:nth-child(5){ transition-delay:.34s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(1){ transition-delay:.08s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(2){ transition-delay:.14s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(3){ transition-delay:.2s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(4){ transition-delay:.26s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(5){ transition-delay:.32s; }
 
-.mobile-menu-links a:hover{ opacity:0.6; transform:translateX(10px); }
+.mobile-menu-links a:hover{ opacity:0.65; transform:translateX(8px); }
 
 .mobile-menu-footer{
   display:flex;
   flex-direction:column;
   align-items:flex-start;
-  gap:18px;
-  padding-top:26px;
+  gap:16px;
+  padding-top:24px;
   border-top:1px solid var(--ligne-onDark);
   opacity:0;
-  transform:translateY(18px);
-  transition:opacity .5s var(--ease), transform .5s var(--ease);
+  transform:translateY(16px);
+  transition:opacity .46s var(--ease), transform .46s var(--ease);
 }
 
-.mobile-menu.open .mobile-menu-footer{ opacity:1; transform:none; transition-delay:.42s; }
+.mobile-menu.open .mobile-menu-footer{ opacity:1; transform:none; transition-delay:.4s; }
 
 .mobile-menu-footer p{
   font-family:'Space Mono',monospace;
-  font-size:.72rem;
+  font-size:.68rem;
   letter-spacing:.08em;
   text-transform:uppercase;
-  color:rgba(255,255,255,0.45);
+  color:rgba(255,255,255,0.38);
 }
 
 @media (max-width:880px){
@@ -554,7 +486,6 @@ html.is-compact .burger{ top:12px; }
   .burger{ display:flex; }
 }
 
-/* ───────────────── HERO ───────────────── */
 .hero{
   min-height:100svh;
   position:relative;
@@ -566,15 +497,13 @@ html.is-compact .burger{ top:12px; }
   border-bottom:2px solid var(--blanc);
 }
 
-/* Le dégradé est détaché de l'image : il reste calé sur le cadre
-   pendant que la photo dérive au scroll. */
 .hero::after{
   content:'';
   position:absolute;
   inset:0;
   z-index:1;
   pointer-events:none;
-  background:linear-gradient(to top, rgba(10,10,10,0.96) 8%, rgba(10,10,10,0.58) 46%, rgba(10,10,10,0.28));
+  background:linear-gradient(to top, rgba(10,10,10,0.98) 6%, rgba(10,10,10,0.62) 42%, rgba(10,10,10,0.24));
 }
 
 .hero-bg{
@@ -588,15 +517,14 @@ html.is-compact .burger{ top:12px; }
   background-image:url('0fc6911e-bb7e-4be2-9817-8390221d3612.JPG');
   background-size:cover;
   background-position:center 20%;
-  filter:grayscale(1) contrast(1.18) brightness(0.86);
+  filter:grayscale(1) contrast(1.16) brightness(0.88);
   transform:scale(1.16);
 }
 
-/* Ouverture : la photo se pose en reculant d'un cran. */
 .js .hero-bg-img{
   opacity:0;
-  transform:scale(1.30);
-  transition:transform 1.8s var(--ease), opacity 1.2s ease;
+  transform:scale(1.28);
+  transition:transform 1.7s var(--ease), opacity 1.15s ease;
 }
 .hero.is-in .hero-bg-img{ opacity:1; transform:scale(1.16); }
 
@@ -606,10 +534,10 @@ html.is-compact .burger{ top:12px; }
   top:clamp(96px,12vh,140px);
   z-index:2;
   font-family:'Space Mono',monospace;
-  font-size:.68rem;
-  line-height:1.7;
-  letter-spacing:.03em;
-  color:rgba(255,255,255,0.4);
+  font-size:.65rem;
+  line-height:1.8;
+  letter-spacing:.02em;
+  color:rgba(255,255,255,0.38);
   text-align:right;
   font-variant-numeric:tabular-nums;
 }
@@ -621,11 +549,11 @@ html.is-compact .burger{ top:12px; }
 .hero-tag{
   font-family:'Space Mono',monospace;
   font-weight:700;
-  font-size:.76rem;
-  letter-spacing:.15em;
+  font-size:.72rem;
+  letter-spacing:.14em;
   text-transform:uppercase;
-  color:rgba(255,255,255,0.65);
-  margin-bottom:24px;
+  color:rgba(255,255,255,0.58);
+  margin-bottom:28px;
 }
 
 .hero h1{
@@ -636,44 +564,34 @@ html.is-compact .burger{ top:12px; }
   font-size:clamp(2.9rem,8.6vw,6.4rem);
   line-height:0.97;
   letter-spacing:-0.015em;
-  margin-bottom:28px;
+  margin-bottom:32px;
 }
 
 .hero-desc{
   max-width:480px;
   font-size:clamp(1rem,1.4vw,1.1rem);
-  line-height:1.85;
-  color:rgba(255,255,255,0.68);
-  margin-bottom:36px;
+  line-height:1.88;
+  color:rgba(255,255,255,0.65);
+  margin-bottom:40px;
 }
 
-.hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+.hero-actions{ display:flex; gap:16px; flex-wrap:wrap; }
 
-/* Séquence d'ouverture — tag, titre, texte, boutons, repères. */
-.js .hero-tag,
-.js .hero-desc,
-.js .hero-actions,
-.js .hero-coords,
-.js .hero-scroll{
+.js .hero-tag,.js .hero-desc,.js .hero-actions,.js .hero-coords,.js .hero-scroll{
   opacity:0;
-  transform:translateY(18px);
-  transition:opacity .9s var(--ease), transform .9s var(--ease);
+  transform:translateY(16px);
+  transition:opacity .85s var(--ease), transform .85s var(--ease);
   transition-delay:var(--delay,0s);
 }
 
-.hero.is-in .hero-tag,
-.hero.is-in .hero-desc,
-.hero.is-in .hero-actions,
-.hero.is-in .hero-coords,
-.hero.is-in .hero-scroll{ opacity:1; transform:none; }
+.hero.is-in .hero-tag,.hero.is-in .hero-desc,.hero.is-in .hero-actions,.hero.is-in .hero-coords,.hero.is-in .hero-scroll{ opacity:1; transform:none; }
 
-.hero-tag{ --delay:.05s; }
-.hero-desc{ --delay:.46s; }
-.hero-actions{ --delay:.58s; }
-.hero-coords{ --delay:.75s; }
-.hero-scroll{ --delay:.9s; }
+.hero-tag{ --delay:.04s; }
+.hero-desc{ --delay:.44s; }
+.hero-actions{ --delay:.56s; }
+.hero-coords{ --delay:.72s; }
+.hero-scroll{ --delay:.88s; }
 
-/* Repère de défilement — un segment qui descend le long d'un rail. */
 .hero-scroll{
   position:absolute;
   right:clamp(20px,6vw,80px);
@@ -682,13 +600,13 @@ html.is-compact .burger{ top:12px; }
   display:none;
   flex-direction:column;
   align-items:center;
-  gap:14px;
+  gap:12px;
   font-family:'Space Mono',monospace;
   font-weight:700;
-  font-size:.62rem;
-  letter-spacing:.22em;
+  font-size:.58rem;
+  letter-spacing:.2em;
   text-transform:uppercase;
-  color:rgba(255,255,255,0.45);
+  color:rgba(255,255,255,0.4);
 }
 
 @media (min-width:900px){ .hero-scroll{ display:flex; } }
@@ -696,30 +614,30 @@ html.is-compact .burger{ top:12px; }
 .hero-scroll-rail{
   position:relative;
   width:1px;
-  height:58px;
-  background:rgba(255,255,255,0.18);
+  height:56px;
+  background:rgba(255,255,255,0.14);
   overflow:hidden;
+  border-radius:1px;
 }
 
 .hero-scroll-rail::after{
   content:'';
   position:absolute;
   left:0; top:0;
-  width:1px; height:18px;
+  width:1px; height:16px;
   background:var(--blanc);
   animation:railRun 2.4s var(--ease-inout) infinite;
 }
 
 @keyframes railRun{
-  0%{ transform:translateY(-20px); }
-  60%{ transform:translateY(58px); }
-  100%{ transform:translateY(58px); }
+  0%{ transform:translateY(-16px); }
+  60%{ transform:translateY(56px); }
+  100%{ transform:translateY(56px); }
 }
 
-.hero.is-scrolled .hero-scroll{ opacity:0; transform:translateY(12px); transition-delay:0s; }
+.hero.is-scrolled .hero-scroll{ opacity:0; transform:translateY(10px); transition-delay:0s; }
 
-/* ───────────────── PROFIL ───────────────── */
-.about-grid{ display:grid; gap:clamp(36px,5vw,64px); align-items:start; }
+.about-grid{ display:grid; gap:clamp(40px,6vw,68px); align-items:start; }
 
 @media (min-width:1000px){ .about-grid{ grid-template-columns:0.82fr 1.18fr; } }
 
@@ -729,17 +647,17 @@ html.is-compact .burger{ top:12px; }
   border:1.5px solid var(--noir);
   aspect-ratio:4/5;
   background:var(--blanc);
+  border-radius:2px;
 }
 
-.about-image img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.05); }
+.about-image img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.08); }
 
-/* L'image se resserre en entrant, puis respire au survol. */
 .js .about-image img{
-  transform:scale(1.09);
-  transition:transform 1.3s var(--ease) .1s;
+  transform:scale(1.11);
+  transition:transform 1.25s var(--ease) .08s;
 }
 .about-image.is-in img{ transform:scale(1); }
-.about-image.is-in:hover img{ transform:scale(1.04); transition-duration:.9s; transition-delay:0s; }
+.about-image.is-in:hover img{ transform:scale(1.05); transition-duration:.85s; transition-delay:0s; }
 
 .about-image .bib{
   position:absolute;
@@ -748,28 +666,27 @@ html.is-compact .burger{ top:12px; }
 
 .js .about-image .bib{
   opacity:0;
-  transform:translateY(14px);
-  transition:opacity .6s var(--ease) .5s, transform .6s var(--ease) .5s;
+  transform:translateY(12px);
+  transition:opacity .56s var(--ease) .48s, transform .56s var(--ease) .48s;
 }
 .about-image.is-in .bib{ opacity:1; transform:none; }
 
 .about-text p{
-  font-size:1.05rem;
-  line-height:1.9;
+  font-size:1.04rem;
+  line-height:1.92;
   color:var(--ardoise);
-  margin-bottom:18px;
+  margin-bottom:20px;
   max-width:58ch;
 }
 
 .about-text strong{ color:var(--noir); font-weight:700; }
 
-/* ───────────────── POURQUOI (dark, piliers) ───────────────── */
 .pourquoi-lead{
   max-width:56ch;
-  font-size:1.05rem;
-  line-height:1.85;
-  color:rgba(255,255,255,0.65);
-  margin-bottom:clamp(36px,5vw,56px);
+  font-size:1.04rem;
+  line-height:1.88;
+  color:rgba(255,255,255,0.62);
+  margin-bottom:clamp(40px,6vw,60px);
 }
 
 .pillars-grid{ grid-template-columns:1fr; }
@@ -780,31 +697,29 @@ html.is-compact .burger{ top:12px; }
   display:block;
   font-family:'Space Mono',monospace;
   font-weight:700;
-  font-size:.85rem;
+  font-size:.8rem;
   font-variant-numeric:tabular-nums;
-  opacity:.55;
-  margin-bottom:18px;
+  letter-spacing:.05em;
+  opacity:.48;
+  margin-bottom:16px;
   transition:opacity var(--t-mid) var(--ease);
 }
 
-.instrument-grid > div:hover .pillar-num,
-.instrument-grid > div:hover .process-step{ opacity:1; }
+.instrument-grid > div:hover .pillar-num,.instrument-grid > div:hover .process-step{ opacity:.72; }
 
 .pillar-block h3{
   font-family:'Archivo',sans-serif;
   font-weight:700;
   text-transform:uppercase;
-  font-size:1.32rem;
+  font-size:1.28rem;
   letter-spacing:-0.01em;
-  margin-bottom:12px;
+  margin-bottom:10px;
+  line-height:1.1;
 }
 
-.pillar-block p{ color:rgba(255,255,255,0.65); line-height:1.8; font-size:.98rem; }
+.pillar-block p{ color:rgba(255,255,255,0.62); line-height:1.85; font-size:.96rem; }
 
-/* ───────────────── PRESTATIONS ─────────────────
-   Au survol, la carte s'inverse en négatif — comme un chrono qu'on
-   déclenche. Le noir monte du bas, la carte se soulève d'un cran. */
-.services-grid{ display:grid; gap:20px; }
+.services-grid{ display:grid; gap:22px; }
 
 @media (min-width:700px){ .services-grid{ grid-template-columns:repeat(2,1fr); } }
 @media (min-width:1150px){ .services-grid{ grid-template-columns:repeat(3,1fr); } }
@@ -812,11 +727,12 @@ html.is-compact .burger{ top:12px; }
 .service-card{
   position:relative;
   isolation:isolate;
-  padding:36px 30px;
+  padding:36px 32px;
   background:var(--blanc);
   border:1.5px solid var(--noir);
   color:var(--noir);
-  transition:color .28s var(--ease), transform .45s var(--ease), box-shadow .45s var(--ease);
+  border-radius:2px;
+  transition:color .26s var(--ease), transform .42s var(--ease), box-shadow .42s var(--ease);
   min-width:0;
 }
 
@@ -828,36 +744,38 @@ html.is-compact .burger{ top:12px; }
   background:var(--noir);
   transform:scaleY(0);
   transform-origin:50% 100%;
-  transition:transform .45s var(--ease);
+  transition:transform .42s var(--ease);
+  border-radius:2px;
 }
 
 .service-card:hover::before{ transform:scaleY(1); }
 
-.service-card:hover,
-.service-card.visible:hover{
+.service-card:hover,.service-card.visible:hover{
   color:var(--blanc);
-  transform:translateY(-5px);
-  box-shadow:0 26px 44px -34px rgba(10,10,10,0.7);
+  transform:translateY(-6px);
+  box-shadow:0 28px 48px -32px rgba(10,10,10,0.65);
 }
 
 .service-card h3{
   font-family:'Archivo',sans-serif;
   font-weight:700;
   text-transform:uppercase;
-  font-size:1.42rem;
+  font-size:1.38rem;
   letter-spacing:-0.01em;
   margin-bottom:10px;
+  line-height:1.1;
 }
 
 .service-card p{
-  line-height:1.8;
+  line-height:1.82;
   color:var(--ardoise);
-  margin-bottom:26px;
-  min-height:4.8em;
-  transition:color .28s var(--ease);
+  margin-bottom:28px;
+  min-height:4.6em;
+  transition:color .26s var(--ease);
+  font-size:.96rem;
 }
 
-.service-card:hover p{ color:rgba(255,255,255,0.7); }
+.service-card:hover p{ color:rgba(255,255,255,0.68); }
 
 .service-bottom{
   display:flex;
@@ -866,39 +784,40 @@ html.is-compact .burger{ top:12px; }
   gap:14px;
   padding-top:20px;
   border-top:1px solid var(--ligne);
-  transition:border-color .28s var(--ease);
+  transition:border-color .26s var(--ease);
 }
 
 .service-card:hover .service-bottom{ border-top-color:var(--ligne-onDark); }
 
 .price{
   font-family:'Space Mono',monospace;
-  font-size:1.6rem;
+  font-size:1.58rem;
   font-weight:700;
   font-variant-numeric:tabular-nums;
   line-height:1;
-  margin-bottom:6px;
+  margin-bottom:4px;
 }
 
 .duration{
   font-family:'Space Mono',monospace;
   color:var(--ardoise);
   text-transform:uppercase;
-  font-size:.68rem;
-  letter-spacing:.06em;
-  transition:color .28s var(--ease);
+  font-size:.64rem;
+  letter-spacing:.05em;
+  transition:color .26s var(--ease);
 }
 
-.service-card:hover .duration{ color:rgba(255,255,255,0.6); }
+.service-card:hover .duration{ color:rgba(255,255,255,0.58); }
 
 .card-arrow{
-  width:40px; height:40px;
+  width:38px; height:38px;
   border:1.5px solid var(--noir);
   color:var(--noir);
   display:flex; align-items:center; justify-content:center;
   flex-shrink:0;
-  transition:background .28s var(--ease), border-color .28s var(--ease), color .28s var(--ease);
-  font-size:1.05rem;
+  border-radius:2px;
+  transition:background .26s var(--ease), border-color .26s var(--ease), color .26s var(--ease);
+  font-size:1rem;
 }
 
 .card-arrow span{
@@ -907,10 +826,8 @@ html.is-compact .burger{ top:12px; }
 }
 
 .service-card:hover .card-arrow{ background:var(--blanc); border-color:var(--blanc); color:var(--noir); }
-.service-card:hover .card-arrow span,
-.card-arrow:hover span{ transform:translateX(3px); }
+.service-card:hover .card-arrow span,.card-arrow:hover span{ transform:translateX(2px); }
 
-/* ───────────────── DÉROULEMENT (dark) ───────────────── */
 .process-track{ grid-template-columns:1fr; }
 
 @media (min-width:700px){ .process-track{ grid-template-columns:repeat(2,1fr); } }
@@ -919,11 +836,11 @@ html.is-compact .burger{ top:12px; }
 .process-step{
   font-family:'Space Mono',monospace;
   font-weight:700;
-  font-size:.74rem;
+  font-size:.7rem;
   letter-spacing:.12em;
   text-transform:uppercase;
-  opacity:.55;
-  margin-bottom:18px;
+  opacity:.48;
+  margin-bottom:16px;
   transition:opacity var(--t-mid) var(--ease);
 }
 
@@ -931,27 +848,30 @@ html.is-compact .burger{ top:12px; }
   font-family:'Archivo',sans-serif;
   font-weight:700;
   text-transform:uppercase;
-  font-size:1.28rem;
-  margin-bottom:10px;
+  font-size:1.24rem;
+  letter-spacing:-0.01em;
+  margin-bottom:8px;
+  line-height:1.1;
 }
 
-.process-card p{ line-height:1.8; color:rgba(255,255,255,0.65); font-size:.98rem; }
+.process-card p{ line-height:1.82; color:rgba(255,255,255,0.62); font-size:.95rem; }
 
-/* ───────────────── CONTACT ───────────────── */
 .contact-box{
   background:var(--blanc);
   border:1.5px solid var(--noir);
+  border-radius:2px;
+  overflow:hidden;
 }
 
 .contact-header{
-  padding:30px clamp(24px,4vw,38px);
+  padding:32px clamp(28px,4.5vw,42px);
   background:var(--noir);
   color:var(--blanc);
   display:flex;
   align-items:center;
   justify-content:space-between;
   flex-wrap:wrap;
-  gap:16px;
+  gap:18px;
 }
 
 .contact-header h3{
@@ -960,35 +880,36 @@ html.is-compact .burger{ top:12px; }
   text-transform:uppercase;
   font-size:clamp(1.4rem,3vw,1.9rem);
   letter-spacing:-0.01em;
+  line-height:1.05;
   margin-bottom:6px;
 }
 
-.contact-header p{ color:rgba(255,255,255,0.65); }
+.contact-header p{ color:rgba(255,255,255,0.58); font-size:.95rem; }
 
 .contact-note{
   display:flex;
   align-items:center;
-  gap:9px;
+  gap:8px;
   font-family:'Space Mono',monospace;
   text-transform:uppercase;
   letter-spacing:.04em;
-  font-size:.72rem;
+  font-size:.68rem;
   color:var(--blanc);
   border:1px solid var(--ligne-onDark);
-  padding:9px 16px;
+  padding:8px 14px;
   white-space:nowrap;
+  border-radius:2px;
 }
 
-/* Le point respire — signal de disponibilité, pas un gyrophare. */
 .contact-note::before{
   content:'●';
-  font-size:.6rem;
+  font-size:.5rem;
   animation:pouls 2.6s var(--ease-inout) infinite;
 }
 
 @keyframes pouls{
-  0%,100%{ opacity:.35; }
-  50%{ opacity:1; }
+  0%,100%{ opacity:.3; }
+  50%{ opacity:.95; }
 }
 
 .calendly-shell{ position:relative; }
@@ -1005,7 +926,6 @@ html.is-compact .burger{ top:12px; }
   .calendly-inline-widget{ height:900px; }
 }
 
-/* Attente du calendrier — un rail qui se remplit, rien d'autre. */
 .calendly-skeleton{
   position:absolute;
   inset:0;
@@ -1014,17 +934,17 @@ html.is-compact .burger{ top:12px; }
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:18px;
+  gap:16px;
   padding:24px;
   text-align:center;
-  transition:opacity .5s var(--ease), visibility 0s linear .5s;
+  transition:opacity .46s var(--ease), visibility 0s linear .46s;
 }
 
 .calendly-skeleton.is-done{ opacity:0; visibility:hidden; }
 
 .calendly-skeleton span.label{
   font-family:'Space Mono',monospace;
-  font-size:.72rem;
+  font-size:.68rem;
   letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--ardoise);
@@ -1032,10 +952,11 @@ html.is-compact .burger{ top:12px; }
 
 .calendly-skeleton .rail{
   position:relative;
-  width:min(220px,60%);
+  width:min(200px,55%);
   height:1px;
   background:var(--ligne);
   overflow:hidden;
+  border-radius:1px;
 }
 
 .calendly-skeleton .rail::after{
@@ -1044,7 +965,7 @@ html.is-compact .burger{ top:12px; }
   inset:0;
   background:var(--noir);
   transform:translateX(-100%);
-  animation:railLoad 1.6s var(--ease-inout) infinite;
+  animation:railLoad 1.5s var(--ease-inout) infinite;
 }
 
 @keyframes railLoad{
@@ -1052,8 +973,7 @@ html.is-compact .burger{ top:12px; }
   100%{ transform:translateX(100%); }
 }
 
-/* ───────────────── FOOTER ───────────────── */
-footer{ padding:60px 20px 40px; background:var(--noir); color:var(--blanc); }
+footer{ padding:68px 20px 48px; background:var(--noir); color:var(--blanc); }
 
 .footer-inner{ max-width:900px; margin-inline:auto; }
 
@@ -1063,7 +983,7 @@ footer{ padding:60px 20px 40px; background:var(--noir); color:var(--blanc); }
   justify-content:center;
   gap:14px;
   flex-wrap:wrap;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 .footer-logo{
@@ -1073,58 +993,56 @@ footer{ padding:60px 20px 40px; background:var(--noir); color:var(--blanc); }
   text-align:center;
 }
 .footer-logo .logo-strong{ font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:-0.01em; }
-.footer-logo .logo-light{ font-family:'Inter',sans-serif; font-weight:500; opacity:.5; }
+.footer-logo .logo-light{ font-family:'Inter',sans-serif; font-weight:500; opacity:.48; }
 
 .footer-place{
   font-family:'Space Mono',monospace;
-  font-size:.7rem;
+  font-size:.66rem;
   letter-spacing:.12em;
   text-transform:uppercase;
-  color:rgba(255,255,255,0.45);
+  color:rgba(255,255,255,0.38);
   border:1px solid var(--ligne-onDark);
-  padding:5px 11px;
+  padding:4px 10px;
+  border-radius:2px;
 }
 
 footer > .footer-inner > p.footer-tagline{
-  color:rgba(255,255,255,0.5);
+  color:rgba(255,255,255,0.45);
   text-align:center;
-  margin-bottom:6px;
+  margin-bottom:4px;
   line-height:1.7;
+  font-size:.95rem;
 }
 
 .footer-legal{
-  margin-top:34px;
-  padding-top:28px;
+  margin-top:38px;
+  padding-top:32px;
   border-top:1px solid var(--ligne-onDark);
 }
 
 .footer-legal h4{
   font-family:'Space Mono',monospace;
   font-weight:700;
-  font-size:.78rem;
+  font-size:.74rem;
   letter-spacing:.14em;
   text-transform:uppercase;
   margin-bottom:18px;
-  color:rgba(255,255,255,0.85);
+  color:rgba(255,255,255,0.8);
   text-align:center;
 }
 
 .footer-legal p{
-  font-size:.88rem;
-  color:rgba(255,255,255,0.65);
-  line-height:1.8;
+  font-size:.85rem;
+  color:rgba(255,255,255,0.58);
+  line-height:1.85;
   margin-bottom:10px;
   text-align:center;
 }
 
-/* ───────────────── REVEAL ─────────────────
-   L'état masqué n'existe que si le JS tourne : sans script, la page
-   reste entièrement lisible. Une fois révélé, l'élément est libéré
-   de ces règles pour rendre la main aux transitions de composant. */
 .js .fade-in{
   opacity:0;
-  transform:translateY(28px);
-  transition:opacity .8s var(--ease), transform .8s var(--ease);
+  transform:translateY(26px);
+  transition:opacity .75s var(--ease), transform .75s var(--ease);
   transition-delay:var(--delay,0s);
 }
 
@@ -1141,13 +1059,10 @@ footer > .footer-inner > p.footer-tagline{
 
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<!-- HEADER -->
 <header>
-
   <div class="logo-wrap">
     <a href="#contenu" class="logo-text" aria-label="Axium.Perform — retour en haut"><span class="logo-strong">Axium</span><span class="logo-light">.Perform</span></a>
   </div>
-
   <nav aria-label="Navigation principale">
     <ul>
       <li><a href="#profil">Profil</a></li>
@@ -1157,9 +1072,7 @@ footer > .footer-inner > p.footer-tagline{
       <li><a href="#contact">Réservation</a></li>
     </ul>
   </nav>
-
   <a href="#contact" class="header-btn">Réserver</a>
-
 </header>
 
 <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -1167,7 +1080,6 @@ footer > .footer-inner > p.footer-tagline{
 </button>
 
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu de navigation">
-
   <nav class="mobile-menu-links" aria-label="Navigation mobile">
     <a href="#profil">Profil</a>
     <a href="#pourquoi">Pourquoi Axium</a>
@@ -1175,83 +1087,61 @@ footer > .footer-inner > p.footer-tagline{
     <a href="#deroulement">Déroulement</a>
     <a href="#contact">Réservation</a>
   </nav>
-
   <div class="mobile-menu-footer">
     <a href="#contact" class="btn-primary">Réserver une séance <span class="arrow">→</span></a>
     <p>Massage · Hijama · Récupération sportive</p>
   </div>
-
 </div>
 
-<!-- HERO -->
 <section class="hero" id="contenu" tabindex="-1">
-
   <div class="hero-bg"><div class="hero-bg-img"></div></div>
-
   <div class="hero-coords" aria-hidden="true">
     Genève — CH<br>
     46.2044° N / 6.1432° E<br>
     <span id="heroClock">--:--:--</span>
   </div>
-
   <div class="hero-content">
-
     <div class="hero-tag">Massage · Hijama · Récupération sportive — Genève</div>
-
     <h1>Sans récup,<br>pas de perf.</h1>
-
     <p class="hero-desc">
       Le corps progresse en récupérant, pas seulement à l'entraînement.
       Relâchement musculaire, circulation, mobilité — une approche ciblée,
       construite séance après séance autour de vos besoins réels.
     </p>
-
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">Prendre rendez-vous <span class="arrow">→</span></a>
       <a href="#prestations" class="btn-secondary">Découvrir les prestations</a>
     </div>
-
   </div>
-
   <div class="hero-scroll" aria-hidden="true">
     <span>Scroll</span>
     <span class="hero-scroll-rail"></span>
   </div>
-
 </section>
 
-<!-- PROFIL -->
 <section class="section" id="profil">
-
   <div class="index">
     <span class="index-num">01</span>
     <span class="index-label">Profil</span>
     <span class="index-line"></span>
   </div>
-
   <h2 class="section-title">Sevann,<br>praticien</h2>
-
   <div class="about-grid">
-
     <div class="about-image fade-in">
       <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann, praticien Axium.Perform" loading="lazy" decoding="async">
       <span class="bib">Athlète &amp; praticien</span>
     </div>
-
     <div class="about-text fade-in">
-
       <p>
         Athlète de demi-fond à la base, Sevann connaît la fatigue musculaire et nerveuse
         de l'intérieur — celle qui suit un bloc d'intensité, une compétition,
         ou simplement une semaine trop chargée.
       </p>
-
       <p>
         <strong>Axium.Perform</strong> est né de ce constat : la récupération n'est pas un luxe,
         c'est une partie du travail. Chaque séance est construite autour de vos besoins du moment —
         tension localisée, fatigue générale, ou simple besoin de relâcher.
       </p>
-
       <p>
         Deux approches se complètent : le massage, pour le travail musculaire direct et
         le relâchement nerveux, et la hijama, méthode traditionnelle par ventouses,
@@ -1260,71 +1150,50 @@ footer > .footer-inner > p.footer-tagline{
       <div>
         <a href="#contact" class="btn-primary">Réserver une séance <span class="arrow">→</span></a>
       </div>
-
     </div>
-
   </div>
-
 </section>
 
-<!-- POURQUOI AXIUM -->
 <section class="section section--dark" id="pourquoi">
-
   <div class="index">
     <span class="index-num">02</span>
     <span class="index-label">Pourquoi Axium</span>
     <span class="index-line"></span>
   </div>
-
   <h2 class="section-title">Pourquoi<br>Axium</h2>
-
   <p class="pourquoi-lead fade-in">
     Trois principes qui structurent chaque séance, du premier échange à la récupération.
   </p>
-
   <div class="instrument-grid pillars-grid">
-
     <div class="pillar-block fade-in">
       <span class="pillar-num">01</span>
       <h3>Vécu d'athlète</h3>
       <p>Une compréhension de la fatigue construite sur l'entraînement, pas seulement sur la théorie.</p>
     </div>
-
     <div class="pillar-block fade-in">
       <span class="pillar-num">02</span>
       <h3>Approche ciblée</h3>
       <p>Chaque séance s'adapte au profil de la personne — sportif ou non.</p>
     </div>
-
     <div class="pillar-block fade-in">
       <span class="pillar-num">03</span>
       <h3>Deux méthodes</h3>
       <p>Massage et hijama, utilisés seuls ou combinés selon le besoin.</p>
     </div>
-
   </div>
-
 </section>
 
-<!-- SERVICES -->
 <section class="section" id="prestations">
-
   <div class="index">
     <span class="index-num">03</span>
     <span class="index-label">Prestations</span>
     <span class="index-line"></span>
   </div>
-
   <h2 class="section-title">Mes<br>prestations</h2>
-
   <div class="services-grid">
-
     <div class="service-card fade-in">
-
       <h3>Massage sportif</h3>
-
       <p>Travail musculaire ciblé pour dénouer les tensions et accélérer la récupération après l'effort.</p>
-
       <div class="service-bottom">
         <div>
           <div class="price">40.–</div>
@@ -1332,15 +1201,10 @@ footer > .footer-inner > p.footer-tagline{
         </div>
         <a href="#contact" class="card-arrow" aria-label="Réserver un massage sportif"><span>→</span></a>
       </div>
-
     </div>
-
     <div class="service-card fade-in">
-
       <h3>Relaxation</h3>
-
       <p>Relâchement global du corps et du système nerveux — pour souffler et récupérer en profondeur.</p>
-
       <div class="service-bottom">
         <div>
           <div class="price">70.–</div>
@@ -1348,15 +1212,10 @@ footer > .footer-inner > p.footer-tagline{
         </div>
         <a href="#contact" class="card-arrow" aria-label="Réserver une relaxation"><span>→</span></a>
       </div>
-
     </div>
-
     <div class="service-card fade-in">
-
       <h3>Hijama</h3>
-
       <p>Méthode traditionnelle par ventouses, pour stimuler la circulation et la récupération en profondeur.</p>
-
       <div class="service-bottom">
         <div>
           <div class="price" style="font-size:1.1rem;">Sur demande</div>
@@ -1364,67 +1223,49 @@ footer > .footer-inner > p.footer-tagline{
         </div>
         <a href="#contact" class="card-arrow" aria-label="Réserver une hijama"><span>→</span></a>
       </div>
-
     </div>
-
   </div>
-
 </section>
 
-<!-- PROCESS -->
 <section class="section section--dark" id="deroulement">
-
   <div class="index">
     <span class="index-num">04</span>
     <span class="index-label">Déroulement</span>
     <span class="index-line"></span>
   </div>
-
   <h2 class="section-title">Votre<br>séance</h2>
-
   <div class="instrument-grid process-track">
-
     <div class="process-card fade-in">
       <div class="process-step">Étape 01</div>
       <h3>Échange</h3>
       <p>Un point rapide sur vos douleurs, votre charge d'entraînement et l'objectif du jour.</p>
     </div>
-
     <div class="process-card fade-in">
       <div class="process-step">Étape 02</div>
       <h3>Travail ciblé</h3>
       <p>Massage ou hijama, selon ce que votre corps demande ce jour-là.</p>
     </div>
-
     <div class="process-card fade-in">
       <div class="process-step">Étape 03</div>
       <h3>Récupération</h3>
       <p>Relâchement musculaire, retour au calme, corps déchargé.</p>
     </div>
-
     <div class="process-card fade-in">
       <div class="process-step">Étape 04</div>
       <h3>Conseils</h3>
       <p>Hydratation, points de vigilance et suivi jusqu'à la prochaine séance.</p>
     </div>
-
   </div>
-
 </section>
 
-<!-- CONTACT -->
 <section class="section" id="contact">
-
   <div class="index">
     <span class="index-num">05</span>
     <span class="index-label">Réservation</span>
     <span class="index-line"></span>
   </div>
-
   <h2 class="section-title">Prendre<br>rendez-vous</h2>
-
   <div class="contact-box fade-in">
-
     <div class="contact-header">
       <div>
         <h3>Calendrier Axium.Perform</h3>
@@ -1432,9 +1273,7 @@ footer > .footer-inner > p.footer-tagline{
       </div>
       <div class="contact-note">Annulation gratuite — 24h avant</div>
     </div>
-
     <div class="calendly-shell">
-
       <div class="calendly-skeleton" id="calendlySkeleton">
         <span class="label">Chargement du calendrier</span>
         <span class="rail"></span>
@@ -1442,88 +1281,57 @@ footer > .footer-inner > p.footer-tagline{
           <a class="btn-secondary" href="https://calendly.com/axium-perform/seance-de-massage-axium" target="_blank" rel="noopener">Ouvrir le calendrier <span class="arrow">→</span></a>
         </noscript>
       </div>
-
       <div class="calendly-inline-widget" id="calendlyWidget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium" data-resize="true"></div>
-
     </div>
-
   </div>
-
 </section>
 
-<!-- FOOTER -->
 <footer>
-
   <div class="footer-inner">
-
     <div class="footer-top fade-in">
       <div class="footer-logo"><span class="logo-strong">Axium</span><span class="logo-light">.Perform</span></div>
     </div>
-
     <p class="footer-tagline fade-in">Massage · Hijama · Récupération sportive</p>
-
     <div class="footer-legal fade-in">
-
       <h4>Conditions générales</h4>
-
       <p>Toute réservation effectuée via Axium.Perform implique l'acceptation des conditions ci-dessous.</p>
-
       <p>Une annulation doit être effectuée au minimum <strong style="color:var(--blanc)">24h à l'avance</strong>. Dans le cas contraire, la séance peut être facturée.</p>
-
       <p>Les prestations proposées sont des services de bien-être et de récupération. Elles ne remplacent en aucun cas un avis ou un traitement médical.</p>
-
       <p>En réservant une séance, le client confirme avoir pris connaissance de ces conditions et les accepter pleinement.</p>
-
     </div>
-
   </div>
-
 </footer>
 
 <script>
 
-/* ═══════════════════════════════════════════════════════════════════
-   MOUVEMENT — un seul rAF pour le scroll, un seul observer pour les
-   entrées. Tout est désactivé si l'utilisateur demande moins d'animation.
-   ═══════════════════════════════════════════════════════════════════ */
-
-const root       = document.documentElement;
-const motionQ    = window.matchMedia('(prefers-reduced-motion: reduce)');
-let   reduced    = motionQ.matches;
-
-const headerEl   = document.querySelector('header');
-const heroEl     = document.querySelector('.hero');
-const heroBg     = document.querySelector('.hero-bg');
-const burger     = document.getElementById('burger');
+const root = document.documentElement;
+const motionQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+let reduced = motionQ.matches;
+const headerEl = document.querySelector('header');
+const heroEl = document.querySelector('.hero');
+const heroBg = document.querySelector('.hero-bg');
+const burger = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobileMenu');
 
-/* ───────────────── TITRES : découpe en lignes masquées ───────────────── */
 function splitLines(el){
   const lines = el.innerHTML.split(/<br\s*\/?>/i).map(s => s.trim()).filter(Boolean);
   if(lines.length === 0) return;
-  el.innerHTML = lines
-    .map((line,i) => `<span class="ln"><span style="--delay:${(i*0.09).toFixed(2)}s">${line}</span></span>`)
-    .join('');
+  el.innerHTML = lines.map((line,i) => `<span class="ln"><span style="--delay:${(i*0.085).toFixed(2)}s">${line}</span></span>`).join('');
   el.classList.add('is-split');
 }
 
 document.querySelectorAll('.section-title, .hero h1').forEach(splitLines);
 
-/* ───────────────── ENTRÉES AU SCROLL ─────────────────
-   Le décalage se calcule par groupe (entre voisins), pas globalement :
-   trois cartes côte à côte se posent l'une après l'autre. */
 document.querySelectorAll('.fade-in').forEach(el => {
   const peers = Array.from(el.parentElement.children).filter(n => n.classList.contains('fade-in'));
   const i = peers.indexOf(el);
-  if(i > 0) el.style.setProperty('--delay', `${(i * 0.09).toFixed(2)}s`);
+  if(i > 0) el.style.setProperty('--delay', `${(i * 0.085).toFixed(2)}s`);
 });
 
 function reveal(el){
   el.classList.add('is-in','visible');
-  /* Une fois posé, on retire l'habillage de révélation pour rendre la
-     main aux transitions propres au composant (survol des cartes…). */
   if(el.classList.contains('fade-in')){
-    window.setTimeout(() => el.classList.remove('fade-in'), 1400);
+    window.setTimeout(() => el.classList.remove('fade-in'), 1300);
   }
 }
 
@@ -1540,14 +1348,10 @@ if(reduced){
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
-
+  }, { threshold:0.1, rootMargin:'0px 0px -6% 0px' });
   revealTargets.forEach(el => revealObserver.observe(el));
 }
 
-/* ───────────────── OUVERTURE DU HERO ─────────────────
-   On attend les polices (max 1.2s) pour ne pas animer un titre qui
-   change de fonte en cours de route. */
 function startHero(){
   heroEl.classList.add('is-in');
   const h1 = heroEl.querySelector('h1');
@@ -1565,36 +1369,26 @@ if(reduced){
   window.addEventListener('load', startHero, { once:true });
 }
 
-/* ───────────────── SCROLL : en-tête, jauge, parallaxe ─────────────────
-   Un seul écouteur passif, une seule frame par tick. */
 let lastY = window.scrollY;
 let ticking = false;
 
 function onScroll(){
   const y = Math.max(0, window.scrollY);
   const max = document.documentElement.scrollHeight - window.innerHeight;
-
   headerEl.style.setProperty('--progress', max > 0 ? Math.min(1, y / max).toFixed(4) : 0);
-
-  root.classList.toggle('is-compact', y > 24);
-
-  /* L'en-tête s'efface en descente et revient dès qu'on remonte —
-     jamais quand le menu est ouvert. */
+  root.classList.toggle('is-compact', y > 20);
   if(!mobileMenu.classList.contains('open')){
     root.classList.toggle('is-nav-hidden', y > lastY + 4 && y > 260);
   }
-
   if(heroEl){
     heroEl.classList.toggle('is-scrolled', y > 60);
-
     if(!reduced && heroBg){
       const h = heroEl.offsetHeight;
       if(y < h){
-        heroBg.style.transform = `translate3d(0, ${(y * 0.07).toFixed(2)}px, 0)`;
+        heroBg.style.transform = `translate3d(0, ${(y * 0.068).toFixed(2)}px, 0)`;
       }
     }
   }
-
   lastY = y;
 }
 
@@ -1606,12 +1400,8 @@ window.addEventListener('scroll', () => {
 
 onScroll();
 
-/* ───────────────── LIEN ACTIF DANS LA NAV ─────────────────
-   La section qui occupe le milieu de l'écran allume son onglet. */
 const navLinks = Array.from(document.querySelectorAll('header nav a'));
-const sections = navLinks
-  .map(a => document.querySelector(a.getAttribute('href')))
-  .filter(Boolean);
+const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
 
 if(sections.length){
   const navObserver = new IntersectionObserver(entries => {
@@ -1620,34 +1410,27 @@ if(sections.length){
       navLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === `#${entry.target.id}`));
     });
   }, { rootMargin:'-45% 0px -50% 0px', threshold:0 });
-
   sections.forEach(s => navObserver.observe(s));
 }
 
-/* ───────────────── PRIX : montée au compteur ─────────────────
-   Le prix se compose comme un chrono qui s'arrête sur le tarif. */
 if(!reduced){
   const easeOut = t => 1 - Math.pow(1 - t, 4);
-
   const countObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if(!entry.isIntersecting) return;
       const el = entry.target;
       countObserver.unobserve(el);
-
       const target = Number(el.dataset.target);
       const suffix = el.dataset.suffix || '';
-      const dur = 900;
+      const dur = 850;
       const t0 = performance.now();
-
       (function step(now){
         const p = Math.min(1, (now - t0) / dur);
         el.textContent = Math.round(target * easeOut(p)) + suffix;
         if(p < 1) requestAnimationFrame(step);
       })(t0);
     });
-  }, { threshold:0.4 });
-
+  }, { threshold:0.38 });
   document.querySelectorAll('.price').forEach(el => {
     const m = el.textContent.trim().match(/^(\d+)([\s\S]*)$/);
     if(!m) return;
@@ -1658,8 +1441,6 @@ if(!reduced){
   });
 }
 
-/* ───────────────── HORLOGE DE GENÈVE ─────────────────
-   Un repère d'instrument : l'heure locale du praticien. */
 const clockEl = document.getElementById('heroClock');
 if(clockEl){
   const fmt = new Intl.DateTimeFormat('fr-CH', {
@@ -1670,7 +1451,6 @@ if(clockEl){
   window.setInterval(() => { if(!document.hidden) tick(); }, 1000);
 }
 
-/* ───────────────── MENU PLEIN ÉCRAN ───────────────── */
 let lastFocused = null;
 
 function menuFocusables(){
@@ -1688,7 +1468,7 @@ function openMobileMenu(){
   window.setTimeout(() => {
     const first = menuFocusables()[0];
     if(first) first.focus({ preventScroll:true });
-  }, 220);
+  }, 200);
 }
 
 function closeMobileMenu(){
@@ -1711,20 +1491,15 @@ document.querySelectorAll('#mobileMenu a').forEach(link => {
 
 document.addEventListener('keydown', (e) => {
   if(!mobileMenu.classList.contains('open')) return;
-
   if(e.key === 'Escape'){
     closeMobileMenu();
     return;
   }
-
-  /* Piège à focus : tant que le menu est ouvert, la tabulation
-     tourne à l'intérieur. */
   if(e.key === 'Tab'){
     const items = menuFocusables().concat(burger);
     if(!items.length) return;
     const first = items[0];
     const last = items[items.length - 1];
-
     if(e.shiftKey && document.activeElement === first){
       e.preventDefault(); last.focus();
     }else if(!e.shiftKey && document.activeElement === last){
@@ -1733,40 +1508,30 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-/* ───────────────── CALENDRIER — chargement différé ─────────────────
-   Le widget ne part qu'à l'approche de la section : la page s'ouvre
-   sans attendre un script tiers. */
 (function deferCalendly(){
   const widget = document.getElementById('calendlyWidget');
   const skeleton = document.getElementById('calendlySkeleton');
   if(!widget) return;
-
   const done = () => { if(skeleton) skeleton.classList.add('is-done'); };
-
   const watch = new MutationObserver(() => {
     if(widget.querySelector('iframe')){
       watch.disconnect();
-      window.setTimeout(done, 600);
+      window.setTimeout(done, 560);
     }
   });
   watch.observe(widget, { childList:true, subtree:true });
-
   function load(){
     const s = document.createElement('script');
     s.src = 'https://assets.calendly.com/assets/external/widget.js';
     s.async = true;
     s.onload = () => {
-      /* Filet de sécurité : si le script n'a pas auto-initialisé le
-         widget (chargement tardif), on l'initialise à la main. */
       window.setTimeout(() => {
         if(!widget.querySelector('iframe') && window.Calendly){
           window.Calendly.initInlineWidget({ url: widget.dataset.url, parentElement: widget });
         }
-      }, 400);
+      }, 380);
     };
     s.onerror = () => {
-      /* Bloqueur de pub, réseau coupé… : on ne laisse jamais la
-         réservation dans le vide, on renvoie sur Calendly. */
       if(!skeleton) return;
       skeleton.querySelector('.label').textContent = 'Calendrier momentanément indisponible';
       const rail = skeleton.querySelector('.rail');
@@ -1783,14 +1548,12 @@ document.addEventListener('keydown', (e) => {
     };
     document.head.appendChild(s);
   }
-
   const io = new IntersectionObserver(entries => {
     if(entries.some(e => e.isIntersecting)){
       io.disconnect();
       load();
     }
   }, { rootMargin:'600px 0px' });
-
   io.observe(widget);
 })();
 
