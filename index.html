@@ -5,18 +5,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Axium.Perform — massage sportif, relaxation et hijama à Genève. Récupération et performance, par un praticien lui-même athlète de demi-fond.">
-<meta name="theme-color" content="#F2F2EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#F5F5F2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)">
 
-<title>Axium.Perform — Récupération & Performance</title>
+<title>Axium.Perform — Récupération &amp; Performance</title>
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_CH">
 <meta property="og:site_name" content="Axium.Perform">
-<meta property="og:title" content="Axium.Perform — Récupération & Performance">
+<meta property="og:title" content="Axium.Perform — Récupération &amp; Performance">
 <meta property="og:description" content="Massage sportif, relaxation et hijama à Genève. Récupération et performance, par un praticien lui-même athlète de demi-fond.">
+<!-- og:image doit être une URL ABSOLUE pour que l'aperçu fonctionne sur WhatsApp/LinkedIn.
+     Remplacer par https://VOTRE-DOMAINE/0fc6911e-bb7e-4be2-9817-8390221d3612.JPG -->
 <meta property="og:image" content="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG">
+<meta property="og:image:alt" content="Sevann, praticien Axium.Perform, en montagne au-dessus de Genève">
 <meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230A0A0A'/%3E%3Cpath d='M16 7.5 22.8 24.5h-4.1l-1.2-3.2h-6.9l4.6-11.4 1.5 3.9-1.6 4h3.3L16 7.5Z' fill='%23fff'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,8 +35,8 @@
    ───────────────────────────────────────────────────────────────────
    Noir      #0A0A0A  — encre. Fond des sections sombres, texte sur clair.
    Blanc     #FFFFFF  — surfaces élevées (cartes, cadres) + texte sur sombre.
-   Neige     #F2F2EF  — fond des sections claires. Papier, pas glacial.
-   Ardoise   #52565A  — texte secondaire sur fond clair.
+   Neige     #F5F5F2  — fond des sections claires. Papier, pas glacial.
+   Ardoise   #54585D  — texte secondaire sur fond clair.
    Ligne     hairline — séparateurs, cadres, grilles.
 
    Pas de couleur d'accent. La hiérarchie se fait au poids, à l'échelle
@@ -48,6 +53,14 @@
    Le mouvement va dans un sens : les lignes se tracent de la gauche,
    les remplissages montent du bas, les textes montent depuis leur
    propre ligne de base. Rien ne clignote, rien ne tourne.
+   ───────────────────────────────────────────────────────────────────
+   IMAGE — une seule photographie, deux cadrages.
+   Le portrait (vertical, serré) et la bande pleine largeur (horizontal,
+   large) proviennent du même fichier : c'est le cadrage et le traitement
+   qui les séparent, pas deux clichés qui se répètent. La topographie
+   (<symbol id="topo"> en tête de <body>) fait le reste du décor —
+   dessin, pas photo. Tout est inline : ce fichier n'a besoin d'aucun
+   autre fichier, hors les images de marque qu'il référence.
    ═══════════════════════════════════════════════════════════════════ */
 
 :root{
@@ -58,7 +71,12 @@
   --neige:#F5F5F2;
   --ardoise:#54585D;
   --ligne:rgba(10,10,10,0.08);
+  --ligne-forte:rgba(10,10,10,0.16);
   --ligne-onDark:rgba(255,255,255,0.1);
+
+  /* rythme */
+  --gouttiere:clamp(24px,7vw,88px);
+  --rayon:12px;
 
   /* mouvement */
   --ease:cubic-bezier(0.22,1,0.36,1);
@@ -87,6 +105,7 @@ html{
   .js .fade-in{ opacity:1 !important; transform:none !important; }
   .is-split .ln > span{ transform:none !important; }
   .js .index-line{ transform:scaleX(1) !important; }
+  .marquee-track{ animation:none !important; transform:none !important; }
 }
 
 body{
@@ -107,17 +126,20 @@ ul{ list-style:none; }
 ::selection{ background:var(--noir); color:var(--blanc); }
 
 a:focus-visible,
-button:focus-visible{
+button:focus-visible,
+summary:focus-visible{
   outline:2px solid var(--noir);
   outline-offset:3px;
 }
 
 .section--dark a:focus-visible,
 .section--dark button:focus-visible,
+.section--dark summary:focus-visible,
 .hero a:focus-visible,
 .hero button:focus-visible,
 .mobile-menu a:focus-visible,
-.mobile-menu button:focus-visible{
+.mobile-menu button:focus-visible,
+.break a:focus-visible{
   outline-color:var(--blanc);
 }
 
@@ -140,8 +162,29 @@ button:focus-visible{
 .skip-link:focus-visible{ transform:translateY(0); outline-color:var(--blanc); }
 
 /* ───────────────── SECTION SHELL ───────────────── */
-.section{ padding:clamp(80px,11vw,148px) clamp(24px,7vw,88px); position:relative; background:var(--neige); }
+/* overflow:hidden — les éléments décoratifs qui débordent volontairement
+   (planche anatomique, topographie) sont coupés net au bord de la section
+   au lieu d'élargir le document et de créer un scroll horizontal. */
+.section{ padding:clamp(80px,11vw,148px) var(--gouttiere); position:relative; background:var(--neige); overflow:hidden; }
 .section--dark{ background:var(--noir); color:var(--blanc); }
+
+/* La topographie : un fond dessiné, jamais une photo de remplissage.
+   Le tracé est défini une seule fois (<symbol id="topo">) et rappelé par
+   <use> dans chaque section, donc la page reste un fichier autonome.
+   stroke:currentColor le teinte : clair sur fond sombre, et l'inverse. */
+.section--topo{ isolation:isolate; }
+.topo-layer{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  opacity:.07;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, transparent, #000 22%, #000 72%, transparent);
+  mask-image:linear-gradient(to bottom, transparent, #000 22%, #000 72%, transparent);
+}
+.section--topo > *:not(.topo-layer){ position:relative; z-index:1; }
 
 .index{
   display:flex;
@@ -195,6 +238,15 @@ button:focus-visible{
   margin-bottom:clamp(36px,5vw,52px);
   max-width:18ch;
 }
+
+.section-lead{
+  max-width:56ch;
+  font-size:1.04rem;
+  line-height:1.88;
+  color:var(--ardoise);
+  margin-bottom:clamp(40px,6vw,60px);
+}
+.section--dark .section-lead{ color:rgba(255,255,255,0.62); }
 
 /* ───────────────── TITRES EN LIGNES MASQUÉES ─────────────────
    Chaque ligne est enfermée dans son propre cadre et remonte depuis
@@ -274,24 +326,30 @@ button:focus-visible{
    fait à l'envers — le blanc se retire vers le bas. */
 .section--dark .btn-primary,
 .hero .btn-primary,
+.break .btn-primary,
 .mobile-menu .btn-primary{ background:transparent; color:var(--noir); border-color:var(--blanc); --fill:var(--blanc); }
 
 .section--dark .btn-primary::before,
 .hero .btn-primary::before,
+.break .btn-primary::before,
 .mobile-menu .btn-primary::before{ transform:scaleY(1); transform-origin:50% 0; }
 
 .section--dark .btn-primary:hover::before,
 .hero .btn-primary:hover::before,
+.break .btn-primary:hover::before,
 .mobile-menu .btn-primary:hover::before{ transform:scaleY(0); }
 
 .section--dark .btn-primary:hover,
 .hero .btn-primary:hover,
+.break .btn-primary:hover,
 .mobile-menu .btn-primary:hover{ color:var(--blanc); }
 
 .section--dark .btn-secondary,
-.hero .btn-secondary{ color:var(--blanc); border-color:rgba(255,255,255,0.35); --fill:var(--blanc); }
+.hero .btn-secondary,
+.break .btn-secondary{ color:var(--blanc); border-color:rgba(255,255,255,0.35); --fill:var(--blanc); }
 .section--dark .btn-secondary:hover,
-.hero .btn-secondary:hover{ color:var(--noir); border-color:var(--blanc); }
+.hero .btn-secondary:hover,
+.break .btn-secondary:hover{ color:var(--noir); border-color:var(--blanc); }
 
 /* ───────────────── DOSSARD (le détail signature) ─────────────────
    Sevann porte un dossard en course. Le même objet, réutilisé ici
@@ -319,7 +377,7 @@ button:focus-visible{
   gap:0;
   background:transparent;
   border:none;
-  border-radius:12px;
+  border-radius:var(--rayon);
   overflow:hidden;
 }
 .instrument-grid > div{
@@ -355,7 +413,7 @@ header{
   align-items:center;
   justify-content:space-between;
   padding:0 clamp(16px,5vw,64px);
-  background:rgba(242,242,239,0.92);
+  background:rgba(245,245,242,0.92);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid var(--ligne);
@@ -453,9 +511,10 @@ nav a.is-active{ color:var(--noir); }
   --fill:var(--neige);
 }
 
-.header-btn:hover{ box-shadow:0 8px 24px -6px rgba(10,10,10,0.28); }
-
-.header-btn:hover{ color:var(--noir); }
+.header-btn:hover{
+  color:var(--noir);
+  box-shadow:0 8px 24px -6px rgba(10,10,10,0.28);
+}
 
 .burger{
   display:none;
@@ -522,11 +581,11 @@ html.is-compact .burger{ top:12px; }
   font-family:'Archivo',sans-serif;
   font-weight:800;
   text-transform:uppercase;
-  font-size:clamp(2.2rem,11vw,3.4rem);
-  line-height:1.12;
+  font-size:clamp(1.9rem,9vw,3.1rem);
+  line-height:1.14;
   letter-spacing:-0.01em;
   color:var(--blanc);
-  padding:8px 0;
+  padding:7px 0;
   opacity:0;
   transform:translateY(24px);
   transition:opacity .46s var(--ease), transform .46s var(--ease);
@@ -535,10 +594,11 @@ html.is-compact .burger{ top:12px; }
 /* Les entrées se posent l'une après l'autre, jamais toutes ensemble. */
 .mobile-menu.open .mobile-menu-links a{ opacity:1; transform:none; }
 .mobile-menu.open .mobile-menu-links a:nth-child(1){ transition-delay:.08s; }
-.mobile-menu.open .mobile-menu-links a:nth-child(2){ transition-delay:.14s; }
-.mobile-menu.open .mobile-menu-links a:nth-child(3){ transition-delay:.2s; }
-.mobile-menu.open .mobile-menu-links a:nth-child(4){ transition-delay:.26s; }
-.mobile-menu.open .mobile-menu-links a:nth-child(5){ transition-delay:.32s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(2){ transition-delay:.13s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(3){ transition-delay:.18s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(4){ transition-delay:.23s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(5){ transition-delay:.28s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(6){ transition-delay:.33s; }
 
 .mobile-menu-links a:hover{ opacity:0.65; transform:translateX(8px); }
 
@@ -735,6 +795,56 @@ html.is-compact .burger{ top:12px; }
 
 .hero.is-scrolled .hero-scroll{ opacity:0; transform:translateY(10px); transition-delay:0s; }
 
+/* ───────────────── BANDEAU DÉFILANT ─────────────────
+   Une seule bande, deux copies du même contenu : la piste se décale
+   d'exactement 50 %, donc la boucle est invisible. La seconde copie
+   est masquée aux lecteurs d'écran pour ne pas répéter le texte. */
+.marquee{
+  position:relative;
+  background:var(--noir);
+  color:var(--blanc);
+  border-top:1px solid var(--ligne-onDark);
+  border-bottom:1px solid var(--ligne-onDark);
+  overflow:hidden;
+  padding:18px 0;
+  display:flex;
+}
+
+.marquee-track{
+  display:flex;
+  flex-shrink:0;
+  min-width:100%;
+  gap:0;
+  animation:marquee 38s linear infinite;
+  will-change:transform;
+}
+
+.marquee:hover .marquee-track{ animation-play-state:paused; }
+
+.marquee-track span{
+  display:inline-flex;
+  align-items:center;
+  gap:28px;
+  padding-right:28px;
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  font-size:.74rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  color:rgba(255,255,255,0.72);
+}
+
+.marquee-track span::after{
+  content:'—';
+  opacity:.3;
+}
+
+@keyframes marquee{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
+}
+
 /* ───────────────── PROFIL ───────────────── */
 .about-grid{ display:grid; gap:clamp(40px,6vw,68px); align-items:start; }
 
@@ -746,11 +856,18 @@ html.is-compact .burger{ top:12px; }
   border:1px solid var(--ligne);
   aspect-ratio:4/5;
   background:var(--blanc);
-  border-radius:12px;
+  border-radius:var(--rayon);
   box-shadow:0 12px 40px -12px rgba(10,10,10,0.18);
 }
 
-.about-image img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.08); }
+/* Cadrage vertical serré sur le sujet : la même photo que le hero,
+   mais recomposée en portrait — on ne revoit pas le même plan. */
+.about-image img{
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position:54% 62%;
+  filter:grayscale(1) contrast(1.14) brightness(1.02);
+}
 
 /* L'image se resserre en entrant, puis respire au survol. */
 .js .about-image img{
@@ -782,15 +899,44 @@ html.is-compact .burger{ top:12px; }
 
 .about-text strong{ color:var(--noir); font-weight:700; }
 
-/* ───────────────── POURQUOI (dark, piliers) ───────────────── */
-.pourquoi-lead{
-  max-width:56ch;
-  font-size:1.04rem;
-  line-height:1.88;
-  color:rgba(255,255,255,0.62);
-  margin-bottom:clamp(40px,6vw,60px);
+/* Fiche technique — l'encadré d'instrument qui accompagne le portrait.
+   Uniquement des faits déjà énoncés dans le texte, rien d'inventé. */
+.fiche{
+  margin:32px 0 30px;
+  border:1px solid var(--ligne);
+  border-radius:var(--rayon);
+  background:var(--blanc);
+  overflow:hidden;
 }
 
+.fiche dl{ display:grid; grid-template-columns:1fr; }
+
+@media (min-width:560px){ .fiche dl{ grid-template-columns:repeat(2,1fr); } }
+
+.fiche div{
+  padding:18px 22px;
+  border-bottom:1px solid var(--ligne);
+  border-right:1px solid var(--ligne);
+}
+
+.fiche dt{
+  font-family:'Space Mono',monospace;
+  font-size:.62rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ardoise);
+  margin-bottom:6px;
+}
+
+.fiche dd{
+  font-family:'Archivo',sans-serif;
+  font-weight:700;
+  font-size:1.02rem;
+  letter-spacing:-0.01em;
+  line-height:1.25;
+}
+
+/* ───────────────── POURQUOI (dark, piliers) ───────────────── */
 .pillars-grid{ grid-template-columns:1fr; }
 
 @media (min-width:760px){ .pillars-grid{ grid-template-columns:repeat(3,1fr); } }
@@ -822,6 +968,58 @@ html.is-compact .burger{ top:12px; }
 
 .pillar-block p{ color:rgba(255,255,255,0.62); line-height:1.85; font-size:.96rem; }
 
+/* ───────────────── BANDE PLEINE LARGEUR ─────────────────
+   Le second cadrage de la photo : horizontal, très large, la citation
+   posée dessus. Le format fait tout le travail de différenciation. */
+.break{
+  position:relative;
+  min-height:clamp(380px,52vw,560px);
+  display:flex;
+  align-items:flex-end;
+  padding:clamp(40px,7vw,80px) var(--gouttiere);
+  overflow:hidden;
+  background:var(--noir);
+  color:var(--blanc);
+}
+
+.break-bg{
+  position:absolute; inset:0;
+  z-index:0;
+  background-image:url('0fc6911e-bb7e-4be2-9817-8390221d3612.JPG');
+  background-size:cover;
+  background-position:center 78%;
+  filter:grayscale(1) contrast(1.3) brightness(0.62);
+  transform:scale(1.06);
+}
+
+.break::after{
+  content:'';
+  position:absolute; inset:0; z-index:1;
+  pointer-events:none;
+  background:linear-gradient(to top, rgba(10,10,10,0.92), rgba(10,10,10,0.34) 55%, rgba(10,10,10,0.5));
+}
+
+.break-inner{ position:relative; z-index:2; max-width:920px; }
+
+.break blockquote{
+  font-family:'Archivo',sans-serif;
+  font-weight:800;
+  text-transform:uppercase;
+  font-size:clamp(1.7rem,4.4vw,3.2rem);
+  line-height:1.06;
+  letter-spacing:-0.015em;
+  margin-bottom:20px;
+}
+
+.break-cite{
+  font-family:'Space Mono',monospace;
+  font-size:.68rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.5);
+  font-style:normal;
+}
+
 /* ───────────────── PRESTATIONS ─────────────────
    Au survol, la carte s'inverse en négatif — comme un chrono qu'on
    déclenche. Le noir monte du bas, la carte se soulève d'un cran. */
@@ -837,9 +1035,10 @@ html.is-compact .burger{ top:12px; }
   background:var(--blanc);
   border:1px solid var(--ligne);
   color:var(--noir);
-  border-radius:12px;
+  border-radius:var(--rayon);
   transition:color .26s var(--ease), transform .42s var(--ease), box-shadow .42s var(--ease), border-color .26s var(--ease);
   min-width:0;
+  overflow:hidden;
 }
 
 .service-card::before{
@@ -851,7 +1050,6 @@ html.is-compact .burger{ top:12px; }
   transform:scaleY(0);
   transform-origin:50% 100%;
   transition:transform .42s var(--ease);
-  border-radius:8px;
 }
 
 .service-card:hover::before{ transform:scaleY(1); }
@@ -862,6 +1060,20 @@ html.is-compact .burger{ top:12px; }
   transform:translateY(-8px);
   box-shadow:0 20px 40px -8px rgba(10,10,10,0.35), 0 4px 12px rgba(10,10,10,0.12);
 }
+
+.service-tag{
+  display:inline-block;
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  font-size:.6rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ardoise);
+  margin-bottom:14px;
+  transition:color .26s var(--ease);
+}
+
+.service-card:hover .service-tag{ color:rgba(255,255,255,0.55); }
 
 .service-card h3{
   font-family:'Archivo',sans-serif;
@@ -876,13 +1088,41 @@ html.is-compact .burger{ top:12px; }
 .service-card p{
   line-height:1.82;
   color:var(--ardoise);
-  margin-bottom:28px;
-  min-height:4.6em;
+  margin-bottom:22px;
   transition:color .26s var(--ease);
   font-size:.96rem;
 }
 
 .service-card:hover p{ color:rgba(255,255,255,0.68); }
+
+/* Points clés — la carte gagne du contenu utile sans gagner du bruit. */
+.service-points{
+  margin-bottom:26px;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  min-height:5.4em;
+}
+
+.service-points li{
+  position:relative;
+  padding-left:18px;
+  font-size:.88rem;
+  line-height:1.5;
+  color:var(--ardoise);
+  transition:color .26s var(--ease);
+}
+
+.service-points li::before{
+  content:'';
+  position:absolute;
+  left:0; top:.62em;
+  width:8px; height:1px;
+  background:currentColor;
+  opacity:.55;
+}
+
+.service-card:hover .service-points li{ color:rgba(255,255,255,0.66); }
 
 .service-bottom{
   display:flex;
@@ -904,6 +1144,8 @@ html.is-compact .burger{ top:12px; }
   line-height:1;
   margin-bottom:4px;
 }
+
+.price--word{ font-size:1.1rem; }
 
 .duration{
   font-family:'Space Mono',monospace;
@@ -936,6 +1178,15 @@ html.is-compact .burger{ top:12px; }
 .service-card:hover .card-arrow span,
 .card-arrow:hover span{ transform:translateX(2px); }
 
+.services-note{
+  margin-top:28px;
+  font-family:'Space Mono',monospace;
+  font-size:.68rem;
+  letter-spacing:.06em;
+  color:var(--ardoise);
+  line-height:1.8;
+}
+
 /* ───────────────── DÉROULEMENT (dark) ───────────────── */
 .process-track{ grid-template-columns:1fr; }
 
@@ -965,11 +1216,90 @@ html.is-compact .burger{ top:12px; }
 
 .process-card p{ line-height:1.82; color:rgba(255,255,255,0.62); font-size:.95rem; }
 
+/* La planche anatomique — figure technique, pas photo d'ambiance :
+   désaturée, très basse opacité, purement décorative et absente du
+   flux de lecture (aria-hidden) comme des petits écrans. */
+.anatomy{
+  position:absolute;
+  right:-4%;
+  bottom:0;
+  width:min(46%,620px);
+  z-index:0;
+  opacity:.09;
+  filter:grayscale(1) contrast(1.5) brightness(1.35);
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to top, transparent, #000 45%);
+  mask-image:linear-gradient(to top, transparent, #000 45%);
+}
+
+@media (max-width:1100px){ .anatomy{ display:none; } }
+
+/* ───────────────── FAQ ───────────────── */
+.faq{ max-width:900px; }
+
+.faq details{
+  border-top:1px solid var(--ligne);
+  padding:0;
+}
+.faq details:last-of-type{ border-bottom:1px solid var(--ligne); }
+
+.faq summary{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:24px;
+  padding:26px 4px;
+  cursor:pointer;
+  list-style:none;
+  font-family:'Archivo',sans-serif;
+  font-weight:700;
+  font-size:clamp(1.02rem,2.1vw,1.24rem);
+  letter-spacing:-0.01em;
+  line-height:1.28;
+  transition:color var(--t-mid) var(--ease);
+}
+
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary:hover{ color:var(--ardoise); }
+
+/* La croix devient un tiret : un seul trait pivote, l'autre reste. */
+.faq-sign{
+  position:relative;
+  flex-shrink:0;
+  width:20px; height:20px;
+  margin-top:.18em;
+}
+.faq-sign::before,
+.faq-sign::after{
+  content:'';
+  position:absolute;
+  left:50%; top:50%;
+  width:14px; height:1.5px;
+  background:currentColor;
+  transform:translate(-50%,-50%);
+  transition:transform .38s var(--ease);
+}
+.faq-sign::after{ transform:translate(-50%,-50%) rotate(90deg); }
+.faq details[open] .faq-sign::after{ transform:translate(-50%,-50%) rotate(0deg); }
+
+.faq-body{
+  padding:0 4px 28px;
+  max-width:68ch;
+}
+
+.faq-body p{
+  color:var(--ardoise);
+  line-height:1.9;
+  font-size:.98rem;
+  margin-bottom:12px;
+}
+.faq-body p:last-child{ margin-bottom:0; }
+
 /* ───────────────── CONTACT ───────────────── */
 .contact-box{
   background:var(--blanc);
   border:1px solid var(--ligne);
-  border-radius:12px;
+  border-radius:var(--rayon);
   overflow:hidden;
   box-shadow:0 8px 32px -8px rgba(10,10,10,0.12);
 }
@@ -1086,47 +1416,103 @@ html.is-compact .burger{ top:12px; }
   100%{ transform:translateX(100%); }
 }
 
-/* ───────────────── FOOTER ───────────────── */
-footer{ padding:68px 20px 48px; background:var(--noir); color:var(--blanc); }
+/* Repères pratiques sous le calendrier. */
+.infos{
+  display:grid;
+  gap:0;
+  margin-top:22px;
+  border:1px solid var(--ligne);
+  border-radius:var(--rayon);
+  overflow:hidden;
+  background:var(--blanc);
+}
 
-.footer-inner{ max-width:900px; margin-inline:auto; }
+@media (min-width:760px){ .infos{ grid-template-columns:repeat(3,1fr); } }
+
+.infos > div{
+  padding:26px 28px;
+  border-bottom:1px solid var(--ligne);
+}
+.infos > div:last-child{ border-bottom:none; }
+
+@media (min-width:760px){
+  .infos > div{ border-bottom:none; border-right:1px solid var(--ligne); }
+  .infos > div:last-child{ border-right:none; }
+}
+
+.infos h4{
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  font-size:.62rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ardoise);
+  margin-bottom:10px;
+}
+
+.infos p{ font-size:.95rem; line-height:1.75; }
+
+/* ───────────────── FOOTER ───────────────── */
+footer{ padding:clamp(56px,8vw,84px) var(--gouttiere) 44px; background:var(--noir); color:var(--blanc); }
+
+.footer-inner{ max-width:1000px; margin-inline:auto; }
 
 .footer-top{
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-bottom:8px;
+  gap:18px;
+  margin-bottom:10px;
+}
+
+/* Le logo de marque, enfin utilisé — ramené en monochrome pour ne pas
+   casser le système noir/blanc (l'original est bleu).
+   Le fichier source porte l'emblème ET le mot « AXIUM » : on recadre sur
+   la partie haute pour ne garder que l'emblème, sinon le nom s'afficherait
+   deux fois (une fois dessiné, une fois composé juste en dessous). */
+.footer-mark{
+  width:clamp(72px,10vw,96px);
+  aspect-ratio:500/292;
+  object-fit:cover;
+  object-position:top center;
+  filter:grayscale(1) brightness(0) invert(1);
+  opacity:.9;
 }
 
 .footer-logo{
   display:flex;
   align-items:baseline;
   font-size:1.5rem;
-  text-align:center;
+  line-height:1;
 }
 .footer-logo .logo-strong{ font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:-0.01em; }
 .footer-logo .logo-light{ font-family:'Inter',sans-serif; font-weight:500; opacity:.48; }
 
-.footer-place{
-  font-family:'Space Mono',monospace;
-  font-size:.66rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.38);
-  border:1px solid var(--ligne-onDark);
-  padding:4px 10px;
-  border-radius:8px;
-}
-
-footer > .footer-inner > p.footer-tagline{
+.footer-tagline{
   color:rgba(255,255,255,0.45);
   text-align:center;
   margin-bottom:4px;
   line-height:1.7;
   font-size:.95rem;
 }
+
+.footer-nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px 26px;
+  margin-top:26px;
+}
+
+.footer-nav a{
+  font-family:'Space Mono',monospace;
+  font-size:.68rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.5);
+  transition:color var(--t-mid) var(--ease);
+}
+.footer-nav a:hover{ color:var(--blanc); }
 
 .footer-legal{
   margin-top:38px;
@@ -1151,6 +1537,18 @@ footer > .footer-inner > p.footer-tagline{
   line-height:1.85;
   margin-bottom:10px;
   text-align:center;
+  max-width:70ch;
+  margin-inline:auto;
+}
+
+.footer-base{
+  margin-top:30px;
+  font-family:'Space Mono',monospace;
+  font-size:.62rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.3);
+  text-align:center;
 }
 
 /* ───────────────── REVEAL ─────────────────
@@ -1168,12 +1566,21 @@ footer > .footer-inner > p.footer-tagline{
 
 .js .fade-in.visible{ opacity:1; transform:translateY(0); }
 
+/* Contraste renforcé — les hairlines décoratifs deviennent lisibles. */
+@media (prefers-contrast:more){
+  :root{ --ligne:rgba(10,10,10,0.28); --ligne-onDark:rgba(255,255,255,0.34); --ardoise:#3C4045; }
+  .section--topo::before{ opacity:.04; }
+  .anatomy{ display:none; }
+}
+
 </style>
 
 <script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><symbol id="topo" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M0 140L50 165L100 181L150 186L200 186L250 187L300 187L350 180L400 167L450 155L500 151L550 157L600 163L650 162L700 153L750 143L800 135L850 127L900 112L950 92L1000 75L1050 71L1100 81L1150 95L1200 108L1250 119L1300 132L1350 150L1400 164L1450 169L1500 163L1550 156L1600 155"/><path d="M0 224L50 239L100 240L150 231L200 222L250 217L300 213L350 204L400 194L450 189L500 193L550 199L600 198L650 186L700 169L750 156L800 147L850 138L900 127L950 119L1000 125L1050 143L1100 166L1150 182L1200 192L1250 200L1300 209L1350 217L1400 216L1450 207L1500 201L1550 204L1600 214"/><path d="M0 286L50 286L100 273L150 256L200 246L250 243L300 241L350 235L400 229L450 228L500 232L550 230L600 216L650 197L700 181L750 176L800 176L850 176L900 179L950 191L1000 214L1050 238L1100 252L1150 256L1200 255L1250 257L1300 260L1350 257L1400 250L1450 247L1500 253L1550 264L1600 270"/><path d="M0 322L50 310L100 291L150 277L200 273L250 276L300 276L350 270L400 264L450 262L500 259L550 248L600 230L650 216L700 215L750 225L800 237L850 248L900 262L950 283L1000 303L1050 312L1100 308L1150 300L1200 297L1250 299L1300 299L1350 295L1400 293L1450 298L1500 305L1550 304L1600 289"/><path d="M0 342L50 327L100 312L150 306L200 310L250 315L300 312L350 302L400 293L450 289L500 282L550 271L600 262L650 266L700 284L750 304L800 320L850 332L900 344L950 356L1000 360L1050 351L1100 339L1150 334L1200 338L1250 341L1300 339L1350 336L1400 336L1450 336L1500 326L1550 306L1600 283"/><path d="M0 362L50 352L100 344L150 346L200 352L250 352L300 342L350 329L400 322L450 320L500 319L550 318L600 326L650 346L700 371L750 388L800 394L850 396L900 400L950 399L1000 389L1050 376L1100 372L1150 377L1200 383L1250 380L1300 372L1350 365L1400 358L1450 345L1500 325L1550 308L1600 303"/><path d="M0 393L50 388L100 385L150 388L200 391L250 384L300 370L350 361L400 363L450 372L500 380L550 391L600 410L650 432L700 447L750 447L800 440L850 435L900 432L950 425L1000 415L1050 411L1100 416L1150 421L1200 416L1250 403L1300 389L1350 379L1400 369L1450 356L1500 348L1550 355L1600 374"/><path d="M0 433L50 429L100 427L150 428L200 425L250 416L300 408L350 411L400 427L450 444L500 457L550 470L600 486L650 496L700 492L750 478L800 468L850 464L900 462L950 456L1000 451L1050 453L1100 456L1150 448L1200 431L1250 414L1300 407L1350 404L1400 402L1450 405L1500 420L1550 443L1600 460"/><path d="M0 477L50 470L100 466L150 466L200 465L250 461L300 465L350 483L400 505L450 520L500 527L550 532L600 536L650 530L700 514L750 500L800 497L850 499L900 497L950 491L1000 488L1050 487L1100 479L1150 462L1200 447L1250 445L1300 453L1350 462L1400 471L1450 488L1500 508L1550 520L1600 519"/><path d="M0 518L50 510L100 508L150 513L200 518L250 524L300 539L350 560L400 576L450 579L500 574L550 569L600 563L650 550L700 536L750 532L800 536L850 538L900 531L950 523L1000 518L1050 511L1100 499L1150 490L1200 495L1250 511L1300 527L1350 539L1400 551L1450 565L1500 570L1550 563L1600 554"/><path d="M0 559L50 554L100 561L150 573L200 584L250 595L300 611L350 624L400 625L450 613L500 600L550 593L600 585L650 575L700 570L750 574L800 577L850 571L900 559L950 551L1000 548L1050 544L1100 543L1150 553L1200 574L1250 593L1300 602L1350 606L1400 611L1450 611L1500 602L1550 593L1600 593"/><path d="M0 606L50 609L100 624L150 641L200 651L250 658L300 665L350 664L400 651L450 633L500 623L550 620L600 616L650 611L700 612L750 616L800 611L850 598L900 589L950 591L1000 596L1050 602L1100 615L1150 635L1200 652L1250 656L1300 652L1350 650L1400 647L1450 640L1500 633L1550 634L1600 640"/><path d="M0 662L50 673L100 692L150 704L200 705L250 702L300 698L350 686L400 669L450 657L500 656L550 658L600 656L650 653L700 653L750 651L800 641L850 634L900 639L950 653L1000 665L1050 677L1100 692L1150 704L1200 703L1250 692L1300 685L1350 683L1400 679L1450 674L1500 674L1550 678L1600 673"/><path d="M0 724L50 738L100 750L150 750L200 740L250 729L300 720L350 707L400 695L450 694L500 700L550 701L600 696L650 692L700 692L750 688L800 685L850 692L900 710L950 726L1000 735L1050 741L1100 747L1150 742L1200 729L1250 720L1300 719L1350 720L1400 716L1450 713L1500 712L1550 705L1600 690"/><path d="M0 782L50 790L100 791L150 779L200 762L250 751L300 745L350 738L400 735L450 741L500 746L550 742L600 735L650 734L700 737L750 740L800 747L850 765L900 782L950 787L1000 786L1050 783L1100 778L1150 766L1200 756L1250 757L1300 760L1350 757L1400 750L1450 745L1500 738L1550 726L1600 719"/><path d="M0 829L50 827L100 817L150 799L200 786L250 783L300 783L350 781L400 783L450 789L500 788L550 781L600 779L650 786L700 796L750 804L800 817L850 831L900 834L950 826L1000 817L1050 812L1100 803L1150 796L1200 796L1250 800L1300 797L1350 787L1400 779L1450 776L1500 770L1550 770L1600 782"/></symbol></svg>
 
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 
@@ -1190,6 +1597,7 @@ footer > .footer-inner > p.footer-tagline{
       <li><a href="#pourquoi">Pourquoi Axium</a></li>
       <li><a href="#prestations">Prestations</a></li>
       <li><a href="#deroulement">Déroulement</a></li>
+      <li><a href="#questions">Questions</a></li>
       <li><a href="#contact">Réservation</a></li>
     </ul>
   </nav>
@@ -1209,6 +1617,7 @@ footer > .footer-inner > p.footer-tagline{
     <a href="#pourquoi">Pourquoi Axium</a>
     <a href="#prestations">Prestations</a>
     <a href="#deroulement">Déroulement</a>
+    <a href="#questions">Questions</a>
     <a href="#contact">Réservation</a>
   </nav>
 
@@ -1256,6 +1665,14 @@ footer > .footer-inner > p.footer-tagline{
 
 </section>
 
+<!-- BANDEAU DÉFILANT -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Massage sportif</span><span>Hijama</span><span>Relaxation</span><span>Récupération</span><span>Mobilité</span><span>Genève</span>
+    <span>Massage sportif</span><span>Hijama</span><span>Relaxation</span><span>Récupération</span><span>Mobilité</span><span>Genève</span>
+  </div>
+</div>
+
 <!-- PROFIL -->
 <section class="section" id="profil">
 
@@ -1270,7 +1687,7 @@ footer > .footer-inner > p.footer-tagline{
   <div class="about-grid">
 
     <div class="about-image fade-in">
-      <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann, praticien Axium.Perform" loading="lazy" decoding="async">
+      <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann, praticien Axium.Perform, en montagne" loading="lazy" decoding="async">
       <span class="bib">Athlète &amp; praticien</span>
     </div>
 
@@ -1293,6 +1710,28 @@ footer > .footer-inner > p.footer-tagline{
         le relâchement nerveux, et la hijama, méthode traditionnelle par ventouses,
         pour la circulation et la récupération en profondeur.
       </p>
+
+      <div class="fiche">
+        <dl>
+          <div>
+            <dt>Discipline</dt>
+            <dd>Demi-fond</dd>
+          </div>
+          <div>
+            <dt>Méthodes</dt>
+            <dd>Massage &amp; hijama</dd>
+          </div>
+          <div>
+            <dt>Lieu</dt>
+            <dd>Genève, Suisse</dd>
+          </div>
+          <div>
+            <dt>Public</dt>
+            <dd>Sportif ou non</dd>
+          </div>
+        </dl>
+      </div>
+
       <div>
         <a href="#contact" class="btn-primary">Réserver une séance <span class="arrow">→</span></a>
       </div>
@@ -1304,7 +1743,10 @@ footer > .footer-inner > p.footer-tagline{
 </section>
 
 <!-- POURQUOI AXIUM -->
-<section class="section section--dark" id="pourquoi">
+<section class="section section--dark section--topo" id="pourquoi">
+
+  <svg class="topo-layer" aria-hidden="true" focusable="false"><use href="#topo"/></svg>
+
 
   <div class="index">
     <span class="index-num">02</span>
@@ -1314,7 +1756,7 @@ footer > .footer-inner > p.footer-tagline{
 
   <h2 class="section-title">Pourquoi<br>Axium</h2>
 
-  <p class="pourquoi-lead fade-in">
+  <p class="section-lead fade-in">
     Trois principes qui structurent chaque séance, du premier échange à la récupération.
   </p>
 
@@ -1342,6 +1784,18 @@ footer > .footer-inner > p.footer-tagline{
 
 </section>
 
+<!-- BANDE PLEINE LARGEUR -->
+<section class="break" aria-label="Manifeste">
+
+  <div class="break-bg" aria-hidden="true"></div>
+
+  <div class="break-inner">
+    <blockquote>La charge se gagne à l'entraînement.<br>La progression se gagne après.</blockquote>
+    <p class="break-cite">Axium.Perform — Genève</p>
+  </div>
+
+</section>
+
 <!-- SERVICES -->
 <section class="section" id="prestations">
 
@@ -1357,9 +1811,17 @@ footer > .footer-inner > p.footer-tagline{
 
     <div class="service-card fade-in">
 
+      <span class="service-tag">Après l'effort</span>
+
       <h3>Massage sportif</h3>
 
       <p>Travail musculaire ciblé pour dénouer les tensions et accélérer la récupération après l'effort.</p>
+
+      <ul class="service-points">
+        <li>Zones travaillées définies avec vous</li>
+        <li>Idéal après une séance ou une course</li>
+        <li>Pression adaptée en continu</li>
+      </ul>
 
       <div class="service-bottom">
         <div>
@@ -1373,9 +1835,17 @@ footer > .footer-inner > p.footer-tagline{
 
     <div class="service-card fade-in">
 
+      <span class="service-tag">Retour au calme</span>
+
       <h3>Relaxation</h3>
 
       <p>Relâchement global du corps et du système nerveux — pour souffler et récupérer en profondeur.</p>
+
+      <ul class="service-points">
+        <li>Corps entier, rythme lent</li>
+        <li>Pour les semaines trop chargées</li>
+        <li>Aucun prérequis sportif</li>
+      </ul>
 
       <div class="service-bottom">
         <div>
@@ -1389,26 +1859,40 @@ footer > .footer-inner > p.footer-tagline{
 
     <div class="service-card fade-in">
 
+      <span class="service-tag">Traditionnel</span>
+
       <h3>Hijama</h3>
 
       <p>Méthode traditionnelle par ventouses, pour stimuler la circulation et la récupération en profondeur.</p>
 
+      <ul class="service-points">
+        <li>Matériel à usage unique</li>
+        <li>Points définis lors de l'échange</li>
+        <li>Seule ou combinée au massage</li>
+      </ul>
+
       <div class="service-bottom">
         <div>
-          <div class="price" style="font-size:1.1rem;">Sur demande</div>
+          <div class="price price--word">Sur demande</div>
           <div class="duration">Selon besoin du client</div>
         </div>
-        <a href="#contact" class="card-arrow" aria-label="Réserver une hijama"><span>→</span></a>
+        <a href="#contact" class="card-arrow" aria-label="Demander une séance de hijama"><span>→</span></a>
       </div>
 
     </div>
 
   </div>
 
+  <p class="services-note fade-in">
+    Tarifs en francs suisses (CHF) · Paiement sur place · Annulation gratuite jusqu'à 24h avant
+  </p>
+
 </section>
 
 <!-- PROCESS -->
 <section class="section section--dark" id="deroulement">
+
+  <img class="anatomy" src="massage-therapy-2277454_1280.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
 
   <div class="index">
     <span class="index-num">04</span>
@@ -1448,11 +1932,76 @@ footer > .footer-inner > p.footer-tagline{
 
 </section>
 
-<!-- CONTACT -->
-<section class="section" id="contact">
+<!-- QUESTIONS -->
+<section class="section" id="questions">
 
   <div class="index">
     <span class="index-num">05</span>
+    <span class="index-label">Questions</span>
+    <span class="index-line"></span>
+  </div>
+
+  <h2 class="section-title">Avant<br>de venir</h2>
+
+  <div class="faq fade-in">
+
+    <details>
+      <summary>Comment choisir entre massage et hijama ?<span class="faq-sign" aria-hidden="true"></span></summary>
+      <div class="faq-body">
+        <p>Le plus simple est de ne pas choisir seul : on en parle au début de la séance. En règle générale, le massage répond à une tension musculaire identifiée ou à une récupération après effort ; la hijama s'adresse plutôt à un besoin de circulation et de récupération plus profonde.</p>
+        <p>Les deux peuvent être combinés dans une même séance si cela a du sens pour votre situation.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>La hijama, c'est quoi exactement ?<span class="faq-sign" aria-hidden="true"></span></summary>
+      <div class="faq-body">
+        <p>C'est une méthode traditionnelle par ventouses : des cupules sont posées sur des points précis afin de créer une aspiration locale. Le matériel utilisé est à usage unique.</p>
+        <p>Il s'agit d'une pratique de bien-être et de récupération, pas d'un acte médical. En cas de doute sur votre situation, parlez-en d'abord à votre médecin.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Est-ce que c'est douloureux ?<span class="faq-sign" aria-hidden="true"></span></summary>
+      <div class="faq-body">
+        <p>La pression est ajustée en continu pendant la séance. Un travail sur une zone très contractée peut être inconfortable sur le moment, mais rien ne doit être douloureux : dites-le simplement et on adapte immédiatement.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Comment me préparer ?<span class="faq-sign" aria-hidden="true"></span></summary>
+      <div class="faq-body">
+        <p>Venez avec une tenue confortable, évitez un repas lourd juste avant, et prévoyez de bien vous hydrater avant comme après. Si vous venez après une séance d'entraînement ou une compétition, mentionnez-le : cela change la façon de travailler.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Y a-t-il des contre-indications ?<span class="faq-sign" aria-hidden="true"></span></summary>
+      <div class="faq-body">
+        <p>Oui. Certaines situations demandent un avis médical préalable — notamment une blessure récente, une pathologie connue, un traitement en cours (anticoagulants par exemple), ou une grossesse.</p>
+        <p>Les prestations proposées sont des services de bien-être et de récupération. Elles ne remplacent en aucun cas un avis ou un traitement médical.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Et si je dois annuler ?<span class="faq-sign" aria-hidden="true"></span></summary>
+      <div class="faq-body">
+        <p>L'annulation est gratuite jusqu'à 24h avant le rendez-vous, directement depuis le lien de confirmation reçu à la réservation. Passé ce délai, la séance peut être facturée.</p>
+      </div>
+    </details>
+
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+<section class="section section--topo" id="contact">
+
+  <svg class="topo-layer" aria-hidden="true" focusable="false"><use href="#topo"/></svg>
+
+
+  <div class="index">
+    <span class="index-num">06</span>
     <span class="index-label">Réservation</span>
     <span class="index-line"></span>
   </div>
@@ -1485,6 +2034,30 @@ footer > .footer-inner > p.footer-tagline{
 
   </div>
 
+  <!-- ┌─────────────────────────────────────────────────────────────┐
+       │ À COMPLÉTER PAR SEVANN                                      │
+       │ Ces trois blocs sont volontairement génériques : je n'ai    │
+       │ pas l'adresse exacte, le téléphone ni les horaires réels.   │
+       │ Remplacer les textes ci-dessous par les vraies infos, et    │
+       │ ajouter un lien tel: / mailto: si tu veux être joignable    │
+       │ autrement que par Calendly. Penser à mettre à jour aussi le │
+       │ bloc JSON-LD en bas de page (adresse, téléphone, horaires). │
+       └─────────────────────────────────────────────────────────────┘ -->
+  <div class="infos fade-in">
+    <div>
+      <h4>Lieu</h4>
+      <p>Genève, Suisse.<br>L'adresse précise est communiquée à la confirmation du rendez-vous.</p>
+    </div>
+    <div>
+      <h4>Sur place</h4>
+      <p>Prévoir une tenue confortable.<br>Paiement sur place, en CHF.</p>
+    </div>
+    <div>
+      <h4>Annulation</h4>
+      <p>Gratuite jusqu'à 24h avant, depuis le lien de confirmation.</p>
+    </div>
+  </div>
+
 </section>
 
 <!-- FOOTER -->
@@ -1493,10 +2066,19 @@ footer > .footer-inner > p.footer-tagline{
   <div class="footer-inner">
 
     <div class="footer-top fade-in">
+      <img class="footer-mark" src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="Logo Axium" loading="lazy" decoding="async">
       <div class="footer-logo"><span class="logo-strong">Axium</span><span class="logo-light">.Perform</span></div>
     </div>
 
-    <p class="footer-tagline fade-in">Massage · Hijama · Récupération sportive</p>
+    <p class="footer-tagline fade-in">Massage · Hijama · Récupération sportive — Genève</p>
+
+    <nav class="footer-nav fade-in" aria-label="Navigation de pied de page">
+      <a href="#profil">Profil</a>
+      <a href="#prestations">Prestations</a>
+      <a href="#deroulement">Déroulement</a>
+      <a href="#questions">Questions</a>
+      <a href="#contact">Réservation</a>
+    </nav>
 
     <div class="footer-legal fade-in">
 
@@ -1512,9 +2094,35 @@ footer > .footer-inner > p.footer-tagline{
 
     </div>
 
+    <p class="footer-base">© <span id="year">2026</span> Axium.Perform — Genève</p>
+
   </div>
 
 </footer>
+
+<!-- Données structurées : aide Google à afficher l'activité comme un
+     commerce local. À compléter avec l'adresse, le téléphone et les
+     horaires réels — puis vérifier sur search.google.com/test/rich-results -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"HealthAndBeautyBusiness",
+  "name":"Axium.Perform",
+  "description":"Massage sportif, relaxation et hijama à Genève. Récupération et performance, par un praticien lui-même athlète de demi-fond.",
+  "areaServed":"Genève, Suisse",
+  "address":{"@type":"PostalAddress","addressLocality":"Genève","addressCountry":"CH"},
+  "currenciesAccepted":"CHF",
+  "potentialAction":{
+    "@type":"ReserveAction",
+    "target":"https://calendly.com/axium-perform/seance-de-massage-axium"
+  },
+  "makesOffer":[
+    {"@type":"Offer","name":"Massage sportif","price":"40","priceCurrency":"CHF"},
+    {"@type":"Offer","name":"Relaxation","price":"70","priceCurrency":"CHF"},
+    {"@type":"Offer","name":"Hijama"}
+  ]
+}
+</script>
 
 <script>
 
@@ -1533,6 +2141,13 @@ const heroBg     = document.querySelector('.hero-bg');
 const burger     = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobileMenu');
 
+/* Si l'utilisateur change son réglage système en cours de route, on
+   arrête la parallaxe immédiatement plutôt que d'attendre un reload. */
+motionQ.addEventListener('change', e => {
+  reduced = e.matches;
+  if(reduced && heroBg) heroBg.style.transform = '';
+});
+
 /* ───────────────── TITRES : découpe en lignes masquées ───────────────── */
 function splitLines(el){
   const lines = el.innerHTML.split(/<br\s*\/?>/i).map(s => s.trim()).filter(Boolean);
@@ -1543,7 +2158,7 @@ function splitLines(el){
   el.classList.add('is-split');
 }
 
-document.querySelectorAll('.section-title, .hero h1').forEach(splitLines);
+document.querySelectorAll('.section-title, .hero h1, .break blockquote').forEach(splitLines);
 
 /* ───────────────── ENTRÉES AU SCROLL ─────────────────
    Le décalage se calcule par groupe (entre voisins), pas globalement :
@@ -1563,7 +2178,7 @@ function reveal(el){
   }
 }
 
-const revealTargets = document.querySelectorAll('.fade-in, .index, .section-title');
+const revealTargets = document.querySelectorAll('.fade-in, .index, .section-title, .break blockquote');
 
 if(reduced){
   revealTargets.forEach(el => el.classList.add('is-in','visible'));
@@ -1661,7 +2276,8 @@ if(sections.length){
 }
 
 /* ───────────────── PRIX : montée au compteur ─────────────────
-   Le prix se compose comme un chrono qui s'arrête sur le tarif. */
+   Le prix se compose comme un chrono qui s'arrête sur le tarif.
+   Les prix non chiffrés ("Sur demande") sont ignorés par le motif. */
 if(!reduced){
   const easeOut = t => 1 - Math.pow(1 - t, 4);
 
@@ -1705,6 +2321,10 @@ if(clockEl){
   tick();
   window.setInterval(() => { if(!document.hidden) tick(); }, 1000);
 }
+
+/* L'année du copyright se met à jour toute seule. */
+const yearEl = document.getElementById('year');
+if(yearEl) yearEl.textContent = new Date().getFullYear();
 
 /* ───────────────── MENU PLEIN ÉCRAN ───────────────── */
 let lastFocused = null;
@@ -1769,6 +2389,17 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+/* ───────────────── FAQ : une seule réponse ouverte ─────────────────
+   <details> gère l'accessibilité tout seul ; on ajoute juste la
+   fermeture des voisines pour garder la liste lisible. */
+const faqItems = Array.from(document.querySelectorAll('.faq details'));
+faqItems.forEach(item => {
+  item.addEventListener('toggle', () => {
+    if(!item.open) return;
+    faqItems.forEach(other => { if(other !== item) other.open = false; });
+  });
+});
+
 /* ───────────────── CALENDRIER — chargement différé ─────────────────
    Le widget ne part qu'à l'approche de la section : la page s'ouvre
    sans attendre un script tiers. */
@@ -1778,6 +2409,25 @@ document.addEventListener('keydown', (e) => {
   if(!widget) return;
 
   const done = () => { if(skeleton) skeleton.classList.add('is-done'); };
+
+  const fallback = () => {
+    /* Bloqueur de pub, réseau coupé… : on ne laisse jamais la
+       réservation dans le vide, on renvoie sur Calendly. */
+    if(!skeleton) return;
+    const label = skeleton.querySelector('.label');
+    if(label) label.textContent = 'Calendrier momentanément indisponible';
+    const rail = skeleton.querySelector('.rail');
+    if(rail) rail.remove();
+    if(!skeleton.querySelector('.fallback-link')){
+      const a = document.createElement('a');
+      a.className = 'btn-secondary fallback-link';
+      a.href = widget.dataset.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.innerHTML = 'Ouvrir le calendrier <span class="arrow">→</span>';
+      skeleton.appendChild(a);
+    }
+  };
 
   const watch = new MutationObserver(() => {
     if(widget.querySelector('iframe')){
@@ -1800,24 +2450,14 @@ document.addEventListener('keydown', (e) => {
         }
       }, 380);
     };
-    s.onerror = () => {
-      /* Bloqueur de pub, réseau coupé… : on ne laisse jamais la
-         réservation dans le vide, on renvoie sur Calendly. */
-      if(!skeleton) return;
-      skeleton.querySelector('.label').textContent = 'Calendrier momentanément indisponible';
-      const rail = skeleton.querySelector('.rail');
-      if(rail) rail.remove();
-      if(!skeleton.querySelector('.fallback-link')){
-        const a = document.createElement('a');
-        a.className = 'btn-secondary fallback-link';
-        a.href = widget.dataset.url;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.innerHTML = 'Ouvrir le calendrier <span class="arrow">→</span>';
-        skeleton.appendChild(a);
-      }
-    };
+    s.onerror = fallback;
     document.head.appendChild(s);
+
+    /* Si au bout de 8s rien n'est monté (script chargé mais bloqué,
+       réseau très lent), on bascule quand même sur le lien direct. */
+    window.setTimeout(() => {
+      if(!widget.querySelector('iframe')) fallback();
+    }, 8000);
   }
 
   const io = new IntersectionObserver(entries => {
