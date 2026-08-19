@@ -1234,6 +1234,150 @@ html.is-compact .burger{ top:12px; }
 
 @media (max-width:1100px){ .anatomy{ display:none; } }
 
+/* ───────────────── SÉQUENCE PILOTÉE AU SCROLL ─────────────────
+   Le principe de la page produit : la section s'allonge, son contenu
+   reste épinglé, et la barre de défilement devient la ligne de temps.
+   Le canvas dessine le terrain image par image — ce n'est pas une
+   vidéo, c'est recalculé à chaque frame, donc net à toute résolution
+   et sans un seul kilo-octet d'image à télécharger.
+
+   Tout est dans .is-scrub, posé par le script uniquement s'il peut
+   vraiment fonctionner : sans JS, ou en mouvement réduit, la section
+   reste la grille de 4 cartes d'origine. */
+.scrub-canvas{ display:none; }
+
+.scrub.is-scrub{
+  height:360vh;
+  padding:0;
+  overflow:visible;   /* sinon position:sticky ne colle pas */
+}
+
+.scrub.is-scrub .scrub-stage{
+  position:sticky;
+  top:0;
+  height:100svh;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  padding:clamp(76px,10vh,110px) var(--gouttiere) clamp(40px,6vh,64px);
+}
+
+.scrub.is-scrub .scrub-inner{ width:100%; }
+
+.scrub.is-scrub .scrub-canvas{
+  display:block;
+  position:absolute;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+
+.scrub.is-scrub .anatomy{ z-index:0; opacity:.07; }
+
+/* Voile dégradé entre le terrain et le texte : les crêtes passent
+   derrière la colonne de lecture sans jamais la traverser. */
+.scrub.is-scrub .scrub-stage::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:linear-gradient(to right, rgba(10,10,10,0.94) 0%, rgba(10,10,10,0.72) 32%, rgba(10,10,10,0) 66%);
+}
+.scrub.is-scrub .index,
+.scrub.is-scrub .section-title,
+.scrub.is-scrub .scrub-steps,
+.scrub.is-scrub .scrub-meter{ position:relative; z-index:1; }
+
+.scrub.is-scrub .section-title{ margin-bottom:clamp(24px,4vh,40px); }
+
+/* Les 4 cartes occupent le même emplacement : une seule est lisible à
+   la fois, les autres attendent leur tour un cran plus bas. */
+.scrub.is-scrub .scrub-steps{
+  position:relative;
+  display:block;
+  border-radius:0;
+  min-height:15.5em;
+}
+
+.scrub.is-scrub .scrub-steps .process-card{
+  position:absolute;
+  inset:0 auto auto 0;
+  width:100%;
+  max-width:56ch;
+  background:transparent;
+  border:none;
+  padding:0;
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
+}
+
+.scrub.is-scrub .scrub-steps .process-card::after{ display:none; }
+.scrub.is-scrub .scrub-steps .process-card:hover{ background:transparent; transform:translateY(22px); }
+
+.scrub.is-scrub .scrub-steps .process-card.is-on{ opacity:1; transform:none; }
+.scrub.is-scrub .scrub-steps .process-card.is-on:hover{ transform:none; }
+
+.scrub.is-scrub .scrub-steps .process-step{ opacity:.6; margin-bottom:20px; }
+
+.scrub.is-scrub .scrub-steps h3{
+  font-size:clamp(1.7rem,4.6vw,3rem);
+  line-height:1.04;
+  margin-bottom:16px;
+}
+
+.scrub.is-scrub .scrub-steps p{
+  font-size:clamp(1rem,1.5vw,1.14rem);
+  line-height:1.8;
+  color:rgba(255,255,255,0.66);
+  max-width:46ch;
+}
+
+/* Compteur + rail : la position dans la séquence, lisible d'un coup. */
+.scrub-meter{ display:none; }
+
+.scrub.is-scrub .scrub-meter{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-top:clamp(28px,5vh,48px);
+}
+
+.scrub-count{
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  font-size:.72rem;
+  letter-spacing:.14em;
+  font-variant-numeric:tabular-nums;
+  color:rgba(255,255,255,0.4);
+  white-space:nowrap;
+}
+.scrub-count b{ color:var(--blanc); }
+
+.scrub-rail{
+  position:relative;
+  flex:1;
+  max-width:340px;
+  height:1px;
+  background:var(--ligne-onDark);
+  overflow:hidden;
+}
+.scrub-rail i{
+  position:absolute;
+  inset:0;
+  background:var(--blanc);
+  transform:scaleX(var(--p,0));
+  transform-origin:0 50%;
+}
+
+@media (max-width:760px){
+  .scrub.is-scrub{ height:300vh; }
+  .scrub.is-scrub .scrub-steps{ min-height:17em; }
+}
+
 /* ───────────────── FAQ ───────────────── */
 .faq{ max-width:900px; }
 
@@ -1889,43 +2033,61 @@ footer{ padding:clamp(56px,8vw,84px) var(--gouttiere) 44px; background:var(--noi
 
 </section>
 
-<!-- PROCESS -->
-<section class="section section--dark" id="deroulement">
+<!-- PROCESS — séquence pilotée au scroll
+     Sans JavaScript, sans le calque canvas ou en mouvement réduit, ce
+     bloc reste une simple grille de 4 cartes, entièrement lisible.
+     C'est le script qui pose .is-scrub et transforme la section en
+     séquence épinglée : rien n'est masqué avant que ça ne fonctionne. -->
+<section class="section section--dark scrub" id="deroulement">
 
-  <img class="anatomy" src="massage-therapy-2277454_1280.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <div class="scrub-stage">
 
-  <div class="index">
-    <span class="index-num">04</span>
-    <span class="index-label">Déroulement</span>
-    <span class="index-line"></span>
-  </div>
+    <canvas class="scrub-canvas" aria-hidden="true"></canvas>
+    <img class="anatomy" src="massage-therapy-2277454_1280.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
 
-  <h2 class="section-title">Votre<br>séance</h2>
+    <div class="scrub-inner">
 
-  <div class="instrument-grid process-track">
+      <div class="index">
+        <span class="index-num">04</span>
+        <span class="index-label">Déroulement</span>
+        <span class="index-line"></span>
+      </div>
 
-    <div class="process-card fade-in">
-      <div class="process-step">Étape 01</div>
-      <h3>Échange</h3>
-      <p>Un point rapide sur vos douleurs, votre charge d'entraînement et l'objectif du jour.</p>
-    </div>
+      <h2 class="section-title">Votre<br>séance</h2>
 
-    <div class="process-card fade-in">
-      <div class="process-step">Étape 02</div>
-      <h3>Travail ciblé</h3>
-      <p>Massage ou hijama, selon ce que votre corps demande ce jour-là.</p>
-    </div>
+      <div class="instrument-grid process-track scrub-steps">
 
-    <div class="process-card fade-in">
-      <div class="process-step">Étape 03</div>
-      <h3>Récupération</h3>
-      <p>Relâchement musculaire, retour au calme, corps déchargé.</p>
-    </div>
+        <div class="process-card fade-in" data-step="0">
+          <div class="process-step">Étape 01</div>
+          <h3>Échange</h3>
+          <p>Un point rapide sur vos douleurs, votre charge d'entraînement et l'objectif du jour.</p>
+        </div>
 
-    <div class="process-card fade-in">
-      <div class="process-step">Étape 04</div>
-      <h3>Conseils</h3>
-      <p>Hydratation, points de vigilance et suivi jusqu'à la prochaine séance.</p>
+        <div class="process-card fade-in" data-step="1">
+          <div class="process-step">Étape 02</div>
+          <h3>Travail ciblé</h3>
+          <p>Massage ou hijama, selon ce que votre corps demande ce jour-là.</p>
+        </div>
+
+        <div class="process-card fade-in" data-step="2">
+          <div class="process-step">Étape 03</div>
+          <h3>Récupération</h3>
+          <p>Relâchement musculaire, retour au calme, corps déchargé.</p>
+        </div>
+
+        <div class="process-card fade-in" data-step="3">
+          <div class="process-step">Étape 04</div>
+          <h3>Conseils</h3>
+          <p>Hydratation, points de vigilance et suivi jusqu'à la prochaine séance.</p>
+        </div>
+
+      </div>
+
+      <div class="scrub-meter" aria-hidden="true">
+        <span class="scrub-count"><b>01</b> / 04</span>
+        <span class="scrub-rail"><i></i></span>
+      </div>
+
     </div>
 
   </div>
@@ -2141,6 +2303,10 @@ const heroBg     = document.querySelector('.hero-bg');
 const burger     = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobileMenu');
 
+/* Renseigné plus bas par la séquence pilotée au scroll, et appelé depuis
+   onScroll() : la page garde un seul écouteur et une seule frame par tick. */
+let scrubUpdate = null;
+
 /* Si l'utilisateur change son réglage système en cours de route, on
    arrête la parallaxe immédiatement plutôt que d'attendre un reload. */
 motionQ.addEventListener('change', e => {
@@ -2245,6 +2411,8 @@ function onScroll(){
       }
     }
   }
+
+  if(scrubUpdate) scrubUpdate();
 
   lastY = y;
 }
@@ -2399,6 +2567,114 @@ faqItems.forEach(item => {
     faqItems.forEach(other => { if(other !== item) other.open = false; });
   });
 });
+
+/* ───────────────── SÉQUENCE PILOTÉE AU SCROLL ─────────────────
+   La barre de défilement devient la ligne de temps de la section : la
+   position dans le bloc (0 → 1) pilote à la fois le terrain dessiné au
+   canvas et l'étape affichée.
+
+   Le terrain est recalculé à chaque frame plutôt que lu dans une suite
+   d'images : net sur tout écran, et zéro octet à télécharger. Le jour où
+   de vraies photos existent, seule draw() est à remplacer par un
+   drawImage() sur la frame correspondant à p — le reste ne bouge pas. */
+(function scrollSequence(){
+  const section = document.querySelector('.scrub');
+  if(!section || reduced) return;                 /* mouvement réduit : on garde la grille */
+
+  const canvas = section.querySelector('.scrub-canvas');
+  const steps  = Array.from(section.querySelectorAll('.scrub-steps .process-card'));
+  const countB = section.querySelector('.scrub-count b');
+  const rail   = section.querySelector('.scrub-rail');
+  const ctx    = canvas && canvas.getContext ? canvas.getContext('2d') : null;
+  if(!ctx || !steps.length) return;               /* canvas indisponible : idem */
+
+  section.classList.add('is-scrub');
+
+  /* Les cartes ne sont plus révélées une à une par l'observer : c'est la
+     séquence qui décide laquelle est visible. */
+  steps.forEach(el => { el.classList.remove('fade-in'); el.style.removeProperty('--delay'); });
+
+  let W = 0, H = 0, active = -1, lastP = -1;
+
+  function resize(){
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const r = canvas.getBoundingClientRect();
+    W = r.width; H = r.height;
+    canvas.width  = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    lastP = -1;                                   /* force un redessin */
+  }
+
+  const clamp = (v,a,b) => v < a ? a : v > b ? b : v;
+
+  /* Le relief : des crêtes qui se tracent de la gauche, l'une après
+     l'autre, pendant que le point de vue descend. Même vocabulaire que
+     la topographie de fond — c'est la même main qui dessine. */
+  function draw(p){
+    ctx.clearRect(0, 0, W, H);
+    const n = W < 760 ? 12 : 20;
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineJoin = 'round';
+
+    for(let i = 0; i < n; i++){
+      const t = i / (n - 1);
+      /* Le +0.14 laisse quelques crêtes déjà tracées à l'arrivée : on
+         entre dans un paysage en place, pas sur un écran vide. */
+      const local = clamp((p * 1.1 + 0.14 - t * 0.5) / 0.55, 0, 1);
+      if(local <= 0) continue;
+
+      const y0  = H * (0.14 + t * 0.78) - p * H * 0.14;
+      const amp = H * 0.06 * (1 - t * 0.45) * (0.55 + 0.45 * Math.sin(p * Math.PI));
+      const seg = Math.max(26, Math.round(W / 16));
+      const upto = Math.max(1, Math.round(seg * local));
+
+      ctx.beginPath();
+      for(let s = 0; s <= upto; s++){
+        const u = s / seg;
+        const y = y0
+          + amp * Math.sin(u * Math.PI * 2 * (1.05 + i * 0.06) + i * 0.62 + p * 1.15)
+          + amp * 0.38 * Math.sin(u * Math.PI * 2 * 2.4 + i * 0.9 - p * 0.75);
+        s === 0 ? ctx.moveTo(u * W, y) : ctx.lineTo(u * W, y);
+      }
+      ctx.globalAlpha = (0.08 + 0.46 * local) * (1 - t * 0.35);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function update(){
+    const r = section.getBoundingClientRect();
+    if(r.bottom < -200 || r.top > window.innerHeight + 200) return;   /* hors champ : on ne calcule rien */
+
+    const span = section.offsetHeight - window.innerHeight;
+    const p = span > 0 ? clamp(-r.top / span, 0, 1) : 0;
+    if(Math.abs(p - lastP) < 0.0012) return;
+    lastP = p;
+
+    draw(p);
+    if(rail) rail.style.setProperty('--p', p.toFixed(4));
+
+    const i = Math.min(steps.length - 1, Math.floor(p * steps.length));
+    if(i !== active){
+      active = i;
+      steps.forEach((el, k) => el.classList.toggle('is-on', k === i));
+      if(countB) countB.textContent = String(i + 1).padStart(2, '0');
+    }
+  }
+
+  let rTick = false;
+  window.addEventListener('resize', () => {
+    if(rTick) return;
+    rTick = true;
+    requestAnimationFrame(() => { resize(); update(); rTick = false; });
+  }, { passive:true });
+
+  resize();
+  update();
+  scrubUpdate = update;      /* branché sur le rAF de scroll existant */
+})();
 
 /* ───────────────── CALENDRIER — chargement différé ─────────────────
    Le widget ne part qu'à l'approche de la section : la page s'ouvre
