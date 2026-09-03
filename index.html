@@ -81,7 +81,13 @@
   --ease:cubic-bezier(0.22,1,0.36,1);
   --t-fast:0.18s;
   --t-mid:0.42s;
+  /* Gouttière unique du cadre. Tout ce qui se pose sur un bord de
+     l'écran s'y aligne — équerres, lettres, en-tête, pastilles,
+     bouton WhatsApp. Avant, chacun avait son propre décalage
+     (+12, +18, +34) : invisible sur téléphone, franchement bancal
+     sur iPad, où les quatre bords tombaient à 30, 42, 48 et 64 px. */
   --marge:clamp(14px,3.2vw,30px);
+  --marge-rail:calc(var(--marge) + 30px);   /* le rail démarre après les équerres */
 }
 
 *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
@@ -157,7 +163,7 @@ summary:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; bord
 /* Rail de progression + le point lumineux qui le parcourt. */
 .frame-rail{
   position:absolute;
-  top:var(--marge); left:calc(var(--marge) + 34px); right:calc(var(--marge) + 34px);
+  top:var(--marge); left:var(--marge-rail); right:var(--marge-rail);
   height:1px;
   background:rgba(255,255,255,0.16);
   container-type:inline-size;   /* référence des 100cqw du point lumineux */
@@ -233,7 +239,7 @@ header{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 calc(var(--marge) + 18px);
+  padding:0 var(--marge);
   pointer-events:none;
 }
 header > *{ pointer-events:auto; }
@@ -503,8 +509,8 @@ html.is-deck .chapter.is-on .ch-media img{ transform:scale(1); }
 
 .wa{
   position:fixed;
-  left:calc(var(--marge) + 12px);
-  bottom:calc(var(--marge) + 20px);
+  left:var(--marge);
+  bottom:calc(var(--marge) + 26px);
   z-index:95;
   display:inline-flex; align-items:center; gap:9px;
   padding:11px 16px 11px 13px;
@@ -532,7 +538,7 @@ html.is-deck .chapter.is-on .ch-media img{ transform:scale(1); }
 /* ═══════════ PASTILLES DE CHAPITRE ═══════════ */
 .dots-nav{
   position:fixed;
-  right:calc(var(--marge) + 12px);
+  right:var(--marge);
   top:50%;
   transform:translateY(-50%);
   z-index:90;
@@ -542,7 +548,7 @@ html.is-deck .chapter.is-on .ch-media img{ transform:scale(1); }
   gap:15px;
 }
 html.is-deck .dots-nav{ display:flex; }
-@media (max-width:720px){ html.is-deck .dots-nav{ gap:11px; right:var(--marge); } }
+@media (max-width:720px){ html.is-deck .dots-nav{ gap:11px; } }
 
 .dots-nav button{
   position:relative;
@@ -603,7 +609,7 @@ html.no-motion .hint i{ animation:none; }
 .menu-close{
   position:fixed;
   top:calc(var(--marge) + 22px);
-  right:calc(var(--marge) + 18px);
+  right:var(--marge);
   z-index:210;
 }
 
