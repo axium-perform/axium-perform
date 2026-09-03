@@ -1,0 +1,8 @@
+# Axium.Perform — Genève
+# La page de suivi client est privée : elle ne doit jamais être indexée.
+
+User-agent: *
+Allow: /
+Disallow: /suivi.html
+
+Sitemap: https://axium-perform.github.io/axium-perform/sitemap.xml

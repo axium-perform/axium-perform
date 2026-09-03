@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+
+<title>Suivi client — Axium.Perform</title>
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23000'/%3E%3Cpath d='M17.4 6.5 24 25.5h-4.3l-1.2-3.6h-6.6L14 18.2h3l-1.7-5.1-4.2 12.4H6.8L13.4 6.5h4Z' fill='%2340D2EC'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="page.css">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   SUIVI CLIENT — outil privé
+   ───────────────────────────────────────────────────────────────────
+   Tout est stocké dans le navigateur de l'appareil qui ouvre la page.
+   Aucun serveur, aucun envoi, aucun compte. C'est un carnet, pas une
+   application : simple, mais ça implique deux choses à savoir, dites
+   franchement à l'écran plutôt que cachées dans une doc.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.outil{ max-width:980px; margin-inline:auto; padding:0 var(--marge) 70px; }
+
+.avert{
+  border:1px solid rgba(232,163,61,0.4);
+  background:rgba(232,163,61,0.07);
+  padding:16px 20px;
+  margin-bottom:30px;
+}
+.avert p{ color:rgba(255,255,255,0.78); font-size:.88rem; margin:0 0 8px; max-width:none; }
+.avert p:last-child{ margin:0; }
+.avert strong{ color:#E8A33D; font-weight:600; }
+
+.barre{
+  display:flex; flex-wrap:wrap; gap:10px;
+  align-items:center;
+  margin-bottom:22px;
+}
+
+input, textarea, select{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:.95rem;
+  background:rgba(255,255,255,0.05);
+  color:var(--blanc);
+  border:1px solid var(--ligne);
+  padding:11px 14px;
+  width:100%;
+}
+input::placeholder, textarea::placeholder{ color:rgba(255,255,255,0.3); }
+input:focus, textarea:focus, select:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+textarea{ resize:vertical; min-height:74px; line-height:1.6; }
+select option{ background:#111; }
+
+.btn{
+  font-family:'Space Mono',monospace;
+  font-weight:700; font-size:.68rem;
+  letter-spacing:.12em; text-transform:uppercase;
+  background:var(--blanc); color:var(--noir);
+  border:1px solid var(--blanc);
+  padding:11px 20px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background .3s var(--ease), color .3s var(--ease);
+}
+.btn:hover{ background:transparent; color:var(--blanc); }
+.btn--ghost{ background:transparent; color:var(--blanc); }
+.btn--ghost:hover{ background:var(--blanc); color:var(--noir); }
+.btn--danger{ background:transparent; color:#E8746B; border-color:rgba(232,116,107,.5); }
+.btn--danger:hover{ background:#E8746B; color:var(--noir); border-color:#E8746B; }
+
+.recherche{ flex:1; min-width:190px; }
+
+.grille{ display:grid; gap:26px; }
+@media (min-width:860px){ .grille{ grid-template-columns:288px 1fr; align-items:start; } }
+
+.liste{ display:grid; gap:2px; }
+.liste button{
+  display:block; width:100%; text-align:left;
+  background:rgba(255,255,255,0.03);
+  border:1px solid transparent;
+  border-left:2px solid transparent;
+  color:var(--blanc);
+  padding:13px 15px;
+  cursor:pointer;
+  font-family:'Inter',sans-serif; font-size:.94rem;
+  transition:background .25s var(--ease), border-color .25s var(--ease);
+}
+.liste button:hover{ background:rgba(255,255,255,0.07); }
+.liste button[aria-current="true"]{ border-left-color:var(--accent); background:rgba(64,210,236,0.09); }
+.liste small{
+  display:block;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem; letter-spacing:.08em;
+  color:var(--gris-faible);
+  margin-top:3px;
+}
+
+.fiche{ border:1px solid var(--ligne); padding:clamp(18px,3vw,28px); min-width:0; }
+.fiche h2{ margin-top:0; border-top:0; padding-top:0; }
+
+.champ{ display:grid; gap:6px; margin-bottom:13px; }
+.champ label{
+  font-family:'Space Mono',monospace;
+  font-size:.6rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--gris-faible);
+}
+.duo{ display:grid; gap:13px; }
+@media (min-width:560px){ .duo{ grid-template-columns:1fr 1fr; } }
+
+.seance{
+  border-top:1px solid var(--ligne);
+  padding:15px 0;
+}
+.seance:first-of-type{ border-top:0; }
+.seance-tete{
+  display:flex; flex-wrap:wrap; gap:8px 14px;
+  align-items:baseline; justify-content:space-between;
+  margin-bottom:6px;
+}
+.seance-date{
+  font-family:'Space Mono',monospace;
+  font-size:.7rem; letter-spacing:.08em;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+}
+.seance-type{
+  font-family:'Space Mono',monospace;
+  font-size:.6rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--gris-faible);
+  border:1px solid var(--ligne);
+  padding:3px 9px;
+}
+.seance p{ font-size:.92rem; margin:0 0 4px; white-space:pre-wrap; }
+.seance .zones{ color:var(--blanc); font-weight:500; }
+
+.vide{
+  color:var(--gris-faible);
+  font-size:.92rem;
+  padding:26px 0;
+  text-align:center;
+}
+
+.compteur{
+  font-family:'Space Mono',monospace;
+  font-size:.62rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--gris-faible);
+  font-variant-numeric:tabular-nums;
+}
+</style>
+
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="index.html" aria-label="Axium.Perform — accueil">Axium<span>Perform</span></a>
+    <a class="back" href="index.html">← Site public</a>
+  </div>
+</header>
+
+<main class="outil">
+
+  <p class="kicker">Outil privé — hors du site public</p>
+  <h1 style="font-size:clamp(1.9rem,6vw,2.9rem);margin-bottom:20px">Suivi client</h1>
+
+  <div class="avert">
+    <p><strong>Où sont les données.</strong> Tout reste dans le navigateur de cet appareil. Rien n'est envoyé nulle part, il n'y a ni compte ni serveur. Sur un autre téléphone ou un autre navigateur, cette page sera vide.</p>
+    <p><strong>Ce que ça implique.</strong> Vider l'historique du navigateur efface tout. <strong>Exportez régulièrement</strong> — le fichier est votre seule sauvegarde. Et évitez d'y écrire des informations de santé détaillées : l'appareil n'est pas chiffré, notez seulement ce qui vous est utile pour la séance suivante.</p>
+  </div>
+
+  <div class="barre">
+    <input class="recherche" id="q" type="search" placeholder="Rechercher un client…" aria-label="Rechercher un client">
+    <button class="btn" id="addClient">+ Client</button>
+    <button class="btn btn--ghost" id="exportBtn">Exporter</button>
+    <button class="btn btn--ghost" id="importBtn">Importer</button>
+    <input type="file" id="importFile" accept="application/json" hidden>
+  </div>
+
+  <div class="grille">
+
+    <div>
+      <p class="compteur" id="compteur">0 client</p>
+      <div class="liste" id="liste"></div>
+    </div>
+
+    <div class="fiche" id="fiche">
+      <p class="vide">Sélectionnez un client, ou créez-en un.</p>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="bas">
+  <div class="wrap">
+    <a href="index.html">Site public</a>
+    <span>Page privée · non indexée · données locales</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+
+const CLE = 'axium-suivi-v1';
+const $ = (id) => document.getElementById(id);
+
+let data = { clients: [] };
+let selection = null;
+
+/* ─── Stockage ─── */
+function charger(){
+  try{
+    const brut = localStorage.getItem(CLE);
+    if(brut) data = JSON.parse(brut);
+  }catch(e){
+    /* Stockage indisponible (navigation privée, réglage strict) : on
+       continue en mémoire plutôt que de planter la page. */
+    alerter("Stockage inaccessible — les modifications ne seront pas conservées.");
+  }
+  if(!Array.isArray(data.clients)) data.clients = [];
+}
+
+function sauver(){
+  try{
+    localStorage.setItem(CLE, JSON.stringify(data));
+  }catch(e){
+    alerter("Impossible d'enregistrer. Exportez vos données pour ne rien perdre.");
+  }
+}
+
+function alerter(msg){
+  const a = document.querySelector('.avert');
+  if(!a || a.dataset.alerte) return;
+  a.dataset.alerte = '1';
+  const p = document.createElement('p');
+  p.innerHTML = '<strong>Attention.</strong> ' + msg;
+  a.appendChild(p);
+}
+
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+const dateFr = (iso) => {
+  if(!iso) return '';
+  const [a,m,j] = iso.split('-');
+  return `${j}.${m}.${a}`;
+};
+
+/* ─── Liste ─── */
+function rendreListe(){
+  const filtre = $('q').value.trim().toLowerCase();
+  const liste = $('liste');
+  liste.textContent = '';
+
+  const vus = data.clients
+    .filter(c => !filtre || c.nom.toLowerCase().includes(filtre))
+    .sort((a,b) => (derniere(b) || '').localeCompare(derniere(a) || '') || a.nom.localeCompare(b.nom));
+
+  $('compteur').textContent = data.clients.length + (data.clients.length > 1 ? ' clients' : ' client');
+
+  if(!vus.length){
+    const p = document.createElement('p');
+    p.className = 'vide';
+    p.textContent = data.clients.length ? 'Aucun résultat.' : 'Aucun client pour l’instant.';
+    liste.appendChild(p);
+    return;
+  }
+
+  vus.forEach(c => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-current', c.id === selection ? 'true' : 'false');
+    b.textContent = c.nom;
+    const s = document.createElement('small');
+    const d = derniere(c);
+    s.textContent = (c.seances.length || 0) + ' séance' + (c.seances.length > 1 ? 's' : '') +
+                    (d ? ' · dernière ' + dateFr(d) : '');
+    b.appendChild(s);
+    b.addEventListener('click', () => { selection = c.id; rendre(); });
+    liste.appendChild(b);
+  });
+}
+
+const derniere = (c) => (c.seances || []).map(s => s.date).sort().pop() || '';
+
+/* ─── Fiche ─── */
+function rendreFiche(){
+  const f = $('fiche');
+  f.textContent = '';
+  const c = data.clients.find(x => x.id === selection);
+
+  if(!c){
+    const p = document.createElement('p');
+    p.className = 'vide';
+    p.textContent = 'Sélectionnez un client, ou créez-en un.';
+    f.appendChild(p);
+    return;
+  }
+
+  const h = document.createElement('h2');
+  h.textContent = c.nom;
+  f.appendChild(h);
+
+  /* Formulaire de nouvelle séance */
+  const form = document.createElement('form');
+  form.innerHTML =
+    '<div class="duo">' +
+      '<div class="champ"><label for="d">Date</label><input id="d" type="date" required></div>' +
+      '<div class="champ"><label for="t">Prestation</label><select id="t">' +
+        '<option>Massage sportif</option><option>Relaxation</option><option>Hijama</option><option>Massage + hijama</option>' +
+      '</select></div>' +
+    '</div>' +
+    '<div class="champ"><label for="z">Zones travaillées</label><input id="z" type="text" placeholder="Ischios droits, trapèzes…"></div>' +
+    '<div class="champ"><label for="n">Notes pour la prochaine fois</label><textarea id="n" placeholder="Pression supportée, ce qui a marché, à surveiller…"></textarea></div>';
+
+  const envoyer = document.createElement('button');
+  envoyer.type = 'submit';
+  envoyer.className = 'btn';
+  envoyer.textContent = 'Enregistrer la séance';
+  form.appendChild(envoyer);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    c.seances.push({
+      id: uid(),
+      date: form.querySelector('#d').value,
+      type: form.querySelector('#t').value,
+      zones: form.querySelector('#z').value.trim(),
+      notes: form.querySelector('#n').value.trim()
+    });
+    sauver();
+    rendre();
+  });
+
+  f.appendChild(form);
+  form.querySelector('#d').value = new Date().toISOString().slice(0, 10);
+
+  /* Historique */
+  const h3 = document.createElement('h2');
+  h3.textContent = 'Historique';
+  f.appendChild(h3);
+
+  const seances = (c.seances || []).slice().sort((a,b) => b.date.localeCompare(a.date));
+
+  if(!seances.length){
+    const p = document.createElement('p');
+    p.className = 'vide';
+    p.textContent = 'Aucune séance enregistrée.';
+    f.appendChild(p);
+  }
+
+  seances.forEach(s => {
+    const d = document.createElement('div');
+    d.className = 'seance';
+
+    const tete = document.createElement('div');
+    tete.className = 'seance-tete';
+    const dd = document.createElement('span');
+    dd.className = 'seance-date'; dd.textContent = dateFr(s.date);
+    const tt = document.createElement('span');
+    tt.className = 'seance-type'; tt.textContent = s.type;
+    tete.append(dd, tt);
+    d.appendChild(tete);
+
+    if(s.zones){
+      const p = document.createElement('p');
+      p.className = 'zones'; p.textContent = s.zones;
+      d.appendChild(p);
+    }
+    if(s.notes){
+      const p = document.createElement('p');
+      p.textContent = s.notes;
+      d.appendChild(p);
+    }
+
+    const sup = document.createElement('button');
+    sup.type = 'button';
+    sup.className = 'btn btn--danger';
+    sup.style.marginTop = '8px';
+    sup.textContent = 'Supprimer';
+    sup.addEventListener('click', () => {
+      if(!confirm('Supprimer la séance du ' + dateFr(s.date) + ' ?')) return;
+      c.seances = c.seances.filter(x => x.id !== s.id);
+      sauver(); rendre();
+    });
+    d.appendChild(sup);
+
+    f.appendChild(d);
+  });
+
+  /* Actions client */
+  const bas = document.createElement('div');
+  bas.className = 'barre';
+  bas.style.marginTop = '26px';
+
+  const ren = document.createElement('button');
+  ren.type = 'button'; ren.className = 'btn btn--ghost'; ren.textContent = 'Renommer';
+  ren.addEventListener('click', () => {
+    const n = prompt('Nom du client', c.nom);
+    if(n && n.trim()){ c.nom = n.trim(); sauver(); rendre(); }
+  });
+
+  const sup = document.createElement('button');
+  sup.type = 'button'; sup.className = 'btn btn--danger';
+  sup.textContent = 'Supprimer le client';
+  sup.addEventListener('click', () => {
+    if(!confirm('Supprimer ' + c.nom + ' et ses ' + c.seances.length + ' séance(s) ? C’est définitif.')) return;
+    data.clients = data.clients.filter(x => x.id !== c.id);
+    selection = null; sauver(); rendre();
+  });
+
+  bas.append(ren, sup);
+  f.appendChild(bas);
+}
+
+function rendre(){ rendreListe(); rendreFiche(); }
+
+/* ─── Actions globales ─── */
+$('addClient').addEventListener('click', () => {
+  const n = prompt('Nom du client');
+  if(!n || !n.trim()) return;
+  const c = { id: uid(), nom: n.trim(), seances: [] };
+  data.clients.push(c);
+  selection = c.id;
+  sauver(); rendre();
+});
+
+$('q').addEventListener('input', rendreListe);
+
+$('exportBtn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'axium-suivi-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+$('importBtn').addEventListener('click', () => $('importFile').click());
+
+$('importFile').addEventListener('change', (e) => {
+  const f = e.target.files[0];
+  if(!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try{
+      const nouveau = JSON.parse(r.result);
+      if(!nouveau || !Array.isArray(nouveau.clients)) throw new Error('format');
+      if(!confirm('Remplacer les ' + data.clients.length + ' client(s) actuels par les ' + nouveau.clients.length + ' du fichier ?')) return;
+      data = nouveau;
+      selection = null;
+      sauver(); rendre();
+    }catch(err){
+      alert("Fichier illisible. Attendu : un export réalisé depuis cette page.");
+    }
+  };
+  r.readAsText(f);
+  e.target.value = '';
+});
+
+charger();
+rendre();
+
+})();
+</script>
+
+</body>
+</html>
