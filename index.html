@@ -478,6 +478,57 @@ html.is-deck .chapter.is-on .ch-actions{ transition-delay:.18s; }
 html.is-deck .chapter .ch-media img{ transform:scale(1.06); transition:transform 1.6s var(--ease); }
 html.is-deck .chapter.is-on .ch-media img{ transform:scale(1); }
 
+/* ═══════════ 03 · 19 · 28 · CONTACT ═══════════ */
+.contacts{ display:grid; gap:2px; margin-top:16px; }
+.contacts a{
+  display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+  padding:14px 16px;
+  background:rgba(255,255,255,0.04);
+  text-decoration:none;
+  transition:background .28s var(--ease);
+}
+.contacts a:hover{ background:rgba(255,255,255,0.09); }
+.contacts span{
+  font-family:'Space Mono',monospace;
+  font-size:.6rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--gris-faible);
+}
+.contacts b{
+  font-family:'Space Mono',monospace;
+  font-size:.9rem; font-weight:700;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+
+.wa{
+  position:fixed;
+  left:calc(var(--marge) + 12px);
+  bottom:calc(var(--marge) + 20px);
+  z-index:95;
+  display:inline-flex; align-items:center; gap:9px;
+  padding:11px 16px 11px 13px;
+  background:rgba(0,0,0,0.62);
+  border:1px solid var(--ligne);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  color:var(--blanc);
+  text-decoration:none;
+  font-family:'Space Mono',monospace;
+  font-weight:700; font-size:.66rem;
+  letter-spacing:.13em; text-transform:uppercase;
+  transition:background .3s var(--ease), border-color .3s var(--ease), transform var(--t-fast) var(--ease);
+}
+.wa:hover{ background:var(--blanc); color:var(--noir); border-color:var(--blanc); }
+.wa:active{ transform:translateY(1px); }
+.wa svg{ width:16px; height:16px; fill:currentColor; flex:none; }
+
+/* Sur petit écran, l'icône seule : le libellé mangerait la moitié de la largeur. */
+@media (max-width:620px){
+  .wa{ padding:11px; border-radius:50%; }
+  .wa span{ display:none; }
+}
+
 /* ═══════════ PASTILLES DE CHAPITRE ═══════════ */
 .dots-nav{
   position:fixed;
@@ -870,6 +921,16 @@ html.is-deck .tail{ display:none; }
   <button class="btn" data-open-menu data-panel="reservation">Réserver une séance</button>
 </div>
 
+<!-- 28 · Joignable en un geste, depuis n'importe quel chapitre. Bulle
+     de discussion plutôt que le logo de la marque : même message, et pas
+     de reproduction de marque déposée. -->
+<a class="wa" href="https://wa.me/41787310732" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M12 3.2c-4.9 0-8.8 3.5-8.8 7.8 0 2.4 1.2 4.5 3.1 5.9v3.9l3.6-2a10 10 0 0 0 2.1.2c4.9 0 8.8-3.5 8.8-7.9S16.9 3.2 12 3.2Z"/>
+  </svg>
+  <span>WhatsApp</span>
+</a>
+
 <nav class="dots-nav" id="dotsNav" aria-label="Chapitres"></nav>
 
 <div class="hint" aria-hidden="true"><span>Défiler</span><i></i></div>
@@ -969,9 +1030,9 @@ html.is-deck .tail{ display:none; }
         <div class="cal-shell">
           <div class="cal-fallback" id="calFallback">
             <p id="calLabel">Chargement du calendrier</p>
-            <a class="btn btn--ghost" href="https://calendly.com/axium-perform/seance-de-massage-axium" target="_blank" rel="noopener">Ouvrir dans un onglet →</a>
+            <a class="btn btn--ghost" href="https://cal.com/axium.perform" target="_blank" rel="noopener">Ouvrir dans un onglet →</a>
           </div>
-          <div class="cal-widget" id="calWidget" data-url="https://calendly.com/axium-perform/seance-de-massage-axium"></div>
+          <div class="cal-widget" id="calWidget" data-cal="axium.perform"></div>
         </div>
       </section>
 
@@ -990,32 +1051,15 @@ html.is-deck .tail{ display:none; }
         </div>
       </section>
 
-      <!-- ┌────────────────────────────────────────────────────────────┐
-           │ PRÊT À ACTIVER — il me manque juste l'information          │
-           │                                                            │
-           │ 03 + 28 · Téléphone et WhatsApp                            │
-           │   Retire les commentaires ci-dessous et remplace le numéro │
-           │   par le tien au format international, sans espaces ni +.  │
-           │   Exemple pour le 079 123 45 67 : 41791234567              │
-           │                                                            │
-           │ 19 · Instagram — remplace axium.perform par ton compte.    │
-           │                                                            │
-           │ 33 · Cal.com — crée un compte sur cal.com, puis remplace   │
-           │   l'adresse Calendly dans data-url (bloc Réservation).     │
-           │   Le reste du code n'a pas besoin d'être touché.           │
-           │                                                            │
-           │ 49 · Lettre d'information — il faut choisir un service     │
-           │   (Buttondown, Brevo…). Dis-moi lequel et je le branche.   │
-           └────────────────────────────────────────────────────────────┘ -->
       <section class="menu-panel" id="panel-contact">
         <h3>Me contacter</h3>
         <div class="menu-legal">
           <p>La réservation en ligne est le plus simple, mais si vous préférez poser une question avant, écrivez-moi.</p>
-          <!--
-          <p><strong>Téléphone.</strong> <a href="tel:+41791234567">079 123 45 67</a></p>
-          <p><strong>WhatsApp.</strong> <a href="https://wa.me/41791234567" target="_blank" rel="noopener">Envoyer un message</a></p>
-          <p><strong>Instagram.</strong> <a href="https://instagram.com/axium.perform" target="_blank" rel="noopener">@axium.perform</a></p>
-          -->
+        </div>
+        <div class="contacts">
+          <a href="tel:+41787310732"><span>Téléphone</span><b>078 731 07 32</b></a>
+          <a href="https://wa.me/41787310732" target="_blank" rel="noopener"><span>WhatsApp</span><b>Envoyer un message →</b></a>
+          <a href="https://instagram.com/axium.perform" target="_blank" rel="noopener"><span>Instagram</span><b>@axium.perform →</b></a>
         </div>
       </section>
 
@@ -1049,7 +1093,9 @@ html.is-deck .tail{ display:none; }
   "areaServed":"Genève, Suisse",
   "address":{"@type":"PostalAddress","addressLocality":"Genève","addressCountry":"CH"},
   "currenciesAccepted":"CHF",
-  "potentialAction":{"@type":"ReserveAction","target":"https://calendly.com/axium-perform/seance-de-massage-axium"},
+  "telephone":"+41787310732",
+  "sameAs":["https://www.instagram.com/axium.perform"],
+  "potentialAction":{"@type":"ReserveAction","target":"https://cal.com/axium.perform"},
   "makesOffer":[
     {"@type":"Offer","name":"Massage sportif","price":"40","priceCurrency":"CHF"},
     {"@type":"Offer","name":"Relaxation","price":"70","priceCurrency":"CHF"},
@@ -1396,6 +1442,8 @@ function loadCalendly(){
   const label  = document.getElementById('calLabel');
   if(!widget) return;
 
+  /* Le calendrier est monté dans une iframe par Cal.com : sa présence est
+     le seul signal fiable que tout s'est bien passé. */
   const watch = new MutationObserver(() => {
     if(widget.querySelector('iframe')){
       watch.disconnect();
@@ -1404,22 +1452,36 @@ function loadCalendly(){
   });
   watch.observe(widget, { childList:true, subtree:true });
 
-  const failed = () => { if(label) label.textContent = 'Calendrier indisponible'; };
+  const echec = () => {
+    if(label) label.textContent = 'Calendrier indisponible';
+  };
 
   const s = document.createElement('script');
-  s.src = 'https://assets.calendly.com/assets/external/widget.js';
+  s.src = 'https://app.cal.com/embed/embed.js';
   s.async = true;
   s.onload = () => {
-    window.setTimeout(() => {
-      if(!widget.querySelector('iframe') && window.Calendly){
-        window.Calendly.initInlineWidget({ url:widget.dataset.url, parentElement:widget });
-      }
-    }, 350);
+    if(!window.Cal){ echec(); return; }
+    try{
+      window.Cal('init', { origin:'https://cal.com' });
+      window.Cal('inline', {
+        elementOrSelector: '#calWidget',
+        calLink: widget.dataset.cal,
+        layout: 'month_view'
+      });
+      window.Cal('ui', {
+        theme: 'dark',
+        cssVarsPerTheme: { dark: { 'cal-brand':'#40D2EC' } },
+        hideEventTypeDetails: false
+      });
+    }catch(e){ echec(); }
   };
-  s.onerror = failed;
+  s.onerror = echec;
   document.head.appendChild(s);
 
-  window.setTimeout(() => { if(!widget.querySelector('iframe')) failed(); }, 8000);
+  /* Bloqueur, réseau lent, ou page Cal.com inexistante : au bout de huit
+     secondes on cesse d'attendre et le lien direct reste la porte de
+     sortie — la réservation ne doit jamais se retrouver dans le vide. */
+  window.setTimeout(() => { if(!widget.querySelector('iframe')) echec(); }, 8000);
 }
 
 })();
