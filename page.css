@@ -1,0 +1,204 @@
+/* ═══════════════════════════════════════════════════════════════════
+   AXIUM.PERFORM — PAGES DE CONTENU
+   ───────────────────────────────────────────────────────────────────
+   La page d'accueil est une bobine de chapitres : spectaculaire, mais
+   inadaptée à du texte qu'on lit et que Google doit indexer.
+
+   Ces pages-ci font l'inverse : un article qui se lit de haut en bas,
+   dans la même palette et les mêmes polices, sans mécanique de scroll.
+   Une par prestation, pour exister sur « massage sportif Genève » et
+   « hijama Genève » — des recherches où « Axium » n'apparaît jamais.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root{
+  --noir:#000000;
+  --blanc:#FFFFFF;
+  --gris:rgba(255,255,255,0.62);
+  --gris-faible:rgba(255,255,255,0.34);
+  --ligne:rgba(255,255,255,0.14);
+  --accent:#40D2EC;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+  --marge:clamp(20px,5vw,64px);
+}
+
+*,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
+
+html{ background:var(--noir); scroll-behavior:smooth; }
+
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  font-weight:400;
+  background:var(--noir);
+  color:var(--blanc);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{ display:block; max-width:100%; }
+a{ color:inherit; }
+ul{ list-style:none; }
+::selection{ background:var(--blanc); color:var(--noir); }
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; }
+
+.wrap{ max-width:760px; margin-inline:auto; padding:0 var(--marge); }
+
+/* ── En-tête ── */
+.top{
+  border-bottom:1px solid var(--ligne);
+  padding:22px 0;
+  margin-bottom:clamp(44px,7vw,80px);
+}
+.top .wrap{ display:flex; align-items:center; justify-content:space-between; gap:18px; }
+
+.mark{
+  font-family:'Archivo',sans-serif;
+  font-style:italic; font-weight:900;
+  font-size:1.02rem; line-height:.95;
+  text-transform:uppercase; letter-spacing:-0.02em;
+}
+.mark span{ display:block; font-size:.74em; letter-spacing:.04em; }
+
+.back{
+  font-family:'Space Mono',monospace;
+  font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--gris-faible);
+  text-decoration:none;
+  transition:color .3s var(--ease);
+}
+.back:hover{ color:var(--blanc); }
+
+/* ── Article ── */
+.kicker{
+  font-family:'Space Mono',monospace;
+  font-weight:700; font-size:.66rem;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:18px;
+}
+
+h1{
+  font-family:'Archivo',sans-serif;
+  font-style:italic; font-weight:900;
+  font-size:clamp(2.3rem,8vw,4rem);
+  line-height:.94;
+  letter-spacing:-0.03em;
+  text-transform:uppercase;
+  margin-bottom:24px;
+  text-wrap:balance;
+}
+
+.chapo{
+  font-size:clamp(1.06rem,2.4vw,1.24rem);
+  font-weight:300;
+  line-height:1.62;
+  color:var(--blanc);
+  margin-bottom:clamp(38px,6vw,58px);
+  max-width:38ch;
+}
+
+h2{
+  font-family:'Archivo',sans-serif;
+  font-weight:700;
+  font-size:clamp(1.24rem,3.2vw,1.56rem);
+  letter-spacing:-0.02em;
+  text-transform:uppercase;
+  margin:clamp(38px,5vw,54px) 0 14px;
+  padding-top:18px;
+  border-top:1px solid var(--ligne);
+}
+
+p{ color:var(--gris); margin-bottom:15px; max-width:64ch; }
+p strong{ color:var(--blanc); font-weight:500; }
+
+.points{ display:grid; gap:10px; margin:6px 0 18px; }
+.points li{
+  position:relative;
+  padding-left:22px;
+  color:var(--gris);
+  max-width:62ch;
+}
+.points li::before{
+  content:'';
+  position:absolute; left:0; top:.72em;
+  width:10px; height:1px;
+  background:var(--accent);
+}
+
+/* ── Prix ── */
+.prix{
+  display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+  border:1px solid var(--ligne);
+  padding:20px 24px;
+  margin:26px 0;
+}
+.prix b{
+  font-family:'Space Mono',monospace;
+  font-size:1.7rem; font-weight:700;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+  line-height:1;
+}
+.prix span{
+  font-family:'Space Mono',monospace;
+  font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--gris-faible);
+}
+
+/* ── Questions ── */
+details{ border-bottom:1px solid var(--ligne); }
+summary{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:15px 0; cursor:pointer; list-style:none;
+  font-weight:500;
+}
+summary::-webkit-details-marker{ display:none; }
+summary::after{ content:'+'; font-family:'Space Mono',monospace; color:var(--accent); }
+details[open] summary::after{ content:'–'; }
+details p{ padding-bottom:15px; font-size:.95rem; font-weight:300; }
+
+/* ── Appel à l'action ── */
+.cta{
+  display:inline-flex; align-items:center; gap:12px;
+  margin:14px 0 0;
+  padding:16px 32px;
+  background:var(--blanc); color:var(--noir);
+  font-family:'Space Mono',monospace;
+  font-weight:700; font-size:.74rem;
+  letter-spacing:.14em; text-transform:uppercase;
+  border:1px solid var(--blanc);
+  text-decoration:none;
+  transition:background .35s var(--ease), color .35s var(--ease);
+}
+.cta:hover{ background:transparent; color:var(--blanc); }
+
+/* ── Pied ── */
+.bas{
+  margin-top:clamp(56px,8vw,90px);
+  border-top:1px solid var(--ligne);
+  padding:26px 0 50px;
+}
+.bas .wrap{ display:flex; flex-wrap:wrap; gap:12px 26px; justify-content:space-between; }
+.bas a, .bas span{
+  font-family:'Space Mono',monospace;
+  font-size:.64rem; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--gris-faible);
+  text-decoration:none;
+}
+.bas a:hover{ color:var(--blanc); }
+
+.note{
+  font-size:.84rem;
+  color:var(--gris-faible);
+  border-left:2px solid var(--ligne);
+  padding-left:16px;
+  margin:26px 0;
+  max-width:60ch;
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ transition:none !important; animation:none !important; }
+}

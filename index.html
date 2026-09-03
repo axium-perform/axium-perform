@@ -22,9 +22,16 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23000'/%3E%3Cpath d='M17.4 6.5 24 25.5h-4.3l-1.2-3.6h-6.6L14 18.2h3l-1.7-5.1-4.2 12.4H6.8L13.4 6.5h4Z' fill='%2340D2EC'/%3E%3C/svg%3E">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,700;1,800;1,900&family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Polices servies depuis ce dépôt : aucune requête vers Google, donc
+     rien qui parte chez un tiers, et un affichage qui ne dépend plus
+     d'un serveur extérieur. -->
+<!-- Posé avant tout rendu : les éléments qui dépendent du script pour
+     disparaître ne s'affichent que si le script peut tourner. -->
+<script>document.documentElement.classList.add('js');</script>
+
+<link rel="preload" as="font" type="font/woff2" href="fonts/Archivo-800i-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="fonts/Inter-300-latin.woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 
 <style>
 
@@ -171,6 +178,52 @@ summary:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; bord
   box-shadow:0 0 12px 3px rgba(255,255,255,0.75), 0 0 30px 8px var(--accent);
 }
 
+/* ═══════════ 37 · OUVERTURE AU LOGO ═══════════ */
+/* Sans JavaScript, rien ne pourrait retirer cet écran : il masquerait
+   le site entier derrière un rectangle noir. Il n'existe donc que si le
+   script est là pour le faire disparaître. */
+.intro{ display:none; }
+html.js .intro{
+  position:fixed; inset:0; z-index:400;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:26px;
+  background:var(--noir);
+  transition:opacity .7s var(--ease), visibility 0s linear .7s;
+}
+.intro.is-out{ opacity:0; visibility:hidden; pointer-events:none; }
+
+.intro-mark{
+  width:clamp(84px,13vw,128px);
+  aspect-ratio:500/292;
+  object-fit:cover; object-position:top center;
+  filter:grayscale(1) brightness(0) invert(1);
+  opacity:0;
+  transform:translateY(14px) scale(.94);
+  animation:introMark 1.15s var(--ease) .1s forwards;
+}
+@keyframes introMark{ to{ opacity:.92; transform:none; } }
+
+.intro-rail{
+  position:relative;
+  width:min(180px,42vw); height:1px;
+  background:rgba(255,255,255,0.16);
+  overflow:hidden;
+}
+.intro-rail i{
+  position:absolute; inset:0;
+  background:var(--accent);
+  transform:scaleX(0); transform-origin:0 50%;
+  animation:introRail 1.5s var(--ease) .35s forwards;
+}
+@keyframes introRail{ to{ transform:scaleX(1); } }
+
+/* ═══════════ 36 · SON ═══════════ */
+.snd{ display:flex; align-items:flex-end; gap:2px; height:11px; }
+.snd i{ width:2px; background:currentColor; height:30%; transition:height .3s var(--ease); }
+html.snd-on .snd i{ animation:eq 1.3s var(--ease) infinite alternate; }
+html.snd-on .snd i:nth-child(2){ animation-delay:.2s; }
+html.snd-on .snd i:nth-child(3){ animation-delay:.4s; }
+
 /* ═══════════ EN-TÊTE ═══════════ */
 header{
   position:fixed;
@@ -184,6 +237,9 @@ header{
   pointer-events:none;
 }
 header > *{ pointer-events:auto; }
+
+.hd-left{ display:flex; align-items:center; gap:clamp(12px,2.4vw,26px); }
+@media (max-width:560px){ .hd-left #motionLabel{ display:none; } }
 
 .hd-btn{
   display:inline-flex; align-items:center; gap:9px;
@@ -536,12 +592,15 @@ html.no-motion .hint i{ animation:none; }
   border-bottom:1px solid rgba(255,255,255,0.08);
 }
 .tarif span{ font-weight:500; }
+.tarif--fort{ background:var(--accent-fond,rgba(64,210,236,0.07)); margin-inline:-10px; padding-inline:10px; }
 .tarif b{
   font-family:'Space Mono',monospace;
   font-variant-numeric:tabular-nums;
   white-space:nowrap;
   color:var(--accent);
 }
+.tarif a{ color:inherit; text-decoration:none; border-bottom:1px solid var(--ligne); transition:border-color .3s var(--ease), color .3s var(--ease); }
+.tarif a:hover{ color:var(--accent); border-bottom-color:var(--accent); }
 .tarif em{ display:block; font-style:normal; font-size:.78rem; color:var(--gris-faible); }
 
 .menu details{ border-bottom:1px solid rgba(255,255,255,0.08); }
@@ -555,6 +614,24 @@ html.no-motion .hint i{ animation:none; }
 .menu details[open] summary::after{ content:'–'; }
 .menu details p{ padding-bottom:16px; color:var(--gris); font-size:.92rem; line-height:1.78; font-weight:300; }
 .menu details p + p{ margin-top:-6px; }
+
+/* Liste de vigilance : des points à lire, pas des cases à cocher — rien
+   n'est envoyé nulle part, donc rien ne doit ressembler à un formulaire. */
+.check{ margin:16px 0 18px; padding:0; list-style:none; display:grid; gap:9px; }
+.check li{
+  position:relative;
+  padding-left:26px;
+  font-size:.93rem; line-height:1.6;
+  color:var(--gris);
+  font-weight:300;
+}
+.check li::before{
+  content:'';
+  position:absolute; left:0; top:.5em;
+  width:11px; height:11px;
+  border:1px solid var(--rouille,#E8A33D);
+  border-radius:2px;
+}
 
 .menu-legal p{ color:var(--gris); font-size:.84rem; line-height:1.8; font-weight:300; margin-bottom:10px; }
 .menu-legal strong{ color:var(--blanc); font-weight:500; }
@@ -610,6 +687,14 @@ html.is-deck .tail{ display:none; }
 
 <body>
 
+<!-- 37 · Ouverture. L'emblème se révèle, puis s'efface et rend la main à
+     la bobine. Retiré du DOM après coup pour ne rien laisser traîner.
+     Ne se joue jamais en mouvement réduit : le script le supprime. -->
+<div class="intro" id="intro" aria-hidden="true">
+  <img class="intro-mark" src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="" decoding="async">
+  <span class="intro-rail"><i></i></span>
+</div>
+
 <a class="skip-link" href="#chapitres">Aller au contenu</a>
 
 <div class="frame" aria-hidden="true">
@@ -620,10 +705,16 @@ html.is-deck .tail{ display:none; }
 
 <header>
 
-  <button class="hd-btn" id="motionBtn" aria-pressed="false">
-    <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
-    <span id="motionLabel">Mouvement</span>
-  </button>
+  <div class="hd-left">
+    <button class="hd-btn" id="soundBtn" aria-pressed="false">
+      <span class="snd" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span id="soundLabel">Son</span>
+    </button>
+    <button class="hd-btn" id="motionBtn" aria-pressed="false">
+      <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span id="motionLabel">Mouvement</span>
+    </button>
+  </div>
 
   <a href="#chapitres" class="hd-logo" aria-label="Axium.Perform, retour au début">
     Axium<span>Perform</span>
@@ -740,6 +831,20 @@ html.is-deck .tail{ display:none; }
       </div>
     </article>
 
+    <!-- 32 · Offrir une séance -->
+    <article class="chapter" data-accent="#9B8CFF" data-nom="Offrir">
+      <div class="ch-glow"></div>
+      <div class="ch-veil"></div>
+      <div class="ch-inner">
+        <p class="ch-kicker">Bon cadeau</p>
+        <h2 class="ch-title">Offrir<br>une séance</h2>
+        <p class="ch-text">Pour quelqu'un qui s'entraîne dur, ou qui ne prend jamais le temps. Bon nominatif, valable six mois.</p>
+        <div class="ch-actions">
+          <button class="btn btn--ghost" data-open-menu data-panel="offrir">Comment ça marche</button>
+        </div>
+      </div>
+    </article>
+
     <!-- 07 — dernier chapitre avant que la bobine ne reparte -->
     <article class="chapter" data-accent="#40D2EC" data-nom="Réserver">
       <div class="ch-glow"></div>
@@ -750,7 +855,7 @@ html.is-deck .tail{ display:none; }
         <p class="ch-text">Choisissez votre créneau en quelques clics. Annulation gratuite jusqu'à 24h avant.</p>
         <div class="ch-actions">
           <button class="btn" data-open-menu data-panel="reservation">Ouvrir le calendrier</button>
-          <button class="btn btn--ghost" data-open-menu data-panel="questions">Questions fréquentes</button>
+          <button class="btn btn--ghost" data-open-menu data-panel="sante">Avant de réserver</button>
         </div>
       </div>
     </article>
@@ -782,9 +887,12 @@ html.is-deck .tail{ display:none; }
 
       <section class="menu-panel" id="panel-tarifs">
         <h3>Prestations &amp; tarifs</h3>
-        <div class="tarif"><span>Massage sportif<em>30 minutes</em></span><b>40.–</b></div>
-        <div class="tarif"><span>Relaxation<em>1 heure</em></span><b>70.–</b></div>
-        <div class="tarif"><span>Hijama<em>Selon besoin</em></span><b>Sur demande</b></div>
+        <div class="tarif"><span><a href="massage-sportif.html">Massage sportif →</a><em>30 minutes</em></span><b>40.–</b></div>
+        <div class="tarif"><span><a href="relaxation.html">Relaxation →</a><em>1 heure</em></span><b>70.–</b></div>
+        <div class="tarif"><span><a href="hijama.html">Hijama →</a><em>Selon besoin</em></span><b>Sur demande</b></div>
+        <div class="tarif tarif--fort"><span>Forfait 5 massages<em>5 × 30 min · valable 6 mois</em></span><b>180.–</b></div>
+        <div class="tarif"><span>Déplacement à domicile<em>Genève et alentours · en supplément</em></span><b>Sur demande</b></div>
+        <div class="tarif"><span>Présence sur compétition<em>Séances courtes sur site</em></span><b>Sur demande</b></div>
         <p style="margin-top:14px;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.08em;color:rgba(255,255,255,0.3);line-height:1.8">
           Tarifs en francs suisses · Paiement sur place · Annulation gratuite 24h avant
         </p>
@@ -822,6 +930,40 @@ html.is-deck .tail{ display:none; }
 
       </section>
 
+      <!-- 32 · Offrir une séance -->
+      <section class="menu-panel" id="panel-offrir">
+        <h3>Offrir une séance</h3>
+        <div class="menu-legal">
+          <p>Un massage s'offre très bien — pour un anniversaire, après une grosse course, ou simplement pour quelqu'un qui ne prend jamais le temps.</p>
+          <p><strong>Comment ça marche.</strong> Vous choisissez la prestation, je prépare un bon nominatif que vous recevez par message et que vous pouvez imprimer. La personne réserve ensuite son créneau quand elle veut. Le bon est valable <strong>six mois</strong>.</p>
+          <p>Dites-le-moi simplement au moment de réserver, ou par message.</p>
+        </div>
+      </section>
+
+      <!-- 27 · Auto-évaluation avant séance. Aucune donnée n'est envoyée
+           ni enregistrée : c'est une liste à lire, pas un formulaire. -->
+      <section class="menu-panel" id="panel-sante">
+        <h3>Avant de réserver — points de vigilance</h3>
+        <div class="menu-legal">
+          <p>Certaines situations demandent un avis médical <strong>avant</strong> une séance. Parcourez cette liste : si l'un de ces points vous concerne, parlez-m'en avant de réserver — on adaptera, ou je vous orienterai.</p>
+        </div>
+        <ul class="check">
+          <li>Blessure récente, entorse, déchirure ou fracture en cours de consolidation</li>
+          <li>Traitement anticoagulant, ou trouble de la coagulation</li>
+          <li>Grossesse, quel qu'en soit le stade</li>
+          <li>Phlébite, thrombose, ou antécédent des deux</li>
+          <li>Problème cardiaque ou tension mal contrôlée</li>
+          <li>Fièvre, infection en cours, ou plaie ouverte sur la zone à traiter</li>
+          <li>Maladie de peau étendue, ou eczéma sur la zone</li>
+          <li>Diabète mal équilibré</li>
+          <li>Cancer en cours de traitement</li>
+          <li>Anémie sévère — point spécifique à la hijama</li>
+        </ul>
+        <div class="menu-legal">
+          <p>Cette liste ne remplace pas un avis médical et ne prétend pas être complète. En cas de doute, la bonne réponse est toujours d'en parler d'abord à votre médecin.</p>
+        </div>
+      </section>
+
       <section class="menu-panel" id="panel-reservation">
         <h3>Réservation</h3>
         <div class="cal-shell">
@@ -845,6 +987,35 @@ html.is-deck .tail{ display:none; }
           <p><strong>Lieu.</strong> Genève, Suisse. L'adresse précise est communiquée à la confirmation du rendez-vous.</p>
           <p><strong>Sur place.</strong> Tenue confortable. Paiement en CHF.</p>
           <p><strong>Annulation.</strong> Gratuite jusqu'à 24h avant, depuis le lien de confirmation.</p>
+        </div>
+      </section>
+
+      <!-- ┌────────────────────────────────────────────────────────────┐
+           │ PRÊT À ACTIVER — il me manque juste l'information          │
+           │                                                            │
+           │ 03 + 28 · Téléphone et WhatsApp                            │
+           │   Retire les commentaires ci-dessous et remplace le numéro │
+           │   par le tien au format international, sans espaces ni +.  │
+           │   Exemple pour le 079 123 45 67 : 41791234567              │
+           │                                                            │
+           │ 19 · Instagram — remplace axium.perform par ton compte.    │
+           │                                                            │
+           │ 33 · Cal.com — crée un compte sur cal.com, puis remplace   │
+           │   l'adresse Calendly dans data-url (bloc Réservation).     │
+           │   Le reste du code n'a pas besoin d'être touché.           │
+           │                                                            │
+           │ 49 · Lettre d'information — il faut choisir un service     │
+           │   (Buttondown, Brevo…). Dis-moi lequel et je le branche.   │
+           └────────────────────────────────────────────────────────────┘ -->
+      <section class="menu-panel" id="panel-contact">
+        <h3>Me contacter</h3>
+        <div class="menu-legal">
+          <p>La réservation en ligne est le plus simple, mais si vous préférez poser une question avant, écrivez-moi.</p>
+          <!--
+          <p><strong>Téléphone.</strong> <a href="tel:+41791234567">079 123 45 67</a></p>
+          <p><strong>WhatsApp.</strong> <a href="https://wa.me/41791234567" target="_blank" rel="noopener">Envoyer un message</a></p>
+          <p><strong>Instagram.</strong> <a href="https://instagram.com/axium.perform" target="_blank" rel="noopener">@axium.perform</a></p>
+          -->
         </div>
       </section>
 
@@ -1122,6 +1293,94 @@ window.addEventListener('resize', () => {
 }, { passive:true });
 
 syncMotion();
+
+/* ─────────────── 37 · OUVERTURE AU LOGO ───────────────
+   L'écran d'ouverture se retire tout seul, puis disparaît du document.
+   En mouvement réduit il n'apparaît jamais : on le supprime aussitôt. */
+(function intro(){
+  const el = document.getElementById('intro');
+  if(!el) return;
+  if(!motionAllowed()){ el.remove(); return; }
+  const partir = () => {
+    el.classList.add('is-out');
+    window.setTimeout(() => el.remove(), 900);
+  };
+  window.setTimeout(partir, 2000);
+  /* Un visiteur pressé ne doit jamais attendre une animation. */
+  window.addEventListener('wheel', partir, { once:true, passive:true });
+  window.addEventListener('touchstart', partir, { once:true, passive:true });
+  window.addEventListener('keydown', partir, { once:true });
+})();
+
+/* ─────────────── 36 · AMBIANCE SONORE ───────────────
+   Rien n'est téléchargé : le souffle est synthétisé sur place — du bruit
+   brun passé dans un filtre passe-bas, dont le volume respire lentement.
+   Coupé par défaut, et jamais démarré sans un clic : c'est la règle des
+   navigateurs, et c'est aussi la politesse minimale. */
+(function ambiance(){
+  const btn = document.getElementById('soundBtn');
+  const lbl = document.getElementById('soundLabel');
+  if(!btn) return;
+
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if(!AC){ btn.remove(); return; }
+
+  let ctx = null, gain = null, on = false;
+
+  function construire(){
+    ctx = new AC();
+
+    /* Bruit brun : plus sourd et plus doux que du bruit blanc, il évoque
+       une respiration plutôt qu'un grésillement. */
+    const n = ctx.sampleRate * 4;
+    const buf = ctx.createBuffer(1, n, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    let last = 0;
+    for(let i = 0; i < n; i++){
+      const w = Math.random() * 2 - 1;
+      last = (last + 0.02 * w) / 1.02;
+      d[i] = last * 3.4;
+    }
+
+    const src = ctx.createBufferSource();
+    src.buffer = buf; src.loop = true;
+
+    const passeBas = ctx.createBiquadFilter();
+    passeBas.type = 'lowpass';
+    passeBas.frequency.value = 400;
+    passeBas.Q.value = 0.6;
+
+    gain = ctx.createGain();
+    gain.gain.value = 0;
+
+    /* Le volume monte et descend toutes les onze secondes environ. */
+    const lfo = ctx.createOscillator();
+    lfo.frequency.value = 0.09;
+    const ampleur = ctx.createGain();
+    ampleur.gain.value = 0.014;
+    lfo.connect(ampleur).connect(gain.gain);
+
+    src.connect(passeBas).connect(gain).connect(ctx.destination);
+    src.start(); lfo.start();
+  }
+
+  btn.addEventListener('click', () => {
+    if(!ctx) construire();
+    on = !on;
+    if(on && ctx.state === 'suspended') ctx.resume();
+    gain.gain.setTargetAtTime(on ? 0.026 : 0, ctx.currentTime, on ? 1.4 : 0.5);
+    if(!on) window.setTimeout(() => { if(!on && ctx.state === 'running') ctx.suspend(); }, 1400);
+    root.classList.toggle('snd-on', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if(lbl) lbl.textContent = on ? 'Son on' : 'Son';
+  });
+
+  /* Le son ne continue jamais dans un onglet qu'on a quitté. */
+  document.addEventListener('visibilitychange', () => {
+    if(!ctx || !on) return;
+    document.hidden ? ctx.suspend() : ctx.resume();
+  });
+})();
 
 /* ─────────────── CALENDRIER ───────────────
    Chargé à l'ouverture du menu seulement : la bobine ne doit jamais
