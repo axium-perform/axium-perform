@@ -171,14 +171,6 @@ summary:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; bord
   box-shadow:0 0 12px 3px rgba(255,255,255,0.75), 0 0 30px 8px var(--accent);
 }
 
-/* Grain — la salle n'est jamais parfaitement propre. */
-.grain{
-  position:fixed; inset:-40px; z-index:55;
-  pointer-events:none;
-  opacity:.055;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 /* ═══════════ EN-TÊTE ═══════════ */
 header{
   position:fixed;
@@ -270,14 +262,30 @@ html.no-motion .eq i{ animation:none; height:35%; }
   width:100%; height:100%;
   object-fit:contain;
   object-position:center;
-  opacity:.5;
+  opacity:.72;
 }
-.ch-media.is-cover img{ object-fit:cover; opacity:.34; filter:grayscale(1) contrast(1.25); }
+/* La source est encodee en niveaux de gris : inutile de refaire le
+   travail au filtre CSS a chaque frame. */
+.ch-media.is-cover img{ object-fit:cover; opacity:.52; filter:contrast(1.14); }
 
 .ch-veil{
   position:absolute; inset:0; z-index:2;
   pointer-events:none;
-  background:radial-gradient(ellipse at center, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.82) 72%);
+  background:radial-gradient(ellipse at center, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.72) 74%);
+}
+
+/* Fond propre au bloc de texte : la lisibilité ne coûte plus la
+   luminosité du sujet. Il s'arrête net avant les bords, donc le sujet
+   reste éclairé là où il compte. */
+.ch-inner::before{
+  content:'';
+  position:absolute;
+  left:50%; top:50%;
+  width:168%; height:186%;
+  transform:translate(-50%,-50%);
+  z-index:-1;
+  pointer-events:none;
+  background:radial-gradient(ellipse at center, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.52) 46%, transparent 72%);
 }
 
 .ch-kicker{
@@ -595,7 +603,6 @@ html.is-deck .tail{ display:none; }
   :root{ --gris:rgba(255,255,255,0.8); --gris-faible:rgba(255,255,255,0.62); --ligne:rgba(255,255,255,0.44); }
   .ch-glow{ opacity:.24; }
   .ch-media img{ opacity:.2; }
-  .grain{ display:none; }
 }
 
 </style>
@@ -604,8 +611,6 @@ html.is-deck .tail{ display:none; }
 <body>
 
 <a class="skip-link" href="#chapitres">Aller au contenu</a>
-
-<div class="grain" aria-hidden="true"></div>
 
 <div class="frame" aria-hidden="true">
   <b></b><b></b><b></b><b></b>
@@ -652,7 +657,10 @@ html.is-deck .tail{ display:none; }
     <article class="chapter" data-accent="#FFFFFF" data-nom="Manifeste">
       <div class="ch-glow"></div>
       <div class="ch-media is-cover">
-        <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <img src="sevann-1600.webp"
+             srcset="sevann-1200.webp 1200w, sevann-1600.webp 1600w"
+             sizes="100vw" width="1600" height="1200"
+             alt="" aria-hidden="true" decoding="async">
       </div>
       <div class="ch-veil"></div>
       <div class="ch-inner">
@@ -677,7 +685,10 @@ html.is-deck .tail{ display:none; }
     <article class="chapter" data-accent="#40D2EC" data-nom="Massage sportif">
       <div class="ch-glow"></div>
       <div class="ch-media">
-        <img src="massage-therapy-2277454_1280.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <img src="anatomie-2800.webp"
+             srcset="anatomie-1400.webp 1400w, anatomie-2800.webp 2800w"
+             sizes="100vw" width="2800" height="1812"
+             alt="" aria-hidden="true" decoding="async">
       </div>
       <div class="ch-veil"></div>
       <div class="ch-inner">
@@ -716,7 +727,10 @@ html.is-deck .tail{ display:none; }
     <article class="chapter" data-accent="#FFFFFF" data-nom="Le praticien">
       <div class="ch-glow"></div>
       <div class="ch-media is-cover">
-        <img src="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG" alt="Sevann, praticien Axium.Perform, en montagne" loading="lazy" decoding="async">
+        <img src="sevann-1600.webp"
+             srcset="sevann-1200.webp 1200w, sevann-1600.webp 1600w"
+             sizes="100vw" width="1600" height="1200"
+             alt="Sevann, praticien Axium.Perform, en montagne" decoding="async">
       </div>
       <div class="ch-veil"></div>
       <div class="ch-inner">
