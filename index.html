@@ -231,20 +231,28 @@ html.snd-on .snd i:nth-child(2){ animation-delay:.2s; }
 html.snd-on .snd i:nth-child(3){ animation-delay:.4s; }
 
 /* ═══════════ EN-TÊTE ═══════════ */
+/* Trois colonnes, les deux extérieures de largeur égale : le logo tombe
+   sur l'axe de l'écran quoi qu'il arrive. En space-between il était
+   poussé par le côté gauche, plus large (SON + MOUVEMENT contre MENU) —
+   décalé d'une quarantaine de pixels, ce qui se voit dès qu'on aligne
+   le regard sur le titre du chapitre, lui bien centré. */
 header{
   position:fixed;
   top:calc(var(--marge) + 26px);
   left:0; right:0;
   z-index:100;
-  display:flex;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
   align-items:center;
-  justify-content:space-between;
   padding:0 var(--marge);
   pointer-events:none;
 }
+.hd-left{ justify-self:start; }
+.hd-logo{ justify-self:center; }
+.hd-menu{ justify-self:end; }
 header > *{ pointer-events:auto; }
 
-.hd-left{ display:flex; align-items:center; gap:clamp(12px,2.4vw,26px); }
+.hd-left{ display:flex; align-items:center; gap:clamp(12px,2.4vw,26px); min-width:0; }
 @media (max-width:560px){ .hd-left #motionLabel{ display:none; } }
 
 .hd-btn{
@@ -1317,7 +1325,7 @@ function openMenu(panel){
   menu.setAttribute('aria-hidden', 'false');
   menuBtn.setAttribute('aria-expanded', 'true');
   document.body.classList.add('is-locked');
-  loadCalendly();
+  window.setTimeout(loadCalendly, 450);
   if(panel){
     const el = document.getElementById('panel-' + panel);
     if(el) window.setTimeout(() => el.scrollIntoView({ block:'start', behavior:'auto' }), 40);
@@ -1496,7 +1504,7 @@ function loadCalendly(){
       fb.dataset.secours = '1';
       const p = document.createElement('p');
       p.className = 'cal-secours';
-      p.innerHTML = 'Réservez par téléphone ou message :<br>' +
+      p.innerHTML = 'Ou réservez directement par téléphone, message ou e-mail :<br>' +
         '<a href="tel:+41787310732">078 731 07 32</a> · ' +
         '<a href="https://wa.me/41787310732" target="_blank" rel="noopener">WhatsApp</a> · ' +
         '<a href="mailto:axium.perform@gmail.com">E-mail</a>';
@@ -1511,16 +1519,14 @@ function loadCalendly(){
     if(!window.Cal){ echec(); return; }
     try{
       window.Cal('init', { origin:'https://cal.com' });
+      /* Pas de layout imposé : cal.com/axium.perform est une page de
+         profil qui liste les prestations, et « month_view » ne
+         s'applique qu'à un type de rendez-vous précis. */
       window.Cal('inline', {
         elementOrSelector: '#calWidget',
-        calLink: widget.dataset.cal,
-        layout: 'month_view'
+        calLink: widget.dataset.cal
       });
-      window.Cal('ui', {
-        theme: 'dark',
-        cssVarsPerTheme: { dark: { 'cal-brand':'#40D2EC' } },
-        hideEventTypeDetails: false
-      });
+      window.Cal('ui', { theme:'dark' });
     }catch(e){ echec(); }
   };
   s.onerror = echec;
@@ -1529,7 +1535,7 @@ function loadCalendly(){
   /* Bloqueur, réseau lent, ou page Cal.com inexistante : au bout de huit
      secondes on cesse d'attendre et le lien direct reste la porte de
      sortie — la réservation ne doit jamais se retrouver dans le vide. */
-  window.setTimeout(() => { if(!widget.querySelector('iframe')) echec(); }, 8000);
+  window.setTimeout(() => { if(!widget.querySelector('iframe')) echec(); }, 12000);
 }
 
 })();
