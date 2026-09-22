@@ -598,15 +598,38 @@ section{ padding:var(--e6) 0; }
 .cal-repli p{ font-size:.86rem; color:var(--gris-faible); }
 
 .contacts{ border-top:1px solid var(--ligne); }
-.contacts a{
+.contacts > a, .contacts > div{
   padding:15px 0;
   display:flex; align-items:baseline; justify-content:space-between; gap:14px;
   border-bottom:1px solid var(--ligne);
-  transition:padding-left .22s var(--ease);
 }
-.contacts a:hover{ padding-left:6px; }
-.contacts span{ font-size:.8rem; color:var(--gris-faible); }
+.contacts > a{ transition:padding-left .22s var(--ease); }
+.contacts > a:hover{ padding-left:6px; }
+.contacts span{ font-size:.8rem; color:var(--gris-faible); flex:none; }
 .contacts b{ font-weight:400; font-size:.92rem; }
+
+/* L'adresse est écrite en toutes lettres, et non plus cachée derrière un
+   « Écrire → ». Un lien mailto: ne fait rien tant que le visiteur n'a pas
+   de logiciel de courrier configuré — cas courant sur ordinateur, et
+   silencieux : on clique, rien ne se passe. Affichée, l'adresse reste
+   recopiable même quand le lien ne s'ouvre pas.
+
+   Elle peut être plus longue que la colonne : on l'autorise à se couper
+   plutôt qu'à déborder. */
+.contacts .mail{ flex-wrap:wrap; }
+.contacts .mail a{ font-size:.92rem; overflow-wrap:anywhere; }
+.contacts .mail a:hover{ text-decoration:underline; }
+
+.copier{
+  flex:none; margin-left:auto;
+  padding:5px 11px;
+  border:1px solid var(--ligne-forte); border-radius:var(--rayon);
+  background:transparent; color:var(--encre);
+  font-family:inherit; font-size:.76rem; cursor:pointer;
+  transition:background .2s var(--ease), color .2s var(--ease);
+}
+.copier:hover{ background:var(--encre); color:var(--blanc); }
+.copier[data-fait]{ background:var(--encre); color:var(--blanc); }
 
 .infos{ margin-top:26px; }
 .infos p{ font-size:.88rem; color:var(--gris); margin-bottom:11px; }
@@ -997,7 +1020,11 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
           <div class="contacts">
             <a href="tel:+41787310732"><span>Téléphone</span><b>078 731 07 32</b></a>
             <a href="https://wa.me/41787310732" target="_blank" rel="noopener"><span>WhatsApp</span><b>Écrire →</b></a>
-            <a href="mailto:axium.perform@gmail.com"><span>E-mail</span><b>Écrire →</b></a>
+            <div class="mail">
+              <span>E-mail</span>
+              <a href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a>
+              <button class="copier" type="button" aria-live="polite" data-copie="axium.perform@gmail.com">Copier</button>
+            </div>
             <a href="https://www.instagram.com/axium.perform" target="_blank" rel="noopener"><span>Instagram</span><b>@axium.perform →</b></a>
           </div>
 
@@ -1163,6 +1190,60 @@ if(matchMedia('(prefers-reduced-motion: reduce)').matches){
   addEventListener('beforeprint', tout);
 }
 
+/* Copier l'adresse.
+
+   Le presse-papiers moderne demande une page servie en https. Là où il
+   n'est pas disponible — file://, navigateur ancien — on passe par une
+   zone de texte sélectionnée, ce qui doit se faire dans le geste de
+   l'utilisateur, donc sans attendre.
+
+   Là où il est disponible, on ne se contente pas d'attraper les erreurs :
+   quand l'autorisation est refusée en silence, la promesse reste en
+   attente et ne rejette jamais. Un garde-fou tranche au bout de 1,2 s,
+   sinon le bouton ne répondrait tout simplement pas.
+
+   Dans tous les cas, l'adresse reste écrite à l'écran : le bouton n'est
+   jamais le seul moyen de l'obtenir. */
+document.querySelectorAll('[data-copie]').forEach(bouton => {
+  const parDefaut = bouton.textContent;
+
+  const repondre = (ok) => {
+    if(bouton.dataset.fait) return;
+    bouton.dataset.fait = '1';
+    bouton.textContent = ok ? 'Copié' : 'À recopier';
+    setTimeout(() => {
+      bouton.textContent = parDefaut;
+      delete bouton.dataset.fait;
+    }, 2000);
+  };
+
+  const parSelection = (texte) => {
+    const z = document.createElement('textarea');
+    z.value = texte;
+    z.setAttribute('readonly', '');
+    z.style.cssText = 'position:fixed;top:-100px;opacity:0';
+    document.body.appendChild(z);
+    z.select();
+    let ok = false;
+    try{ ok = document.execCommand('copy'); }catch(e){ ok = false; }
+    z.remove();
+    return ok;
+  };
+
+  bouton.addEventListener('click', () => {
+    const texte = bouton.dataset.copie;
+
+    if(window.isSecureContext && navigator.clipboard){
+      navigator.clipboard.writeText(texte)
+        .then(() => repondre(true))
+        .catch(() => repondre(parSelection(texte)));
+      setTimeout(() => repondre(false), 1200);
+    }else{
+      repondre(parSelection(texte));
+    }
+  });
+});
+
 /* ─────────────── CALENDRIER ───────────────
    Le conteneur est visible dès le chargement de la page : Cal.com peut
    donc se mesurer correctement, ce qui n'était pas le cas quand il était
@@ -1192,7 +1273,7 @@ if(matchMedia('(prefers-reduced-motion: reduce)').matches){
       p.innerHTML = 'Réservez directement :<br>' +
         '<a style="color:var(--accent)" href="tel:+41787310732">078 731 07 32</a> · ' +
         '<a style="color:var(--accent)" href="https://wa.me/41787310732" target="_blank" rel="noopener">WhatsApp</a> · ' +
-        '<a style="color:var(--accent)" href="mailto:axium.perform@gmail.com">E-mail</a>';
+        '<a style="color:var(--accent)" href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a>';
       repli.appendChild(p);
     }
   };
