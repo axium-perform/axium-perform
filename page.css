@@ -8,17 +8,18 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 :root{
+  /* Même palette neutre que l'accueil, relevée chez drinknomio.com. */
   --fond:#FFFFFF;
-  --surface:#F0F0EE;
-  --papier-2:#E7E7E3;
-  --encre:#14140F;
-  --gris:#5B5B54;
-  --gris-faible:#65655E;
-  --ligne:rgba(20,20,15,0.13);
-  --ligne-forte:rgba(20,20,15,0.32);
+  --surface:#EFEFEF;
+  --papier-2:#E9E9E9;
+  --encre:#000000;
+  --gris:#4D4D4D;
+  --gris-faible:#656565;
+  --ligne:rgba(0,0,0,0.12);
+  --ligne-forte:rgba(0,0,0,0.32);
   --accent:#0E7C99;
-  --rayon:3px;
-  --gouttiere:clamp(20px,4.5vw,120px);
+  --rayon:0px;
+  --gouttiere:clamp(18px,2.6vw,52px);
   --ease:cubic-bezier(0.22,1,0.36,1);
 
   /* Même échelle fluide que l'accueil, pour que les pages ne se
@@ -98,9 +99,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible{
 /* ── Article ── */
 .kicker{
   display:block;
-  font-size:.72rem;
-  text-transform:uppercase;
-  letter-spacing:.13em;
+  font-size:.82rem;
   color:var(--gris-faible);
   margin-bottom:16px;
 }
