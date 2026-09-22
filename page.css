@@ -71,12 +71,19 @@ a:focus-visible, button:focus-visible, summary:focus-visible{
 }
 .top .wrap{ max-width:min(100%,72rem); display:flex; align-items:center; justify-content:space-between; gap:18px; }
 
-.mark{
-  font-family:'Instrument Serif',Georgia,serif;
-  font-weight:400; font-size:1.42rem; letter-spacing:-0.01em;
+/* Même logo que l'accueil : le nom, un filet, la précision. Le filet est
+   un élément à part, pour s'étirer sur la hauteur du bloc. */
+.mark{ display:inline-flex; align-items:stretch; gap:10px; }
+.mark-nom{
+  font-family:'Instrument Serif',Georgia,serif; font-weight:400;
+  font-size:1.44rem; line-height:.95; letter-spacing:-0.01em;
 }
-.mark span{ color:var(--gris-faible); font-weight:400; }
-.mark span::before{ content:'.'; }
+.mark-filet{ width:1px; flex:none; background:var(--ligne-forte); }
+.mark-qualif{
+  align-self:center; white-space:nowrap;
+  font-size:.5rem; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--gris-faible); line-height:1.38;
+}
 
 .back{ font-size:.9rem; color:var(--gris); transition:color .25s var(--ease); }
 .back:hover{ color:var(--encre); }
