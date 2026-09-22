@@ -459,39 +459,6 @@ section{ padding:var(--e6) 0; }
 .etape h3{ font-size:1.18rem; margin-bottom:7px; }
 .etape p{ font-size:.89rem; color:var(--gris); }
 
-/* ═══════════ BANDEAU DÉFILANT ═══════════
-   Une bande d'encre qui coupe la page juste après le héros, et redonne
-   le nom des choses au passage.
-
-   Deux copies identiques de la même liste défilent côte à côte. Quand la
-   piste a parcouru la moitié de sa largeur, elle est revenue exactement
-   sur le début de la première copie : la boucle ne se voit pas. C'est
-   pour ça que la translation vaut -50 % et pas une distance en pixels —
-   elle reste juste quelle que soit la longueur du texte.
-
-   La seconde copie est masquée aux lecteurs d'écran : c'est le même
-   texte deux fois, il ne doit être annoncé qu'une. */
-.ticker{ background:var(--encre); color:var(--blanc); overflow:hidden; padding:clamp(13px,1.4vw,20px) 0; }
-.ticker-piste{ display:flex; width:max-content; animation:defile 42s linear infinite; }
-.ticker:hover .ticker-piste{ animation-play-state:paused; }
-.ticker-suite{ display:flex; align-items:center; }
-.ticker-suite li{
-  display:flex; align-items:center;
-  gap:clamp(26px,3.6vw,54px); padding-right:clamp(26px,3.6vw,54px);
-  font-family:'Instrument Serif',Georgia,serif; font-weight:400;
-  font-size:clamp(1.06rem,1.9vw,1.55rem); line-height:1.2;
-  white-space:nowrap;
-}
-/* La pastille sert de séparateur : le même point bleu que dans les
-   listes, c'est la seule couleur de la page. */
-.ticker-suite li::after{
-  content:''; flex:none; width:6px; height:6px; border-radius:50%; background:var(--accent);
-}
-@keyframes defile{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
-/* animation:none l'emporte même sur la durée !important posée plus bas
-   pour le mouvement réduit : sans nom d'animation, rien ne se joue. */
-@media (prefers-reduced-motion:reduce){ .ticker-piste{ animation:none; } }
-
 /* ═══════════ TEXTE EN VIS-À-VIS D'UNE IMAGE ═══════════
    Deux colonnes qui s'empilent d'elles-mêmes quand il n'y a plus la
    place pour deux. Aucune largeur d'écran n'est nommée : c'est la place
@@ -524,13 +491,18 @@ section{ padding:var(--e6) 0; }
 .portrait img{ width:100%; aspect-ratio:4/5; object-fit:cover; object-position:54% 62%; }
 
 /* ═══════════ DÉCLARATION ═══════════
-   Une respiration avant la réservation : une seule phrase, en grand,
-   sur fond d'encre. Rien à lire, rien à cliquer. */
-.declaration{ background:var(--encre); color:var(--blanc); }
+   La bande d'encre qui coupe la page juste après le héros. Elle portait
+   une liste de mots qui défilait ; elle porte maintenant une phrase, qui
+   dit quelque chose. Rien à lire de plus, rien à cliquer.
+
+   Plus basse et moins haute de corps que lorsqu'elle fermait la page :
+   ici elle suit immédiatement le titre du héros, et deux serifs de même
+   taille coup sur coup se feraient concurrence. */
+.declaration{ background:var(--encre); color:var(--blanc); padding:var(--e5) 0; }
 .declaration blockquote{
   font-family:'Instrument Serif',Georgia,serif; font-weight:400;
-  font-size:clamp(1.9rem,4.4vw,3.25rem); line-height:1.13;
-  max-width:20ch; text-wrap:balance;
+  font-size:clamp(1.6rem,3.4vw,2.6rem); line-height:1.15;
+  max-width:26ch; text-wrap:balance;
 }
 .declaration figcaption{ margin-top:var(--e3); font-size:.78rem; text-transform:uppercase; letter-spacing:.13em; color:rgba(255,255,255,.62); }
 
@@ -722,27 +694,15 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
   </div>
   </div>
 
-  <!-- BANDEAU DÉFILANT -->
-  <div class="ticker">
-    <div class="ticker-piste">
-      <ul class="ticker-suite">
-        <li>Massage sportif</li>
-        <li>Relaxation</li>
-        <li>Hijama</li>
-        <li>Genève</li>
-        <li>Praticien athlète</li>
-        <li>Sur rendez-vous</li>
-      </ul>
-      <ul class="ticker-suite" aria-hidden="true">
-        <li>Massage sportif</li>
-        <li>Relaxation</li>
-        <li>Hijama</li>
-        <li>Genève</li>
-        <li>Praticien athlète</li>
-        <li>Sur rendez-vous</li>
-      </ul>
+  <!-- DÉCLARATION -->
+  <section class="declaration">
+    <div class="wrap">
+      <figure>
+        <blockquote>On ne progresse pas pendant l'effort. On progresse pendant ce qui suit.</blockquote>
+        <figcaption>Axium Perform — Genève</figcaption>
+      </figure>
     </div>
-  </div>
+  </section>
 
   <!-- PRESTATIONS -->
   <section id="prestations" class="sur-papier">
@@ -973,16 +933,6 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
         </ul>
         <p class="fin">Cette liste ne remplace pas un avis médical et ne prétend pas être complète. En cas de doute, la bonne réponse est toujours d'en parler d'abord à votre médecin.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- DÉCLARATION -->
-  <section class="declaration">
-    <div class="wrap">
-      <figure>
-        <blockquote>On ne progresse pas pendant l'effort. On progresse pendant ce qui suit.</blockquote>
-        <figcaption>Axium.Perform — Genève</figcaption>
-      </figure>
     </div>
   </section>
 
