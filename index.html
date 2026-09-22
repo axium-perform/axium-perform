@@ -177,7 +177,9 @@ h2{ font-size:clamp(2rem,4vw,3.1rem); margin-bottom:16px; text-wrap:balance; }
 h3{ font-size:1.32rem; }
 
 .eyebrow{
-  font-size:.82rem;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.13em;
   color:var(--gris-faible);
   margin-bottom:14px;
 }
@@ -343,15 +345,15 @@ section{ padding:var(--e6) 0; }
   .carte-lien{ grid-column:1; }
 }
 
-.carte ul{ display:grid; gap:0; margin-bottom:26px; }
-.carte li{
+.carte ul, .liste{ display:grid; gap:0; margin-bottom:26px; }
+.carte li, .liste li{
   position:relative; padding:9px 0 9px 20px;
   font-size:.88rem; color:var(--gris);
   border-top:1px solid var(--ligne);
 }
-.carte li:last-child{ border-bottom:1px solid var(--ligne); }
+.carte li:last-child, .liste li:last-child{ border-bottom:1px solid var(--ligne); }
 /* La pastille : le seul endroit où la couleur apparaît. */
-.carte li::before{
+.carte li::before, .liste li::before{
   content:''; position:absolute; left:0; top:1.05em;
   width:7px; height:7px; border-radius:50%; background:var(--accent);
 }
@@ -400,6 +402,79 @@ section{ padding:var(--e6) 0; }
 .etape i{ display:block; font-style:normal; font-size:.8rem; color:var(--gris-faible); margin-bottom:12px; }
 .etape h3{ font-size:1.18rem; margin-bottom:7px; }
 .etape p{ font-size:.89rem; color:var(--gris); }
+
+/* ═══════════ BANDEAU DÉFILANT ═══════════
+   Une bande d'encre qui coupe la page juste après le héros, et redonne
+   le nom des choses au passage.
+
+   Deux copies identiques de la même liste défilent côte à côte. Quand la
+   piste a parcouru la moitié de sa largeur, elle est revenue exactement
+   sur le début de la première copie : la boucle ne se voit pas. C'est
+   pour ça que la translation vaut -50 % et pas une distance en pixels —
+   elle reste juste quelle que soit la longueur du texte.
+
+   La seconde copie est masquée aux lecteurs d'écran : c'est le même
+   texte deux fois, il ne doit être annoncé qu'une. */
+.ticker{ background:var(--encre); color:var(--blanc); overflow:hidden; padding:clamp(13px,1.4vw,20px) 0; }
+.ticker-piste{ display:flex; width:max-content; animation:defile 42s linear infinite; }
+.ticker:hover .ticker-piste{ animation-play-state:paused; }
+.ticker-suite{ display:flex; align-items:center; }
+.ticker-suite li{
+  display:flex; align-items:center;
+  gap:clamp(26px,3.6vw,54px); padding-right:clamp(26px,3.6vw,54px);
+  font-family:'Instrument Serif',Georgia,serif; font-weight:400;
+  font-size:clamp(1.06rem,1.9vw,1.55rem); line-height:1.2;
+  white-space:nowrap;
+}
+/* La pastille sert de séparateur : le même point bleu que dans les
+   listes, c'est la seule couleur de la page. */
+.ticker-suite li::after{
+  content:''; flex:none; width:6px; height:6px; border-radius:50%; background:var(--accent);
+}
+@keyframes defile{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+/* animation:none l'emporte même sur la durée !important posée plus bas
+   pour le mouvement réduit : sans nom d'animation, rien ne se joue. */
+@media (prefers-reduced-motion:reduce){ .ticker-piste{ animation:none; } }
+
+/* ═══════════ TEXTE EN VIS-À-VIS D'UNE IMAGE ═══════════
+   Deux colonnes qui se partagent la largeur, et qui s'empilent d'elles-
+   mêmes quand il n'y a plus la place pour deux. Aucune largeur d'écran
+   n'est nommée : c'est la place disponible qui tranche. */
+.duo{
+  display:grid; align-items:center;
+  gap:var(--e5) clamp(30px,5vw,80px);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,21rem),1fr));
+}
+.duo > div > p{ color:var(--gris); max-width:52ch; margin-bottom:var(--e2); }
+.duo > div > p:last-of-type{ margin-bottom:0; }
+.duo .liste{ margin-top:var(--e3); margin-bottom:0; }
+.duo-image img{ width:100%; height:auto; }
+
+/* Le portrait est recadré en hauteur, et borné : à mi-largeur d'un grand
+   écran, une image au format 4/5 ferait presque un écran de haut. */
+.portrait{ width:100%; max-width:25rem; justify-self:center; }
+.portrait img{ width:100%; aspect-ratio:4/5; object-fit:cover; object-position:54% 62%; }
+
+/* ═══════════ DÉCLARATION ═══════════
+   Une respiration avant la réservation : une seule phrase, en grand,
+   sur fond d'encre. Rien à lire, rien à cliquer. */
+.declaration{ background:var(--encre); color:var(--blanc); text-align:center; }
+.declaration blockquote{
+  font-family:'Instrument Serif',Georgia,serif; font-weight:400;
+  font-size:clamp(1.9rem,4.4vw,3.25rem); line-height:1.13;
+  max-width:24ch; margin-inline:auto; text-wrap:balance;
+}
+.declaration figcaption{ margin-top:var(--e3); font-size:.78rem; text-transform:uppercase; letter-spacing:.13em; color:rgba(255,255,255,.62); }
+
+/* ═══════════ PRATICIEN ═══════════ */
+/* La remise à zéro globale enlève la marge des paragraphes ; il faut la
+   rendre là où plusieurs se suivent, sinon le texte forme un seul pavé.
+   La mesure est bornée ici, pas sur .etroit : la largeur de 62rem sert
+   aussi à des blocs qui ne sont pas du texte courant. */
+#praticien p{ color:var(--gris); max-width:66ch; margin-bottom:var(--e2); }
+#praticien p:last-child{ margin-bottom:0; }
+#praticien strong{ color:var(--encre); font-weight:500; }
+#praticien h2{ margin-bottom:var(--e3); }
 
 /* ═══════════ QUESTIONS ═══════════ */
 .faq details{ border-bottom:1px solid var(--ligne); }
@@ -579,6 +654,28 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
   </div>
   </div>
 
+  <!-- BANDEAU DÉFILANT -->
+  <div class="ticker">
+    <div class="ticker-piste">
+      <ul class="ticker-suite">
+        <li>Massage sportif</li>
+        <li>Relaxation</li>
+        <li>Hijama</li>
+        <li>Genève</li>
+        <li>Praticien athlète</li>
+        <li>Sur rendez-vous</li>
+      </ul>
+      <ul class="ticker-suite" aria-hidden="true">
+        <li>Massage sportif</li>
+        <li>Relaxation</li>
+        <li>Hijama</li>
+        <li>Genève</li>
+        <li>Praticien athlète</li>
+        <li>Sur rendez-vous</li>
+      </ul>
+    </div>
+  </div>
+
   <!-- PRESTATIONS -->
   <section id="prestations" class="sur-papier">
     <div class="wrap mesure">
@@ -676,9 +773,35 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
     </div>
   </section>
 
+  <!-- LE TRAVAIL -->
+  <section id="travail" class="sur-papier">
+    <div class="wrap duo">
+      <div class="up">
+        <p class="eyebrow">Le travail</p>
+        <h2>Là où ça se joue</h2>
+        <p>Une séance ne se promène pas sur tout le corps. On part des zones qui ont encaissé — celles que vous signalez au début, et celles qui se révèlent sous la main.</p>
+        <p>Chez un coureur, c'est presque toujours la même histoire : la chaîne postérieure qui ne relâche plus, le bas du dos qui compense, les mollets qui restent durs trois jours après la séance de côtes.</p>
+        <ul class="liste">
+          <li>Chaîne postérieure — ischio-jambiers, mollets, fessiers</li>
+          <li>Bas du dos et bassin, souvent en compensation</li>
+          <li>Quadriceps et face externe de la cuisse</li>
+          <li>Épaules et trapèzes, pour les semaines de bureau</li>
+        </ul>
+      </div>
+      <figure class="duo-image up">
+        <img src="anatomie-1400.webp"
+             srcset="anatomie-1400.webp 1400w, anatomie-2800.webp 2800w"
+             sizes="(min-width:64rem) 44vw, 100vw"
+             width="1400" height="906"
+             alt="Illustration anatomique : un praticien appuie des deux mains sur les muscles postérieurs d'une personne allongée à plat ventre sur une table de massage."
+             loading="lazy" decoding="async">
+      </figure>
+    </div>
+  </section>
+
   <!-- PRATICIEN -->
   <section id="praticien">
-    <div class="wrap etroit">
+    <div class="wrap duo">
       <div class="up">
         <p class="eyebrow">Le praticien</p>
         <h2>Sevann</h2>
@@ -686,6 +809,15 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
         <p><strong>Axium.Perform</strong> est né de ce constat : la récupération n'est pas un luxe qu'on s'offre quand il reste du temps, c'est une partie du travail. Chaque séance part de votre situation du moment — une tension localisée, une fatigue générale, ou juste le besoin de relâcher.</p>
         <p>Deux approches se complètent : le massage, pour le travail musculaire direct et le relâchement nerveux ; la hijama, méthode traditionnelle par ventouses, pour la circulation et la récupération en profondeur.</p>
       </div>
+
+      <figure class="portrait up">
+        <img src="sevann-1200.webp"
+             srcset="sevann-1200.webp 1200w, sevann-1600.webp 1600w"
+             sizes="(min-width:64rem) 25rem, 100vw"
+             width="1200" height="900"
+             alt="Sevann en montagne, en tenue de course, sur un sentier de pierres."
+             loading="lazy" decoding="async">
+      </figure>
     </div>
   </section>
 
@@ -769,6 +901,16 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
         </ul>
         <p class="fin">Cette liste ne remplace pas un avis médical et ne prétend pas être complète. En cas de doute, la bonne réponse est toujours d'en parler d'abord à votre médecin.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- DÉCLARATION -->
+  <section class="declaration">
+    <div class="wrap">
+      <figure>
+        <blockquote>On ne progresse pas pendant l'effort. On progresse pendant ce qui suit.</blockquote>
+        <figcaption>Axium.Perform — Genève</figcaption>
+      </figure>
     </div>
   </section>
 
