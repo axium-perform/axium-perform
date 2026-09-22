@@ -18,7 +18,7 @@
   --ligne-forte:rgba(20,20,15,0.32);
   --accent:#0E7C99;
   --rayon:3px;
-  --gouttiere:clamp(20px,5vw,64px);
+  --gouttiere:clamp(20px,4.5vw,120px);
   --ease:cubic-bezier(0.22,1,0.36,1);
 
   /* Même échelle fluide que l'accueil, pour que les pages ne se
@@ -58,7 +58,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible{
   outline:2px solid var(--accent); outline-offset:3px; border-radius:4px;
 }
 
-.wrap{ max-width:min(100%,46rem); margin-inline:auto; padding-inline:var(--gouttiere); }
+/* La colonne de lecture reste bornée — 46rem, c'est la longueur de ligne
+   qui se lit sans effort — mais elle est calée à gauche, sur la même
+   gouttière que l'accueil, et non centrée au milieu de l'écran. La
+   gouttière s'ajoute à la mesure au lieu de la manger. */
+.wrap{ max-width:calc(46rem + 2 * var(--gouttiere)); padding-inline:var(--gouttiere); }
 
 /* ── En-tête ── */
 .top{
@@ -69,14 +73,24 @@ a:focus-visible, button:focus-visible, summary:focus-visible{
   padding:16px 0;
   margin-bottom:clamp(48px,8vw,88px);
 }
-.top .wrap{ max-width:min(100%,72rem); display:flex; align-items:center; justify-content:space-between; gap:18px; }
+/* L'en-tête, lui, traverse toute la page : le logo se pose sur la même
+   gouttière que le texte en dessous, le lien de retour sur celle de
+   droite. */
+.top .wrap{ max-width:none; display:flex; align-items:center; justify-content:space-between; gap:18px; }
 
-.mark{
-  font-family:'Instrument Serif',Georgia,serif;
-  font-weight:400; font-size:1.42rem; letter-spacing:-0.01em;
+/* Même logo que l'accueil : le nom, un filet, la précision. Le filet est
+   un élément à part, pour s'étirer sur la hauteur du bloc. */
+.mark{ display:inline-flex; align-items:stretch; gap:10px; }
+.mark-nom{
+  font-family:'Instrument Serif',Georgia,serif; font-weight:400;
+  font-size:1.44rem; line-height:.95; letter-spacing:-0.01em;
 }
-.mark span{ color:var(--gris-faible); font-weight:400; }
-.mark span::before{ content:'.'; }
+.mark-filet{ width:1px; flex:none; background:var(--ligne-forte); }
+.mark-qualif{
+  align-self:center; white-space:nowrap;
+  font-size:.5rem; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--gris-faible); line-height:1.38;
+}
 
 .back{ font-size:.9rem; color:var(--gris); transition:color .25s var(--ease); }
 .back:hover{ color:var(--encre); }
@@ -100,7 +114,6 @@ h1{
   margin-bottom:22px;
   text-wrap:balance;
 }
-h1 br{ display:none; }
 
 .chapo{
   font-size:clamp(1.04rem,2.2vw,1.2rem);
