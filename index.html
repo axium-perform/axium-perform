@@ -49,18 +49,33 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 :root{
+  /* Relevé dans la feuille de style de drinknomio.com, pas deviné :
+     leur palette est strictement neutre. Du blanc, du noir franc, deux
+     gris de fond, et rien de chaud nulle part. L'ancienne palette d'ici
+     tirait sur le beige — c'était une invention. */
   --blanc:#FFFFFF;
-  --papier:#F0F0EE;
-  --papier-2:#E7E7E3;
-  --encre:#14140F;
-  --gris:#5B5B54;
-  --gris-faible:#65655E;
-  --ligne:rgba(20,20,15,0.13);
-  --ligne-forte:rgba(20,20,15,0.32);
+  --papier:#EFEFEF;       /* leur --color-pale  */
+  --papier-2:#E9E9E9;     /* leur --color-light */
+  --encre:#000000;        /* du noir, pas un noir chaud */
+  --gris:#4D4D4D;
+  --gris-faible:#656565;  /* leur --color-line */
+  --ligne:rgba(0,0,0,0.12);
+  --ligne-forte:rgba(0,0,0,0.32);
+
+  /* Leur accent à eux est un vert vif, #6eff70. Je garde le bleu
+     d'Axium : reprendre leur vert ferait de ce site une copie de leur
+     marque, pas un site qui s'en inspire. */
   --accent:#0E7C99;
 
-  --rayon:3px;
-  --gouttiere:clamp(20px,4.5vw,120px);
+  /* Leurs boutons n'ont aucun arrondi, et aucun de leurs textes n'est
+     espacé : --BUTTON-RADIUS vaut 0, et toutes leurs variables
+     d'interlettrage valent « normal ». */
+  --rayon:0px;
+
+  /* Leur gabarit fait 3000 px de large pour une gouttière de 20 px :
+     autrement dit, la page touche les bords. On s'en approche sans
+     aller jusqu'à 20 px, illisible sur un grand écran. */
+  --gouttiere:clamp(18px,2.6vw,52px);
   --ease:cubic-bezier(0.22,1,0.36,1);
 
   /* ── Échelle d'espacement fluide ──────────────────────────────────
@@ -90,7 +105,7 @@
 html{
   font-size:clamp(0.9375rem, 0.875rem + 0.35vw, 1.1875rem);
   scroll-behavior:smooth;
-  scroll-padding-top:calc(64px + var(--e2));
+  scroll-padding-top:calc(88px + var(--e2));
   background:var(--blanc);
 }
 
@@ -195,10 +210,12 @@ h1{ font-size:clamp(2.6rem,5.6vw,4.2rem); }
 h2{ font-size:clamp(2rem,4vw,3.1rem); margin-bottom:16px; text-wrap:balance; }
 h3{ font-size:1.32rem; }
 
+/* Pas de capitales espacées : chez eux, toutes les variables
+   d'interlettrage valent « normal », y compris celle des intertitres.
+   Les petites capitales tracées que j'avais posées ici venaient d'une
+   idée que je me faisais du registre, pas de leur page. */
 .eyebrow{
-  font-size:.72rem;
-  text-transform:uppercase;
-  letter-spacing:.13em;
+  font-size:.82rem;
   color:var(--gris-faible);
   margin-bottom:14px;
 }
@@ -232,6 +249,19 @@ h3{ font-size:1.32rem; }
 .btn--clair-plein{ background:var(--blanc); color:var(--encre); border-color:var(--blanc); }
 .btn--clair-plein:hover{ background:transparent; color:var(--blanc); }
 
+/* ═══════════ BANDE D'ANNONCE ═══════════
+   Une bande noire au ras du haut, texte blanc : c'est la première chose
+   de leur page, avant même l'en-tête. Elle ne colle pas au défilement,
+   elle passe et on ne la revoit plus. */
+.annonce{ background:var(--encre); color:var(--blanc); }
+.annonce .wrap{ display:flex; align-items:center; min-height:38px; }
+.annonce p{ font-size:.78rem; }
+.annonce span{ color:rgba(255,255,255,.62); }
+/* Sur un écran étroit, la mention d'annulation fait passer la bande sur
+   deux lignes et lui donne le poids d'une section. Elle reste dans les
+   questions et dans le pied ; ici elle s'efface. */
+@media (max-width:560px){ .annonce span{ display:none; } }
+
 /* ═══════════ EN-TÊTE ═══════════ */
 header{
   position:sticky; top:0; z-index:100;
@@ -241,7 +271,7 @@ header{
 }
 html.is-scrolled header{ border-bottom-color:var(--ligne); }
 
-.hd{ display:flex; align-items:center; justify-content:space-between; gap:20px; height:64px; }
+.hd{ display:flex; align-items:center; justify-content:space-between; gap:20px; height:88px; }
 
 /* Le logo : le nom en serif, et la précision rejetée à droite derrière
    un filet vertical.
@@ -276,8 +306,12 @@ html.is-scrolled header{ border-bottom-color:var(--ligne); }
 
 @media (max-width:900px){ .nav, .hd > .btn{ display:none; } .burger{ display:flex; } }
 
+/* Le panneau part du bas de l'en-tête, mesuré à l'ouverture. Une valeur
+   écrite en dur ne marcherait pas : tant que la bande d'annonce est à
+   l'écran, l'en-tête est poussé vers le bas, et le panneau lui
+   recouvrirait le menu. */
 .mob{
-  position:fixed; inset:64px 0 0; z-index:99;
+  position:fixed; inset:var(--sous-entete,88px) 0 0; z-index:99;
   background:var(--papier);
   padding:24px var(--gouttiere) 40px;
   display:flex; flex-direction:column;
@@ -504,7 +538,7 @@ section{ padding:var(--e6) 0; }
   font-size:clamp(1.6rem,3.4vw,2.6rem); line-height:1.15;
   max-width:26ch; text-wrap:balance;
 }
-.declaration figcaption{ margin-top:var(--e3); font-size:.78rem; text-transform:uppercase; letter-spacing:.13em; color:rgba(255,255,255,.62); }
+.declaration figcaption{ margin-top:var(--e3); font-size:.82rem; color:rgba(255,255,255,.62); }
 
 /* ═══════════ PRATICIEN ═══════════ */
 /* La remise à zéro globale enlève la marge des paragraphes ; il faut la
@@ -636,6 +670,12 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
 <body>
 
 <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<div class="annonce">
+  <div class="wrap">
+    <p>Genève — sur rendez-vous <span>· Annulation gratuite jusqu'à 24h avant</span></p>
+  </div>
+</div>
 
 <header>
   <div class="wrap hd">
@@ -1075,6 +1115,10 @@ function fermer(){
   document.body.classList.remove('is-locked');
 }
 burger.addEventListener('click', () => {
+  /* Mesuré au moment du clic : l'en-tête descend tant que la bande
+     d'annonce est visible, et remonte dès qu'on a défilé. */
+  root.style.setProperty('--sous-entete',
+    Math.round(document.querySelector('header').getBoundingClientRect().bottom) + 'px');
   const ouvert = mob.classList.toggle('open');
   burger.classList.toggle('open', ouvert);
   burger.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
