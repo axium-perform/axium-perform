@@ -84,7 +84,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible{
 /* ── Article ── */
 .kicker{
   display:block;
-  font-size:.82rem;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.13em;
   color:var(--gris-faible);
   margin-bottom:16px;
 }
