@@ -24,9 +24,10 @@
    franchement à l'écran plutôt que cachées dans une doc.
    ═══════════════════════════════════════════════════════════════════ */
 
-.outil{ max-width:980px; margin-inline:auto; padding:0 var(--marge) 70px; }
+.outil{ max-width:980px; margin-inline:auto; padding:0 var(--gouttiere) 70px; }
 
 .avert{
+  border-radius:var(--rayon);
   border:1px solid rgba(232,163,61,0.4);
   background:rgba(232,163,61,0.07);
   padding:16px 20px;
@@ -43,6 +44,7 @@
 }
 
 input, textarea, select{
+  border-radius:10px;
   font-family:'Inter',system-ui,sans-serif;
   font-size:.95rem;
   background:rgba(255,255,255,0.05);
@@ -60,18 +62,19 @@ select option{ background:#111; }
   font-family:'Space Mono',monospace;
   font-weight:700; font-size:.68rem;
   letter-spacing:.12em; text-transform:uppercase;
-  background:var(--blanc); color:var(--noir);
+  background:var(--blanc); color:var(--fond);
   border:1px solid var(--blanc);
   padding:11px 20px;
+  border-radius:100px;
   cursor:pointer;
   white-space:nowrap;
   transition:background .3s var(--ease), color .3s var(--ease);
 }
 .btn:hover{ background:transparent; color:var(--blanc); }
 .btn--ghost{ background:transparent; color:var(--blanc); }
-.btn--ghost:hover{ background:var(--blanc); color:var(--noir); }
+.btn--ghost:hover{ background:var(--blanc); color:var(--fond); }
 .btn--danger{ background:transparent; color:#E8746B; border-color:rgba(232,116,107,.5); }
-.btn--danger:hover{ background:#E8746B; color:var(--noir); border-color:#E8746B; }
+.btn--danger:hover{ background:#E8746B; color:var(--fond); border-color:#E8746B; }
 
 .recherche{ flex:1; min-width:190px; }
 
@@ -100,7 +103,7 @@ select option{ background:#111; }
   margin-top:3px;
 }
 
-.fiche{ border:1px solid var(--ligne); padding:clamp(18px,3vw,28px); min-width:0; }
+.fiche{ border:1px solid var(--ligne); border-radius:var(--rayon); padding:clamp(18px,3vw,28px); min-width:0; }
 .fiche h2{ margin-top:0; border-top:0; padding-top:0; }
 
 .champ{ display:grid; gap:6px; margin-bottom:13px; }

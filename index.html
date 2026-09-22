@@ -5,1129 +5,783 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Axium.Perform — massage sportif, relaxation et hijama à Genève. Récupération et performance, par un praticien lui-même athlète de demi-fond.">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#0A0B0D">
 <meta name="color-scheme" content="dark">
 
 <title>Axium.Perform — Récupération &amp; Performance</title>
+<link rel="canonical" href="https://axium-perform.github.io/axium-perform/">
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_CH">
 <meta property="og:site_name" content="Axium.Perform">
 <meta property="og:title" content="Axium.Perform — Récupération &amp; Performance">
 <meta property="og:description" content="Massage sportif, relaxation et hijama à Genève. Récupération et performance, par un praticien lui-même athlète de demi-fond.">
-<!-- og:image doit être une URL ABSOLUE pour l'aperçu WhatsApp/LinkedIn.
-     Remplacer par https://VOTRE-DOMAINE/0fc6911e-bb7e-4be2-9817-8390221d3612.JPG -->
+<!-- og:image doit être une URL ABSOLUE pour l'aperçu WhatsApp/LinkedIn. -->
 <meta property="og:image" content="0fc6911e-bb7e-4be2-9817-8390221d3612.JPG">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23000'/%3E%3Cpath d='M17.4 6.5 24 25.5h-4.3l-1.2-3.6h-6.6L14 18.2h3l-1.7-5.1-4.2 12.4H6.8L13.4 6.5h4Z' fill='%2340D2EC'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A0B0D'/%3E%3Cpath d='M17.4 6.5 24 25.5h-4.3l-1.2-3.6h-6.6L14 18.2h3l-1.7-5.1-4.2 12.4H6.8L13.4 6.5h4Z' fill='%235CC9DE'/%3E%3C/svg%3E">
 
-<!-- Polices servies depuis ce dépôt : aucune requête vers Google, donc
-     rien qui parte chez un tiers, et un affichage qui ne dépend plus
-     d'un serveur extérieur. -->
-<!-- Posé avant tout rendu : les éléments qui dépendent du script pour
-     disparaître ne s'affichent que si le script peut tourner. -->
-<script>document.documentElement.classList.add('js');</script>
-
-<link rel="preload" as="font" type="font/woff2" href="fonts/Archivo-800i-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="fonts/InstrumentSans-400-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/Inter-300-latin.woff2" crossorigin>
 <link rel="stylesheet" href="fonts/fonts.css">
 
 <style>
 
 /* ═══════════════════════════════════════════════════════════════════
-   AXIUM.PERFORM — « SALLE DE PROJECTION »
+   AXIUM.PERFORM
    ───────────────────────────────────────────────────────────────────
-   Refonte complète, d'après la direction de ciaoenergy.com.
+   Sombre, calme, et qui se lit de haut en bas.
 
-   Le site n'est plus une page qu'on parcourt : c'est une bobine de
-   chapitres plein écran. On avance image par image, et arrivé au bout
-   la bobine repart au début — la boucle est invisible parce que le
-   dernier écran est, au pixel près, le premier.
+   Ce qui a été retiré par rapport à la version précédente, et pourquoi :
+   la bobine de chapitres plein écran, le bouclage, le cadre à équerres,
+   le grain, le bandeau défilant. C'était spectaculaire, mais ça mettait
+   un spectacle entre le visiteur et l'information qu'il cherche. Une
+   personne qui veut connaître un tarif doit le trouver en défilant, pas
+   en ouvrant un menu.
 
-   NOIR      #000000 — pas de gris de fond. La salle est éteinte.
-   BLANC     #FFFFFF — le texte, le cadre, le sujet.
-   ACCENT    variable par chapitre. Le halo derrière le sujet, et lui
-             seul, porte la couleur — jamais le texte courant.
+   FOND      #0A0B0D  — noir très légèrement bleuté, moins dur que le noir pur
+   SURFACE   #111316  — les cartes et panneaux, à peine détachés du fond
+   TEXTE     #F4F5F6  — blanc cassé, pas de blanc pur qui vibre sur du noir
+   ACCENT    #5CC9DE  — le bleu du logo Axium, désaturé pour rester calme
 
-   CYAN      #40D2EC  massage        (repris du logo Axium)
-   VIOLET    #9B8CFF  relaxation
-   AMBRE     #E8A33D  hijama
+   L'accent ne sert qu'aux prix, aux liens et à un trait par section.
+   Jamais de grand aplat de couleur : c'est le vide qui structure.
 
-   Display   Archivo 900 italique — lourd, penché, serré.
-   Texte     Inter 300/400, centré, très aéré.
-   Report    Space Mono — repères, index, données. L'appareil de mesure.
-   ───────────────────────────────────────────────────────────────────
-   LE CADRE. Quatre équerres aux angles, des lettres sur le bord
-   gauche, un rail lumineux en haut. Ce n'est pas de la décoration :
-   c'est ce qui dit « vous regardez quelque chose de cadré », et c'est
-   ce qui tient l'écran quand le sujet est une photo unique.
-   ───────────────────────────────────────────────────────────────────
-   REPLIS. La bobine n'existe que si le script tourne ET que le
-   mouvement est autorisé. Sans JavaScript, en mouvement réduit, ou
-   si le visiteur coupe l'animation lui-même (bouton MOUVEMENT), les
-   chapitres redeviennent des sections empilées, lisibles de haut en
-   bas. Rien n'est jamais caché derrière une animation.
+   Titres    Instrument Sans 600/700 — droit, ouvert, pas d'italique lourde
+   Texte     Inter 300/400, interligne généreux
+   Repères   Space Mono — prix, durées, étiquettes
    ═══════════════════════════════════════════════════════════════════ */
 
 :root{
-  --noir:#000000;
-  --blanc:#FFFFFF;
-  --gris:rgba(255,255,255,0.52);
-  --gris-faible:rgba(255,255,255,0.3);
-  --ligne:rgba(255,255,255,0.16);
-  --accent:#40D2EC;
+  --fond:#0A0B0D;
+  --surface:#111316;
+  --surface-2:#171A1E;
+  --blanc:#F4F5F6;
+  --gris:rgba(244,245,246,0.62);
+  --gris-faible:rgba(244,245,246,0.38);
+  --ligne:rgba(244,245,246,0.10);
+  --ligne-forte:rgba(244,245,246,0.20);
+  --accent:#5CC9DE;
+  --accent-sourd:rgba(92,201,222,0.12);
 
+  --rayon:16px;
+  --rayon-s:10px;
+  --gouttiere:clamp(20px,5vw,64px);
   --ease:cubic-bezier(0.22,1,0.36,1);
-  --t-fast:0.18s;
-  --t-mid:0.42s;
-  /* Gouttière unique du cadre. Tout ce qui se pose sur un bord de
-     l'écran s'y aligne — équerres, lettres, en-tête, pastilles,
-     bouton WhatsApp. Avant, chacun avait son propre décalage
-     (+12, +18, +34) : invisible sur téléphone, franchement bancal
-     sur iPad, où les quatre bords tombaient à 30, 42, 48 et 64 px. */
-  --marge:clamp(14px,3.2vw,30px);
-  --marge-rail:calc(var(--marge) + 30px);   /* le rail démarre après les équerres */
 }
 
 *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
 
-html{ scroll-behavior:smooth; background:var(--noir); }
+html{ scroll-behavior:smooth; scroll-padding-top:88px; background:var(--fond); }
 
 body{
   font-family:'Inter',system-ui,sans-serif;
   font-weight:400;
-  background:var(--noir);
+  background:var(--fond);
   color:var(--blanc);
-  line-height:1.6;
+  line-height:1.7;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
-  min-height:100svh;
 }
-
 body.is-locked{ overflow:hidden; }
 
 img{ display:block; max-width:100%; }
-a{ text-decoration:none; color:inherit; }
+a{ color:inherit; text-decoration:none; }
 ul{ list-style:none; }
-::selection{ background:var(--blanc); color:var(--noir); }
+::selection{ background:var(--accent); color:var(--fond); }
 
-a:focus-visible,
-button:focus-visible,
-summary:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; border-radius:2px; }
-
-.sr{
-  position:absolute; width:1px; height:1px;
-  padding:0; margin:-1px; overflow:hidden;
-  clip:rect(0 0 0 0); white-space:nowrap; border:0;
+a:focus-visible, button:focus-visible, summary:focus-visible{
+  outline:2px solid var(--accent); outline-offset:3px; border-radius:4px;
 }
+
+.wrap{ max-width:1160px; margin-inline:auto; padding-inline:var(--gouttiere); }
+.etroit{ max-width:760px; }
+
+.sr{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 
 .skip-link{
-  position:fixed; top:10px; left:10px; z-index:1300;
-  padding:10px 18px;
-  background:var(--blanc); color:var(--noir);
-  font-family:'Space Mono',monospace;
-  font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
-  transform:translateY(-200%);
-  transition:transform var(--t-mid) var(--ease);
+  position:fixed; top:10px; left:10px; z-index:300;
+  padding:10px 18px; background:var(--blanc); color:var(--fond);
+  font-family:'Space Mono',monospace; font-size:.66rem;
+  letter-spacing:.14em; text-transform:uppercase; border-radius:8px;
+  transform:translateY(-200%); transition:transform .3s var(--ease);
 }
-.skip-link:focus-visible{ transform:translateY(0); outline-color:var(--noir); }
-
-/* ═══════════ LE CADRE ═══════════ */
-.frame{ position:fixed; inset:0; z-index:60; pointer-events:none; }
-
-/* Quatre équerres. Bordures sur un carré vide : deux côtés par angle. */
-.frame b{
-  position:absolute;
-  width:16px; height:16px;
-  border:1px solid rgba(255,255,255,0.34);
-}
-.frame b:nth-child(1){ top:var(--marge);    left:var(--marge);  border-right:0; border-bottom:0; }
-.frame b:nth-child(2){ top:var(--marge);    right:var(--marge); border-left:0;  border-bottom:0; }
-.frame b:nth-child(3){ bottom:var(--marge); left:var(--marge);  border-right:0; border-top:0; }
-.frame b:nth-child(4){ bottom:var(--marge); right:var(--marge); border-left:0;  border-top:0; }
-
-/* Les lettres du bord gauche : le nom, à la verticale, en filigrane. */
-.frame-edge{
-  position:absolute;
-  left:var(--marge);
-  top:50%;
-  transform:translateY(-50%);
-  display:flex; flex-direction:column; gap:14px;
-  font-family:'Space Mono',monospace;
-  font-size:.6rem; letter-spacing:.1em;
-  color:rgba(255,255,255,0.24);
-}
-@media (max-width:720px){ .frame-edge{ display:none; } }
-
-/* Rail de progression + le point lumineux qui le parcourt. */
-.frame-rail{
-  position:absolute;
-  top:var(--marge); left:var(--marge-rail); right:var(--marge-rail);
-  height:1px;
-  background:rgba(255,255,255,0.16);
-  container-type:inline-size;   /* référence des 100cqw du point lumineux */
-}
-.frame-rail i{
-  position:absolute; top:50%; left:0;
-  width:64px; height:1px;
-  margin-top:-.5px;
-  background:linear-gradient(90deg, transparent, #fff 55%, transparent);
-  transform:translateX(calc(var(--p,0) * (100cqw - 64px)));
-}
-.frame-rail i::after{
-  content:'';
-  position:absolute; top:50%; left:55%;
-  width:5px; height:5px; margin:-2.5px 0 0 -2.5px;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:0 0 12px 3px rgba(255,255,255,0.75), 0 0 30px 8px var(--accent);
-}
-
-/* ═══════════ 37 · OUVERTURE AU LOGO ═══════════ */
-/* Sans JavaScript, rien ne pourrait retirer cet écran : il masquerait
-   le site entier derrière un rectangle noir. Il n'existe donc que si le
-   script est là pour le faire disparaître. */
-.intro{ display:none; }
-html.js .intro{
-  position:fixed; inset:0; z-index:400;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:26px;
-  background:var(--noir);
-  transition:opacity .7s var(--ease), visibility 0s linear .7s;
-}
-.intro.is-out{ opacity:0; visibility:hidden; pointer-events:none; }
-
-.intro-mark{
-  width:clamp(84px,13vw,128px);
-  aspect-ratio:500/292;
-  object-fit:cover; object-position:top center;
-  filter:grayscale(1) brightness(0) invert(1);
-  opacity:0;
-  transform:translateY(14px) scale(.94);
-  animation:introMark 1.15s var(--ease) .1s forwards;
-}
-@keyframes introMark{ to{ opacity:.92; transform:none; } }
-
-.intro-rail{
-  position:relative;
-  width:min(180px,42vw); height:1px;
-  background:rgba(255,255,255,0.16);
-  overflow:hidden;
-}
-.intro-rail i{
-  position:absolute; inset:0;
-  background:var(--accent);
-  transform:scaleX(0); transform-origin:0 50%;
-  animation:introRail 1.5s var(--ease) .35s forwards;
-}
-@keyframes introRail{ to{ transform:scaleX(1); } }
-
-/* ═══════════ 36 · SON ═══════════ */
-.snd{ display:flex; align-items:flex-end; gap:2px; height:11px; }
-.snd i{ width:2px; background:currentColor; height:30%; transition:height .3s var(--ease); }
-html.snd-on .snd i{ animation:eq 1.3s var(--ease) infinite alternate; }
-html.snd-on .snd i:nth-child(2){ animation-delay:.2s; }
-html.snd-on .snd i:nth-child(3){ animation-delay:.4s; }
+.skip-link:focus-visible{ transform:translateY(0); outline-color:var(--fond); }
 
 /* ═══════════ EN-TÊTE ═══════════ */
-/* Trois colonnes, les deux extérieures de largeur égale : le logo tombe
-   sur l'axe de l'écran quoi qu'il arrive. En space-between il était
-   poussé par le côté gauche, plus large (SON + MOUVEMENT contre MENU) —
-   décalé d'une quarantaine de pixels, ce qui se voit dès qu'on aligne
-   le regard sur le titre du chapitre, lui bien centré. */
 header{
-  position:fixed;
-  top:calc(var(--marge) + 26px);
-  left:0; right:0;
-  z-index:100;
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  padding:0 var(--marge);
-  pointer-events:none;
+  position:sticky; top:0; z-index:100;
+  background:rgba(10,11,13,0.82);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s var(--ease), background-color .3s var(--ease);
 }
-.hd-left{ justify-self:start; }
-.hd-logo{ justify-self:center; }
-.hd-menu{ justify-self:end; }
-header > *{ pointer-events:auto; }
+html.is-scrolled header{ border-bottom-color:var(--ligne); background:rgba(10,11,13,0.94); }
 
-.hd-left{ display:flex; align-items:center; gap:clamp(12px,2.4vw,26px); min-width:0; }
-@media (max-width:560px){ .hd-left #motionLabel{ display:none; } }
+.hd{ display:flex; align-items:center; justify-content:space-between; gap:20px; height:72px; }
 
-.hd-btn{
-  display:inline-flex; align-items:center; gap:9px;
-  background:none; border:0; cursor:pointer;
+.logo{ display:flex; align-items:center; gap:11px; flex:none; }
+/* L'emblème n'est lisible qu'à partir d'une certaine taille : en pied de
+   page uniquement, où il a la place. Recadré sur sa partie haute, le
+   fichier source portant aussi le mot « AXIUM » qui ferait doublon. */
+.logo--grand{ align-items:flex-end; }
+.logo--grand img{
+  width:52px; aspect-ratio:500/292;
+  object-fit:cover; object-position:top center;
+  filter:grayscale(1) brightness(0) invert(1); opacity:.85;
+}
+.logo b{
+  font-family:'Instrument Sans',sans-serif;
+  font-weight:600; font-size:1.02rem; letter-spacing:-0.02em;
+}
+.logo b span{ color:var(--gris-faible); font-weight:400; }
+
+.nav{ display:flex; align-items:center; gap:clamp(18px,2.6vw,34px); }
+.nav a{
+  font-size:.9rem; color:var(--gris);
+  transition:color .25s var(--ease);
+}
+.nav a:hover{ color:var(--blanc); }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 24px;
+  border-radius:100px;
+  font-family:'Instrument Sans',sans-serif;
+  font-weight:600; font-size:.9rem; letter-spacing:-0.01em;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), transform .18s var(--ease);
+}
+.btn:active{ transform:translateY(1px); }
+.btn--plein{ background:var(--blanc); color:var(--fond); }
+.btn--plein:hover{ background:var(--accent); }
+.btn--vide{ border-color:var(--ligne-forte); color:var(--blanc); }
+.btn--vide:hover{ border-color:var(--blanc); background:rgba(244,245,246,0.06); }
+.btn--s{ padding:10px 19px; font-size:.84rem; }
+
+.burger{ display:none; width:40px; height:40px; border:0; background:none; cursor:pointer; flex-direction:column; align-items:center; justify-content:center; gap:5px; }
+.burger i{ width:19px; height:1.5px; background:var(--blanc); border-radius:2px; transition:transform .3s var(--ease), opacity .2s var(--ease); }
+.burger.open i:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+.burger.open i:nth-child(2){ opacity:0; }
+.burger.open i:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+@media (max-width:880px){
+  .nav, .hd > .btn{ display:none; }
+  .burger{ display:flex; }
+}
+
+/* Menu mobile */
+.mob{
+  position:fixed; inset:72px 0 0; z-index:99;
+  background:var(--fond);
+  padding:28px var(--gouttiere) 40px;
+  display:flex; flex-direction:column; gap:6px;
+  opacity:0; visibility:hidden; transform:translateY(-8px);
+  transition:opacity .28s var(--ease), transform .28s var(--ease), visibility 0s linear .28s;
+  overflow-y:auto;
+}
+.mob.open{ opacity:1; visibility:visible; transform:none; transition:opacity .28s var(--ease), transform .28s var(--ease); }
+.mob a{
+  font-family:'Instrument Sans',sans-serif;
+  font-weight:600; font-size:1.5rem; letter-spacing:-0.02em;
+  padding:14px 0; border-bottom:1px solid var(--ligne);
+}
+.mob .btn{ margin-top:22px; }
+
+/* ═══════════ SECTIONS ═══════════ */
+section{ padding:clamp(72px,10vw,132px) 0; }
+section + section{ border-top:1px solid var(--ligne); }
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
   font-family:'Space Mono',monospace;
-  font-weight:700; font-size:.72rem;
-  letter-spacing:.14em; text-transform:uppercase;
-  color:var(--blanc);
-  transition:opacity var(--t-fast) var(--ease);
-}
-.hd-btn:hover{ opacity:.6; }
-
-/* Trois barres qui respirent — coupées, elles s'aplatissent. */
-.eq{ display:flex; align-items:flex-end; gap:2px; height:11px; }
-.eq i{ width:2px; background:currentColor; height:40%; animation:eq 1.1s var(--ease) infinite alternate; }
-.eq i:nth-child(2){ animation-delay:.18s; }
-.eq i:nth-child(3){ animation-delay:.36s; }
-@keyframes eq{ from{ height:25%; } to{ height:100%; } }
-html.no-motion .eq i{ animation:none; height:35%; }
-
-.hd-logo{
-  font-family:'Archivo',sans-serif;
-  font-style:italic; font-weight:900;
-  font-size:clamp(1rem,2.6vw,1.24rem);
-  line-height:.94;
-  letter-spacing:-0.02em;
-  text-transform:uppercase;
-  text-align:center;
-  white-space:nowrap;
-}
-.hd-logo span{ display:block; font-size:.74em; letter-spacing:.04em; }
-
-.hd-menu .dots{ letter-spacing:-2px; font-size:1rem; line-height:1; }
-
-/* ═══════════ LA BOBINE ═══════════ */
-/* Base (sans JS, mouvement réduit, ou animation coupée) : les chapitres
-   sont de simples sections empilées. Tout est lisible, rien n'est fixe. */
-.deck{ position:relative; }
-
-.chapter{
-  position:relative;
-  min-height:100svh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:calc(var(--marge) + 96px) clamp(22px,7vw,80px) calc(var(--marge) + 90px);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  overflow:hidden;
-}
-
-.ch-inner{
-  position:relative; z-index:3;
-  width:100%;
-  max-width:760px;
-  text-align:center;
-}
-
-/* Le halo : la seule surface colorée de la page. */
-.ch-glow{
-  position:absolute;
-  left:50%; top:50%;
-  width:min(150vw,1180px); height:min(150vw,1180px);
-  transform:translate(-50%,-50%);
-  z-index:0;
-  pointer-events:none;
-  background:radial-gradient(circle, color-mix(in srgb, var(--ch, #40D2EC) 42%, transparent) 0%, transparent 62%);
-  opacity:.5;
-}
-
-.ch-media{
-  position:absolute; inset:0; z-index:1;
-  pointer-events:none;
-  display:flex; align-items:center; justify-content:center;
-}
-.ch-media img{
-  width:100%; height:100%;
-  object-fit:contain;
-  object-position:center;
-  opacity:.72;
-}
-/* La source est encodee en niveaux de gris : inutile de refaire le
-   travail au filtre CSS a chaque frame. */
-.ch-media.is-cover img{ object-fit:cover; opacity:.52; filter:contrast(1.14); }
-
-.ch-veil{
-  position:absolute; inset:0; z-index:2;
-  pointer-events:none;
-  background:radial-gradient(ellipse at center, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.72) 74%);
-}
-
-/* Fond propre au bloc de texte : la lisibilité ne coûte plus la
-   luminosité du sujet. Il s'arrête net avant les bords, donc le sujet
-   reste éclairé là où il compte. */
-.ch-inner::before{
-  content:'';
-  position:absolute;
-  left:50%; top:50%;
-  width:168%; height:186%;
-  transform:translate(-50%,-50%);
-  z-index:-1;
-  pointer-events:none;
-  background:radial-gradient(ellipse at center, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.52) 46%, transparent 72%);
-}
-
-.ch-kicker{
-  font-family:'Space Mono',monospace;
-  font-weight:700; font-size:.66rem;
-  letter-spacing:.24em; text-transform:uppercase;
+  font-weight:700; font-size:.64rem;
+  letter-spacing:.2em; text-transform:uppercase;
   color:var(--gris-faible);
-  margin-bottom:22px;
+  margin-bottom:20px;
 }
+.eyebrow::before{ content:''; width:22px; height:1px; background:var(--accent); }
 
-.ch-title{
-  font-family:'Archivo',sans-serif;
-  font-style:italic; font-weight:900;
-  text-transform:uppercase;
-  font-size:clamp(2.6rem,9.4vw,6.2rem);
-  line-height:.9;
-  letter-spacing:-0.03em;
-  margin-bottom:24px;
+h1,h2,h3{ font-family:'Instrument Sans',sans-serif; letter-spacing:-0.03em; line-height:1.08; }
+
+h2{
+  font-weight:600;
+  font-size:clamp(1.9rem,4.6vw,3rem);
+  margin-bottom:18px;
   text-wrap:balance;
 }
 
-.ch-text{
+.lede{
+  font-size:clamp(1.02rem,1.9vw,1.16rem);
   font-weight:300;
-  font-size:clamp(1rem,2.3vw,1.24rem);
-  line-height:1.66;
-  color:rgba(255,255,255,0.82);
-  max-width:32ch;
-  margin:0 auto 26px;
+  color:var(--gris);
+  max-width:56ch;
+  margin-bottom:clamp(38px,5vw,56px);
   text-wrap:pretty;
 }
 
-.ch-meta{
-  display:inline-flex; align-items:center; gap:14px;
-  font-family:'Space Mono',monospace;
-  font-weight:700; font-size:.76rem;
-  letter-spacing:.12em; text-transform:uppercase;
-  font-variant-numeric:tabular-nums;
+/* ═══════════ HERO ═══════════ */
+.hero{ position:relative; padding:0; border-top:0; overflow:hidden; }
+.hero-media{ position:absolute; inset:0; z-index:0; }
+.hero-media img{ width:100%; height:100%; object-fit:cover; object-position:50% 42%; opacity:.5; }
+.hero-media::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(10,11,13,.62) 0%, rgba(10,11,13,.78) 55%, var(--fond) 100%);
+}
+.hero-in{
+  position:relative; z-index:1;
+  padding:clamp(96px,16vw,180px) 0 clamp(72px,11vw,128px);
+  max-width:800px;
+}
+.hero h1{
+  font-weight:700;
+  font-size:clamp(2.5rem,7vw,4.6rem);
+  margin-bottom:22px;
+  text-wrap:balance;
+}
+.hero p{
+  font-size:clamp(1.04rem,2vw,1.22rem);
+  font-weight:300; color:var(--gris);
+  max-width:50ch; margin-bottom:34px;
+}
+.hero-actions{ display:flex; gap:12px; flex-wrap:wrap; }
+
+/* Repères sous le hero */
+.reperes{
+  display:grid; gap:1px;
+  background:var(--ligne);
+  border-block:1px solid var(--ligne);
+}
+@media (min-width:700px){ .reperes{ grid-template-columns:repeat(3,1fr); } }
+.repere{ background:var(--fond); padding:26px var(--gouttiere); }
+.repere b{
+  display:block;
+  font-family:'Instrument Sans',sans-serif;
+  font-weight:600; font-size:1.04rem; margin-bottom:3px;
+}
+.repere span{ font-size:.88rem; color:var(--gris-faible); }
+
+/* ═══════════ PRESTATIONS ═══════════ */
+.cartes{ display:grid; gap:18px; }
+@media (min-width:760px){ .cartes{ grid-template-columns:repeat(3,1fr); } }
+
+.carte{
+  display:flex; flex-direction:column;
+  background:var(--surface);
   border:1px solid var(--ligne);
-  padding:11px 20px;
-  color:var(--blanc);
+  border-radius:var(--rayon);
+  padding:30px 28px;
+  transition:border-color .3s var(--ease), background .3s var(--ease), transform .3s var(--ease);
 }
-.ch-meta b{ color:var(--ch,var(--accent)); font-weight:700; }
+.carte:hover{ border-color:var(--ligne-forte); background:var(--surface-2); transform:translateY(-3px); }
 
-/* Le dispositif barré : ce qu'on retire, puis ce qu'on met à la place. */
-.swap-out{
-  display:inline-flex; align-items:center; gap:0;
-  margin-bottom:20px;
-  font-family:'Archivo',sans-serif;
-  font-weight:700; font-size:clamp(.82rem,2.5vw,1.02rem);
-  letter-spacing:.02em; text-transform:uppercase;
+.carte h3{ font-weight:600; font-size:1.26rem; margin-bottom:10px; }
+.carte > p{ color:var(--gris); font-size:.95rem; font-weight:300; margin-bottom:20px; }
+
+.carte ul{ display:grid; gap:8px; margin-bottom:26px; }
+.carte li{ position:relative; padding-left:19px; font-size:.88rem; color:var(--gris); }
+.carte li::before{ content:''; position:absolute; left:0; top:.68em; width:9px; height:1px; background:var(--accent); opacity:.7; }
+
+.carte-bas{ margin-top:auto; padding-top:20px; border-top:1px solid var(--ligne); display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+.prix{ font-family:'Space Mono',monospace; font-weight:700; font-size:1.42rem; color:var(--accent); font-variant-numeric:tabular-nums; }
+.prix.mot{ font-size:1rem; }
+.duree{ font-family:'Space Mono',monospace; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gris-faible); }
+
+.carte-lien{
+  margin-top:18px; font-size:.86rem; color:var(--accent);
+  display:inline-flex; align-items:center; gap:6px;
+  transition:gap .25s var(--ease);
 }
-.swap-out i{
-  display:grid; place-items:center;
-  width:26px; height:26px;
-  background:color-mix(in srgb, var(--ch,#40D2EC) 42%, #000);
-  color:var(--blanc);
-  font-style:normal; font-size:.8rem;
+.carte:hover .carte-lien{ gap:11px; }
+
+.extras{ display:grid; gap:1px; background:var(--ligne); border:1px solid var(--ligne); border-radius:var(--rayon); overflow:hidden; margin-top:18px; }
+@media (min-width:700px){ .extras{ grid-template-columns:repeat(3,1fr); } }
+.extra{ background:var(--surface); padding:22px 26px; }
+.extra b{ display:block; font-family:'Instrument Sans',sans-serif; font-weight:600; font-size:.98rem; margin-bottom:4px; }
+.extra span{ font-size:.86rem; color:var(--gris-faible); }
+.extra em{ font-style:normal; color:var(--accent); font-family:'Space Mono',monospace; }
+
+.note-tarifs{ margin-top:22px; font-family:'Space Mono',monospace; font-size:.68rem; letter-spacing:.05em; color:var(--gris-faible); }
+
+/* ═══════════ PRATICIEN ═══════════ */
+.duo{ display:grid; gap:clamp(30px,5vw,60px); align-items:center; }
+@media (min-width:900px){ .duo{ grid-template-columns:0.85fr 1.15fr; } }
+
+.portrait{
+  border-radius:var(--rayon); overflow:hidden;
+  border:1px solid var(--ligne);
+  aspect-ratio:4/5; background:var(--surface);
 }
-.swap-out s{
-  background:var(--blanc); color:var(--noir);
-  padding:5px 12px;
-  text-decoration-thickness:1.5px;
+.portrait img{ width:100%; height:100%; object-fit:cover; object-position:54% 60%; }
+
+.duo p{ color:var(--gris); font-weight:300; margin-bottom:15px; max-width:56ch; }
+.duo p strong{ color:var(--blanc); font-weight:500; }
+
+/* ═══════════ ÉTAPES ═══════════ */
+.etapes{ display:grid; gap:1px; background:var(--ligne); border:1px solid var(--ligne); border-radius:var(--rayon); overflow:hidden; }
+@media (min-width:640px){ .etapes{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1040px){ .etapes{ grid-template-columns:repeat(4,1fr); } }
+
+.etape{ background:var(--surface); padding:30px 26px; }
+.etape i{
+  display:block; font-style:normal;
+  font-family:'Space Mono',monospace; font-weight:700; font-size:.68rem;
+  letter-spacing:.14em; color:var(--accent); margin-bottom:16px;
 }
+.etape h3{ font-weight:600; font-size:1.08rem; margin-bottom:8px; }
+.etape p{ font-size:.9rem; color:var(--gris); font-weight:300; }
 
-.btn{
-  display:inline-flex; align-items:center; gap:12px;
-  padding:16px 34px;
-  background:var(--blanc); color:var(--noir);
-  font-family:'Space Mono',monospace;
-  font-weight:700; font-size:.76rem;
-  letter-spacing:.14em; text-transform:uppercase;
-  border:1px solid var(--blanc);
-  cursor:pointer;
-  transition:background var(--t-mid) var(--ease), color var(--t-mid) var(--ease), transform var(--t-fast) var(--ease);
+/* ═══════════ QUESTIONS ═══════════ */
+.faq details{ border-bottom:1px solid var(--ligne); }
+.faq details:first-of-type{ border-top:1px solid var(--ligne); }
+.faq summary{
+  display:flex; align-items:center; justify-content:space-between; gap:20px;
+  padding:20px 2px; cursor:pointer; list-style:none;
+  font-family:'Instrument Sans',sans-serif; font-weight:500; font-size:1.02rem;
+  transition:color .25s var(--ease);
 }
-.btn:hover{ background:transparent; color:var(--blanc); }
-.btn:active{ transform:translateY(1px); }
-.btn--ghost{ background:transparent; color:var(--blanc); }
-.btn--ghost:hover{ background:var(--blanc); color:var(--noir); }
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary:hover{ color:var(--accent); }
+.faq summary i{ position:relative; flex:none; width:16px; height:16px; }
+.faq summary i::before, .faq summary i::after{
+  content:''; position:absolute; left:50%; top:50%;
+  width:12px; height:1.5px; background:currentColor;
+  transform:translate(-50%,-50%); transition:transform .3s var(--ease);
+}
+.faq summary i::after{ transform:translate(-50%,-50%) rotate(90deg); }
+.faq details[open] summary i::after{ transform:translate(-50%,-50%) rotate(0); }
+.faq-corps{ padding:0 2px 24px; max-width:68ch; }
+.faq-corps p{ color:var(--gris); font-weight:300; font-size:.96rem; margin-bottom:12px; }
+.faq-corps p:last-child{ margin-bottom:0; }
 
-.ch-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:6px; }
+/* Points de vigilance */
+.vigilance{
+  margin-top:clamp(34px,5vw,52px);
+  border:1px solid rgba(232,163,61,0.28);
+  background:rgba(232,163,61,0.05);
+  border-radius:var(--rayon);
+  padding:clamp(24px,3.4vw,34px);
+}
+.vigilance h3{ font-weight:600; font-size:1.1rem; margin-bottom:10px; color:#E8A33D; }
+.vigilance > p{ color:var(--gris); font-weight:300; font-size:.94rem; margin-bottom:16px; max-width:64ch; }
+.vigilance ul{ display:grid; gap:8px; }
+@media (min-width:720px){ .vigilance ul{ grid-template-columns:repeat(2,1fr); } }
+.vigilance li{ position:relative; padding-left:20px; font-size:.9rem; color:var(--gris); font-weight:300; }
+.vigilance li::before{ content:''; position:absolute; left:0; top:.6em; width:7px; height:7px; border:1px solid rgba(232,163,61,.6); border-radius:2px; }
+.vigilance .fin{ margin-top:16px; margin-bottom:0; font-size:.88rem; }
 
-/* ─── MODE BOBINE (posé par le script) ─── */
-html.is-deck body{ overflow-x:hidden; }
+/* ═══════════ RÉSERVATION ═══════════ */
+.resa{ display:grid; gap:24px; align-items:start; }
+@media (min-width:1000px){ .resa{ grid-template-columns:1.35fr 0.65fr; } }
 
-html.is-deck .deck{ height:var(--deck-h,900svh); }
-
-html.is-deck .stage{
-  position:fixed;
-  inset:0;
-  z-index:1;
+.cal-shell{
+  position:relative;
+  border:1px solid var(--ligne);
+  border-radius:var(--rayon);
   overflow:hidden;
+  background:var(--surface);
 }
-
-html.is-deck .chapter{
-  position:absolute;
-  inset:0;
-  min-height:0;
-  border-bottom:0;
-  opacity:0;
-  visibility:hidden;
-  transition:opacity .5s var(--ease), visibility 0s linear .5s;
-}
-html.is-deck .chapter.is-on{
-  opacity:1;
-  visibility:visible;
-  transition:opacity .5s var(--ease);
-}
-
-/* Les éléments entrent en décalé quand le chapitre prend la main. */
-html.is-deck .chapter .ch-kicker,
-html.is-deck .chapter .ch-title,
-html.is-deck .chapter .ch-text,
-html.is-deck .chapter .ch-meta,
-html.is-deck .chapter .swap-out,
-html.is-deck .chapter .ch-actions{
-  opacity:0;
-  transform:translateY(26px);
-  transition:opacity .62s var(--ease), transform .62s var(--ease);
-}
-html.is-deck .chapter.is-on .ch-kicker,
-html.is-deck .chapter.is-on .ch-title,
-html.is-deck .chapter.is-on .ch-text,
-html.is-deck .chapter.is-on .ch-meta,
-html.is-deck .chapter.is-on .swap-out,
-html.is-deck .chapter.is-on .ch-actions{ opacity:1; transform:none; }
-
-html.is-deck .chapter.is-on .ch-title{ transition-delay:.06s; }
-html.is-deck .chapter.is-on .ch-text{ transition-delay:.12s; }
-html.is-deck .chapter.is-on .ch-meta,
-html.is-deck .chapter.is-on .ch-actions{ transition-delay:.18s; }
-
-/* Le sujet dérive lentement — le seul mouvement continu de la page. */
-html.is-deck .chapter .ch-media img{ transform:scale(1.06); transition:transform 1.6s var(--ease); }
-html.is-deck .chapter.is-on .ch-media img{ transform:scale(1); }
-
-/* ═══════════ 03 · 19 · 28 · CONTACT ═══════════ */
-.contacts{ display:grid; gap:2px; margin-top:16px; }
-.contacts a{
-  display:flex; align-items:baseline; justify-content:space-between; gap:16px;
-  padding:14px 16px;
-  background:rgba(255,255,255,0.04);
-  text-decoration:none;
-  transition:background .28s var(--ease);
-}
-.contacts a:hover{ background:rgba(255,255,255,0.09); }
-.contacts span{
-  font-family:'Space Mono',monospace;
-  font-size:.6rem; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--gris-faible);
-}
-.contacts b{
-  font-family:'Space Mono',monospace;
-  font-size:.9rem; font-weight:700;
-  color:var(--accent);
-  font-variant-numeric:tabular-nums;
-  white-space:nowrap;
-}
-
-.wa{
-  position:fixed;
-  left:var(--marge);
-  bottom:calc(var(--marge) + 26px);
-  z-index:95;
-  display:inline-flex; align-items:center; gap:9px;
-  padding:11px 16px 11px 13px;
-  background:rgba(0,0,0,0.62);
-  border:1px solid var(--ligne);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  color:var(--blanc);
-  text-decoration:none;
-  font-family:'Space Mono',monospace;
-  font-weight:700; font-size:.66rem;
-  letter-spacing:.13em; text-transform:uppercase;
-  transition:background .3s var(--ease), border-color .3s var(--ease), transform var(--t-fast) var(--ease);
-}
-.wa:hover{ background:var(--blanc); color:var(--noir); border-color:var(--blanc); }
-.wa:active{ transform:translateY(1px); }
-.wa svg{ width:16px; height:16px; fill:currentColor; flex:none; }
-
-/* Sur petit écran, l'icône seule : le libellé mangerait la moitié de la largeur. */
-@media (max-width:620px){
-  .wa{ padding:11px; border-radius:50%; }
-  .wa span{ display:none; }
-}
-
-/* ═══════════ PASTILLES DE CHAPITRE ═══════════ */
-.dots-nav{
-  position:fixed;
-  right:var(--marge);
-  top:50%;
-  transform:translateY(-50%);
-  z-index:90;
-  display:none;
-  flex-direction:column;
-  align-items:center;
-  gap:15px;
-}
-html.is-deck .dots-nav{ display:flex; }
-@media (max-width:720px){ html.is-deck .dots-nav{ gap:11px; } }
-
-.dots-nav button{
-  position:relative;
-  width:9px; height:9px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,0.42);
-  background:transparent;
-  cursor:pointer;
-  padding:0;
-  transition:background var(--t-mid) var(--ease), border-color var(--t-mid) var(--ease), transform var(--t-mid) var(--ease);
-}
-.dots-nav button:hover{ border-color:#fff; transform:scale(1.25); }
-.dots-nav button[aria-current="true"]{
-  background:var(--accent);
-  border-color:var(--accent);
-  transform:scale(1.3);
-  box-shadow:0 0 14px 2px color-mix(in srgb, var(--accent) 60%, transparent);
-}
-
-/* ═══════════ INDICATEUR DE DÉFILEMENT ═══════════ */
-.hint{
-  position:fixed;
-  left:50%; bottom:calc(var(--marge) + 26px);
-  transform:translateX(-50%);
-  z-index:90;
-  display:none;
-  align-items:center; gap:10px;
-  font-family:'Space Mono',monospace;
-  font-size:.6rem; letter-spacing:.22em; text-transform:uppercase;
-  color:var(--gris-faible);
-  transition:opacity var(--t-mid) var(--ease);
-}
-html.is-deck .hint{ display:flex; }
-html.is-deck.is-moved .hint{ opacity:0; }
-
-.hint i{
-  width:22px; height:1px; background:currentColor;
-  transform-origin:0 50%;
-  animation:hint 1.9s var(--ease) infinite;
-}
-@keyframes hint{ 0%{ transform:scaleX(0); } 55%{ transform:scaleX(1); } 100%{ transform:scaleX(0); transform-origin:100% 50%; } }
-html.no-motion .hint i{ animation:none; }
-
-/* ═══════════ MENU ═══════════ */
-.menu{
-  position:fixed; inset:0; z-index:200;
-  background:rgba(0,0,0,0.97);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  opacity:0; visibility:hidden;
-  transition:opacity .34s var(--ease), visibility 0s linear .34s;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-  padding:calc(var(--marge) + 90px) clamp(22px,6vw,72px) 64px;
-}
-.menu.open{ opacity:1; visibility:visible; transition:opacity .34s var(--ease); }
-
-.menu-close{
-  position:fixed;
-  top:calc(var(--marge) + 22px);
-  right:var(--marge);
-  z-index:210;
-}
-
-.menu-grid{ max-width:1020px; margin-inline:auto; display:grid; gap:clamp(34px,5vw,58px); }
-@media (min-width:900px){ .menu-grid{ grid-template-columns:1fr 1.15fr; } }
-
-.menu-nav{ display:flex; flex-direction:column; }
-.menu-nav button{
-  background:none; border:0; cursor:pointer;
-  text-align:left;
-  padding:8px 0;
-  font-family:'Archivo',sans-serif;
-  font-style:italic; font-weight:900;
-  font-size:clamp(1.6rem,6.4vw,2.5rem);
-  line-height:1.1;
-  letter-spacing:-0.02em;
-  text-transform:uppercase;
-  color:var(--blanc);
-  transition:color var(--t-mid) var(--ease), transform var(--t-mid) var(--ease);
-}
-.menu-nav button:hover{ color:var(--accent); transform:translateX(9px); }
-
-.menu-panel h3{
-  font-family:'Space Mono',monospace;
-  font-weight:700; font-size:.66rem;
-  letter-spacing:.2em; text-transform:uppercase;
-  color:var(--gris-faible);
-  margin-bottom:16px;
-  padding-bottom:12px;
-  border-bottom:1px solid var(--ligne);
-}
-.menu-panel + .menu-panel{ margin-top:38px; }
-
-.tarif{
-  display:flex; align-items:baseline; justify-content:space-between; gap:16px;
-  padding:13px 0;
-  border-bottom:1px solid rgba(255,255,255,0.08);
-}
-.tarif span{ font-weight:500; }
-.tarif--fort{ background:var(--accent-fond,rgba(64,210,236,0.07)); margin-inline:-10px; padding-inline:10px; }
-.tarif b{
-  font-family:'Space Mono',monospace;
-  font-variant-numeric:tabular-nums;
-  white-space:nowrap;
-  color:var(--accent);
-}
-.tarif a{ color:inherit; text-decoration:none; border-bottom:1px solid var(--ligne); transition:border-color .3s var(--ease), color .3s var(--ease); }
-.tarif a:hover{ color:var(--accent); border-bottom-color:var(--accent); }
-.tarif em{ display:block; font-style:normal; font-size:.78rem; color:var(--gris-faible); }
-
-.menu details{ border-bottom:1px solid rgba(255,255,255,0.08); }
-.menu summary{
-  display:flex; align-items:center; justify-content:space-between; gap:16px;
-  padding:15px 0; cursor:pointer; list-style:none;
-  font-weight:500; font-size:.98rem;
-}
-.menu summary::-webkit-details-marker{ display:none; }
-.menu summary::after{ content:'+'; font-family:'Space Mono',monospace; color:var(--accent); }
-.menu details[open] summary::after{ content:'–'; }
-.menu details p{ padding-bottom:16px; color:var(--gris); font-size:.92rem; line-height:1.78; font-weight:300; }
-.menu details p + p{ margin-top:-6px; }
-
-/* Liste de vigilance : des points à lire, pas des cases à cocher — rien
-   n'est envoyé nulle part, donc rien ne doit ressembler à un formulaire. */
-.check{ margin:16px 0 18px; padding:0; list-style:none; display:grid; gap:9px; }
-.check li{
-  position:relative;
-  padding-left:26px;
-  font-size:.93rem; line-height:1.6;
-  color:var(--gris);
-  font-weight:300;
-}
-.check li::before{
-  content:'';
-  position:absolute; left:0; top:.5em;
-  width:11px; height:11px;
-  border:1px solid var(--rouille,#E8A33D);
-  border-radius:2px;
-}
-
-.menu-legal p{ color:var(--gris); font-size:.84rem; line-height:1.8; font-weight:300; margin-bottom:10px; }
-.menu-legal strong{ color:var(--blanc); font-weight:500; }
-
-.cal-shell{ position:relative; margin-top:8px; border:1px solid var(--ligne); }
-.cal-widget{ min-width:280px; width:100%; height:min(640px,78vh); position:relative; z-index:1; }
-
-/* Le repli passe AU-DESSUS du conteneur du calendrier. Dans l'autre sens,
-   le conteneur — vide mais haut de 640 px — recouvrait le repli et
-   avalait les clics : le lien de secours était visible mais mort.
-   Une fois le calendrier monté, .is-done le masque en visibility:hidden,
-   ce qui le retire aussi de la détection des clics. */
-.cal-fallback{
+.cal-widget{ position:relative; z-index:1; min-height:560px; width:100%; }
+.cal-repli{
   position:absolute; inset:0; z-index:2;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
-  padding:24px; text-align:center;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:16px; padding:32px; text-align:center;
 }
-.cal-fallback.is-done{ opacity:0; visibility:hidden; }
-.cal-secours{ line-height:2.1; }
-.cal-secours a{
-  color:var(--accent);
-  font-family:'Space Mono',monospace;
-  border-bottom:1px solid rgba(64,210,236,.4);
-}
-.cal-secours a:hover{ border-bottom-color:var(--accent); }
-.cal-fallback p{
-  font-family:'Space Mono',monospace;
-  font-size:.64rem; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--gris-faible);
-}
+.cal-repli.is-done{ opacity:0; visibility:hidden; }
+.cal-repli p{ font-family:'Space Mono',monospace; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gris-faible); }
 
-.menu-foot{
-  max-width:1020px; margin:52px auto 0;
-  padding-top:24px;
-  border-top:1px solid var(--ligne);
-  display:flex; flex-wrap:wrap; gap:12px 28px; justify-content:space-between;
-  font-family:'Space Mono',monospace;
-  font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--gris-faible);
+.contacts{ display:grid; gap:1px; background:var(--ligne); border:1px solid var(--ligne); border-radius:var(--rayon); overflow:hidden; }
+.contacts a, .contacts div{
+  background:var(--surface); padding:17px 22px;
+  display:flex; align-items:baseline; justify-content:space-between; gap:14px;
+  transition:background .25s var(--ease);
 }
+.contacts a:hover{ background:var(--surface-2); }
+.contacts span{ font-family:'Space Mono',monospace; font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gris-faible); }
+.contacts b{ font-family:'Space Mono',monospace; font-size:.88rem; font-weight:700; color:var(--accent); font-variant-numeric:tabular-nums; white-space:nowrap; }
 
-/* ═══════════ REPLIS ═══════════ */
-/* Hors bobine, on remet un pied de page lisible en fin de parcours. */
-.tail{ display:block; padding:70px clamp(22px,6vw,72px); border-top:1px solid var(--ligne); text-align:center; }
-html.is-deck .tail{ display:none; }
-.tail p{ color:var(--gris); font-size:.88rem; margin-bottom:14px; font-weight:300; }
+.infos{ margin-top:18px; border:1px solid var(--ligne); border-radius:var(--rayon); padding:22px; background:var(--surface); }
+.infos p{ font-size:.9rem; color:var(--gris); font-weight:300; margin-bottom:10px; }
+.infos p:last-child{ margin-bottom:0; }
+.infos strong{ color:var(--blanc); font-weight:500; }
+
+/* ═══════════ PIED ═══════════ */
+footer{ border-top:1px solid var(--ligne); padding:clamp(48px,6vw,72px) 0 40px; }
+.pied{ display:grid; gap:34px; }
+@media (min-width:820px){ .pied{ grid-template-columns:1.3fr 1fr 1fr; } }
+.pied h4{
+  font-family:'Space Mono',monospace; font-weight:700; font-size:.62rem;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--gris-faible); margin-bottom:14px;
+}
+.pied ul{ display:grid; gap:9px; }
+.pied a{ font-size:.92rem; color:var(--gris); transition:color .25s var(--ease); }
+.pied a:hover{ color:var(--blanc); }
+.pied-marque p{ color:var(--gris); font-size:.92rem; font-weight:300; margin-top:12px; max-width:36ch; }
+
+.cgv{ margin-top:44px; padding-top:26px; border-top:1px solid var(--ligne); }
+.cgv p{ font-size:.82rem; color:var(--gris-faible); font-weight:300; margin-bottom:9px; max-width:80ch; }
+.cgv strong{ color:var(--gris); font-weight:500; }
+.bas{ margin-top:26px; font-family:'Space Mono',monospace; font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gris-faible); }
+
+/* WhatsApp flottant */
+.wa{
+  position:fixed; right:18px; bottom:18px; z-index:90;
+  display:inline-flex; align-items:center; gap:9px;
+  padding:12px 18px 12px 15px;
+  border-radius:100px;
+  background:rgba(17,19,22,0.9);
+  border:1px solid var(--ligne-forte);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  font-family:'Instrument Sans',sans-serif; font-weight:600; font-size:.86rem;
+  box-shadow:0 8px 28px -10px rgba(0,0,0,.8);
+  transition:background .25s var(--ease), color .25s var(--ease), transform .18s var(--ease);
+}
+.wa:hover{ background:var(--blanc); color:var(--fond); }
+.wa svg{ width:17px; height:17px; fill:currentColor; flex:none; }
+.wa:active{ transform:translateY(1px); }
+@media (max-width:560px){ .wa{ padding:13px; } .wa span{ display:none; } }
+
+/* Entrées discrètes — jamais d'élément qui reste invisible sans JS. */
+.js .up{ opacity:0; transform:translateY(16px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.js .up.vu{ opacity:1; transform:none; }
 
 @media (prefers-reduced-motion:reduce){
   html{ scroll-behavior:auto; }
-  *,*::before,*::after{
-    animation-duration:.01ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:.01ms !important;
-    transition-delay:0s !important;
-  }
+  *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; transition-delay:0s !important; }
+  .js .up{ opacity:1 !important; transform:none !important; }
+}
+
+@media print{
+  .js .up{ opacity:1 !important; transform:none !important; }
+  header, .wa{ display:none; }
 }
 
 @media (prefers-contrast:more){
-  :root{ --gris:rgba(255,255,255,0.8); --gris-faible:rgba(255,255,255,0.62); --ligne:rgba(255,255,255,0.44); }
-  .ch-glow{ opacity:.24; }
-  .ch-media img{ opacity:.2; }
+  :root{ --gris:rgba(244,245,246,.85); --gris-faible:rgba(244,245,246,.66); --ligne:rgba(244,245,246,.3); }
+  .hero-media img{ opacity:.22; }
 }
 
 </style>
-</head>
 
+<script>document.documentElement.classList.add('js');</script>
+</head>
 <body>
 
-<!-- 37 · Ouverture. L'emblème se révèle, puis s'efface et rend la main à
-     la bobine. Retiré du DOM après coup pour ne rien laisser traîner.
-     Ne se joue jamais en mouvement réduit : le script le supprime. -->
-<div class="intro" id="intro" aria-hidden="true">
-  <img class="intro-mark" src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="" decoding="async">
-  <span class="intro-rail"><i></i></span>
-</div>
-
-<a class="skip-link" href="#chapitres">Aller au contenu</a>
-
-<div class="frame" aria-hidden="true">
-  <b></b><b></b><b></b><b></b>
-  <div class="frame-rail"><i></i></div>
-  <div class="frame-edge"><span>A</span><span>X</span><span>I</span><span>U</span><span>M</span></div>
-</div>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
 <header>
+  <div class="wrap hd">
+    <a class="logo" href="#contenu" aria-label="Axium.Perform, haut de page">
+      <b>Axium<span>.Perform</span></b>
+    </a>
 
-  <div class="hd-left">
-    <button class="hd-btn" id="soundBtn" aria-pressed="false">
-      <span class="snd" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span id="soundLabel">Son</span>
-    </button>
-    <button class="hd-btn" id="motionBtn" aria-pressed="false">
-      <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span id="motionLabel">Mouvement</span>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#prestations">Prestations</a>
+      <a href="#praticien">Le praticien</a>
+      <a href="#seance">La séance</a>
+      <a href="#questions">Questions</a>
+    </nav>
+
+    <a class="btn btn--plein btn--s" href="#reserver">Réserver</a>
+
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mob">
+      <i></i><i></i><i></i>
     </button>
   </div>
-
-  <a href="#chapitres" class="hd-logo" aria-label="Axium.Perform, retour au début">
-    Axium<span>Perform</span>
-  </a>
-
-  <button class="hd-btn hd-menu" id="menuBtn" aria-expanded="false" aria-controls="menu">
-    <span class="dots" aria-hidden="true">::</span> Menu
-  </button>
-
 </header>
 
-<main class="deck" id="chapitres">
-  <div class="stage">
-
-    <!-- 00 — l'ouverture. C'est aussi l'image sur laquelle la bobine
-         reboucle : le dernier écran de la bobine est celui-ci. -->
-    <article class="chapter" data-accent="#40D2EC" data-nom="Ouverture">
-      <div class="ch-glow"></div>
-      <div class="ch-veil"></div>
-      <div class="ch-inner">
-        <p class="ch-kicker">Genève — 46.2044° N / 6.1432° E</p>
-        <h1 class="ch-title">Axium<br>Perform</h1>
-        <p class="ch-text">Massage sportif, relaxation et hijama. La récupération traitée comme une partie du travail, pas comme un extra.</p>
-        <div class="ch-actions">
-          <button class="btn" data-open-menu data-panel="reservation">Réserver une séance</button>
-        </div>
-      </div>
-    </article>
-
-    <!-- 01 -->
-    <article class="chapter" data-accent="#FFFFFF" data-nom="Manifeste">
-      <div class="ch-glow"></div>
-      <div class="ch-media is-cover">
-        <img src="sevann-1600.webp"
-             srcset="sevann-1200.webp 1200w, sevann-1600.webp 1600w"
-             sizes="100vw" width="1600" height="1200"
-             alt="" aria-hidden="true" decoding="async">
-      </div>
-      <div class="ch-veil"></div>
-      <div class="ch-inner">
-        <p class="ch-kicker">Le principe</p>
-        <h2 class="ch-title">Sans récup,<br>pas de perf</h2>
-        <p class="ch-text">Le corps progresse en récupérant, pas seulement à l'entraînement. C'est après la charge que tout se joue.</p>
-      </div>
-    </article>
-
-    <!-- 02 — le dispositif barré, repris de la référence -->
-    <article class="chapter" data-accent="#40D2EC" data-nom="Le constat">
-      <div class="ch-glow"></div>
-      <div class="ch-veil"></div>
-      <div class="ch-inner">
-        <p class="swap-out"><i aria-hidden="true">×</i><s>Repos passif</s></p>
-        <h2 class="ch-title">Récupération<br>active</h2>
-        <p class="ch-text">Attendre que ça passe n'est pas un plan. Relâchement musculaire, circulation, mobilité — on travaille la récupération, on ne la subit pas.</p>
-      </div>
-    </article>
-
-    <!-- 03 -->
-    <article class="chapter" data-accent="#40D2EC" data-nom="Massage sportif">
-      <div class="ch-glow"></div>
-      <div class="ch-media">
-        <img src="anatomie-2800.webp"
-             srcset="anatomie-1400.webp 1400w, anatomie-2800.webp 2800w"
-             sizes="100vw" width="2800" height="1812"
-             alt="" aria-hidden="true" decoding="async">
-      </div>
-      <div class="ch-veil"></div>
-      <div class="ch-inner">
-        <p class="ch-kicker">Prestation 01</p>
-        <h2 class="ch-title">Massage<br>sportif</h2>
-        <p class="ch-text">Travail musculaire ciblé pour dénouer les tensions et accélérer la récupération après l'effort.</p>
-        <p class="ch-meta"><b>40.–</b> 30 minutes</p>
-      </div>
-    </article>
-
-    <!-- 04 -->
-    <article class="chapter" data-accent="#9B8CFF" data-nom="Relaxation">
-      <div class="ch-glow"></div>
-      <div class="ch-veil"></div>
-      <div class="ch-inner">
-        <p class="ch-kicker">Prestation 02</p>
-        <h2 class="ch-title">Relaxation</h2>
-        <p class="ch-text">Relâchement global du corps et du système nerveux. Pour souffler, et récupérer en profondeur.</p>
-        <p class="ch-meta"><b>70.–</b> 1 heure</p>
-      </div>
-    </article>
-
-    <!-- 05 -->
-    <article class="chapter" data-accent="#E8A33D" data-nom="Hijama">
-      <div class="ch-glow"></div>
-      <div class="ch-veil"></div>
-      <div class="ch-inner">
-        <p class="ch-kicker">Prestation 03</p>
-        <h2 class="ch-title">Hijama</h2>
-        <p class="ch-text">Méthode traditionnelle par ventouses, matériel à usage unique. Pour la circulation et la récupération profonde.</p>
-        <p class="ch-meta"><b>Sur demande</b> selon besoin</p>
-      </div>
-    </article>
-
-    <!-- 06 -->
-    <article class="chapter" data-accent="#FFFFFF" data-nom="Le praticien">
-      <div class="ch-glow"></div>
-      <div class="ch-media is-cover">
-        <img src="sevann-1600.webp"
-             srcset="sevann-1200.webp 1200w, sevann-1600.webp 1600w"
-             sizes="100vw" width="1600" height="1200"
-             alt="Sevann, praticien Axium.Perform, en montagne" decoding="async">
-      </div>
-      <div class="ch-veil"></div>
-      <div class="ch-inner">
-        <p class="ch-kicker">Le praticien</p>
-        <h2 class="ch-title">Sevann</h2>
-        <p class="ch-text">Athlète de demi-fond. Il connaît la fatigue musculaire et nerveuse de l'intérieur — celle qui suit un bloc d'intensité, une compétition, ou une semaine trop chargée.</p>
-      </div>
-    </article>
-
-    <!-- 32 · Offrir une séance -->
-    <article class="chapter" data-accent="#9B8CFF" data-nom="Offrir">
-      <div class="ch-glow"></div>
-      <div class="ch-veil"></div>
-      <div class="ch-inner">
-        <p class="ch-kicker">Bon cadeau</p>
-        <h2 class="ch-title">Offrir<br>une séance</h2>
-        <p class="ch-text">Pour quelqu'un qui s'entraîne dur, ou qui ne prend jamais le temps. Bon nominatif, valable six mois.</p>
-        <div class="ch-actions">
-          <button class="btn btn--ghost" data-open-menu data-panel="offrir">Comment ça marche</button>
-        </div>
-      </div>
-    </article>
-
-    <!-- 07 — dernier chapitre avant que la bobine ne reparte -->
-    <article class="chapter" data-accent="#40D2EC" data-nom="Réserver">
-      <div class="ch-glow"></div>
-      <div class="ch-veil"></div>
-      <div class="ch-inner">
-        <p class="ch-kicker">Rendez-vous</p>
-        <h2 class="ch-title">On s'y<br>met ?</h2>
-        <p class="ch-text">Choisissez votre créneau en quelques clics. Annulation gratuite jusqu'à 24h avant.</p>
-        <div class="ch-actions">
-          <button class="btn" data-open-menu data-panel="reservation">Ouvrir le calendrier</button>
-          <button class="btn btn--ghost" data-open-menu data-panel="sante">Avant de réserver</button>
-        </div>
-      </div>
-    </article>
-
-  </div>
-</main>
-
-<!-- Fin de parcours — visible uniquement hors mode bobine, pour que la
-     page se termine proprement quand les chapitres sont empilés. -->
-<div class="tail">
-  <p>Massage · Hijama · Récupération sportive — Genève</p>
-  <button class="btn" data-open-menu data-panel="reservation">Réserver une séance</button>
+<div class="mob" id="mob">
+  <a href="#prestations">Prestations</a>
+  <a href="#praticien">Le praticien</a>
+  <a href="#seance">La séance</a>
+  <a href="#questions">Questions</a>
+  <a class="btn btn--plein" href="#reserver">Réserver une séance</a>
 </div>
 
-<!-- 28 · Joignable en un geste, depuis n'importe quel chapitre. Bulle
-     de discussion plutôt que le logo de la marque : même message, et pas
-     de reproduction de marque déposée. -->
-<a class="wa" href="https://wa.me/41787310732" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp">
-  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <path d="M12 3.2c-4.9 0-8.8 3.5-8.8 7.8 0 2.4 1.2 4.5 3.1 5.9v3.9l3.6-2a10 10 0 0 0 2.1.2c4.9 0 8.8-3.5 8.8-7.9S16.9 3.2 12 3.2Z"/>
-  </svg>
-  <span>WhatsApp</span>
-</a>
+<main id="contenu">
 
-<nav class="dots-nav" id="dotsNav" aria-label="Chapitres"></nav>
-
-<div class="hint" aria-hidden="true"><span>Défiler</span><i></i></div>
-
-<!-- ═══════════ MENU ═══════════ -->
-<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
-
-  <button class="hd-btn menu-close" id="menuClose">Fermer ×</button>
-
-  <div class="menu-grid">
-
-    <nav class="menu-nav" id="menuNav" aria-label="Aller au chapitre"></nav>
-
-    <div>
-
-      <section class="menu-panel" id="panel-tarifs">
-        <h3>Prestations &amp; tarifs</h3>
-        <div class="tarif"><span><a href="massage-sportif.html">Massage sportif →</a><em>30 minutes</em></span><b>40.–</b></div>
-        <div class="tarif"><span><a href="relaxation.html">Relaxation →</a><em>1 heure</em></span><b>70.–</b></div>
-        <div class="tarif"><span><a href="hijama.html">Hijama →</a><em>Selon besoin</em></span><b>Sur demande</b></div>
-        <div class="tarif tarif--fort"><span>Forfait 5 massages<em>5 × 30 min · valable 6 mois</em></span><b>180.–</b></div>
-        <div class="tarif"><span>Déplacement à domicile<em>Genève et alentours · en supplément</em></span><b>Sur demande</b></div>
-        <div class="tarif"><span>Présence sur compétition<em>Séances courtes sur site</em></span><b>Sur demande</b></div>
-        <p style="margin-top:14px;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.08em;color:rgba(255,255,255,0.3);line-height:1.8">
-          Tarifs en francs suisses · Paiement sur place · Annulation gratuite 24h avant
-        </p>
-      </section>
-
-      <section class="menu-panel" id="panel-questions">
-        <h3>Questions fréquentes</h3>
-
-        <details>
-          <summary>Comment choisir entre massage et hijama ?</summary>
-          <p>On en parle au début de la séance. En règle générale, le massage répond à une tension musculaire identifiée ou à une récupération après effort ; la hijama s'adresse plutôt à un besoin de circulation et de récupération plus profonde. Les deux peuvent être combinés.</p>
-        </details>
-
-        <details>
-          <summary>La hijama, c'est quoi exactement ?</summary>
-          <p>Une méthode traditionnelle par ventouses : des cupules sont posées sur des points précis afin de créer une aspiration locale. Le matériel est à usage unique.</p>
-          <p>C'est une pratique de bien-être et de récupération, pas un acte médical. En cas de doute, parlez-en d'abord à votre médecin.</p>
-        </details>
-
-        <details>
-          <summary>Est-ce que c'est douloureux ?</summary>
-          <p>La pression est ajustée en continu. Un travail sur une zone très contractée peut être inconfortable sur le moment, mais rien ne doit être douloureux : dites-le et on adapte immédiatement.</p>
-        </details>
-
-        <details>
-          <summary>Comment me préparer ?</summary>
-          <p>Tenue confortable, pas de repas lourd juste avant, et hydratez-vous bien avant comme après. Si vous venez après un entraînement ou une compétition, mentionnez-le : cela change la façon de travailler.</p>
-        </details>
-
-        <details>
-          <summary>Y a-t-il des contre-indications ?</summary>
-          <p>Oui. Certaines situations demandent un avis médical préalable — blessure récente, pathologie connue, traitement en cours (anticoagulants notamment), ou grossesse.</p>
-          <p>Les prestations proposées sont des services de bien-être et de récupération. Elles ne remplacent en aucun cas un avis ou un traitement médical.</p>
-        </details>
-
-      </section>
-
-      <!-- 32 · Offrir une séance -->
-      <section class="menu-panel" id="panel-offrir">
-        <h3>Offrir une séance</h3>
-        <div class="menu-legal">
-          <p>Un massage s'offre très bien — pour un anniversaire, après une grosse course, ou simplement pour quelqu'un qui ne prend jamais le temps.</p>
-          <p><strong>Comment ça marche.</strong> Vous choisissez la prestation, je prépare un bon nominatif que vous recevez par message et que vous pouvez imprimer. La personne réserve ensuite son créneau quand elle veut. Le bon est valable <strong>six mois</strong>.</p>
-          <p>Dites-le-moi simplement au moment de réserver, ou par message.</p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-media" aria-hidden="true">
+      <img src="sevann-1600.webp" srcset="sevann-1200.webp 1200w, sevann-1600.webp 1600w" sizes="100vw" width="1600" height="1200" alt="" decoding="async">
+    </div>
+    <div class="wrap">
+      <div class="hero-in">
+        <p class="eyebrow">Genève — massage &amp; hijama</p>
+        <h1>La récupération fait partie du travail.</h1>
+        <p>Massage sportif, relaxation et hijama. Une approche construite séance après séance autour de ce que votre corps a réellement encaissé.</p>
+        <div class="hero-actions">
+          <a class="btn btn--plein" href="#reserver">Réserver une séance</a>
+          <a class="btn btn--vide" href="#prestations">Voir les prestations</a>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <!-- 27 · Auto-évaluation avant séance. Aucune donnée n'est envoyée
-           ni enregistrée : c'est une liste à lire, pas un formulaire. -->
-      <section class="menu-panel" id="panel-sante">
-        <h3>Avant de réserver — points de vigilance</h3>
-        <div class="menu-legal">
-          <p>Certaines situations demandent un avis médical <strong>avant</strong> une séance. Parcourez cette liste : si l'un de ces points vous concerne, parlez-m'en avant de réserver — on adaptera, ou je vous orienterai.</p>
-        </div>
-        <ul class="check">
-          <li>Blessure récente, entorse, déchirure ou fracture en cours de consolidation</li>
-          <li>Traitement anticoagulant, ou trouble de la coagulation</li>
+  <div class="reperes">
+    <div class="repere"><b>Praticien athlète</b><span>Demi-fond — la fatigue connue de l'intérieur</span></div>
+    <div class="repere"><b>Deux méthodes</b><span>Massage et hijama, seules ou combinées</span></div>
+    <div class="repere"><b>Sportif ou non</b><span>Aucun niveau requis pour venir</span></div>
+  </div>
+
+  <!-- PRESTATIONS -->
+  <section id="prestations">
+    <div class="wrap">
+      <p class="eyebrow up">Prestations</p>
+      <h2 class="up">Trois façons de récupérer</h2>
+      <p class="lede up">Le choix se fait ensemble au début de la séance, selon ce qui coince et ce que vous avez prévu dans les jours qui viennent.</p>
+
+      <div class="cartes">
+
+        <article class="carte up">
+          <h3>Massage sportif</h3>
+          <p>Travail musculaire ciblé pour dénouer les tensions et accélérer la récupération après l'effort.</p>
+          <ul>
+            <li>Zones définies avec vous</li>
+            <li>Idéal après une séance ou une course</li>
+            <li>Pression ajustée en continu</li>
+          </ul>
+          <div class="carte-bas">
+            <span class="prix">40.–</span>
+            <span class="duree">30 minutes</span>
+          </div>
+          <a class="carte-lien" href="massage-sportif.html">En savoir plus <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="carte up">
+          <h3>Relaxation</h3>
+          <p>Relâchement global du corps et du système nerveux. Pour souffler et redescendre, vraiment.</p>
+          <ul>
+            <li>Corps entier, rythme lent</li>
+            <li>Pour les semaines trop chargées</li>
+            <li>Aucun prérequis sportif</li>
+          </ul>
+          <div class="carte-bas">
+            <span class="prix">70.–</span>
+            <span class="duree">1 heure</span>
+          </div>
+          <a class="carte-lien" href="relaxation.html">En savoir plus <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="carte up">
+          <h3>Hijama</h3>
+          <p>Méthode traditionnelle par ventouses, pour la circulation et la récupération en profondeur.</p>
+          <ul>
+            <li>Matériel à usage unique</li>
+            <li>Points définis lors de l'échange</li>
+            <li>Seule ou combinée au massage</li>
+          </ul>
+          <div class="carte-bas">
+            <span class="prix mot">Sur demande</span>
+            <span class="duree">Selon besoin</span>
+          </div>
+          <a class="carte-lien" href="hijama.html">En savoir plus <span aria-hidden="true">→</span></a>
+        </article>
+
+      </div>
+
+      <div class="extras up">
+        <div class="extra"><b>Forfait 5 massages</b><span>5 × 30 min · valable 6 mois — <em>180.–</em></span></div>
+        <div class="extra"><b>Déplacement à domicile</b><span>Genève et alentours — <em>sur demande</em></span></div>
+        <div class="extra"><b>Présence sur compétition</b><span>Séances courtes sur site — <em>sur demande</em></span></div>
+      </div>
+
+      <p class="note-tarifs up">Tarifs en francs suisses · Paiement sur place · Annulation gratuite jusqu'à 24h avant</p>
+    </div>
+  </section>
+
+  <!-- PRATICIEN -->
+  <section id="praticien">
+    <div class="wrap duo">
+      <div class="portrait up">
+        <img src="sevann-1600.webp" srcset="sevann-1200.webp 1200w, sevann-1600.webp 1600w" sizes="(min-width:900px) 40vw, 100vw" width="1600" height="1200" alt="Sevann, praticien Axium.Perform, en montagne" decoding="async" loading="lazy">
+      </div>
+      <div class="up">
+        <p class="eyebrow">Le praticien</p>
+        <h2>Sevann</h2>
+        <p>Athlète de demi-fond à la base. Il connaît la fatigue musculaire et nerveuse de l'intérieur — celle qui suit un bloc d'intensité, une compétition, ou simplement une semaine trop chargée.</p>
+        <p><strong>Axium.Perform</strong> est né de ce constat : la récupération n'est pas un luxe qu'on s'offre quand il reste du temps, c'est une partie du travail. Chaque séance part de votre situation du moment — une tension localisée, une fatigue générale, ou juste le besoin de relâcher.</p>
+        <p>Deux approches se complètent : le massage, pour le travail musculaire direct et le relâchement nerveux ; la hijama, méthode traditionnelle par ventouses, pour la circulation et la récupération en profondeur.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SÉANCE -->
+  <section id="seance">
+    <div class="wrap">
+      <p class="eyebrow up">Déroulement</p>
+      <h2 class="up">Comment se passe une séance</h2>
+      <p class="lede up">Quatre temps, toujours les mêmes. Rien n'est décidé sans vous, et rien ne commence avant qu'on ait fait le point.</p>
+
+      <div class="etapes">
+        <div class="etape up"><i>Étape 01</i><h3>Échange</h3><p>Un point rapide sur vos douleurs, votre charge d'entraînement et l'objectif du jour.</p></div>
+        <div class="etape up"><i>Étape 02</i><h3>Travail ciblé</h3><p>Massage ou hijama, selon ce que votre corps demande ce jour-là.</p></div>
+        <div class="etape up"><i>Étape 03</i><h3>Récupération</h3><p>Relâchement musculaire, retour au calme, corps déchargé.</p></div>
+        <div class="etape up"><i>Étape 04</i><h3>Conseils</h3><p>Hydratation, points de vigilance et suivi jusqu'à la prochaine séance.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUESTIONS -->
+  <section id="questions">
+    <div class="wrap etroit">
+      <p class="eyebrow up">Questions</p>
+      <h2 class="up">Avant de venir</h2>
+
+      <div class="faq up">
+
+        <details>
+          <summary>Comment choisir entre massage et hijama ?<i aria-hidden="true"></i></summary>
+          <div class="faq-corps">
+            <p>Le plus simple est de ne pas choisir seul : on en parle au début de la séance. En règle générale, le massage répond à une tension musculaire identifiée ou à une récupération après effort ; la hijama s'adresse plutôt à un besoin de circulation et de récupération plus profonde.</p>
+            <p>Les deux peuvent être combinés dans une même séance si cela a du sens pour votre situation.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>La hijama, c'est quoi exactement ?<i aria-hidden="true"></i></summary>
+          <div class="faq-corps">
+            <p>Une méthode traditionnelle par ventouses : des cupules sont posées sur des points précis afin de créer une aspiration locale. Le matériel utilisé est à usage unique.</p>
+            <p>Il s'agit d'une pratique de bien-être et de récupération, pas d'un acte médical. En cas de doute sur votre situation, parlez-en d'abord à votre médecin.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Est-ce que c'est douloureux ?<i aria-hidden="true"></i></summary>
+          <div class="faq-corps">
+            <p>La pression est ajustée en continu pendant la séance. Un travail sur une zone très contractée peut être inconfortable sur le moment, mais rien ne doit être douloureux : dites-le simplement et on adapte immédiatement.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Comment me préparer ?<i aria-hidden="true"></i></summary>
+          <div class="faq-corps">
+            <p>Venez avec une tenue confortable, évitez un repas lourd juste avant, et prévoyez de bien vous hydrater avant comme après. Si vous venez après une séance d'entraînement ou une compétition, mentionnez-le : cela change la façon de travailler.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Et si je dois annuler ?<i aria-hidden="true"></i></summary>
+          <div class="faq-corps">
+            <p>L'annulation est gratuite jusqu'à 24h avant le rendez-vous, directement depuis le lien de confirmation reçu à la réservation. Passé ce délai, la séance peut être facturée.</p>
+          </div>
+        </details>
+
+      </div>
+
+      <div class="vigilance up">
+        <h3>Points de vigilance</h3>
+        <p>Certaines situations demandent un avis médical <strong>avant</strong> une séance. Si l'un de ces points vous concerne, parlez-m'en avant de réserver — on adaptera, ou je vous orienterai.</p>
+        <ul>
+          <li>Blessure récente, entorse ou fracture en consolidation</li>
+          <li>Traitement anticoagulant, trouble de la coagulation</li>
           <li>Grossesse, quel qu'en soit le stade</li>
-          <li>Phlébite, thrombose, ou antécédent des deux</li>
-          <li>Problème cardiaque ou tension mal contrôlée</li>
-          <li>Fièvre, infection en cours, ou plaie ouverte sur la zone à traiter</li>
-          <li>Maladie de peau étendue, ou eczéma sur la zone</li>
+          <li>Phlébite, thrombose, ou antécédent</li>
+          <li>Problème cardiaque, tension mal contrôlée</li>
+          <li>Fièvre, infection en cours, plaie ouverte</li>
+          <li>Maladie de peau ou eczéma sur la zone</li>
           <li>Diabète mal équilibré</li>
           <li>Cancer en cours de traitement</li>
-          <li>Anémie sévère — point spécifique à la hijama</li>
+          <li>Anémie sévère — spécifique à la hijama</li>
         </ul>
-        <div class="menu-legal">
-          <p>Cette liste ne remplace pas un avis médical et ne prétend pas être complète. En cas de doute, la bonne réponse est toujours d'en parler d'abord à votre médecin.</p>
-        </div>
-      </section>
+        <p class="fin">Cette liste ne remplace pas un avis médical et ne prétend pas être complète. En cas de doute, la bonne réponse est toujours d'en parler d'abord à votre médecin.</p>
+      </div>
+    </div>
+  </section>
 
-      <section class="menu-panel" id="panel-reservation">
-        <h3>Réservation</h3>
-        <div class="cal-shell">
-          <div class="cal-fallback" id="calFallback">
+  <!-- RÉSERVATION -->
+  <section id="reserver">
+    <div class="wrap">
+      <p class="eyebrow up">Réservation</p>
+      <h2 class="up">Prendre rendez-vous</h2>
+      <p class="lede up">Choisissez votre créneau directement. Annulation gratuite jusqu'à 24h avant.</p>
+
+      <div class="resa">
+
+        <div class="cal-shell up">
+          <div class="cal-repli" id="calRepli">
             <p id="calLabel">Chargement du calendrier</p>
-            <a class="btn btn--ghost" href="https://cal.com/axium.perform" target="_blank" rel="noopener">Ouvrir dans un onglet →</a>
+            <a class="btn btn--vide" href="https://cal.com/axium.perform" target="_blank" rel="noopener">Ouvrir dans un onglet →</a>
           </div>
           <div class="cal-widget" id="calWidget" data-cal="axium.perform"></div>
         </div>
-      </section>
 
-      <!-- ┌──────────────────────────────────────────────────────────┐
-           │ À COMPLÉTER PAR SEVANN                                   │
-           │ Adresse exacte, téléphone, e-mail, horaires : je ne les  │
-           │ ai pas, donc je n'invente rien. Remplace le bloc         │
-           │ ci-dessous, et pense au JSON-LD en bas de page.          │
-           └──────────────────────────────────────────────────────────┘ -->
-      <section class="menu-panel" id="panel-infos">
-        <h3>Infos pratiques</h3>
-        <div class="menu-legal">
-          <p><strong>Lieu.</strong> Genève, Suisse. L'adresse précise est communiquée à la confirmation du rendez-vous.</p>
-          <p><strong>Sur place.</strong> Tenue confortable. Paiement en CHF.</p>
-          <p><strong>Annulation.</strong> Gratuite jusqu'à 24h avant, depuis le lien de confirmation.</p>
-        </div>
-      </section>
+        <div class="up">
+          <div class="contacts">
+            <a href="tel:+41787310732"><span>Téléphone</span><b>078 731 07 32</b></a>
+            <a href="https://wa.me/41787310732" target="_blank" rel="noopener"><span>WhatsApp</span><b>Écrire →</b></a>
+            <a href="mailto:axium.perform@gmail.com"><span>E-mail</span><b>Écrire →</b></a>
+            <a href="https://www.instagram.com/axium.perform" target="_blank" rel="noopener"><span>Instagram</span><b>@axium.perform →</b></a>
+          </div>
 
-      <section class="menu-panel" id="panel-contact">
-        <h3>Me contacter</h3>
-        <div class="menu-legal">
-          <p>La réservation en ligne est le plus simple, mais si vous préférez poser une question avant, écrivez-moi.</p>
+          <!-- ┌──────────────────────────────────────────────────────┐
+               │ À COMPLÉTER — adresse exacte et horaires.            │
+               │ Penser aussi au bloc JSON-LD en bas de page.         │
+               └──────────────────────────────────────────────────────┘ -->
+          <div class="infos">
+            <p><strong>Lieu.</strong> Genève. L'adresse précise est communiquée à la confirmation du rendez-vous.</p>
+            <p><strong>Sur place.</strong> Tenue confortable, paiement en CHF.</p>
+            <p><strong>Annulation.</strong> Gratuite jusqu'à 24h avant, depuis le lien de confirmation.</p>
+          </div>
         </div>
-        <div class="contacts">
-          <a href="tel:+41787310732"><span>Téléphone</span><b>078 731 07 32</b></a>
-          <a href="https://wa.me/41787310732" target="_blank" rel="noopener"><span>WhatsApp</span><b>Envoyer un message →</b></a>
-          <a href="https://instagram.com/axium.perform" target="_blank" rel="noopener"><span>Instagram</span><b>@axium.perform →</b></a>
-          <a href="mailto:axium.perform@gmail.com"><span>E-mail</span><b>axium.perform@gmail.com</b></a>
-        </div>
-      </section>
 
-      <!-- 49 · Lettre d'information.
-           Volontairement sans service tiers : l'inscription est un simple
-           e-mail, donc le consentement est explicite et rien n'est
-           collecté à l'insu de personne. Tenir la liste en copie cachée.
-           Au-delà de deux ou trois cents inscrits, Gmail plafonne les
-           envois et il faudra passer sur un vrai service. -->
-      <section class="menu-panel" id="panel-lettre">
-        <h3>Lettre d'information</h3>
-        <div class="menu-legal">
-          <p>Une fois par trimestre, pas plus : les créneaux qui s'ouvrent, un conseil de récupération, une actualité du cabinet. Rien de commercial, et jamais d'adresse transmise à qui que ce soit.</p>
-          <p>Pour vous inscrire, envoyez-moi simplement un message — un mot suffit. Pour vous désinscrire, répondez « stop » à n'importe quel envoi, et c'est réglé le jour même.</p>
-        </div>
-        <div class="contacts">
-          <a href="mailto:axium.perform@gmail.com?subject=Inscription%20%C3%A0%20la%20lettre%20Axium.Perform&body=Bonjour%20Sevann%2C%0A%0AJe%20souhaite%20recevoir%20la%20lettre%20d%27information.%0A%0APr%C3%A9nom%20%3A%0A"><span>S'inscrire</span><b>Envoyer un e-mail →</b></a>
-        </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <section class="menu-panel" id="panel-cgv">
-        <h3>Conditions générales</h3>
-        <div class="menu-legal">
-          <p>Toute réservation via Axium.Perform implique l'acceptation des conditions ci-dessous.</p>
-          <p>Une annulation doit être effectuée au minimum <strong>24h à l'avance</strong>. Dans le cas contraire, la séance peut être facturée.</p>
-          <p>Les prestations proposées sont des services de bien-être et de récupération. Elles ne remplacent en aucun cas un avis ou un traitement médical.</p>
-          <p>En réservant, le client confirme avoir pris connaissance de ces conditions et les accepter pleinement.</p>
-        </div>
-      </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="pied">
+
+      <div class="pied-marque">
+        <a class="logo logo--grand" href="#contenu" aria-label="Axium.Perform">
+          <img src="0B8EB8A2-C0E2-469B-9539-E4B9E5061B41__1_-removebg-preview.png" alt="" aria-hidden="true" width="52" height="30">
+          <b>Axium<span>.Perform</span></b>
+        </a>
+        <p>Massage sportif, relaxation et hijama à Genève. Récupération et performance.</p>
+      </div>
+
+      <div>
+        <h4>Prestations</h4>
+        <ul>
+          <li><a href="massage-sportif.html">Massage sportif</a></li>
+          <li><a href="relaxation.html">Relaxation</a></li>
+          <li><a href="hijama.html">Hijama</a></li>
+          <li><a href="#reserver">Réserver</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+41787310732">078 731 07 32</a></li>
+          <li><a href="https://wa.me/41787310732" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a></li>
+          <li><a href="https://www.instagram.com/axium.perform" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
 
     </div>
 
+    <div class="cgv">
+      <h4 style="font-family:'Space Mono',monospace;font-weight:700;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gris-faible);margin-bottom:14px">Conditions générales</h4>
+      <p>Toute réservation via Axium.Perform implique l'acceptation des conditions ci-dessous.</p>
+      <p>Une annulation doit être effectuée au minimum <strong>24h à l'avance</strong>. Dans le cas contraire, la séance peut être facturée.</p>
+      <p>Les prestations proposées sont des services de bien-être et de récupération. Elles ne remplacent en aucun cas un avis ou un traitement médical.</p>
+      <p>En réservant, le client confirme avoir pris connaissance de ces conditions et les accepter pleinement.</p>
+      <p class="bas">© <span id="annee">2026</span> Axium.Perform — Genève</p>
+    </div>
   </div>
+</footer>
 
-  <div class="menu-foot">
-    <span>Axium.Perform — Genève</span>
-    <span>© <span id="year">2026</span></span>
-  </div>
-
-</div>
+<a class="wa" href="https://wa.me/41787310732" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.2c-4.9 0-8.8 3.5-8.8 7.8 0 2.4 1.2 4.5 3.1 5.9v3.9l3.6-2a10 10 0 0 0 2.1.2c4.9 0 8.8-3.5 8.8-7.9S16.9 3.2 12 3.2Z"/></svg>
+  <span>WhatsApp</span>
+</a>
 
 <script type="application/ld+json">
 {
@@ -1136,15 +790,16 @@ html.is-deck .tail{ display:none; }
   "name":"Axium.Perform",
   "description":"Massage sportif, relaxation et hijama à Genève. Récupération et performance, par un praticien lui-même athlète de demi-fond.",
   "areaServed":"Genève, Suisse",
-  "address":{"@type":"PostalAddress","addressLocality":"Genève","addressCountry":"CH"},
-  "currenciesAccepted":"CHF",
   "telephone":"+41787310732",
   "email":"axium.perform@gmail.com",
   "sameAs":["https://www.instagram.com/axium.perform"],
+  "address":{"@type":"PostalAddress","addressLocality":"Genève","addressCountry":"CH"},
+  "currenciesAccepted":"CHF",
   "potentialAction":{"@type":"ReserveAction","target":"https://cal.com/axium.perform"},
   "makesOffer":[
     {"@type":"Offer","name":"Massage sportif","price":"40","priceCurrency":"CHF"},
     {"@type":"Offer","name":"Relaxation","price":"70","priceCurrency":"CHF"},
+    {"@type":"Offer","name":"Forfait 5 massages","price":"180","priceCurrency":"CHF"},
     {"@type":"Offer","name":"Hijama"}
   ]
 }
@@ -1154,389 +809,128 @@ html.is-deck .tail{ display:none; }
 (function(){
 'use strict';
 
-const root      = document.documentElement;
-const motionQ   = window.matchMedia('(prefers-reduced-motion: reduce)');
-const chapters  = Array.from(document.querySelectorAll('.chapter'));
-const deck      = document.querySelector('.deck');
-const dotsNav   = document.getElementById('dotsNav');
-const menu      = document.getElementById('menu');
-const menuBtn   = document.getElementById('menuBtn');
-const menuNav   = document.getElementById('menuNav');
-const motionBtn = document.getElementById('motionBtn');
-const rail      = document.querySelector('.frame-rail i');
-const N         = chapters.length;
+const root = document.documentElement;
+const an = document.getElementById('annee');
+if(an) an.textContent = new Date().getFullYear();
 
-const yearEl = document.getElementById('year');
-if(yearEl) yearEl.textContent = new Date().getFullYear();
-
-/* ─────────────── MOUVEMENT : réglage système + bouton ───────────────
-   Le visiteur peut couper l'animation lui-même. Son choix est retenu
-   d'une visite à l'autre, et prime sur tout le reste. */
-let userOff = false;
-try{ userOff = localStorage.getItem('axium-motion') === 'off'; }catch(e){}
-
-function motionAllowed(){ return !motionQ.matches && !userOff; }
-
-/* ─────────────── LA BOBINE ───────────────
-   Le conteneur mesure (N+1) écrans. Le dernier écran rend exactement
-   le chapitre 0 : quand on l'atteint, on remet le défilement à zéro et
-   personne ne voit la couture. C'est ça, la boucle. */
-let active = -1, lastP = -1, deckOn = false, wrapping = false;
-
-const clamp = (v,a,b) => v < a ? a : v > b ? b : v;
-
-function setAccent(hex){
-  root.style.setProperty('--accent', hex);
-}
-
-function show(i){
-  if(i === active) return;
-  active = i;
-  chapters.forEach((c,k) => c.classList.toggle('is-on', k === i));
-  Array.from(dotsNav.children).forEach((d,k) => d.setAttribute('aria-current', k === i ? 'true' : 'false'));
-  const ch = chapters[i];
-  if(ch) setAccent(ch.dataset.accent || '#40D2EC');
-}
-
-/* Le maximum réellement défilable, et pas la hauteur du conteneur : les
-   deux diffèrent (marges, unités svh, barres d'outils mobiles) et s'en
-   remettre à offsetHeight décale la progression et empêche la boucle
-   de se déclencher, puisqu'on attend une position jamais atteinte. */
-function maxScroll(){
-  return Math.max(0, root.scrollHeight - window.innerHeight);
-}
-
-function progress(){
-  const max = maxScroll();
-  return max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
-}
-
-function render(){
-  if(!deckOn) return;
-  const p = progress();
-
-  if(Math.abs(p - lastP) > 0.0004){
-    lastP = p;
-    if(rail) rail.style.setProperty('--p', p.toFixed(4));
-  }
-
-  /* raw va de 0 à N. À raw === N on est sur l'écran de bouclage, qui
-     doit afficher le chapitre 0 — d'où le modulo. */
-  const raw = p * N;
-  show(Math.floor(raw) % N);
-
-  if(window.scrollY > 4) root.classList.add('is-moved');
-  else root.classList.remove('is-moved');
-}
-
-/* Le bouclage. On ne le déclenche qu'une fois par passage, sinon le
-   navigateur et nous nous renvoyons la balle indéfiniment. */
-function checkWrap(){
-  if(!deckOn || wrapping) return;
-  const max = maxScroll();
-  if(max <= 0) return;
-
-  if(window.scrollY >= max - 2){
-    wrapping = true;
-    /* 'instant' et non 'auto' : html a scroll-behavior:smooth, et 'auto'
-       s'y conforme — le bouclage deviendrait un défilement animé de
-       plusieurs milliers de pixels au lieu d'une coupe invisible. */
-    window.scrollTo({ top:0, behavior:'instant' });
-    window.setTimeout(() => { wrapping = false; }, 90);
-  }
-}
-
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if(ticking) return;
-  ticking = true;
-  requestAnimationFrame(() => { render(); checkWrap(); ticking = false; });
+/* En-tête : un filet apparaît dès qu'on quitte le haut de page. */
+let tick = false;
+addEventListener('scroll', () => {
+  if(tick) return;
+  tick = true;
+  requestAnimationFrame(() => { root.classList.toggle('is-scrolled', scrollY > 8); tick = false; });
 }, { passive:true });
 
-/* Remonter au-delà du premier écran renvoie à la fin : la bobine
-   tourne dans les deux sens. La molette est le seul signal fiable pour
-   détecter l'intention quand le défilement est déjà bloqué à 0. */
-window.addEventListener('wheel', (e) => {
-  if(!deckOn || wrapping) return;
-  if(e.deltaY < 0 && window.scrollY <= 0){
-    const max = maxScroll();
-    wrapping = true;
-    window.scrollTo({ top:Math.max(0, max - 3), behavior:'instant' });
-    window.setTimeout(() => { wrapping = false; }, 90);
-  }
-}, { passive:true });
-
-function enableDeck(){
-  if(deckOn) return;
-  deckOn = true;
-  root.classList.add('is-deck');
-  root.style.setProperty('--deck-h', (N + 1) * 100 + 'svh');
-  active = -1; lastP = -1;
-  render();
-}
-
-function disableDeck(){
-  if(!deckOn) return;
-  deckOn = false;
-  root.classList.remove('is-deck');
-  root.style.removeProperty('--deck-h');
-  chapters.forEach(c => c.classList.remove('is-on'));
-  active = -1;
-  setAccent('#40D2EC');
-}
-
-/* ─────────────── PASTILLES + MENU DE CHAPITRES ─────────────── */
-chapters.forEach((ch, i) => {
-  const nom = ch.dataset.nom || ('Chapitre ' + (i + 1));
-
-  const dot = document.createElement('button');
-  dot.type = 'button';
-  dot.setAttribute('aria-label', nom);
-  dot.setAttribute('aria-current', 'false');
-  dot.addEventListener('click', () => goTo(i));
-  dotsNav.appendChild(dot);
-
-  const link = document.createElement('button');
-  link.type = 'button';
-  link.textContent = nom;
-  link.addEventListener('click', () => { closeMenu(); goTo(i); });
-  menuNav.appendChild(link);
-});
-
-function goTo(i){
-  if(deckOn){
-    window.scrollTo({ top:(i / N) * maxScroll() + 2, behavior: motionAllowed() ? 'smooth' : 'auto' });
-  }else{
-    chapters[i].scrollIntoView({ behavior: motionAllowed() ? 'smooth' : 'auto', block:'start' });
-  }
-}
-
-/* ─────────────── MENU ─────────────── */
-let lastFocus = null;
-
-function focusables(){
-  return Array.from(menu.querySelectorAll('button, a[href], summary, [tabindex]:not([tabindex="-1"])'))
-    .filter(el => el.offsetParent !== null);
-}
-
-function openMenu(panel){
-  lastFocus = document.activeElement;
-  menu.classList.add('open');
-  menu.setAttribute('aria-hidden', 'false');
-  menuBtn.setAttribute('aria-expanded', 'true');
-  document.body.classList.add('is-locked');
-  window.setTimeout(loadCalendly, 450);
-  if(panel){
-    const el = document.getElementById('panel-' + panel);
-    if(el) window.setTimeout(() => el.scrollIntoView({ block:'start', behavior:'auto' }), 40);
-  }
-  window.setTimeout(() => { const f = focusables()[0]; if(f) f.focus({ preventScroll:true }); }, 60);
-}
-
-function closeMenu(){
-  if(!menu.classList.contains('open')) return;
-  menu.classList.remove('open');
-  menu.setAttribute('aria-hidden', 'true');
-  menuBtn.setAttribute('aria-expanded', 'false');
+/* Menu mobile */
+const burger = document.getElementById('burger');
+const mob = document.getElementById('mob');
+function fermer(){
+  mob.classList.remove('open'); burger.classList.remove('open');
+  burger.setAttribute('aria-expanded','false');
+  burger.setAttribute('aria-label','Ouvrir le menu');
   document.body.classList.remove('is-locked');
-  if(lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll:true });
 }
-
-menuBtn.addEventListener('click', () => menu.classList.contains('open') ? closeMenu() : openMenu());
-document.getElementById('menuClose').addEventListener('click', closeMenu);
-document.querySelectorAll('[data-open-menu]').forEach(b => {
-  b.addEventListener('click', () => openMenu(b.dataset.panel));
+burger.addEventListener('click', () => {
+  const ouvert = mob.classList.toggle('open');
+  burger.classList.toggle('open', ouvert);
+  burger.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+  burger.setAttribute('aria-label', ouvert ? 'Fermer le menu' : 'Ouvrir le menu');
+  document.body.classList.toggle('is-locked', ouvert);
 });
+mob.querySelectorAll('a').forEach(a => a.addEventListener('click', fermer));
+addEventListener('keydown', e => { if(e.key === 'Escape') fermer(); });
 
-document.addEventListener('keydown', (e) => {
-  if(!menu.classList.contains('open')) return;
-  if(e.key === 'Escape'){ closeMenu(); return; }
-  if(e.key === 'Tab'){
-    const items = focusables();
-    if(!items.length) return;
-    const first = items[0], last = items[items.length - 1];
-    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
-  }
-});
+/* Une seule réponse ouverte à la fois dans la FAQ. */
+const qs = Array.from(document.querySelectorAll('.faq details'));
+qs.forEach(d => d.addEventListener('toggle', () => {
+  if(d.open) qs.forEach(o => { if(o !== d) o.open = false; });
+}));
 
-/* ─────────────── BOUTON MOUVEMENT ─────────────── */
-function syncMotion(){
-  const on = motionAllowed();
-  root.classList.toggle('no-motion', !on);
-  motionBtn.setAttribute('aria-pressed', on ? 'false' : 'true');
-  document.getElementById('motionLabel').textContent = on ? 'Mouvement' : 'Mouvement off';
-  on ? enableDeck() : disableDeck();
-}
+/* Entrées au défilement. Sans script, .up n'est jamais masqué. */
+const blocs = Array.from(document.querySelectorAll('.up'));
+const tout = () => blocs.forEach(el => el.classList.add('vu'));
 
-motionBtn.addEventListener('click', () => {
-  userOff = !userOff;
-  try{ localStorage.setItem('axium-motion', userOff ? 'off' : 'on'); }catch(e){}
-  window.scrollTo({ top:0, behavior:'instant' });
-  syncMotion();
-});
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+  tout();
+}else{
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vu'); io.unobserve(e.target); } });
+  }, { threshold:.08, rootMargin:'0px 0px -5% 0px' });
 
-motionQ.addEventListener('change', syncMotion);
+  blocs.forEach(el => {
+    const voisins = Array.from(el.parentElement.children).filter(n => n.classList.contains('up'));
+    const k = voisins.indexOf(el);
+    if(k > 0) el.style.transitionDelay = (k * 0.07).toFixed(2) + 's';
 
-window.addEventListener('resize', () => {
-  if(!deckOn) return;
-  lastP = -1;
-  render();
-}, { passive:true });
-
-syncMotion();
-
-/* ─────────────── 37 · OUVERTURE AU LOGO ───────────────
-   L'écran d'ouverture se retire tout seul, puis disparaît du document.
-   En mouvement réduit il n'apparaît jamais : on le supprime aussitôt. */
-(function intro(){
-  const el = document.getElementById('intro');
-  if(!el) return;
-  if(!motionAllowed()){ el.remove(); return; }
-  const partir = () => {
-    el.classList.add('is-out');
-    window.setTimeout(() => el.remove(), 900);
-  };
-  window.setTimeout(partir, 2000);
-  /* Un visiteur pressé ne doit jamais attendre une animation. */
-  window.addEventListener('wheel', partir, { once:true, passive:true });
-  window.addEventListener('touchstart', partir, { once:true, passive:true });
-  window.addEventListener('keydown', partir, { once:true });
-})();
-
-/* ─────────────── 36 · AMBIANCE SONORE ───────────────
-   Rien n'est téléchargé : le souffle est synthétisé sur place — du bruit
-   brun passé dans un filtre passe-bas, dont le volume respire lentement.
-   Coupé par défaut, et jamais démarré sans un clic : c'est la règle des
-   navigateurs, et c'est aussi la politesse minimale. */
-(function ambiance(){
-  const btn = document.getElementById('soundBtn');
-  const lbl = document.getElementById('soundLabel');
-  if(!btn) return;
-
-  const AC = window.AudioContext || window.webkitAudioContext;
-  if(!AC){ btn.remove(); return; }
-
-  let ctx = null, gain = null, on = false;
-
-  function construire(){
-    ctx = new AC();
-
-    /* Bruit brun : plus sourd et plus doux que du bruit blanc, il évoque
-       une respiration plutôt qu'un grésillement. */
-    const n = ctx.sampleRate * 4;
-    const buf = ctx.createBuffer(1, n, ctx.sampleRate);
-    const d = buf.getChannelData(0);
-    let last = 0;
-    for(let i = 0; i < n; i++){
-      const w = Math.random() * 2 - 1;
-      last = (last + 0.02 * w) / 1.02;
-      d[i] = last * 3.4;
-    }
-
-    const src = ctx.createBufferSource();
-    src.buffer = buf; src.loop = true;
-
-    const passeBas = ctx.createBiquadFilter();
-    passeBas.type = 'lowpass';
-    passeBas.frequency.value = 400;
-    passeBas.Q.value = 0.6;
-
-    gain = ctx.createGain();
-    gain.gain.value = 0;
-
-    /* Le volume monte et descend toutes les onze secondes environ. */
-    const lfo = ctx.createOscillator();
-    lfo.frequency.value = 0.09;
-    const ampleur = ctx.createGain();
-    ampleur.gain.value = 0.014;
-    lfo.connect(ampleur).connect(gain.gain);
-
-    src.connect(passeBas).connect(gain).connect(ctx.destination);
-    src.start(); lfo.start();
-  }
-
-  btn.addEventListener('click', () => {
-    if(!ctx) construire();
-    on = !on;
-    if(on && ctx.state === 'suspended') ctx.resume();
-    gain.gain.setTargetAtTime(on ? 0.026 : 0, ctx.currentTime, on ? 1.4 : 0.5);
-    if(!on) window.setTimeout(() => { if(!on && ctx.state === 'running') ctx.suspend(); }, 1400);
-    root.classList.toggle('snd-on', on);
-    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    if(lbl) lbl.textContent = on ? 'Son on' : 'Son';
+    /* Ce qui est déjà à l'écran au chargement s'affiche sans attendre :
+       le premier regard ne doit jamais tomber sur du vide. */
+    if(el.getBoundingClientRect().top < innerHeight + 200) el.classList.add('vu');
+    else io.observe(el);
   });
 
-  /* Le son ne continue jamais dans un onglet qu'on a quitté. */
-  document.addEventListener('visibilitychange', () => {
-    if(!ctx || !on) return;
-    document.hidden ? ctx.suspend() : ctx.resume();
-  });
-})();
+  /* Filet : si l'observateur ne se déclenche pas — navigateur ancien,
+     onglet en arrière-plan, script interrompu — tout finit par s'afficher.
+     Un texte ne reste jamais invisible à cause d'une animation. */
+  setTimeout(tout, 2500);
+  addEventListener('beforeprint', tout);
+}
 
 /* ─────────────── CALENDRIER ───────────────
-   Chargé à l'ouverture du menu seulement : la bobine ne doit jamais
-   attendre un script tiers. Si rien ne monte, le lien direct reste. */
-let calStarted = false;
-
-function loadCalendly(){
-  if(calStarted) return;
-  calStarted = true;
-
+   Le conteneur est visible dès le chargement de la page : Cal.com peut
+   donc se mesurer correctement, ce qui n'était pas le cas quand il était
+   monté dans un menu encore masqué. On attend malgré tout que la section
+   approche pour ne pas charger un script tiers dont personne n'a besoin
+   en haut de page. */
+(function calendrier(){
   const widget = document.getElementById('calWidget');
-  const fb     = document.getElementById('calFallback');
+  const repli  = document.getElementById('calRepli');
   const label  = document.getElementById('calLabel');
   if(!widget) return;
 
-  /* Le calendrier est monté dans une iframe par Cal.com : sa présence est
-     le seul signal fiable que tout s'est bien passé. */
-  const watch = new MutationObserver(() => {
+  const vu = new MutationObserver(() => {
     if(widget.querySelector('iframe')){
-      watch.disconnect();
-      window.setTimeout(() => fb && fb.classList.add('is-done'), 500);
+      vu.disconnect();
+      setTimeout(() => repli && repli.classList.add('is-done'), 500);
     }
   });
-  watch.observe(widget, { childList:true, subtree:true });
+  vu.observe(widget, { childList:true, subtree:true });
 
   const echec = () => {
     if(label) label.textContent = 'Calendrier momentanément indisponible';
-    if(fb && !fb.dataset.secours){
-      fb.dataset.secours = '1';
+    if(repli && !repli.dataset.secours){
+      repli.dataset.secours = '1';
       const p = document.createElement('p');
-      p.className = 'cal-secours';
-      p.innerHTML = 'Ou réservez directement par téléphone, message ou e-mail :<br>' +
-        '<a href="tel:+41787310732">078 731 07 32</a> · ' +
-        '<a href="https://wa.me/41787310732" target="_blank" rel="noopener">WhatsApp</a> · ' +
-        '<a href="mailto:axium.perform@gmail.com">E-mail</a>';
-      fb.appendChild(p);
+      p.style.cssText = 'text-transform:none;letter-spacing:0;font-family:Inter,sans-serif;font-size:.92rem;line-height:1.9;color:var(--gris)';
+      p.innerHTML = 'Réservez directement :<br>' +
+        '<a style="color:var(--accent)" href="tel:+41787310732">078 731 07 32</a> · ' +
+        '<a style="color:var(--accent)" href="https://wa.me/41787310732" target="_blank" rel="noopener">WhatsApp</a> · ' +
+        '<a style="color:var(--accent)" href="mailto:axium.perform@gmail.com">E-mail</a>';
+      repli.appendChild(p);
     }
   };
 
-  const s = document.createElement('script');
-  s.src = 'https://app.cal.com/embed/embed.js';
-  s.async = true;
-  s.onload = () => {
-    if(!window.Cal){ echec(); return; }
-    try{
-      window.Cal('init', { origin:'https://cal.com' });
-      /* Pas de layout imposé : cal.com/axium.perform est une page de
-         profil qui liste les prestations, et « month_view » ne
-         s'applique qu'à un type de rendez-vous précis. */
-      window.Cal('inline', {
-        elementOrSelector: '#calWidget',
-        calLink: widget.dataset.cal
-      });
-      window.Cal('ui', { theme:'dark' });
-    }catch(e){ echec(); }
-  };
-  s.onerror = echec;
-  document.head.appendChild(s);
+  function charger(){
+    const s = document.createElement('script');
+    s.src = 'https://app.cal.com/embed/embed.js';
+    s.async = true;
+    s.onload = () => {
+      if(!window.Cal){ echec(); return; }
+      try{
+        window.Cal('init', { origin:'https://cal.com' });
+        window.Cal('inline', { elementOrSelector:'#calWidget', calLink: widget.dataset.cal });
+        window.Cal('ui', { theme:'dark' });
+      }catch(e){ echec(); }
+    };
+    s.onerror = echec;
+    document.head.appendChild(s);
+    setTimeout(() => { if(!widget.querySelector('iframe')) echec(); }, 12000);
+  }
 
-  /* Bloqueur, réseau lent, ou page Cal.com inexistante : au bout de huit
-     secondes on cesse d'attendre et le lien direct reste la porte de
-     sortie — la réservation ne doit jamais se retrouver dans le vide. */
-  window.setTimeout(() => { if(!widget.querySelector('iframe')) echec(); }, 12000);
-}
+  const io = new IntersectionObserver(es => {
+    if(es.some(e => e.isIntersecting)){ io.disconnect(); charger(); }
+  }, { rootMargin:'700px 0px' });
+  io.observe(widget);
+})();
 
 })();
 </script>
