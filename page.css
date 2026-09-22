@@ -20,16 +20,29 @@
   --rayon:3px;
   --gouttiere:clamp(20px,5vw,64px);
   --ease:cubic-bezier(0.22,1,0.36,1);
+
+  /* Même échelle fluide que l'accueil, pour que les pages ne se
+     désolidarisent pas quand on passe de l'une à l'autre. */
+  --e2:clamp(10px,0.9vw,16px);
+  --e3:clamp(16px,1.5vw,26px);
+  --e4:clamp(24px,2.4vw,40px);
+  --e5:clamp(36px,4vw,64px);
 }
 
 *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
 
-html{ background:var(--fond); scroll-behavior:smooth; }
+/* La racine grandit avec la fenêtre : toutes les tailles en rem suivent
+   sans qu'on ait à nommer un seul point de rupture. */
+html{
+  font-size:clamp(0.9375rem, 0.875rem + 0.35vw, 1.1875rem);
+  background:var(--fond);
+  scroll-behavior:smooth;
+}
 
 body{
   font-family:'Instrument Sans','Inter',system-ui,sans-serif;
   font-weight:400;
-  font-size:15.5px;
+  font-size:1rem;
   background:var(--fond);
   color:var(--encre);
   line-height:1.75;
@@ -45,7 +58,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible{
   outline:2px solid var(--accent); outline-offset:3px; border-radius:4px;
 }
 
-.wrap{ max-width:760px; margin-inline:auto; padding-inline:var(--gouttiere); }
+.wrap{ max-width:min(100%,46rem); margin-inline:auto; padding-inline:var(--gouttiere); }
 
 /* ── En-tête ── */
 .top{
@@ -56,7 +69,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible{
   padding:16px 0;
   margin-bottom:clamp(48px,8vw,88px);
 }
-.top .wrap{ max-width:1160px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+.top .wrap{ max-width:min(100%,72rem); display:flex; align-items:center; justify-content:space-between; gap:18px; }
 
 .mark{
   font-family:'Instrument Serif',Georgia,serif;
@@ -186,7 +199,7 @@ details p{ padding-bottom:18px; font-size:.95rem; }
   border-top:1px solid var(--ligne);
   padding:28px 0 56px;
 }
-.bas .wrap{ max-width:1160px; display:flex; flex-wrap:wrap; gap:12px 26px; align-items:center; }
+.bas .wrap{ max-width:min(100%,72rem); display:flex; flex-wrap:wrap; gap:12px 26px; align-items:center; }
 .bas a, .bas span{ font-size:.86rem; color:var(--gris-faible); transition:color .25s var(--ease); }
 .bas a:hover{ color:var(--encre); }
 .bas span{ margin-left:auto; }

@@ -62,16 +62,42 @@
   --rayon:3px;
   --gouttiere:clamp(20px,5vw,72px);
   --ease:cubic-bezier(0.22,1,0.36,1);
+
+  /* ── Échelle d'espacement fluide ──────────────────────────────────
+     Un seul jeu de valeurs, qui grandit avec la page. On ne répète
+     plus « petit sur mobile, grand sur écran » à chaque composant :
+     l'espacement est continu, il n'attend aucun point de rupture. */
+  --e1:clamp(6px,0.5vw,10px);
+  --e2:clamp(10px,0.9vw,16px);
+  --e3:clamp(16px,1.5vw,26px);
+  --e4:clamp(24px,2.4vw,40px);
+  --e5:clamp(36px,4vw,64px);
+  --e6:clamp(56px,7vw,110px);
+
 }
 
 *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
 
-html{ scroll-behavior:smooth; scroll-padding-top:80px; background:var(--blanc); }
+/* La racine grandit avec la fenêtre, donc toutes les tailles exprimées
+   en rem suivent d'un coup — titres, textes, marges internes.
+
+   Les TROIS bornes sont en rem, y compris la plus haute. C'est la
+   condition pour que le réglage « taille de police » du navigateur
+   continue d'agir : avec un plafond en px, le texte de quelqu'un qui a
+   réglé son navigateur sur 200 % resterait bloqué à 19px. Dans une
+   déclaration font-size sur html, rem vaut la taille par défaut du
+   navigateur, donc l'échelle entière suit ce réglage. Vérifié à 32px. */
+html{
+  font-size:clamp(0.9375rem, 0.875rem + 0.35vw, 1.1875rem);
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(64px + var(--e2));
+  background:var(--blanc);
+}
 
 body{
   font-family:'Instrument Sans','Inter',system-ui,sans-serif;
   font-weight:400;
-  font-size:15.5px;
+  font-size:1rem;
   background:var(--blanc);
   color:var(--encre);
   line-height:1.62;
@@ -90,7 +116,41 @@ a:focus-visible, button:focus-visible, summary:focus-visible{
 }
 
 .wrap{ max-width:1280px; margin-inline:auto; padding-inline:var(--gouttiere); }
-.etroit{ max-width:860px; }
+.etroit{ max-width:min(100%,62rem); }
+
+/* ═══════════ GRILLES À FILETS ═══════════
+   Le filet de séparation est le fond qui transparaît dans un écart d'un
+   pixel. C'est ce qui rend la grille repliable : un border-right laisse
+   un trait orphelin dès qu'une ligne se remplit à moitié, un écart non.
+
+   Le nombre de colonnes se décide sur la largeur du CONTENEUR, jamais
+   sur celle de l'écran. Deux conséquences : la grille se réorganise
+   aussi quand c'est la colonne qui rétrécit, et le même composant reste
+   juste où qu'on le place. */
+.mesure{ container-type:inline-size; }
+
+.grille{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:1px;
+  background:var(--ligne);
+  border-block:1px solid var(--ligne);
+}
+.grille > *{ background:var(--cellule,var(--blanc)); }
+.sur-papier, .reperes{ --cellule:var(--papier); }
+
+/* Trois éléments : trois colonnes, ou une. Jamais deux — une rangée de
+   trois cartes présentée à « deux plus une » a l'air cassée, pas
+   adaptée. C'est précisément ce qu'auto-fit ne sait pas éviter : il
+   remplit au mieux sans savoir combien d'éléments il a à placer. */
+@container (min-width:50rem){
+  .cartes, .reperes, .extras{ grid-template-columns:repeat(3,1fr); }
+}
+
+/* Quatre étapes : quatre, deux, ou une. Le palier à trois est sauté
+   pour la même raison. */
+@container (min-width:32rem){ .etapes{ grid-template-columns:repeat(2,1fr); } }
+@container (min-width:58rem){ .etapes{ grid-template-columns:repeat(4,1fr); } }
 
 .sr{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 
@@ -200,12 +260,20 @@ html.is-scrolled header{ border-bottom-color:var(--ligne); }
 .mob .btn{ margin-top:24px; align-self:flex-start; }
 
 /* ═══════════ SECTIONS ═══════════ */
-section{ padding:clamp(72px,9vw,124px) 0; }
+section{ padding:var(--e6) 0; }
 .sur-papier{ background:var(--papier); }
 
 /* ═══════════ HERO ═══════════ */
 /* Photo pleine largeur, texte posé dessus en bas à gauche. */
-.hero{ position:relative; padding:0; min-height:clamp(460px,74vh,760px); display:flex; align-items:flex-end; overflow:hidden; }
+/* svh plutôt que vh : sur mobile, vh compte la barre d'outils du
+   navigateur comme si elle n'était pas là, et le bas du héros passe
+   sous elle. La borne haute empêche le héros d'avaler tout un grand
+   écran — passé une certaine taille, mieux vaut laisser voir la suite. */
+.hero{
+  position:relative; padding:0;
+  min-height:clamp(440px, 76svh, 780px);
+  display:flex; align-items:flex-end; overflow:hidden;
+}
 .hero-media{ position:absolute; inset:0; z-index:0; }
 .hero-media img{ width:100%; height:100%; object-fit:cover; object-position:58% 78%; }
 /* Deux voiles superposés : l'un depuis la gauche pour la colonne de
@@ -214,7 +282,7 @@ section{ padding:clamp(72px,9vw,124px) 0; }
 .hero-media::after{
   content:''; position:absolute; inset:0;
   background:
-    linear-gradient(90deg, rgba(6,6,5,.86) 0%, rgba(6,6,5,.78) 40%, rgba(6,6,5,.40) 66%, rgba(6,6,5,0) 90%),
+    linear-gradient(90deg, rgba(6,6,5,.88) 0%, rgba(6,6,5,.82) 46%, rgba(6,6,5,.54) 70%, rgba(6,6,5,0) 92%),
     linear-gradient(0deg, rgba(6,6,5,.52) 0%, rgba(6,6,5,0) 62%);
 }
 /* Sur écran étroit, le texte occupe toute la largeur : un voile venant
@@ -226,41 +294,54 @@ section{ padding:clamp(72px,9vw,124px) 0; }
   }
 }
 
-.hero-in{ position:relative; z-index:1; padding:0 0 clamp(48px,6vw,80px); max-width:560px; color:var(--blanc); }
-.hero h1{ font-size:clamp(2.4rem,4.8vw,3.7rem); margin-bottom:16px; text-wrap:balance; }
-.hero-in > p{ font-size:1rem; color:rgba(255,255,255,.86); max-width:44ch; margin-bottom:26px; }
+.hero-in{ position:relative; z-index:1; padding:0 0 clamp(48px,6vw,80px); max-width:min(100%,33rem); color:var(--blanc); }
+.hero h1{ font-size:clamp(2.4rem,4.8vw,3.7rem); margin-bottom:var(--e2); text-wrap:balance; }
+.hero-in > p{ font-size:1rem; color:rgba(255,255,255,.86); max-width:44ch; margin-bottom:var(--e3); }
 .hero-actions{ display:flex; gap:10px; flex-wrap:wrap; }
 
 /* Repères */
-.reperes{ display:grid; gap:0; background:var(--papier); }
-@media (min-width:760px){ .reperes{ grid-template-columns:repeat(3,1fr); } }
-.repere{ padding:24px var(--gouttiere); border-bottom:1px solid var(--ligne); }
-@media (min-width:760px){
-  .repere{ border-bottom:0; border-right:1px solid var(--ligne); }
-  .repere:last-child{ border-right:0; }
-}
+/* Pas de background ici : c'est celui de .grille qui doit transparaître
+   dans l'écart d'un pixel pour faire les filets. Le papier est porté par
+   les cellules, via --cellule. Le haut reste sans filet, le héros fait
+   déjà la séparation. */
+.reperes{ border-top:0; }
+.repere{ padding:var(--e3) var(--gouttiere); }
 .repere b{ display:block; font-weight:500; font-size:.96rem; margin-bottom:2px; }
 .repere span{ font-size:.86rem; color:var(--gris-faible); }
 
 /* ═══════════ PRESTATIONS ═══════════ */
-.cartes{ display:grid; gap:0; border-top:1px solid var(--ligne); }
-@media (min-width:860px){ .cartes{ grid-template-columns:repeat(3,1fr); } }
-
 /* Pas de cartes encadrées : des colonnes séparées par un filet, comme
    chez eux. C'est le vide qui fait la séparation. */
+.cartes{ border-bottom:0; }
 .carte{
   display:flex; flex-direction:column;
-  padding:34px clamp(22px,2.6vw,38px) 30px;
-  border-bottom:1px solid var(--ligne);
-}
-@media (min-width:860px){
-  .carte{ border-bottom:0; border-right:1px solid var(--ligne); }
-  .carte:last-child{ border-right:0; }
-  .carte:first-child{ padding-left:0; }
-  .carte:last-child{ padding-right:0; }
+  padding:var(--e4) clamp(22px,2.6vw,38px);
 }
 .carte h3{ margin-bottom:10px; }
-.carte > p{ color:var(--gris); font-size:.93rem; margin-bottom:22px; }
+.carte > p{ color:var(--gris); font-size:.93rem; margin-bottom:var(--e3); }
+
+/* Entre 32 et 50rem, la grille est à une colonne mais large : la carte
+   occupe toute la page. L'étirer telle quelle donnerait des lignes de
+   texte interminables et une liste perdue dans le vide, alors elle se
+   remet d'elle-même sur deux colonnes. Au-delà de 50rem la grille repasse
+   à trois cartes étroites, et ce partage n'a plus lieu d'être — d'où
+   l'intervalle fermé plutôt qu'un simple minimum.
+
+   La borne haute est calée juste sous celle de la grille : les deux
+   règles se relaient sans laisser de trou ni se chevaucher. */
+@container (min-width:32rem) and (max-width:49.999rem){
+  .carte{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    column-gap:var(--e5);
+    align-content:start;
+  }
+  .carte h3{ font-size:1.5rem; }
+  .carte > p{ margin-bottom:0; }
+  .carte ul{ grid-column:2; grid-row:1 / span 3; margin-bottom:0; align-self:start; }
+  .carte-bas{ grid-column:1; margin-top:var(--e4); }
+  .carte-lien{ grid-column:1; }
+}
 
 .carte ul{ display:grid; gap:0; margin-bottom:26px; }
 .carte li{
@@ -283,10 +364,8 @@ section{ padding:clamp(72px,9vw,124px) 0; }
 .carte-lien{ margin-top:16px; font-size:.86rem; border-bottom:1px solid var(--ligne-forte); align-self:flex-start; padding-bottom:2px; transition:border-color .22s var(--ease); }
 .carte-lien:hover{ border-bottom-color:var(--encre); }
 
-.extras{ display:grid; gap:0; margin-top:44px; border-top:1px solid var(--ligne); }
-@media (min-width:760px){ .extras{ grid-template-columns:repeat(3,1fr); } }
-.extra{ padding:20px clamp(20px,2.4vw,34px) 20px 0; border-bottom:1px solid var(--ligne); }
-@media (min-width:760px){ .extra{ border-bottom:0; } }
+.extras{ margin-top:var(--e5); }
+.extra{ padding:var(--e3) clamp(20px,2.4vw,34px); }
 .extra b{ display:block; font-weight:500; font-size:.93rem; margin-bottom:2px; }
 .extra span{ font-size:.86rem; color:var(--gris-faible); }
 .extra em{ font-style:normal; color:var(--encre); }
@@ -296,8 +375,10 @@ section{ padding:clamp(72px,9vw,124px) 0; }
 /* ═══════════ TABLEAU D'ORIENTATION ═══════════ */
 /* Repris de leur tableau d'usage : une ligne par situation, une pastille
    par prestation conseillée. Plus rapide à lire qu'un paragraphe. */
-.orient{ display:grid; gap:clamp(28px,4vw,56px); align-items:start; }
-@media (min-width:900px){ .orient{ grid-template-columns:0.9fr 1.1fr; } }
+.orient{
+  display:grid; gap:var(--e5); align-items:start;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));
+}
 
 .tbl{ width:100%; border-collapse:collapse; font-size:.92rem; }
 .tbl th{
@@ -315,11 +396,7 @@ section{ padding:clamp(72px,9vw,124px) 0; }
 .legende li{ display:flex; align-items:center; gap:10px; font-size:.86rem; color:var(--gris); }
 
 /* ═══════════ ÉTAPES ═══════════ */
-.etapes{ display:grid; gap:0; border-top:1px solid var(--ligne); }
-@media (min-width:700px){ .etapes{ grid-template-columns:repeat(2,1fr); } }
-@media (min-width:1060px){ .etapes{ grid-template-columns:repeat(4,1fr); } }
-.etape{ padding:28px clamp(20px,2.4vw,34px) 28px 0; border-bottom:1px solid var(--ligne); }
-@media (min-width:1060px){ .etape{ border-bottom:0; } }
+.etape{ padding:var(--e4) clamp(20px,2.4vw,34px); }
 .etape i{ display:block; font-style:normal; font-size:.8rem; color:var(--gris-faible); margin-bottom:12px; }
 .etape h3{ font-size:1.18rem; margin-bottom:7px; }
 .etape p{ font-size:.89rem; color:var(--gris); }
@@ -344,15 +421,22 @@ section{ padding:clamp(72px,9vw,124px) 0; }
 .vigilance{ margin-top:clamp(40px,5vw,60px); padding-top:30px; border-top:1px solid var(--ligne); }
 .vigilance h3{ font-size:1.24rem; margin-bottom:10px; }
 .vigilance > p{ color:var(--gris); font-size:.92rem; margin-bottom:18px; max-width:66ch; }
-.vigilance ul{ display:grid; gap:0; }
-@media (min-width:760px){ .vigilance ul{ grid-template-columns:repeat(2,1fr); column-gap:40px; } }
+.vigilance ul{
+  display:grid; row-gap:0; column-gap:var(--e5);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));
+}
 .vigilance li{ position:relative; padding:9px 0 9px 20px; font-size:.88rem; color:var(--gris); border-bottom:1px solid var(--ligne); }
 .vigilance li::before{ content:''; position:absolute; left:0; top:1.05em; width:7px; height:7px; border-radius:50%; border:1px solid var(--ligne-forte); }
 .vigilance .fin{ margin-top:18px; margin-bottom:0; font-size:.86rem; color:var(--gris-faible); }
 
 /* ═══════════ RÉSERVATION ═══════════ */
-.resa{ display:grid; gap:24px; align-items:start; }
-@media (min-width:1000px){ .resa{ grid-template-columns:1.4fr 0.6fr; } }
+/* Le calendrier veut de la place, la colonne de contact s'en contente de
+   peu. Un flex qui passe à la ligne garde ce rapport tant que les deux
+   tiennent côte à côte, puis les empile — sans qu'aucune largeur d'écran
+   soit nommée : c'est la place disponible qui tranche. */
+.resa{ display:flex; flex-wrap:wrap; gap:var(--e4); align-items:flex-start; }
+.resa > .cal-shell{ flex:3 1 24rem; }
+.resa > .resa-aside{ flex:1 1 15rem; }
 
 .cal-shell{ position:relative; border:1px solid var(--ligne); background:var(--blanc); }
 .cal-widget{ position:relative; z-index:1; min-height:580px; width:100%; }
@@ -382,8 +466,9 @@ section{ padding:clamp(72px,9vw,124px) 0; }
 
 /* ═══════════ PIED ═══════════ */
 footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
-.pied{ display:grid; gap:36px; }
-@media (min-width:820px){ .pied{ grid-template-columns:1.4fr 1fr 1fr; } }
+.pied{ display:flex; flex-wrap:wrap; gap:var(--e5); }
+.pied-marque{ flex:1.6 1 18rem; }
+.pied > nav{ flex:1 1 11rem; }
 .pied h4{ font-size:.82rem; color:var(--gris-faible); font-weight:400; margin-bottom:14px; }
 .pied ul{ display:grid; gap:9px; }
 .pied a{ font-size:.9rem; transition:color .22s var(--ease); }
@@ -486,20 +571,22 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
     </div>
   </section>
 
-  <div class="reperes">
+  <div class="mesure">
+  <div class="reperes grille">
     <div class="repere"><b>Praticien athlète</b><span>Demi-fond — la fatigue connue de l'intérieur</span></div>
     <div class="repere"><b>Deux méthodes</b><span>Massage et hijama, seules ou combinées</span></div>
     <div class="repere"><b>Sportif ou non</b><span>Aucun niveau requis pour venir</span></div>
   </div>
+  </div>
 
   <!-- PRESTATIONS -->
   <section id="prestations" class="sur-papier">
-    <div class="wrap">
+    <div class="wrap mesure">
       <p class="eyebrow up">Prestations</p>
       <h2 class="up">Trois façons de récupérer</h2>
       <p class="lede up">Le choix se fait ensemble au début de la séance, selon ce qui coince et ce que vous avez prévu dans les jours qui viennent.</p>
 
-      <div class="cartes">
+      <div class="cartes grille">
 
         <article class="carte up">
           <h3>Massage sportif</h3>
@@ -548,7 +635,7 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
 
       </div>
 
-      <div class="extras up">
+      <div class="extras grille up">
         <div class="extra"><b>Forfait 5 massages</b><span>5 × 30 min · valable 6 mois — <em>180.–</em></span></div>
         <div class="extra"><b>Déplacement à domicile</b><span>Genève et alentours — <em>sur demande</em></span></div>
         <div class="extra"><b>Présence sur compétition</b><span>Séances courtes sur site — <em>sur demande</em></span></div>
@@ -604,12 +691,12 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
 
   <!-- SÉANCE -->
   <section id="seance" class="sur-papier">
-    <div class="wrap">
+    <div class="wrap mesure">
       <p class="eyebrow up">Déroulement</p>
       <h2 class="up">Comment se passe une séance</h2>
       <p class="lede up">Quatre temps, toujours les mêmes. Rien n'est décidé sans vous, et rien ne commence avant qu'on ait fait le point.</p>
 
-      <div class="etapes">
+      <div class="etapes grille">
         <div class="etape up"><i>Étape 01</i><h3>Échange</h3><p>Un point rapide sur vos douleurs, votre charge d'entraînement et l'objectif du jour.</p></div>
         <div class="etape up"><i>Étape 02</i><h3>Travail ciblé</h3><p>Massage ou hijama, selon ce que votre corps demande ce jour-là.</p></div>
         <div class="etape up"><i>Étape 03</i><h3>Récupération</h3><p>Relâchement musculaire, retour au calme, corps déchargé.</p></div>
@@ -702,7 +789,7 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
           <div class="cal-widget" id="calWidget" data-cal="axium.perform"></div>
         </div>
 
-        <div class="up">
+        <div class="resa-aside up">
           <div class="contacts">
             <a href="tel:+41787310732"><span>Téléphone</span><b>078 731 07 32</b></a>
             <a href="https://wa.me/41787310732" target="_blank" rel="noopener"><span>WhatsApp</span><b>Écrire →</b></a>
@@ -739,7 +826,7 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
         <p>Massage sportif, relaxation et hijama à Genève. Récupération et performance.</p>
       </div>
 
-      <div>
+      <nav aria-label="Prestations">
         <h4>Prestations</h4>
         <ul>
           <li><a href="massage-sportif.html">Massage sportif</a></li>
@@ -747,9 +834,9 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
           <li><a href="hijama.html">Hijama</a></li>
           <li><a href="#reserver">Réserver</a></li>
         </ul>
-      </div>
+      </nav>
 
-      <div>
+      <nav aria-label="Contact">
         <h4>Contact</h4>
         <ul>
           <li><a href="tel:+41787310732">078 731 07 32</a></li>
@@ -757,7 +844,7 @@ footer{ background:var(--papier); padding:clamp(52px,6vw,80px) 0 40px; }
           <li><a href="mailto:axium.perform@gmail.com">axium.perform@gmail.com</a></li>
           <li><a href="https://www.instagram.com/axium.perform" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
-      </div>
+      </nav>
 
     </div>
 
